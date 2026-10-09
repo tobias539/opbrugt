@@ -243,7 +243,9 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 @keyframes tanke2{0%{opacity:0}33.3%{opacity:1}}
 @keyframes tanke3{0%{opacity:0}66.6%{opacity:1}}
 /* Under "Planlæg ugen" vises kun trinene */
-#t-snak.fokus>*:not(header):not(#ugeplan){display:none!important}
+#t-snak.fokus>*:not(header):not(#ugeplan):not(#opsStart){display:none!important}
+#t-snak.fokus>#opsStart:empty{display:none}
+[hidden]{display:none!important}
 .planknapper .btn[disabled]{opacity:.45}
 .foot{font-size:.8rem;color:var(--muted);margin-top:28px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
@@ -258,7 +260,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indsæt API-nøglen her. Planen, skabet og indkøbslisten virker også uden.</p><div class="addrow" style="padding:10px 0 0"><input id="keyIn2" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" aria-label="API-nøgle" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn" id="keySave2">Gem</button></div></div>
 
   <div id="ugeInfo"></div>
-  <div class="row planknapper" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"><button class="btn" id="planDenne">Planlæg denne uge</button><button class="btn" id="planNaeste">Planlæg næste uge</button></div>
+  <div class="row planknapper" id="planknapper" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"><button class="btn" id="planDenne">Planlæg denne uge</button><button class="btn" id="planNaeste">Planlæg næste uge</button></div>
   <p class="muted" id="naesteInfo" style="margin:6px 2px 0;font-size:.8rem"></p>
   <div id="opsStart"></div>
   <div id="ugeplan"></div>
@@ -374,7 +376,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 33 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 34 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1235,7 +1237,7 @@ function renderSet(){
    `<div class="set"><div>Økologi på grundvarer<div class="muted">Mælk, æg, fløde, smør, løg, gulerødder, kartofler, pasta, oksekød</div></div><button class="toggle" id="oko" aria-pressed="${st.settings.oko}" aria-label="Økologi på grundvarer"></button></div>`+
    `<div class="set"><div>Frugt og grønt<div class="muted">Skal du bruge 2 æbler: køb dem enkeltvis, når det kan lade sig gøre, eller en hel pose?</div><div class="chips" style="margin-top:8px"><button class="chip" data-kf="enkelt" aria-pressed="${st.settings.koebForm!=="pakke"}">Enkeltvis</button><button class="chip" data-kf="pakke" aria-pressed="${st.settings.koebForm==="pakke"}">Hele pakker</button></div></div></div>`+
    `<div class="set"><div>Butikker du handler i<div class="chips" id="butikker" style="margin-top:8px"></div></div></div>`+
-   `<div class="set"><div>Del indkøbet op, hvis besparelsen er over<div class="muted">Pr. ekstra butik. Bruges, når appen får ugens tilbud.</div></div><div class="step"><button data-g="-25" aria-label="Lavere">−</button><output>${st.settings.delGraense} kr</output><button data-g="25" aria-label="Højere">+</button></div></div>`;
+   `<div class="set"><div>Tag en butik mere med på samme tur, hvis det sparer mindst<div class="muted">Bruges, når appen sammenligner butikkernes priser og tilbud.</div></div><div class="step"><button data-g="-25" aria-label="Lavere">−</button><output>${st.settings.delGraense} kr</output><button data-g="25" aria-label="Højere">+</button></div></div>`;
   s.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.settings[k]=Math.min(LIM[k][1],Math.max(LIM[k][0],st.settings[k]+ +b.dataset.d));changed()});
   document.getElementById("oko").onclick=()=>{st.settings.oko=!st.settings.oko;changed()};
   s.querySelectorAll("[data-kf]").forEach(b=>b.onclick=()=>{st.settings.koebForm=b.dataset.kf;changed()});
@@ -1613,11 +1615,11 @@ const MTYPER=[
 ];
 function typerTekst(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[3]}`).join(", ")}
 function typerKort(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[2]}`).join(", ")}
-function handelTekst(s){s=s||st.settings;const n=s.maksButikker||1,g=s.indkobGange||1;return (n<=1?"Vil helst handle i én butik.":`Vil handle i højst ${n} butikker, men kun dele op, hvis det sparer mindst ${s.delGraense} kr pr. ekstra butik.`)+` Handler ind ${g===1?"én gang":"op til "+g+" gange"} om ugen.`}
-function indkobKort(v){const g=Math.min(3,v.indkobGange||1);return g===1?"Én gang om ugen":`Op til ${g} gange om ugen`}
-function handelKort(v){return (v.maksButikker||1)<=1?"Én butik":`Op til ${v.maksButikker} butikker, hvis det sparer mindst ${v.delGraense} kr`}
-function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}${typerKort()?": "+typerKort():""}. ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${handelKort(s)}. Handler ind ${indkobKort(s).toLowerCase()}.`}
-const WIZ_TRIN=["P","M","typer","butikker","handel","indkob","oversigt"];
+function handelTekst(s){s=s||st.settings;const n=s.maksButikker||1,g=s.indkobGange||1;return `Handler ind ${g===1?"én gang":"op til "+g+" gange"} om ugen. `+(n<=1?"Vil kun handle i én butik pr. indkøbstur.":`Vil gerne handle i op til ${n} butikker på samme indkøbstur, men kun hvis hver ekstra butik sparer mindst ${s.delGraense} kr.`)}
+function indkobKort(v){const g=Math.min(3,v.indkobGange||1);return g===1?"Én indkøbstur om ugen":`Op til ${g} indkøbsture om ugen`}
+function handelKort(v){return (v.maksButikker||1)<=1?"Én butik pr. tur":`Op til ${v.maksButikker} butikker pr. tur, hvis det sparer mindst ${v.delGraense} kr`}
+function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}${typerKort()?": "+typerKort():""}. ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${indkobKort(s)}, ${handelKort(s).charAt(0).toLowerCase()+handelKort(s).slice(1)}.`}
+const WIZ_TRIN=["P","M","typer","butikker","indkob","handel","oversigt"];
 let wiz=null;
 function sumTyper(t){return Object.values(t).reduce((a,b)=>a+b,0)}
 function nyBruger(){return !st.opsat&&!st.opsatSkjul&&!st.fast.length&&!st.favoritter.length&&!Object.keys(st.skab).length&&!st.chat.length}
@@ -1626,9 +1628,15 @@ function wizStart(host){
   wiz={host,trin:0,egenAaben:false,egenTekst:"",v:{P:s.P,M:s.M,typer:{...(s.typer||{})},butikker:[...s.butikker],egneButikker:[...(s.egneButikker||[])],maksButikker:s.maksButikker||1,delGraense:s.delGraense,indkobGange:Math.min(3,s.indkobGange||1)}};
   renderOps();document.getElementById(host).scrollIntoView({behavior:"smooth",block:"start"});
 }
+/* Plan-fanen: under "Planlæg" og præferenceguiden vises kun trinene; uden præferencer ingen "Planlæg"-knapper */
+function planFokus(){
+  document.getElementById("t-snak").classList.toggle("fokus",!!up||!!(wiz&&wiz.host==="opsStart"));
+  for(const id of ["planknapper","naesteInfo"]){const el=document.getElementById(id);if(el)el.hidden=!st.opsat}
+}
 function renderOps(){
   const ps=document.getElementById("opsStart"),pp=document.getElementById("prefOpsat");
-  ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():nyBruger()?`<div class="wiz"><h2>Velkommen til Mad app</h2><p class="muted" style="margin:0">Et par hurtige valg, så passer forslag, mængder og tilbud til dig.</p><div class="nav"><button class="btn" data-w="start">Opret præferencer</button><button class="btn ghost" data-w="skjul">Senere</button></div></div>`:"";
+  ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():!st.opsat?`<div class="wiz"><h2>Velkommen til Mad app</h2><p class="muted" style="margin:0">Før du planlægger ugen: et par hurtige valg om jer, så passer forslag, mængder og tilbud. Det tager under et minut.</p><div class="nav"><span class="grow"></span><button class="btn" data-w="start">Opret præferencer</button></div></div>`:"";
+  planFokus();
   document.getElementById("t-pref").classList.toggle("kunGuide",!!(wiz&&wiz.host==="prefOpsat"));
   pp.innerHTML=wiz&&wiz.host==="prefOpsat"?wizHtml():st.opsat?`<div class="list"><div class="item"><div class="grow">${esc(opsatResume())}</div></div></div><button class="btn ghost" data-w="ret" style="margin-top:10px">Ret præferencer</button>`:`<p class="muted">Hvor mange I er, hvad I vil spise, og hvor I handler. Det tager under et minut.</p><button class="btn" data-w="ret">Opret præferencer</button>`;
   for(const el of [ps,pp])el.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>wizHandling(b,el.id));
@@ -1650,14 +1658,14 @@ function wizHtml(){
     <div class="tiles logo">${[...BUTIKKER,...v.egneButikker.map(b=>[b,null,null])].map(([n,niv,logo])=>{const on=v.butikker.includes(n);return `<button class="tile lg" data-w="butik" data-n="${esc(n)}" aria-pressed="${on}" aria-label="${esc(n)}${niv?", "+PRISNIVEAU[niv].toLowerCase():""}${harTilbud(n)?", har tilbud":""}">${logo?`<img src="logoer/${logo}" alt="">`:`<span class="txt">${esc(n)}</span>`}<span class="niv">${niv?PRISNIVEAU[niv]:"Egen"}</span>${harTilbud(n)?`<span class="tbm" aria-hidden="true">%</span>`:""}${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}<button class="tile lg" data-w="egenButik" aria-expanded="${wiz.egenAaben}" aria-label="Tilføj egen butik"><span class="txt" style="font-size:1.4rem">＋</span><span class="niv">Tilføj egen</span></button></div>
     ${wiz.egenAaben?`<div class="addrow" style="padding:10px 0 0"><input id="wizEgen" value="${esc(wiz.egenTekst)}" placeholder="Butikkens navn" aria-label="Butikkens navn" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-w="egenTilfoej">Tilføj</button></div>`:""}
     <p class="muted" style="margin-top:6px;font-size:.78rem">Prisniveauet er et groft skøn ud fra kædens type.</p>`;
-  else if(t==="handel")h=`<h2>Hvor mange butikker vil du handle i om ugen?</h2><p class="muted" style="margin:0">Flere butikker kan spare penge, men tager mere tid.</p>
-    <div class="tiles">${[[1,"Én","Enklest"],[2,"Op til to","Hvis det sparer"],[3,"Op til tre","Mest besparelse"]].map(([n,lb,sm])=>`<button class="tile" data-w="maks" data-n="${n}" aria-pressed="${v.maksButikker===n}"><span class="ik">${"🛒".repeat(n)}</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>
-    ${v.maksButikker>1?`<h3 style="margin-top:16px">Del kun op, hvis det sparer mindst</h3><div class="tiles tal">${[25,50,100,200].map(g=>`<button class="tile" data-w="graense" data-n="${g}" aria-pressed="${v.delGraense===g}"><span class="lb" style="font-size:1.1rem">${g} kr</span><span class="sm">pr. butik</span></button>`).join("")}</div>`:""}`;
-  else if(t==="indkob")h=`<h2>Hvor mange gange vil du handle ind om ugen?</h2><p class="muted" style="margin:0">Så lægger appen det, der holder kortest, lige efter en indkøbsdag.</p>
+  else if(t==="handel")h=`<h2>Vil du handle i flere butikker på samme indkøbstur?</h2><p class="muted" style="margin:0">Fx både Netto og REMA 1000 samme dag, hvis det sparer penge. Det tager lidt mere tid.</p>
+    <div class="tiles">${[[1,"Nej, én butik","Enklest"],[2,"Ja, op til to","Hvis det sparer"],[3,"Ja, op til tre","Mest besparelse"]].map(([n,lb,sm])=>`<button class="tile" data-w="maks" data-n="${n}" aria-pressed="${v.maksButikker===n}"><span class="ik">${"🛒".repeat(n)}</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>
+    ${v.maksButikker>1?`<h3 style="margin-top:16px">Kun hvis den ekstra butik sparer mindst</h3><div class="tiles tal">${[25,50,100,200].map(g=>`<button class="tile" data-w="graense" data-n="${g}" aria-pressed="${v.delGraense===g}"><span class="lb" style="font-size:1.1rem">${g} kr</span><span class="sm">pr. tur</span></button>`).join("")}</div>`:""}`;
+  else if(t==="indkob")h=`<h2>Hvor mange indkøbsture om ugen?</h2><p class="muted" style="margin:0">Handler du flere gange, bliver kød og grønt friskere, og appen kan lægge indkøbet på de dage, tilbuddene gælder.</p>
     <div class="tiles">${[[1,"Én gang","Storindkøb"],[2,"Op til to gange","Friskere varer og flere tilbud"],[3,"Op til tre gange","Friskt hele ugen"]].map(([n,lb,sm])=>`<button class="tile" data-w="indkob" data-n="${n}" aria-pressed="${v.indkobGange===n}"><span class="ik">🧺</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>`;
   else{
     const uden=v.butikker.filter(b=>!harTilbud(b));
-    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Måltider",typerKort(v.typer)||"Frit valg"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Butikker pr. uge",handelKort(v)],["Indkøb",indkobKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
+    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Måltider",typerKort(v.typer)||"Frit valg"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Indkøbsture",indkobKort(v)],["Butikker pr. tur",handelKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
     ${uden.length?`<p class="muted" style="margin-top:8px">Vi har ikke tilbud fra ${esc(uden.join(", "))} endnu. Ønsket bliver gemt, så de kan komme med senere.</p>`:""}`;
   }
   const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span><button class="btn ghost" data-w="luk">Luk</button>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">${t==="typer"&&sumTyper(v.typer)<v.M?"Næste (resten frit)":"Næste"}</button>`}</div>`;
@@ -1774,7 +1782,7 @@ document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
 document.getElementById("planNaeste").onclick=()=>ugeplanStart("naeste");
 function renderUgeplan(){
   const el=document.getElementById("ugeplan"),ny=naesteUge();
-  document.getElementById("t-snak").classList.toggle("fokus",!!up);
+  planFokus();
   const nb=document.getElementById("planNaeste");nb.disabled=!ny;
   nb.textContent=visPaamindelse()?"Planlæg næste uge ✨":"Planlæg næste uge";
   document.getElementById("naesteInfo").textContent=ny?(visPaamindelse()?`Næste uges tilbudsaviser er klar (fra ${dayLabel(ny,true)}).`:""):"Næste uges tilbudsaviser er ikke kommet endnu.";
@@ -2596,7 +2604,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="33";
+const APP_VERSION="34";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
