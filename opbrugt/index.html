@@ -337,7 +337,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 23 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 24 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -754,7 +754,14 @@ function aktivButik(){const b=shopTur.length?shopTur:st.settings.butikker;if(!b.
    Besparelse = mængde × (appens cirkapris pr. kg/l/stk − tilbuddets pris pr. kg/l/stk). Kendes
    cirkaprisen ikke, regnes der ingen besparelse, men tilbuddet bruges, hvis man alligevel er i butikken. */
 let shopTur=[];
+/* Hyldepriser: REMA 1000's almindelige priser pr. ingrediens (priser/hent_priser.py). Bruges som normalpris. */
+let HP={varer:{}};
+function hyldeMaengde(u){const x=String(u||"").toUpperCase().match(/([\d.,]+)\s*(KG|GR|LTR|L|ML|CL|STK)\./);if(!x)return "";return x[1].replace(",",".")+" "+({KG:"kg",GR:"g",LTR:"l",L:"l",ML:"ml",CL:"cl",STK:"stk"})[x[2]]}
+function hylde(id){const h=id&&HP.varer[id];return h&&h.ep!=null&&h.pr?{p:h.p,ep:h.ep,pr:h.pr,m:hyldeMaengde(h.u),n:h.n,k:HP.kaede}:null}
+async function hentHyldepriser(){try{const r=await fetch("../priser/til_opbrugt/rema-1000.json",{cache:"no-cache"});if(r.ok){HP=await r.json();render()}}catch(e){}}
 function normEP(id){
+  const h=hylde(id);
+  if(h){const gps=OI[id]&&OI[id].gps,o={[h.pr]:h.ep};if(h.pr==="stk"&&gps)o.kg=h.ep/(gps/1000);if(h.pr==="kg"&&gps)o.stk=h.ep*gps/1000;return o}
   const k=Object.keys(OB.pTilBank).find(x=>OB.pTilBank[x]===id&&P[x]);if(!k)return null;
   const v=P[k],pr=price(k);
   if(v.e==="g")return {kg:pr/(v.pk/1000)};if(v.e==="ml")return {l:pr/(v.pk/1000)};
@@ -775,7 +782,7 @@ function iEnhed(m,pr){
 function butikFor(kaede){return st.settings.butikker.find(b=>T_NORM(b)===T_NORM(kaede))||null}
 function tilbudPrButik(id,dato){
   const o={};if(!id)return o;
-  for(const x of tGyldige(dato)){if(x.i!==id)continue;const b=butikFor(x.k);if(!b)continue;const y=o[b];if(!y||((x.ep!=null&&y.ep!=null&&x.pr===y.pr)?x.ep<y.ep:x.p<y.p))o[b]=x}
+  for(const x of tGyldige(dato)){if(x.i!==id||!aegteTilbud(x))continue;const b=butikFor(x.k);if(!b)continue;const y=o[b];if(!y||((x.ep!=null&&y.ep!=null&&x.pr===y.pr)?x.ep<y.ep:x.p<y.p))o[b]=x}
   return o;
 }
 /* Ukendt normalpris: skøn, at tilbuddet er 20 % under normalprisen (normalpris = tilbudspris × 1,25) */
@@ -795,6 +802,7 @@ function besparelse(v,b){
 /* Hvad koster varen ca.: tilbudsprisen, hvis den købes på tilbud, ellers appens cirkapris */
 function varePris(v,o){
   if(o){const q=tilbudMaengde(v,o);return Math.max(o.p,q!=null?q*o.ep:0)}
+  const h=hylde(v.id);if(h){const q=tilbudMaengde(v,h);return Math.max(h.p,q!=null?q*h.ep:0)}
   return v.pris||0;
 }
 
@@ -938,7 +946,7 @@ function renderShopPlan(F){
   let t=`Køb ind i ${F.tur.join(" og ")}: ${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)}`:""}.`;
   if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, får du ${m.n} ${m.n===1?"vare":"varer"} mere på tilbud og sparer ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
   const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Skøn: hvor appen ikke kender normalprisen, regnes tilbuddet som 20 % billigere.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = REMA 1000's hyldepris, hvor den findes. Ellers skøn: tilbuddet regnes som 20 % billigere.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
   const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
 }
 function renderSkab(){
@@ -1584,7 +1592,7 @@ function ugeTilfoej(idx){
 }
 /* Tilbud, der gælder i perioden fra-til: det bedste pr. ingrediens i banken */
 function tTekstPeriode(fra,til){
-  const best={};for(const x of TB.tilbud)if(x.i&&x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)&&(!best[x.i]||x.p<best[x.i].p))best[x.i]=x;
+  const best={};for(const x of TB.tilbud)if(x.i&&aegteTilbud(x)&&x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)&&(!best[x.i]||x.p<best[x.i].p))best[x.i]=x;
   return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${x.k} ${tPris(x.p)}${x.m?" ("+x.m+")":""}`).join("; ");
 }
 async function hentUgeforslag(){
@@ -1789,7 +1797,9 @@ const T_NORM=s=>String(s||"").toLowerCase().replace(/[^a-zæøå0-9]/g,"");
 function tKaedeAktiv(k){const valgt=st.settings.butikker.map(T_NORM);if(!valgt.length)return true;return valgt.includes(T_NORM(k))}
 function tGyldige(dato){const t0=todayIso();if(!dato||dato<t0)dato=t0;return TB.tilbud.filter(x=>x.f<=dato&&x.t>=t0&&tKaedeAktiv(x.k))}
 function tUge(){return addDays(todayIso(),6)}
-function tBedst(id,dato){let b=null;for(const x of tGyldige(dato)){if(x.i!==id)continue;if(!b||((x.ep!=null&&b.ep!=null&&x.pr===b.pr)?x.ep<b.ep:x.p<b.p))b=x}return b}
+/* Et tilbud tæller kun, hvis det er mindst 2 % billigere pr. kg/l/stk end normalprisen (når den kendes) */
+function aegteTilbud(x){const ne=x.i&&normEP(x.i);return !(ne&&x.pr&&x.ep!=null&&ne[x.pr]!=null&&x.ep>=ne[x.pr]*0.98)}
+function tBedst(id,dato){let b=null;for(const x of tGyldige(dato)){if(x.i!==id||!aegteTilbud(x))continue;if(!b||((x.ep!=null&&b.ep!=null&&x.pr===b.pr)?x.ep<b.ep:x.p<b.p))b=x}return b}
 function tPris(p){return String(p).replace(".",",")+" kr"}
 /* "Netto 35 kr (400 g) · senest tor 9/10". Med dato: siger "senest", hvis tilbuddet slutter før dato. */
 function tKort(x,dato){
@@ -2218,13 +2228,13 @@ document.getElementById("importFil").onchange=async e=>{const f=e.target.files&&
 document.getElementById("importTekstBtn").onclick=()=>{const w=document.getElementById("importTekstWrap");w.style.display=w.style.display==="none"?"":"none"};
 document.getElementById("importTekstOk").onclick=()=>importer(document.getElementById("importTekst").value);
 
-forbind();tHent();
+forbind();tHent();hentHyldepriser();
 
 /* ---------- Opdatering ----------
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="23";
+const APP_VERSION="24";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;

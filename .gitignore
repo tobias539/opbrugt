@@ -9,3 +9,6 @@ opskriftbank/kilder/scanninger/
 .claude/settings.local.json
 __pycache__/
 desktop.ini
+
+# Hyldepriser: kun de matchede priser i priser/til_opbrugt/ udgives
+priser/raa/
