@@ -32,9 +32,9 @@ MAPPE = Path(__file__).resolve().parent
 NOEGLE = MAPPE / "salling-noegle.txt"
 AKTUELLE_TILBUD = MAPPE.parent / "tilbud" / "aktuelle.json"
 MAANED = 28 * 86400
-# Salling Group blokerer IP-adressen ved for mange opslag. Derfor højst 15 prisopslag pr. kørsel med god
+# Salling Group blokerer IP-adressen ved for mange opslag. Derfor højst 24 prisopslag pr. kørsel med god
 # pause imellem; den daglige opgave tager resten de følgende dage. Ved 429 stoppes, og der ventes.
-SALLING_MAKS, SALLING_PAUSE = 15, 8
+SALLING_MAKS, SALLING_PAUSE = 24, 10  # i alt pr. kørsel, deles mellem Salling-kæderne
 SALLING_STATUS = MAPPE / "raa" / "salling-status.json"
 ENHED = {"kg": "kg", "ltr": "l", "l": "l", "stk": "stk", "g": "kg", "ml": "l"}
 
@@ -228,6 +228,7 @@ def main():
     log = []
     tving, kun_byg = "--tving" in sys.argv, "--kun-byg" in sys.argv
     noegle = NOEGLE.read_text(encoding="utf-8").strip() if NOEGLE.exists() else None
+    salling = [k for k, c in KAEDER.items() if c["type"] != "rema" and c.get("butik")]
     kvote = SALLING_MAKS
     for k, c in KAEDER.items():
         try:
@@ -244,8 +245,11 @@ def main():
                 elif not kun_byg:
                     if tving or gammel(MAPPE / "raa" / f"{k}.json.gz"):
                         log.append(salling_hent_liste(k, noegle))
-                    if kvote > 0:
-                        n, blokeret, rest = salling_hent_priser(k, noegle, tving, kvote)
+                    # del kvoten ligeligt mellem de Salling-kæder, der er tilbage, så alle får priser hver dag
+                    tilbage = len(salling) - salling.index(k) if k in salling else 1
+                    andel = -(-kvote // tilbage)
+                    if andel > 0:
+                        n, blokeret, rest = salling_hent_priser(k, noegle, tving, andel)
                         kvote -= n
                         if n or rest:
                             log.append(f"slog {n} priser op i {c['navn']}" + (f", {rest} venter til de næste dage" if rest else ""))

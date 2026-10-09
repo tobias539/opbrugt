@@ -337,7 +337,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 27 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 28 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -759,10 +759,20 @@ let shopTur=[];
 const PRISFILER={rema1000:"rema-1000",netto:"netto",føtex:"foetex"};
 let HP={};
 function hyldeMaengde(u){const x=String(u||"").toUpperCase().match(/([\d.,]+)\s*(KG|GR|LTR|L|ML|CL|STK)\./);if(!x)return "";return x[1].replace(",",".")+" "+({KG:"kg",GR:"g",LTR:"l",L:"l",ML:"ml",CL:"cl",STK:"stk"})[x[2]]}
+/* Når en butik låner REMA's pris, lægges et tillæg på efter butikkens prisniveau (groft skøn).
+   Butikkens egne hyldepriser og dine kvitteringer fra butikken erstatter efterhånden de lånte priser. */
+const NIVEAU_TILLAEG={discount:1,mellem:1.1,dyrere:1.2};
+function niveauFaktor(butik){
+  if(!butik||T_NORM(butik)===T_NORM("Rema 1000"))return 1;
+  const b=BUTIKKER.find(x=>T_NORM(x[0])===T_NORM(butik));
+  return NIVEAU_TILLAEG[b?b[1]:"mellem"]||1;
+}
 function hylde(id,butik){
   if(!id)return null;
-  const egen=butik&&HP[PRISFILER[T_NORM(butik)]],kilde=(egen&&egen.varer[id])?egen:HP["rema-1000"],h=kilde&&kilde.varer[id];
-  return h&&h.ep!=null&&h.pr?{p:h.p,ep:h.ep,pr:h.pr,m:hyldeMaengde(h.u)||h.u||"",n:h.n,k:kilde.kaede}:null;
+  const egen=butik&&HP[PRISFILER[T_NORM(butik)]],laant=!(egen&&egen.varer[id]),kilde=laant?HP["rema-1000"]:egen,h=kilde&&kilde.varer[id];
+  if(!h||h.ep==null||!h.pr)return null;
+  const f=laant?niveauFaktor(butik):1;
+  return {p:h.p*f,ep:h.ep*f,pr:h.pr,m:hyldeMaengde(h.u)||h.u||"",n:h.n,k:kilde.kaede,laant};
 }
 async function hentHyldepriser(){
   await Promise.all([...new Set(Object.values(PRISFILER))].map(async f=>{try{const r=await fetch(`../priser/til_opbrugt/${f}.json`,{cache:"no-cache"});if(r.ok)HP[f]=await r.json()}catch(e){}}));
@@ -779,7 +789,7 @@ function normEP(id,butik){
   const h=hylde(id,butik);
   if(h){const gps=OI[id]&&OI[id].gps,o={[h.pr]:h.ep};if(h.pr==="stk"&&gps)o.kg=h.ep/(gps/1000);if(h.pr==="kg"&&gps)o.stk=h.ep*gps/1000;return o}
   const k=Object.keys(OB.pTilBank).find(x=>OB.pTilBank[x]===id&&P[x]);if(!k)return null;
-  const v=P[k],pr=price(k);
+  const v=P[k],pr=price(k)*niveauFaktor(butik);
   if(v.e==="g")return {kg:pr/(v.pk/1000)};if(v.e==="ml")return {l:pr/(v.pk/1000)};
   if(v.e==="stk"){const gps=OI[id]&&OI[id].gps;return gps?{stk:pr/v.pk,kg:pr/(v.pk*gps/1000)}:{stk:pr/v.pk}}
   return null;
@@ -847,16 +857,18 @@ function koeb(v,k,butik){
 function normalKilde(v,butik){
   const l=laertEP(v.id,butik);if(l){const pr=Object.keys(l)[0];return {ep:l[pr],pr,p:null,m:""}}
   const h=hylde(v.id,butik);if(h)return {ep:h.ep,pr:h.pr,p:h.p,m:h.m};
-  if(v.pk&&P[v.pk]){const x=P[v.pk],pr={g:"kg",ml:"l",stk:"stk"}[x.e];if(pr)return {ep:price(v.pk)/(pr==="stk"?x.pk:x.pk/1000),pr,p:price(v.pk),m:x.pk+" "+x.e}}
+  if(v.pk&&P[v.pk]){const x=P[v.pk],pr={g:"kg",ml:"l",stk:"stk"}[x.e],pp=price(v.pk)*niveauFaktor(butik);if(pr)return {ep:pp/(pr==="stk"?x.pk:x.pk/1000),pr,p:pp,m:x.pk+" "+x.e}}
   return null;
 }
 function tilbudKilde(o){return {ep:o.ep,pr:o.pr,p:o.p,m:o.m}}
-/* Hvad sparer man reelt ved tilbuddet i butik b frem for normalprisen i samme butik */
-function besparelse(v,b){
-  const o=v.tilbud[b];if(!o)return 0;
-  const t=koeb(v,tilbudKilde(o),b),n=koeb(v,normalKilde(v,b),b);
-  if(t&&n)return Math.max(0,n.reel-t.reel);
-  return SKOEN_RABAT*(t?Math.max(0,t.reel):o.p);
+/* Reel pris for varen i butik b: tilbuddet eller normalprisen, det der er billigst.
+   Kendes normalprisen ingen steder, skønnes den til det billigste tilbud × 1,25. */
+function prisI(v,b){
+  const t=v.tilbud[b]?koeb(v,tilbudKilde(v.tilbud[b]),b):null,n=koeb(v,normalKilde(v,b),b);
+  if(t&&n)return t.reel<n.reel-0.01?{reel:t.reel,normal:n.reel,tilbud:true}:{reel:n.reel,normal:n.reel,tilbud:false};
+  if(n)return {reel:n.reel,normal:n.reel,tilbud:false};
+  if(t)return {reel:t.reel,normal:t.reel*(1+SKOEN_RABAT),tilbud:true};
+  return null;
 }
 /* Det, man betaler ved kassen: tilbuddet, hvis varen købes på tilbud, ellers normalprisen (hele pakker) */
 function varePris(v,o,butik){
@@ -865,36 +877,43 @@ function varePris(v,o,butik){
 }
 function vareFra(g){return {key:g.key,id:g.id,pk:g.pk,afd:g.afd,navn:g.navn,pris:g.pris,behov:g.behov>0&&g.enhed?{q:g.behov,e:g.enhed}:null}}
 
+/* Fordel indkøbet på butikker, så den samlede reelle pris bliver lavest: start i den billigste butik,
+   og tag en butik mere med, så længe den sparer mindst grænsen og der er plads til flere butikker. */
 function fordel(grupper){
   const butikker=st.settings.butikker,varer=[];
   for(const g of grupper){
     const tilbud=tilbudPrButik(g.id,g.dato||tUge());
     if(!Object.keys(tilbud).length&&g.fastTilbud&&g.fastTilbud.t>=todayIso()){const b=butikFor(g.fastTilbud.k);if(b)tilbud[b]=g.fastTilbud}
-    varer.push({...vareFra(g),tilbud});
+    const v={...vareFra(g),tilbud,priser:{}};
+    for(const b of butikker)v.priser[b]=prisI(v,b);
+    /* Butikker uden nogen pris på varen regnes til det skønnede normalniveau, så de hverken vinder eller taber */
+    const kendt=Object.values(v.priser).filter(Boolean);
+    v.ref=kendt.length?Math.max(...kendt.map(x=>x.normal)):0;
+    varer.push(v);
   }
-  const sum=b=>varer.reduce((a,v)=>a+besparelse(v,b),0);
+  const pris=(v,b)=>v.priser[b]?v.priser[b].reel:v.ref;
+  const total=b=>varer.reduce((a,v)=>a+pris(v,b),0);
   let hoved=butikker.includes(st.settings.hovedButik)?st.settings.hovedButik:null;
-  if(!hoved&&butikker.length){let bedst=-1;for(const b of butikker){const v=sum(b)+.01*varer.filter(x=>x.tilbud[b]).length;if(v>bedst+1e-9){bedst=v;hoved=b}}}
+  if(!hoved&&butikker.length){let bedst=Infinity;for(const b of butikker){const t=total(b);if(t<bedst-0.01){bedst=t;hoved=b}}}
   const tur=hoved?[hoved]:[],tildelt=new Map(varer.map(v=>[v.key,hoved]));
-  const spar=v=>besparelse(v,tildelt.get(v.key));
+  const nu=v=>pris(v,tildelt.get(v.key));
   const maks=Math.max(1,st.settings.maksButikker||1),graense=st.settings.delGraense||0;
   let misset=null;
   while(hoved){
     let bedst=null;
-    for(const b of butikker){if(tur.includes(b))continue;const g=varer.reduce((a,v)=>a+Math.max(0,besparelse(v,b)-spar(v)),0),n=varer.filter(v=>besparelse(v,b)>spar(v)).length;if(g>0&&(!bedst||g>bedst.g))bedst={b,g,n}}
+    for(const b of butikker){if(tur.includes(b))continue;const bedre=varer.filter(v=>pris(v,b)<nu(v)-0.01),g=bedre.reduce((a,v)=>a+nu(v)-pris(v,b),0);if(g>0&&(!bedst||g>bedst.g))bedst={b,g,n:bedre.length}}
     if(!bedst)break;
     if(tur.length>=maks||bedst.g<graense){misset=bedst;break}
-    tur.push(bedst.b);for(const v of varer)if(besparelse(v,bedst.b)>spar(v))tildelt.set(v.key,bedst.b);
+    tur.push(bedst.b);for(const v of varer)if(pris(v,bedst.b)<nu(v)-0.01)tildelt.set(v.key,bedst.b);
   }
-  /* Tilbud, hvor normalprisen er ukendt: køb dem i en butik, man alligevel skal i. Kendes normalprisen,
-     og er tilbuddet reelt ikke billigere (fx en stor pakke, hvor resten ikke bliver brugt), springes det over. */
-  for(const v of varer){const b=tildelt.get(v.key);if(spar(v)>0||(b&&v.tilbud[b]))continue;const alt=tur.filter(x=>v.tilbud[x]&&!normalKilde(v,x)).sort((x,y)=>v.tilbud[x].p-v.tilbud[y].p)[0];if(alt)tildelt.set(v.key,alt)}
+  /* Besparelse = hvad varen ville koste til normalpris i den billigste af de butikker, du kommer i, minus det, den koster */
   const prButik={};for(const b of tur)prButik[b]={antal:0,spar:0};
   const valgtTilbud=new Map(),koebInfo=new Map();
   for(const v of varer){
     const b=tildelt.get(v.key);if(!b)continue;
-    prButik[b].antal++;prButik[b].spar+=besparelse(v,b);
-    const o=v.tilbud[b],brug=o&&(besparelse(v,b)>0||!normalKilde(v,b))?o:null;
+    const x=v.priser[b],normal=Math.min(...tur.map(t=>v.priser[t]?v.priser[t].normal:v.ref));
+    prButik[b].antal++;if(x)prButik[b].spar+=Math.max(0,normal-x.reel);
+    const brug=x&&x.tilbud?v.tilbud[b]:null;
     valgtTilbud.set(v.key,brug);
     koebInfo.set(v.key,{vare:v,koeb:brug?koeb(v,tilbudKilde(brug),b):koeb(v,normalKilde(v,b),b)});
   }
@@ -1035,7 +1054,7 @@ function renderShopPlan(F){
   let t=`Køb ind i ${F.tur.join(" og ")}: ${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)}`:""}.`;
   if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, får du ${m.n} ${m.n===1?"vare":"varer"} mere på tilbud og sparer ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
   const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris (Netto og REMA 1000; de andre bruger REMA's), ellers skøn.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris, ellers REMA 1000's pris plus et tillæg efter butikkens prisniveau. Jo flere kvitteringer du scanner, jo mere præcist.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
   const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
   const tips=lagerTips(F,samletIndkob(last));
   if(tips.length){
@@ -1374,7 +1393,9 @@ Mangler af basisvarer: ${st.basisMangler.map(b=>BASIS[b]).join(", ")||"ingen ken
 Kan lide: ${st.favoritter.join(", ")||"ingen gemt"}
 Har haft eller har på planen inden for 3 uger (foreslå dem ikke, medmindre brugeren selv beder om dem): ${nyligTekst()||"intet"}
 Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
-${TB.tilbud.length?`Ugens tilbud på ingredienser fra opskrifterne (bedste pr. vare). Foretræk retter, der bruger dem: ${tTekst()||"ingen"}
+${TB.tilbud.length?`Kød og fisk på tilbud – her er der mest at spare, så byg forslag til retter op om dem (billigst pr. ret først):
+${koedTilbud(todayIso(),tUge())||"ingen"}
+Ugens tilbud på ingredienser fra opskrifterne (bedste pr. vare). Foretræk retter, der bruger dem: ${tTekst()||"ingen"}
 Andre friske tilbud i deres butikker: ${friskeTilbud(todayIso(),tUge())||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer til ønsket, og sæt "opskrift" til id'et:
 ${oKatalogTekst()}
 Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
@@ -1709,8 +1730,10 @@ Kan lide (favoritter): ${favs.join(", ")||"ingen gemt"}${favs.length?`. Mindst �
 Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
 Har haft eller har på planen inden for 3 uger (undgå, medmindre det er en favorit): ${nyligTekst()||"intet"}
 ${tidl.length?`Foreslå ikke disse igen: ${tidl.join(", ")}\n`:""}Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
-${TB.tilbud.length?`BYG RETTERNE OP OM UGENS TILBUD: mindst halvdelen af retterne skal have hovedingrediensen (kød, fisk eller det vigtigste grønt) på tilbud i deres butikker, og brug gerne flere tilbudsvarer pr. ret. Skriv i "hvorfor", hvad der er på tilbud.
-Tilbud på ingredienser fra opskrifterne (bedste pr. vare): ${tTekstPeriode(up.start,slut)||"ingen"}
+${TB.tilbud.length?`BYG RETTERNE OP OM UGENS KØDTILBUD – det er dér, der er mest at spare. Mindst halvdelen af retterne (gerne flere) skal have kød eller fisk fra listen herunder som hovedingrediens; tag dem fra toppen af listen først (billigst pr. ret). Er pakken stor, så brug den samme kødvare til to retter (fx hakket oksekød til både chili og lasagne). Brug gerne flere tilbudsvarer pr. ret. Skriv i "hvorfor", hvilket tilbud retten bygger på, og omtrent hvad det sparer.
+Kød og fisk på tilbud (billigst pr. ret først):
+${koedTilbud(up.start,slut)||"ingen"}
+Andre tilbud på ingredienser fra opskrifterne (bedste pr. vare): ${tTekstPeriode(up.start,slut)||"ingen"}
 Andre friske tilbud i deres butikker: ${friskeTilbud(up.start,slut)||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer, og sæt "opskrift" til id'et:
 ${oKatalogTekst()}
 Returnér KUN JSON: {"forslag":[{"navn","opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": én kort sætning,"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-5 korte trin}]}`;
@@ -2100,6 +2123,31 @@ function oKatalogTekst(){
 }
 /* Friske tilbud i brugerens butikker, som ikke er koblet til en ingrediens i banken (fx svinekoteletter) */
 const FRISK=/kød|kylling|svin|okse|kalv|lam\b|laks|torsk|fisk|sej\b|rejer|filet|mørbrad|kotelet|steak|bøf|fars|pølse|bacon|skinke|kalkun|kartof|løg|tomat|agurk|peber|salat|kål|gulerød|broccoli|blomkål|squash|æble|pære|svamp|champignon|ost\b|æg\b/i;
+/* Kød og fisk på tilbud, sorteret efter hvad man sparer på en ret til husstanden. Her er der mest at spare.
+   Besparelse: normalprisen i butikken (kvitteringer, hyldepris eller REMA + tillæg) mod tilbuddet, ellers avisens førpris. */
+const KOED=/kød|kylling|svin|okse|kalv|lam\b|lammekød|lammekølle|lammeryg|lammeskank|laks|torsk|fisk|sej\b|rødspætte|rejer|filet|mørbrad|kotelet|steak|bøf|fars|pølse|bacon|skinke|kalkun|culotte|entrecote|ribben|nakke|flæsk|bryst|lår|hakket|kebab|gyros/i;
+const KOED_IKKE=/pålæg|postej|leverpostej|spegepølse|salami|rullepølse|hamburgerryg|kyllingebryst i skiver|i skiver|skåret pålæg|bouillon|fond|suppe|kattemad|hundemad|snack|chips|tærte|lasagne|pizza|sandwich|wrap|færdigret|hakker|kværn|gryde|pande|kniv|termometer|maskine|bræt|kartof|pommes|fries|brød\b|kebabbrød|pitabrød/i;
+function koedTilbud(fra,til,maks=14){
+  const P_=st.settings.P||2,ret=0.15*P_; /* ca. 150 g kød pr. person */
+  const set=new Set(),ud=[];
+  for(const x of TB.tilbud){
+    if(!(x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)))continue;
+    const bank=x.i&&OI[x.i];
+    if(bank?bank.afd!=="kod":(!KOED.test(x.o)||KOED_IKKE.test(x.o)||T_IKKE.test(x.o)||O_FORARB.test(x.o.toLowerCase())))continue;
+    if(bank&&!aegteTilbud(x))continue;
+    const n=(x.k+"|"+x.o).toLowerCase();if(set.has(n))continue;set.add(n);
+    const b=butikFor(x.k),ne=bank&&b&&normEP(x.i,b);
+    let spar=null;
+    if(ne&&x.pr==="kg"&&ne.kg!=null&&x.ep!=null)spar=(ne.kg-x.ep)*ret;
+    else if(ne&&x.pr&&ne[x.pr]!=null&&x.ep!=null){const q=iEnhed(parseMaengde(x.m),x.pr);if(q)spar=(ne[x.pr]-x.ep)*q}
+    else if(x.fp&&x.fp>x.p){const q=x.pr==="kg"&&iEnhed(parseMaengde(x.m),"kg");spar=(x.fp-x.p)*(q?Math.min(1,ret/q):1)}
+    const retPris=x.pr==="kg"&&x.ep?x.ep*ret:x.p; /* hvad kødet koster til én ret */
+    ud.push({x,spar,retPris});
+  }
+  /* Billigst pr. ret først; en stor besparelse trækker op */
+  ud.sort((a,b)=>(a.retPris-(a.spar||0)/2)-(b.retPris-(b.spar||0)/2));
+  return ud.slice(0,maks).map(({x,spar,retPris})=>`${x.k}: ${x.o} ${tPris(x.p)}${x.m?" ("+x.m+")":""}${x.pr==="kg"&&x.ep?", "+Math.round(x.ep)+" kr/kg":""} – ca. ${Math.round(retPris)} kr pr. ret${spar>=1?`, sparer ca. ${Math.round(spar)} kr`:""}`).join("\n");
+}
 function friskeTilbud(fra,til){
   const set=new Set();friskeTilbud.n={}; /* højst 30 pr. kæde, så alle butikker kommer med */
   return TB.tilbud.filter(x=>!x.i&&x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)&&FRISK.test(x.o)&&!T_IKKE.test(x.o)&&!O_FORARB.test(x.o.toLowerCase())).filter(x=>{const k=x.k+x.o;if(set.has(k))return false;set.add(k);return true})
@@ -2354,7 +2402,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="27";
+const APP_VERSION="28";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
