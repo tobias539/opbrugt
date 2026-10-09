@@ -143,6 +143,13 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .sitem{padding:8px 12px}.sitem .amt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #shopAfd,#shopStores{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}#shopAfd::-webkit-scrollbar,#shopStores::-webkit-scrollbar{display:none}
 #shopAfd .chip,#shopStores .chip{flex:0 0 auto}
+.valg{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;margin-top:6px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.valg[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft)}
+.valg .logos{display:flex;gap:3px;flex:none}
+.valg .sm{display:block;font-size:.8rem;color:var(--muted);margin-top:1px}
+.valg .anb{font-size:.7rem;font-weight:700;color:var(--leaf);text-transform:uppercase;letter-spacing:.03em}
+.andre{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:.8rem;color:var(--muted)}
+.andre .chip{font-size:.78rem;padding:3px 9px}
 .blogo{border-radius:6px;vertical-align:middle;object-fit:contain;background:#fff}
 .bchip{display:inline-flex;align-items:center;gap:6px;padding-left:6px}
 .butikslinje{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -337,7 +344,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 28 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 29 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -748,11 +755,10 @@ function fmtKoeb(k,packs){
 }
 function aktivButik(){const b=shopTur.length?shopTur:st.settings.butikker;if(!b.length)return null;if(!b.includes(st.aktivButik))st.aktivButik=b[0];return st.aktivButik}
 
-/* ---------- Fordeling af indkøbet på butikker ----------
-   Hovedbutikken er den, hvor tilbuddene sparer mest (eller den, man selv har valgt). Ekstra butikker
-   lægges til én ad gangen, hvis de sparer mindst delGraense, og højst op til maksButikker.
-   Besparelse = mængde × (appens cirkapris pr. kg/l/stk − tilbuddets pris pr. kg/l/stk). Kendes
-   cirkaprisen ikke, regnes der ingen besparelse, men tilbuddet bruges, hvis man alligevel er i butikken. */
+/* ---------- Anbefalet indkøb ----------
+   Anbefalingen er den butik, hvor hele indkøbet samlet er billigst (reel pris). Alternativet er de to
+   butikker, der tilsammen er billigst ("gå i to butikker og spar x kr"). Har man i præferencerne sagt ja
+   til flere butikker, og sparer to butikker mindst grænsen, anbefales de to. Man kan selv vælge en anden. */
 let shopTur=[];
 /* Hyldepriser: REMA 1000's almindelige priser pr. ingrediens (priser/hent_priser.py). Bruges som normalpris. */
 /* Hyldepriser pr. kæde (priser/til_opbrugt/<kæde>.json). Kæder uden egne priser bruger REMA 1000's. */
@@ -865,9 +871,9 @@ function tilbudKilde(o){return {ep:o.ep,pr:o.pr,p:o.p,m:o.m}}
    Kendes normalprisen ingen steder, skønnes den til det billigste tilbud × 1,25. */
 function prisI(v,b){
   const t=v.tilbud[b]?koeb(v,tilbudKilde(v.tilbud[b]),b):null,n=koeb(v,normalKilde(v,b),b);
-  if(t&&n)return t.reel<n.reel-0.01?{reel:t.reel,normal:n.reel,tilbud:true}:{reel:n.reel,normal:n.reel,tilbud:false};
-  if(n)return {reel:n.reel,normal:n.reel,tilbud:false};
-  if(t)return {reel:t.reel,normal:t.reel*(1+SKOEN_RABAT),tilbud:true};
+  if(t&&n)return t.reel<n.reel-0.01?{reel:t.reel,betal:t.betal,normal:n.reel,tilbud:true}:{reel:n.reel,betal:n.betal,normal:n.reel,tilbud:false};
+  if(n)return {reel:n.reel,betal:n.betal,normal:n.reel,tilbud:false};
+  if(t)return {reel:t.reel,betal:t.betal,normal:t.reel*(1+SKOEN_RABAT),tilbud:true};
   return null;
 }
 /* Det, man betaler ved kassen: tilbuddet, hvis varen købes på tilbud, ellers normalprisen (hele pakker) */
@@ -892,20 +898,27 @@ function fordel(grupper){
     varer.push(v);
   }
   const pris=(v,b)=>v.priser[b]?v.priser[b].reel:v.ref;
-  const total=b=>varer.reduce((a,v)=>a+pris(v,b),0);
-  let hoved=butikker.includes(st.settings.hovedButik)?st.settings.hovedButik:null;
-  if(!hoved&&butikker.length){let bedst=Infinity;for(const b of butikker){const t=total(b);if(t<bedst-0.01){bedst=t;hoved=b}}}
-  const tur=hoved?[hoved]:[],tildelt=new Map(varer.map(v=>[v.key,hoved]));
-  const nu=v=>pris(v,tildelt.get(v.key));
+  const betal=(v,b)=>v.priser[b]?v.priser[b].betal:(v.pris||0);
+  /* Et indkøb i en eller flere butikker: hver vare købes, hvor den er billigst blandt dem */
+  const plan=liste=>{
+    const tildelt=new Map(),antal={};let sum=0,kasse=0;
+    for(const v of varer){let b=liste[0];for(const x of liste)if(pris(v,x)<pris(v,b)-0.01)b=x;tildelt.set(v.key,b);antal[b]=(antal[b]||0)+1;sum+=pris(v,b);kasse+=betal(v,b)}
+    const tur=liste.filter(b=>antal[b]).sort((a,b)=>antal[b]-antal[a]);
+    return {tur:tur.length?tur:[liste[0]],tildelt,sum,kasse};
+  };
+  const enkelt=butikker.map(b=>plan([b])).sort((a,b)=>a.sum-b.sum);
+  const par=[];for(let i=0;i<butikker.length;i++)for(let j=i+1;j<butikker.length;j++)par.push(plan([butikker[i],butikker[j]]));
+  par.sort((a,b)=>a.sum-b.sum);
+  const bedstPar=par[0]&&par[0].tur.length===2&&enkelt[0].sum-par[0].sum>=5?par[0]:null;
   const maks=Math.max(1,st.settings.maksButikker||1),graense=st.settings.delGraense||0;
-  let misset=null;
-  while(hoved){
-    let bedst=null;
-    for(const b of butikker){if(tur.includes(b))continue;const bedre=varer.filter(v=>pris(v,b)<nu(v)-0.01),g=bedre.reduce((a,v)=>a+nu(v)-pris(v,b),0);if(g>0&&(!bedst||g>bedst.g))bedst={b,g,n:bedre.length}}
-    if(!bedst)break;
-    if(tur.length>=maks||bedst.g<graense){misset=bedst;break}
-    tur.push(bedst.b);for(const v of varer)if(pris(v,bedst.b)<nu(v)-0.01)tildelt.set(v.key,bedst.b);
-  }
+  const anbefalet=bedstPar&&maks>=2&&enkelt[0].sum-bedstPar.sum>=graense?bedstPar:enkelt[0]||null;
+  /* Eget valg gælder en uge */
+  const ev=st.indkobValg,egen=ev&&ev.dato&&addDays(ev.dato,6)>=todayIso()&&ev.tur.length&&ev.tur.every(b=>butikker.includes(b))?plan(ev.tur):null;
+  const valgt=egen||anbefalet;
+  const tur=valgt?valgt.tur:[],tildelt=valgt?valgt.tildelt:new Map(),hoved=tur[0]||null;
+  const n=x=>x?x.tur.join("+"):"";
+  const muligheder=[anbefalet,anbefalet===bedstPar?enkelt[0]:bedstPar].filter(Boolean);
+  if(egen&&!muligheder.some(x=>n(x)===n(egen)))muligheder.push(egen);
   /* Besparelse = hvad varen ville koste til normalpris i den billigste af de butikker, du kommer i, minus det, den koster */
   const prButik={};for(const b of tur)prButik[b]={antal:0,spar:0};
   const valgtTilbud=new Map(),koebInfo=new Map();
@@ -917,7 +930,7 @@ function fordel(grupper){
     valgtTilbud.set(v.key,brug);
     koebInfo.set(v.key,{vare:v,koeb:brug?koeb(v,tilbudKilde(brug),b):koeb(v,normalKilde(v,b),b)});
   }
-  return {hoved,tur,tildelt,prButik,misset,tilbud:valgtTilbud,koeb:koebInfo};
+  return {hoved,tur,tildelt,prButik,tilbud:valgtTilbud,koeb:koebInfo,valgt,anbefalet,muligheder,enkelt};
 }
 /* ---------- Samlet indkøbsliste ----------
    Samme vare fra flere retter (og fra pakkeberegningen) bliver til én linje. Mængden er det, opskrifterne
@@ -1048,14 +1061,25 @@ function lagerTips(F,G){
 }
 function renderShopPlan(F){
   const el=document.getElementById("shopPlan"),s=st.settings;
-  if(!F.hoved||!TB.tilbud.length){el.innerHTML="";return}
+  if(!F.valgt||!TB.tilbud.length||st.settings.butikker.length<2){el.innerHTML="";return}
   const kr0=x=>"ca. "+Math.round(x)+" kr";
   const spar=F.tur.reduce((a,b)=>a+F.prButik[b].spar,0),nTb=[...F.tilbud.values()].filter(Boolean).length,nAlle=F.tilbud.size;
-  let t=`Køb ind i ${F.tur.join(" og ")}: ${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)}`:""}.`;
-  if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, får du ${m.n} ${m.n===1?"vare":"varer"} mere på tilbud og sparer ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
-  const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris, ellers REMA 1000's pris plus et tillæg efter butikkens prisniveau. Jo flere kvitteringer du scanner, jo mere præcist.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
-  const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
+  const navn=x=>x.tur.join("+"),billigst=Math.min(...F.muligheder.map(x=>x.sum));
+  const kort=x=>{
+    const valgt=navn(x)===navn(F.valgt),anb=navn(x)===navn(F.anbefalet),dyrere=x.sum-billigst;
+    const titel=x.tur.length>1?`Gå i ${x.tur.join(" og ")}`:`Køb alt i ${x.tur[0]}`;
+    const e0=F.enkelt[0],merKasse=x.kasse-e0.kasse;
+    const under=x.tur.length>1?(merKasse>=1?`${kr0(merKasse)} mere ved kassen, men større pakker – reelt ${kr0(e0.sum-x.sum).replace("ca. ","")} billigere end kun ${e0.tur[0]}`:`spar ${kr0(e0.sum-x.sum)} mod kun ${e0.tur[0]}`):navn(x)===navn(e0)?"billigste butik samlet":`${kr0(x.sum-e0.sum)} dyrere end ${e0.tur[0]}`;
+    return `<button class="valg" data-valg="${esc(JSON.stringify(x.tur))}" aria-pressed="${valgt}"><span class="logos">${x.tur.map(b=>logoHtml(b,28)||esc(b)).join("")}</span><span class="grow"><b>${esc(titel)}</b>${anb?` <span class="anb">Anbefalet</span>`:""}<span class="sm">${kr0(x.kasse)} ved kassen · ${esc(under)}</span></span></button>`;
+  };
+  const andre=F.enkelt.filter(x=>!F.muligheder.some(m=>navn(m)===navn(x)));
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px">
+    <p style="margin:0 0 2px;font-weight:700;font-size:.95rem">Anbefalet indkøb</p>
+    ${F.muligheder.map(kort).join("")}
+    ${andre.length?`<div class="andre">Andre: ${andre.map(x=>`<button class="chip" data-valg="${esc(JSON.stringify(x.tur))}">${esc(x.tur[0])} ${kr0(x.kasse)}</button>`).join("")}</div>`:""}
+    <p style="margin:8px 0 0;font-size:.88rem">${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)} mod normalpris`:""}.</p>
+    <p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris, ellers REMA 1000's pris plus et tillæg efter butikkens prisniveau. Jo flere kvitteringer du scanner, jo mere præcist.</p></div>`;
+  el.querySelectorAll("[data-valg]").forEach(b=>b.onclick=()=>{const tur=JSON.parse(b.dataset.valg);st.indkobValg=navn({tur})===navn(F.anbefalet)?null:{tur,dato:todayIso()};st.aktivButik=null;changed()});
   const tips=lagerTips(F,samletIndkob(last));
   if(tips.length){
     el.insertAdjacentHTML("beforeend",`<div class="sugg" style="margin:0 0 6px;padding:10px 12px;background:var(--leaf-soft)"><p style="margin:0;font-weight:700;font-size:.9rem">Forresten, når du alligevel er der:</p>${tips.map((t,i)=>`<div class="addrow" style="padding:6px 0 0"><span style="flex:1;font-size:.88rem">${esc(OI[t.id].n)} i ${esc(t.b)}: ${esc(tPris(t.x.p))}${t.x.m?" ("+esc(t.x.m)+")":""}${t.r>=.05?` · ca. ${Math.round(t.r*100)} % under normalprisen`:""}</span><button class="btn ghost" data-lager="${i}" style="padding:4px 10px;font-size:.85rem">På listen</button></div>`).join("")}</div>`);
@@ -2402,7 +2426,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="28";
+const APP_VERSION="29";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
