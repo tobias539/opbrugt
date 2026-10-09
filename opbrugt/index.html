@@ -123,7 +123,8 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .scanrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
 .scanrow input[type=checkbox]{width:22px;height:22px;accent-color:var(--leaf)}
 .scanrow .grow{flex:1;min-width:0}
-.log{display:flex;flex-direction:column;gap:14px;margin:0 0 14px}
+.log{display:flex;flex-direction:column;gap:22px;margin:0 0 14px}
+.tur{display:flex;flex-direction:column;gap:14px}
 .me{align-self:flex-end;background:var(--leaf);color:var(--bg);border-radius:16px 16px 4px 16px;padding:9px 14px;max-width:85%}
 .bot p{margin:0 0 8px}
 .dish{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
@@ -209,12 +210,12 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div id="dayInfo"></div>
   <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button class="btn" id="anbefalBtn">Anbefal</button><button class="btn ghost" id="ryddage">Fravælg dage</button><button class="btn ghost" id="ugeplanBtn">Planlæg ugen</button></div>
 
-  <div class="log" id="log" style="margin-top:18px"></div>
-  <div class="ask">
+  <div class="ask" style="margin-top:18px">
     <label for="chatIn" class="muted">Skriv eller tal – fx "vi får gæster", "jeg har rødbeder" eller "jeg mangler toiletpapir"</label>
     <textarea id="chatIn"></textarea>
     <div class="row"><button class="btn ghost" id="chatClear">Ryd samtalen</button><button class="btn" id="chatBtn">Send</button></div>
   </div>
+  <div class="log" id="log" style="margin-top:14px"></div>
 
   <details class="fold" style="margin-top:22px"><summary>Pakkeberegning for ugen</summary>
     <p class="muted" style="margin-top:8px" id="subline"></p>
@@ -320,7 +321,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 18 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 19 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1023,7 +1024,9 @@ function normForslag(f){
 function renderSnak(){
   for(const t of st.chat)if(t.data&&Array.isArray(t.data.forslag))t.data.forslag=t.data.forslag.map(normForslag);
   const lg=document.getElementById("log");
-  lg.innerHTML=st.chat.map((t,ti)=>t.role==="user"?`<div class="me">${esc(t.text)}</div>`:botHtml(t,ti)).join("");
+  /* Nyeste spørgsmål og svar øverst, lige under tekstfeltet. Inden for hver tur står spørgsmålet over svaret. */
+  const ture=[];st.chat.forEach((t,ti)=>{if(t.role==="user"||!ture.length)ture.push([]);ture[ture.length-1].push(t.role==="user"?`<div class="me">${esc(t.text)}</div>`:botHtml(t,ti))});
+  lg.innerHTML=ture.reverse().map(x=>`<div class="tur">${x.join("")}</div>`).join("");
   lg.querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,+b.dataset.t,+b.dataset.f,b.dataset.dag));
   const fv=document.getElementById("favs");fv.innerHTML="";
   const all=[...st.favoritter];
@@ -1166,8 +1169,8 @@ async function sendChat(override){
   const dage=[...selDays].sort();
   const vis=typed||override;
   st.chat.push({role:"user",text:vis}); inp.value=""; renderSnak();
-  const lg=document.getElementById("log"); const wait=document.createElement("p");wait.className="muted";wait.textContent="Tænker …";lg.appendChild(wait);
-  wait.scrollIntoView({behavior:"smooth",block:"end"});
+  const lg=document.getElementById("log"); const wait=document.createElement("p");wait.className="muted";wait.textContent="Tænker …";(lg.firstElementChild||lg).appendChild(wait);
+  wait.scrollIntoView({behavior:"smooth",block:"nearest"});
   btn.disabled=true; ab.disabled=true;
   const hist=st.chat.slice(-7,-1).map(x=>x.role==="user"?"Bruger: "+x.text:"Assistent: "+(x.data?.svar||"")+((x.data?.forslag||[]).length?" [Foreslog: "+x.data.forslag.map(f=>f.navn).join(", ")+"]":"")).join("\n");
   const t0=todayIso();
@@ -1214,7 +1217,7 @@ Svar KUN med JSON.`;
   }
   st.chat=st.chat.slice(-20);
   btn.disabled=false; ab.disabled=false; changed();
-  const last=document.getElementById("log").lastElementChild; if(last)last.scrollIntoView({behavior:"smooth",block:"start"});
+  const ny=document.getElementById("log").firstElementChild; if(ny)ny.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 document.getElementById("chatBtn").onclick=sendChat;
 document.getElementById("chatClear").onclick=()=>{st.chat=[];changed()};
