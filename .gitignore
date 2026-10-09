@@ -2,8 +2,6 @@
 tilbud/raa/
 tilbud/aktuelle.json
 tilbud/log.txt
-tilbud/til_opbrugt/sendt.txt
-tilbud/til_opbrugt/fingeraftryk.txt
 
 # Originale scanninger
 opskriftbank/kilder/scanninger/

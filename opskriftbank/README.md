@@ -60,7 +60,9 @@ Opbrugt henter opskrifterne fra en eksport af banken. Når banken er ændret, g�
 
 1. `python vaerktoej/byg.py`
 2. `python vaerktoej/eksporter_opbrugt.py ../opbrugt`. Det skriver `opskrifter.js` og billeder i 560 px bredde.
-3. Udgiv `../opbrugt/index.html` igen sammen med `opskrifter.js` og `billeder/`.
+3. Commit og `git push`. Appen ligger på GitHub Pages og opdateres af sig selv et minut efter.
+
+Appen kalder Claude direkte fra browseren med en API-nøgle, som hver bruger skriver ind under Præferencer. Skab, plan og indkøbsliste gemmes kun i browseren på den enkelte telefon. Tilbuddene henter appen fra `../tilbud/til_opbrugt/`, som en daglig routine opdaterer med `tilbud/hent_tilbud.py`.
 
 `eksporter_opbrugt.py` indeholder en tabel (`P_TIL_BANK`), der oversætter appens egne varenøgler (fx `peber` og `okse`) til bankens ingredienser. Fritekst-varer i skabet, fx "2 røde peberfrugter", matches på navne og synonymer. Forarbejdede varer som "syltede agurker" og "chilisovs" matcher kun ved præcist navn.
 

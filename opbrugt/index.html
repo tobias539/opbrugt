@@ -179,7 +179,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- PLAN -->
 <section class="tab on" id="t-snak" aria-labelledby="h-snak">
   <header class="top"><h1 id="h-snak">Opbrugt</h1><span class="muted" id="saveState"></span></header>
-  <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Appen kan ikke nå Claude i den visning, den er åbnet i. Planen, skabet og indkøbslisten virker stadig. Se linjen "Forbindelse" nederst under Præferencer.</p></div>
+  <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indtast API-nøglen under Præferencer → Forbindelse til Claude. Planen, skabet og indkøbslisten virker også uden.</p></div>
 
   <div class="strip" role="group" aria-label="Dage">
     <button class="arrow" id="prevDays" aria-label="Tidligere dage">‹</button>
@@ -274,8 +274,15 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <h2>Ny uge</h2>
   <p class="muted">Det, der kan holde sig, flyttes over i skabet, og pakkeberegningen starter forfra.</p>
   <button class="btn" id="endWeek">Afslut ugen</button>
+  <h2>Forbindelse til Claude</h2>
+  <p class="muted">Appen bruger Claude med en API-nøgle. Nøglen gemmes kun i denne browser.</p>
+  <div class="list"><div class="addrow"><input id="keyIn" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="keySave">Gem</button></div></div>
+  <div class="list" style="margin-top:10px">
+    <div class="addrow"><label for="modelHurtig" style="flex:1">Snak</label><select id="modelHurtig"></select></div>
+    <div class="addrow"><label for="modelScan" style="flex:1">Kvitteringer</label><select id="modelScan"></select></div>
+  </div>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 12 · 7/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 13 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -372,9 +379,9 @@ const S = [
 const DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
 
 /* ---------- State ---------- */
-const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100},ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[]};
+const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5"},ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[]};
 let st = JSON.parse(JSON.stringify(DEFAULT));
-let db = null, docRef = null, saveTimer = null, sample = null;
+let saveTimer = null, sample = null;
 
 function price(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko)?p.oko:p.p}
 function pname(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko?"Øko ":"")+p.n}
@@ -846,7 +853,7 @@ async function hentAnbefalinger(soeg){
   const note=document.getElementById("recNote");
   if(!sample){
     if(soeg){if(!isFav(soeg))st.favoritter.push(soeg);changed();toast(soeg+" er tilføjet")}
-    else note.textContent="Flere anbefalinger virker, når appen er åbnet fra Claude-linket.";
+    else note.textContent="Flere anbefalinger virker, når der er en API-nøgle under Forbindelse til Claude.";
     return;
   }
   note.textContent="Finder retter …";
@@ -865,7 +872,7 @@ Returnér KUN JSON: {"retter":[{"navn":"kort dansk rettenavn","gruppe":"køkken,
     st.anbefalet=[...nye.map(x=>({navn:String(x.navn),gruppe:gruppe||String(x.gruppe||"Til jer")})),...st.anbefalet];
     note.textContent=nye.length?"":"Ingen nye retter fundet. Prøv en anden søgning.";
     changed();document.getElementById("recFold").open=true;document.getElementById("recFold").scrollIntoView({behavior:"smooth",block:"start"});
-  }catch(e){note.textContent=e&&e.code==="not_granted"?"Kræver, at appen må bruge Claude.":"Det gik ikke igennem. Prøv igen om lidt."}
+  }catch(e){note.textContent=fejlTekst(e)}
 }
 function normForslag(f){
   if(!f||typeof f!=="object")return {navn:String(f||"Ret"),bruger:[],mangler:[],trin:[]};
@@ -1063,7 +1070,7 @@ Svar KUN med JSON.`;
     st.chat.push({role:"bot",data:{svar:r.svar,forslag},note});
   }catch(e){
     diag("sidste fejl: "+((e&&e.code)||"ukendt")+((e&&e.message)?" – "+e.message:""));
-    st.chat.push({role:"bot",data:{svar:e&&e.code==="not_granted"?"Appen skal have lov til at bruge Claude. Luk og åbn appen igen, og tryk Tillad.":"Det gik ikke igennem. Prøv igen om lidt."}});
+    st.chat.push({role:"bot",data:{svar:fejlTekst(e)}});
   }
   st.chat=st.chat.slice(-20);
   btn.disabled=false; ab.disabled=false; changed();
@@ -1121,8 +1128,8 @@ let scanItems=[];
 async function setupScan(){
   const note=document.getElementById("scanNote"), lab=document.getElementById("scanLabel");
   let caps=null; if(sample){try{caps=await sample.limits()}catch(e){caps=null}}
-  if(!caps||!caps.images){lab.style.display="none";note.textContent="Scanning virker, når appen er åbnet fra Claude-linket.";return}
-  lab.style.display="inline-block";
+  if(!caps||!caps.images){lab.style.display="none";note.textContent="Scanning virker, når der er en API-nøgle under Præferencer.";return}
+  lab.style.display="inline-block";note.textContent="";
   document.getElementById("scanFile").accept=(caps.images.mediaTypes||["image/*"]).join(",");
 }
 document.getElementById("scanFile").onchange=async e=>{
@@ -1155,7 +1162,7 @@ Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvi
       changed();toast(n+" varer lagt i skabet");
     };
   }catch(err){
-    out.innerHTML=`<p class="bad">Kvitteringen kunne ikke læses${err&&err.code==="not_granted"?", fordi adgang til Claude blev afvist":""}. Prøv et skarpere billede taget lige ovenfra.</p>`;
+    out.innerHTML=`<p class="bad">Kvitteringen kunne ikke læses. ${err&&err.code==="upstream_error"||err&&err.code==="invalid_json"?"Prøv et skarpere billede taget lige ovenfra.":esc(fejlTekst(err))}</p>`;
   }
 };
 
@@ -1258,14 +1265,16 @@ function tKandidater(navn,dato){
   const egenIkke=T_IKKE.test(navn);
   return tGyldige(dato).filter(x=>{const o=x.o.toLowerCase();return (egenIkke||!T_IKKE.test(o))&&ord.some(w=>new RegExp("(^|[^a-zæøå])"+w).test(o))}).slice(0,6);
 }
+/* Tilbuddene ligger som filer ved siden af appen og opdateres dagligt af hent_tilbud.py */
+const T_MAPPE="../tilbud/til_opbrugt/";
 async function tHent(){
-  if(!db)return;
+  const hent=async f=>{const r=await fetch(T_MAPPE+f,{cache:"no-cache"});if(!r.ok)throw new Error(f+": HTTP "+r.status);return r.json()};
   try{
-    const m=await db.doc("tilbud/meta").get();if(!m.exists)return;
-    const meta=m.data(),liste=[];
-    for(const k of meta.kaeder||[]){const d=await db.doc("tilbud/"+k.id).get();if(d.exists)for(const x of (d.data().tilbud||[]))liste.push({...x,k:k.navn})}
+    const meta=await hent("meta.json"),liste=[];
+    const docs=await Promise.all((meta.kaeder||[]).map(k=>hent(k.id+".json").catch(()=>null)));
+    (meta.kaeder||[]).forEach((k,i)=>{for(const x of (docs[i]?.tilbud||[]))liste.push({...x,k:k.navn})});
     TB={meta,tilbud:liste};render();
-  }catch(e){diag("tilbud kunne ikke læses ("+((e&&e.code)||e)+")")}
+  }catch(e){console.warn("tilbud kunne ikke læses",e)}
 }
 /* Sæt tilbud på de manglende varer i Claudes forslag */
 async function tAnnoter(forslag){
@@ -1418,9 +1427,7 @@ function changed(){render();save()}
 function save(){
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
-    const data=JSON.parse(JSON.stringify(st));
-    if(docRef){try{await docRef.set(data);flag("Gemt")}catch(e){flag("Ikke gemt");local(data)}}
-    else local(data);
+    local(JSON.parse(JSON.stringify(st)));
   },600);
 }
 function local(d){try{localStorage.setItem("opbrugt",JSON.stringify(d));flag("Gemt på telefonen")}catch(e){}}
@@ -1433,37 +1440,81 @@ fillSelects();render();setupScan();
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
 window.addEventListener("error",e=>{try{diag("fejl: "+e.message+" (linje "+e.lineno+")")}catch(_){}});
 window.addEventListener("unhandledrejection",e=>{try{diag("fejl: "+((e.reason&&(e.reason.code||e.reason.message))||e.reason))}catch(_){}});
-function flatAdapter(){
-  /* chat-forhåndsvisningen har en simpel window.claude.complete i stedet for use() */
-  if(!window.claude||typeof window.claude.complete!=="function")return null;
+/* ---------- Claude API ----------
+   Appen kalder Messages API direkte fra browseren med brugerens egen nøgle (gemt i localStorage).
+   "quick" = snak, forslag og tilbudsvalg; "default" = kvitteringsscanning. Modellerne vælges under Præferencer. */
+const MODELLER=[["claude-haiku-5-5","Haiku 5.5 · billigst"],["claude-sonnet-5-5","Sonnet 5.5 · klogere"],["claude-opus-5-5","Opus 5.5 · klogest"]];
+const NOEGLE="opbrugt_api_noegle";
+function noegle(){try{return localStorage.getItem(NOEGLE)||""}catch(e){return ""}}
+function modelNavn(id){return (MODELLER.find(m=>m[0]===id)||[id,id])[1].split(" · ")[0]}
+function fejlTekst(e){
+  const c=e&&e.code;
+  if(c==="no_key")return "Indtast API-nøglen under Præferencer → Forbindelse til Claude.";
+  if(c==="bad_key")return "API-nøglen virker ikke. Tjek den under Præferencer.";
+  if(c==="no_credit")return "Der er ikke flere API-credits på kontoen.";
+  if(c==="rate_limit")return "Claude har travlt lige nu. Prøv igen om lidt.";
+  if(c==="network")return "Ingen forbindelse til nettet. Prøv igen om lidt.";
+  return "Det gik ikke igennem. Prøv igen om lidt.";
+}
+/* Telefonbilleder er ofte for store til API'et (5 MB). Skaler ned og send som JPEG. */
+async function billede64(fil){
+  const img=await createImageBitmap(fil);
+  const s=Math.min(1,2400/Math.max(img.width,img.height),Math.sqrt(3.5e6/(img.width*img.height)));
+  const c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+  c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg",0.85).split(",")[1];
+}
+function lesJson(t){
+  t=String(t||"").replace(/```json|```/g,"").trim();
+  const a=t.indexOf("{"),b=t.lastIndexOf("}");
+  try{return JSON.parse(a>=0?t.slice(a,b+1):t)}catch(e){throw {code:"invalid_json",message:"ugyldigt svar"}}
+}
+function apiAdapter(){
   return {
-    limits:async()=>null,
-    json:async(prompt)=>{
-      let t;try{t=await window.claude.complete(prompt)}catch(e){throw {code:"upstream_error",message:String(e)}}
-      t=String(t||"").replace(/```json|```/g,"").trim();
-      const a=t.indexOf("{"),b=t.lastIndexOf("}");
-      try{return JSON.parse(a>=0?t.slice(a,b+1):t)}catch(e){throw {code:"invalid_json",message:"ugyldigt svar"}}
+    limits:async()=>({images:{mediaTypes:["image/jpeg","image/png","image/webp","image/gif"]}}),
+    json:async(prompt,opt={})=>{
+      const key=noegle();if(!key)throw {code:"no_key"};
+      const model=opt.modelTier==="default"?st.settings.modelScan:st.settings.modelHurtig;
+      const content=[];
+      for(const f of [].concat(opt.images||[]))content.push({type:"image",source:{type:"base64",media_type:"image/jpeg",data:await billede64(f)}});
+      content.push({type:"text",text:prompt});
+      const body={model,max_tokens:16000,messages:[{role:"user",content}]};
+      const headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
+      /* Sonnet og Opus: lad API'et selv prøve en anden model, hvis en sikkerhedsfilter afviser et svar */
+      if(model!=="claude-haiku-5-5"){body.fallbacks="default";headers["anthropic-beta"]="server-side-fallback-2026-07-01"}
+      let r;
+      try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body)})}
+      catch(e){throw {code:"network",message:String(e)}}
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok){
+        const msg=d?.error?.message||("HTTP "+r.status);
+        throw {code:r.status===401||r.status===403?"bad_key":r.status===429||r.status===529?"rate_limit":/credit balance/i.test(msg)?"no_credit":"upstream_error",message:msg};
+      }
+      if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
+      return lesJson((d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
     }
   };
 }
-(async()=>{
-  if(!window.claude){diag("ingen (siden kører uden for Claude)");document.getElementById("noClaude").style.display="";return}
-  if(!window.claude.use){
-    sample=flatAdapter();
-    diag(sample?"chat-forhåndsvisning (Snak virker, scanning og deling af data gør ikke)":"ingen (window.claude uden use)");
-    document.getElementById("noClaude").style.display=sample?"none":"";
-    setupScan();return;
-  }
-  try{
-    db=await window.claude.use("db");
-    if(db){docRef=db.doc("state/main");const s=await docRef.get();if(s.exists){merge(s.data());render()}flag("");tHent()}
-  }catch(e){docRef=null}
-  try{sample=await window.claude.use("sample")}catch(e){sample=null}
-  if(!sample){const f=flatAdapter();if(f)sample=f}
-  diag(`Claude-runtime · database ${docRef?"✓":"✗"} · Claude-svar ${sample?"✓":"✗ (ikke tilladt eller ikke tilgængelig her)"}`);
-  setupScan();
+function forbind(){
+  sample=noegle()?apiAdapter():null;
+  const s=st.settings;
+  diag(sample?`Claude API · snak: ${modelNavn(s.modelHurtig)} · kvitteringer: ${modelNavn(s.modelScan)}`:"ingen API-nøgle");
   document.getElementById("noClaude").style.display=sample?"none":"";
-})();
+  document.getElementById("keyIn").placeholder=sample?"Nøgle gemt ✓ (skriv en ny for at skifte)":"sk-ant-…";
+  for(const id of ["modelHurtig","modelScan"]){
+    const el=document.getElementById(id);
+    el.innerHTML=MODELLER.map(([v,t])=>`<option value="${v}" ${v===s[id]?"selected":""}>${t}</option>`).join("");
+  }
+  setupScan();
+}
+document.getElementById("keySave").onclick=()=>{
+  const inp=document.getElementById("keyIn"),v=inp.value.trim();
+  if(!v){toast(noegle()?"Nøglen er uændret":"Skriv nøglen først");return}
+  try{localStorage.setItem(NOEGLE,v)}catch(e){toast("Kunne ikke gemme nøglen");return}
+  inp.value="";forbind();toast("Nøglen er gemt");
+};
+for(const id of ["modelHurtig","modelScan"])document.getElementById(id).onchange=e=>{st.settings[id]=e.target.value;changed();forbind()};
+forbind();tHent();
 </script>
 </body>
 </html>

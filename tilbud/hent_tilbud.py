@@ -1,26 +1,26 @@
 """Hent tilbudsaviser fra REMA 1000, Netto, føtex og Lidl via Tjek (eTilbudsavis).
 
-Brug:  python hent_tilbud.py            (tjek for nye aviser, hent dem, byg aktuelle.json)
-       python hent_tilbud.py --kun-byg  (byg aktuelle.json igen ud fra det, der allerede er hentet)
-       python hent_tilbud.py --sendt    (marker til_opbrugt/ som lagt i Opbrugts database)
+Brug:  python hent_tilbud.py            (tjek for nye aviser, hent dem, byg til_opbrugt/ hvis noget er ændret)
+       python hent_tilbud.py --kun-byg  (byg igen ud fra det, der allerede er hentet)
 
-Køres gerne hver dag: et tjek koster én lille forespørgsel pr. kæde (~5 KB). En avis hentes kun
-første gang, den dukker op, så I altid har næste uges tilbud, så snart de er udgivet.
+Køres hver dag af en routine, som committer til_opbrugt/ og hentet.json, så Opbrugt-appen på
+GitHub Pages får de nye tilbud. Et tjek koster én lille forespørgsel pr. kæde (~5 KB). Der bygges
+kun, når en avis er kommet til eller udløbet. De rå aviser ligger ikke i git; mangler en, når der
+skal bygges (fx i routinens friske kopi af repoet), hentes den igen.
 
 Filer (i samme mappe som scriptet):
-  raa/<kæde>/<start>_<katalog-id>.json.gz   avisen præcis som Tjek leverer den (katalog + alle tilbud)
-  hentet.json                               hvilke aviser der allerede er hentet
+  raa/<kæde>/<start>_<katalog-id>.json.gz   avisen præcis som Tjek leverer den (ikke i git)
+  hentet.json                               hvilke aviser der er set (i git)
   aktuelle.json                             alle tilbud, der gælder nu eller senere, i kort form og
-                                            matchet mod opskriftbankens ingredienser
-  til_opbrugt/<kæde>.json, meta.json        kompakte dokumenter til Opbrugt-appens database (samling "tilbud");
-                                            linjen "OPBRUGT: skal opdateres" betyder, at de er ændret
-  log.txt                                   én linje pr. kørsel
+                                            matchet mod opskriftbankens ingredienser (ikke i git)
+  til_opbrugt/<kæde>.json, meta.json        kompakte filer, som Opbrugt-appen henter (i git)
+  til_opbrugt/aviser.txt                    hvilke aviser til_opbrugt/ sidst blev bygget af (i git)
+  log.txt                                   én linje pr. kørsel (ikke i git)
 
 Bemærk: Tjeks API er ikke officielt åbent (https://tjek.com/apis-and-sdks). Brug det privat og
 sparsomt; scriptet henter kun madaviser og ingen billeder.
 """
 import gzip
-import hashlib
 import json
 import re
 import sys
@@ -28,6 +28,12 @@ import time
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+
+try:
+    from zoneinfo import ZoneInfo
+    DK = ZoneInfo("Europe/Copenhagen")
+except Exception:  # Windows uden tzdata-pakken: brug computerens egen tidszone
+    DK = None
 
 MAPPE = Path(__file__).resolve().parent
 BANK = MAPPE.parent / "opskriftbank"
@@ -52,8 +58,28 @@ def dato(s):
     return datetime.fromisoformat(s.replace("+0000", "+00:00"))
 
 
+def hent_avis(kid, ud, katalog, antal=None):
+    """Hent alle tilbud i et katalog og gem dem i raa/. Returnerer (tilbud, bytes)."""
+    tilbud, offset, n_bytes = [], 0, 0
+    while antal is None or offset < antal:
+        side, n = hent(f"/offers?catalog_ids={kid}&limit=100&offset={offset}")
+        n_bytes += n
+        if not side:
+            break
+        tilbud += side
+        offset += 100
+        time.sleep(0.5)
+        if len(side) < 100:
+            break
+    ud.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(ud, "wt", encoding="utf-8") as f:
+        json.dump({"katalog": katalog, "tilbud": tilbud, "hentet": datetime.now(timezone.utc).isoformat()}, f, ensure_ascii=False)
+    return tilbud, n_bytes
+
+
 def nye_aviser(hentet, log):
-    bytes_ialt = 0
+    """Returnerer (antal nye aviser, bytes)."""
+    bytes_ialt, nye = 0, 0
     for kaede, did in KAEDER.items():
         kataloger, n = hent(f"/catalogs?dealer_ids={did}&limit=24")
         bytes_ialt += n
@@ -61,23 +87,19 @@ def nye_aviser(hentet, log):
             dage = (dato(k["run_till"]) - dato(k["run_from"])).days
             if k["id"] in hentet or not k.get("offer_count") or dage > MAKS_DAGE or IKKE_MAD.search(k.get("label") or ""):
                 continue
-            tilbud, offset = [], 0
-            while offset < k["offer_count"]:
-                side, n = hent(f"/offers?catalog_ids={k['id']}&limit=100&offset={offset}")
-                bytes_ialt += n
-                if not side:
-                    break
-                tilbud += side
-                offset += 100
-                time.sleep(0.5)
             ud = MAPPE / "raa" / kaede / f"{k['run_from'][:10]}_{k['id']}.json.gz"
-            ud.parent.mkdir(parents=True, exist_ok=True)
-            with gzip.open(ud, "wt", encoding="utf-8") as f:
-                json.dump({"katalog": k, "tilbud": tilbud, "hentet": datetime.now(timezone.utc).isoformat()}, f, ensure_ascii=False)
+            tilbud, n = hent_avis(k["id"], ud, k, k["offer_count"])
+            bytes_ialt += n
+            nye += 1
             hentet[k["id"]] = {"kaede": kaede, "label": k.get("label"), "fra": k["run_from"], "til": k["run_till"],
                                "antal": len(tilbud), "fil": ud.relative_to(MAPPE).as_posix()}
             log.append(f"ny avis: {kaede} '{k.get('label')}' {k['run_from'][:10]}–{k['run_till'][:10]}, {len(tilbud)} tilbud")
-    return bytes_ialt
+    return nye, bytes_ialt
+
+
+def aktive_aviser(hentet):
+    nu = datetime.now(timezone.utc)
+    return sorted(kid for kid, h in hentet.items() if dato(h["til"]) >= nu)
 
 
 # ---------- Match mod opskriftbanken ----------
@@ -134,14 +156,18 @@ def enhedspris(t):
     return None, None
 
 
-def byg(hentet):
+def byg(hentet, log):
     nu = datetime.now(timezone.utc)
     termer = ingredienskatalog()
     ud, matchet, set_ = [], 0, set()
     for kid, h in sorted(hentet.items(), key=lambda x: x[1]["fra"]):
         if dato(h["til"]) < nu:
             continue
-        with gzip.open(MAPPE / h["fil"], "rt", encoding="utf-8") as f:
+        fil = MAPPE / h["fil"]
+        if not fil.exists():
+            _, n = hent_avis(kid, fil, {"id": kid, "label": h["label"], "run_from": h["fra"], "run_till": h["til"]})
+            log.append(f"hentede {h['kaede']} '{h['label']}' igen ({n // 1024} KB)")
+        with gzip.open(fil, "rt", encoding="utf-8") as f:
             raa = json.load(f)
         for t in raa["tilbud"]:
             # samme tilbud i to aviser (fx Lidls uge- og weekendavis) tæller kun én gang
@@ -168,12 +194,12 @@ def byg(hentet):
     data = {"opdateret": nu.isoformat(timespec="minutes"), "kaeder": list(KAEDER), "antal": len(ud), "matchet": matchet,
             "aviser": [h for h in hentet.values() if dato(h["til"]) >= nu], "tilbud": ud}
     (MAPPE / "aktuelle.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
-    skal_sendes = til_opbrugt(data)
-    return len(ud), matchet, skal_sendes
+    til_opbrugt(data)
+    return len(ud), matchet
 
 
 def lokal_dato(s):
-    return dato(s).astimezone().date().isoformat()
+    return dato(s).astimezone(DK).date().isoformat()
 
 
 def maengde_tekst(m):
@@ -188,8 +214,7 @@ OPBRUGT_ID = {"REMA 1000": "rema-1000", "Netto": "netto", "føtex": "foetex", "L
 
 
 def til_opbrugt(data):
-    """Kompakte dokumenter til Opbrugt-appens database: ét pr. kæde (under 256 KB hver) + meta.
-    Returnerer True, hvis indholdet er ændret siden sidste afsendelse (se --sendt)."""
+    """Kompakte filer til Opbrugt-appen: én pr. kæde + meta."""
     mappe = MAPPE / "til_opbrugt"
     mappe.mkdir(exist_ok=True)
     pr_kaede = {k: [] for k in KAEDER}
@@ -209,37 +234,30 @@ def til_opbrugt(data):
     docs["meta"] = {"opdateret": data["opdateret"], "kaeder": [{"id": OPBRUGT_ID[k], "navn": k} for k in KAEDER],
                     "aviser": [{"kaede": a["kaede"], "label": a["label"], "fra": lokal_dato(a["fra"]), "til": lokal_dato(a["til"])}
                                for a in sorted(data["aviser"], key=lambda a: (a["kaede"], a["fra"]))]}
-    indhold = ""
     for doc_id, d in docs.items():
         tekst = json.dumps(d, ensure_ascii=False, separators=(",", ":"))
-        assert len(tekst.encode()) < 250_000, f"{doc_id} er for stort til databasen"
         (mappe / f"{doc_id}.json").write_text(tekst, encoding="utf-8")
-        if doc_id != "meta":
-            indhold += json.dumps(d["tilbud"], ensure_ascii=False, sort_keys=True)
-    fingeraftryk = hashlib.sha256(indhold.encode()).hexdigest()[:16]
-    (mappe / "fingeraftryk.txt").write_text(fingeraftryk, encoding="utf-8")
-    sendt = (mappe / "sendt.txt").read_text(encoding="utf-8").strip() if (mappe / "sendt.txt").exists() else ""
-    return fingeraftryk != sendt
 
 
 def main():
     hentet_fil = MAPPE / "hentet.json"
     hentet = json.loads(hentet_fil.read_text(encoding="utf-8")) if hentet_fil.exists() else {}
-    if "--sendt" in sys.argv:
-        # kaldes af den planlagte opgave, når dokumenterne er lagt i Opbrugts database
-        mappe = MAPPE / "til_opbrugt"
-        (mappe / "sendt.txt").write_text((mappe / "fingeraftryk.txt").read_text(encoding="utf-8"), encoding="utf-8")
-        print("Opbrugt markeret som opdateret.")
-        return
+    bygget_fil = MAPPE / "til_opbrugt" / "aviser.txt"
     log = []
     try:
+        nye = 0
         if "--kun-byg" not in sys.argv:
-            n_bytes = nye_aviser(hentet, log)
+            nye, n_bytes = nye_aviser(hentet, log)
             hentet_fil.write_text(json.dumps(hentet, ensure_ascii=False, indent=1), encoding="utf-8")
             log.append(f"hentet {n_bytes // 1024} KB")
-        antal, matchet, skal_sendes = byg(hentet)
-        log.append(f"aktuelle.json: {antal} tilbud, {matchet} matchet mod opskriftbanken")
-        log.append("OPBRUGT: skal opdateres" if skal_sendes else "OPBRUGT: uændret")
+        aktive = "\n".join(aktive_aviser(hentet))
+        bygget = bygget_fil.read_text(encoding="utf-8").strip() if bygget_fil.exists() else None
+        if "--kun-byg" in sys.argv or nye or aktive != bygget:
+            antal, matchet = byg(hentet, log)
+            bygget_fil.write_text(aktive, encoding="utf-8")
+            log.append(f"til_opbrugt: {antal} tilbud, {matchet} matchet mod opskriftbanken")
+        else:
+            log.append("til_opbrugt: uændret")
     except Exception as e:  # noqa: BLE001 – en planlagt kørsel skal skrive fejlen i loggen
         log.append(f"FEJL: {type(e).__name__}: {e}")
     linje = datetime.now().strftime("%Y-%m-%d %H:%M") + "  " + " | ".join(log)
