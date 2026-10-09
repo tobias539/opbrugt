@@ -205,8 +205,9 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
     <button class="arrow" id="nextDays" aria-label="Senere dage">›</button>
   </div>
   <div id="opsStart"></div>
+  <div id="ugeplan"></div>
   <div id="dayInfo"></div>
-  <div class="row" style="display:flex;gap:8px;margin-top:10px"><button class="btn" id="anbefalBtn">Anbefal</button><button class="btn ghost" id="ryddage">Fravælg dage</button></div>
+  <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button class="btn" id="anbefalBtn">Anbefal</button><button class="btn ghost" id="ryddage">Fravælg dage</button><button class="btn ghost" id="ugeplanBtn">Planlæg ugen</button></div>
 
   <div class="log" id="log" style="margin-top:18px"></div>
   <div class="ask">
@@ -319,7 +320,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 16 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 17 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -416,7 +417,7 @@ const S = [
 const DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
 
 /* ---------- State ---------- */
-const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5",typer:{},maksButikker:1,egneButikker:[]},opsat:false,opsatSkjul:false,butikOensker:[],ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[],egne:[],historik:[],valgtAntal:{}};
+const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5",typer:{},maksButikker:1,egneButikker:[],indkobGange:1},opsat:false,opsatSkjul:false,butikOensker:[],ugeplanFor:null,ugeplanUdsat:null,ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[],egne:[],historik:[],valgtAntal:{}};
 let st = JSON.parse(JSON.stringify(DEFAULT));
 let saveTimer = null, sample = null;
 
@@ -596,7 +597,7 @@ function minHo(s){let m=99;for(const k in (s.absd||{}))m=Math.min(m,ho(k));retur
 /* ---------- Render ---------- */
 let last=null;
 function render(){
-  oOpdaterEgne();renderOps();
+  oOpdaterEgne();renderOps();renderUgeplan();
   const p=plan(); last=p;
   const {P:pers,N,M}=st.settings;
   document.getElementById("subline").textContent=`${pers} ${pers===1?"person":"personer"} · ${N} aftener fra ${dayLabel(ugeStart(),true)} · ${M} gange madlavning`;
@@ -975,6 +976,12 @@ function botHtml(t,ti){
   });
   return h+`</div>`;
 }
+/* Nøglen i skabet for en vare, Claude kun har nævnt ved navn (fx "Squash") */
+function skabNoegle(k,navn){
+  if(k&&st.skab[k])return k;
+  const n=String(navn||"").toLowerCase().trim(),id=oFind(n);
+  return Object.keys(st.skab).find(x=>(id&&OB.pTilBank[x]===id)||P[x].n.toLowerCase().replace(/ \(løs\)/,"")===n)||null;
+}
 function placer(f,dato,antaget){
   let fx=f._fastId&&st.fast.find(x=>x.id===f._fastId);
   if(fx){fx.dato=dato}else if(f.opskrift&&ORMAP[f.opskrift]){
@@ -986,7 +993,7 @@ function placer(f,dato,antaget){
     st.fast.push(fx); f._fastId=id;
     for(const m of fx.mangler)if(!st.ekstraIndkob.some(x=>x.navn.toLowerCase()===m.navn.toLowerCase()&&!x.done))st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde||"",kat:m.kat||gaetAfd(m.navn),til:fx.navn,fastId:id,...(m.tilbud?{tilbud:m.tilbud,dato}:{})});
     for(const u of f.bruger||[]){
-      const navn=String(u.navn||u), alt=!!u.alt, k=u.k;
+      const navn=String(u.navn||u), alt=!!u.alt, k=skabNoegle(u.k,navn);
       if(k&&st.skab[k]){if(alt)delete st.skab[k];else st.skab[k].amt/=2}
       const i=st.fri.findIndex(x=>x.navn.toLowerCase()===navn.toLowerCase());
       if(i>=0){if(alt)st.fri.splice(i,1);else st.fri[i].niveau="lidt"}
@@ -1014,7 +1021,7 @@ function actInner(a,ti,fi,dag){
   if(a==="fav"){st.favoritter.push(String(f.navn));toast("Gemt som favorit")}
   if(a==="lav"){
     for(const u of f.bruger||[]){
-      const navn=String(u.navn||u), alt=!!u.alt, k=u.k;
+      const navn=String(u.navn||u), alt=!!u.alt, k=skabNoegle(u.k,navn);
       if(k&&st.skab[k]){if(alt)delete st.skab[k];else st.skab[k].amt/=2}
       const i=st.fri.findIndex(x=>x.navn.toLowerCase()===navn.toLowerCase());
       if(i>=0){if(alt)st.fri.splice(i,1);else st.fri[i].niveau="lidt"}
@@ -1146,21 +1153,22 @@ const MTYPER=[
 ];
 function typerTekst(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[3]}`).join(", ")}
 function typerKort(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[2]}`).join(", ")}
-function handelTekst(s){s=s||st.settings;const n=s.maksButikker||1;return n<=1?"Vil helst handle i én butik.":`Vil handle i højst ${n} butikker, men kun dele op, hvis det sparer mindst ${s.delGraense} kr pr. ekstra butik.`}
+function handelTekst(s){s=s||st.settings;const n=s.maksButikker||1,g=s.indkobGange||1;return (n<=1?"Vil helst handle i én butik.":`Vil handle i højst ${n} butikker, men kun dele op, hvis det sparer mindst ${s.delGraense} kr pr. ekstra butik.`)+` Handler ind ${g} ${g===1?"gang":"gange"} om ugen.`}
+function indkobKort(v){const g=v.indkobGange||1;return g===1?"Én gang om ugen":`${g} gange om ugen`}
 function handelKort(v){return (v.maksButikker||1)<=1?"Én butik":`Op til ${v.maksButikker} butikker, hvis det sparer mindst ${v.delGraense} kr`}
-function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}${typerKort()?": "+typerKort():""}. ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${handelKort(s)}.`}
-const WIZ_TRIN=["P","M","typer","butikker","handel","oversigt"];
+function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}${typerKort()?": "+typerKort():""}. ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${handelKort(s)}. Handler ind ${indkobKort(s).toLowerCase()}.`}
+const WIZ_TRIN=["P","M","typer","butikker","handel","indkob","oversigt"];
 let wiz=null;
 function sumTyper(t){return Object.values(t).reduce((a,b)=>a+b,0)}
 function nyBruger(){return !st.opsat&&!st.opsatSkjul&&!st.fast.length&&!st.favoritter.length&&!Object.keys(st.skab).length&&!st.chat.length}
 function wizStart(host){
   const s=st.settings;
-  wiz={host,trin:0,egenAaben:false,egenTekst:"",v:{P:s.P,M:s.M,typer:{...(s.typer||{})},butikker:[...s.butikker],egneButikker:[...(s.egneButikker||[])],maksButikker:s.maksButikker||1,delGraense:s.delGraense}};
+  wiz={host,trin:0,egenAaben:false,egenTekst:"",v:{P:s.P,M:s.M,typer:{...(s.typer||{})},butikker:[...s.butikker],egneButikker:[...(s.egneButikker||[])],maksButikker:s.maksButikker||1,delGraense:s.delGraense,indkobGange:s.indkobGange||1}};
   renderOps();document.getElementById(host).scrollIntoView({behavior:"smooth",block:"start"});
 }
 function renderOps(){
   const ps=document.getElementById("opsStart"),pp=document.getElementById("prefOpsat");
-  ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():nyBruger()?`<div class="wiz"><h2>Velkommen til Opbrugt</h2><p class="muted" style="margin:0">Fem hurtige valg, så passer forslag, mængder og tilbud til dig.</p><div class="nav"><button class="btn" data-w="start">Opret præferencer</button><button class="btn ghost" data-w="skjul">Senere</button></div></div>`:"";
+  ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():nyBruger()?`<div class="wiz"><h2>Velkommen til Opbrugt</h2><p class="muted" style="margin:0">Et par hurtige valg, så passer forslag, mængder og tilbud til dig.</p><div class="nav"><button class="btn" data-w="start">Opret præferencer</button><button class="btn ghost" data-w="skjul">Senere</button></div></div>`:"";
   pp.innerHTML=wiz&&wiz.host==="prefOpsat"?wizHtml():st.opsat?`<div class="list"><div class="item"><div class="grow">${esc(opsatResume())}</div></div></div><button class="btn ghost" data-w="ret" style="margin-top:10px">Ret præferencer</button>`:`<p class="muted">Hvor mange I er, hvad I vil spise, og hvor I handler. Det tager under et minut.</p><button class="btn" data-w="ret">Opret præferencer</button>`;
   for(const el of [ps,pp])el.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>wizHandling(b,el.id));
   const ei=document.getElementById("wizEgen");
@@ -1184,9 +1192,11 @@ function wizHtml(){
   else if(t==="handel")h=`<h2>Hvor mange butikker vil du handle i om ugen?</h2><p class="muted" style="margin:0">Flere butikker kan spare penge, men tager mere tid.</p>
     <div class="tiles">${[[1,"Én","Enklest"],[2,"Op til to","Hvis det sparer"],[3,"Op til tre","Mest besparelse"]].map(([n,lb,sm])=>`<button class="tile" data-w="maks" data-n="${n}" aria-pressed="${v.maksButikker===n}"><span class="ik">${"🛒".repeat(n)}</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>
     ${v.maksButikker>1?`<h3 style="margin-top:16px">Del kun op, hvis det sparer mindst</h3><div class="tiles tal">${[25,50,100,200].map(g=>`<button class="tile" data-w="graense" data-n="${g}" aria-pressed="${v.delGraense===g}"><span class="lb" style="font-size:1.1rem">${g} kr</span><span class="sm">pr. butik</span></button>`).join("")}</div>`:""}`;
+  else if(t==="indkob")h=`<h2>Hvor mange gange vil du handle ind om ugen?</h2><p class="muted" style="margin:0">Så lægger appen det, der holder kortest, lige efter en indkøbsdag.</p>
+    <div class="tiles">${[[1,"Én gang","Storindkøb"],[2,"To gange","Fx weekend og midt i ugen"],[3,"Tre gange","Friskt hele ugen"],[4,"Oftere","Næsten hver dag"]].map(([n,lb,sm])=>`<button class="tile" data-w="indkob" data-n="${n}" aria-pressed="${v.indkobGange===n}"><span class="ik">🧺</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>`;
   else{
     const uden=v.butikker.filter(b=>!harTilbud(b));
-    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Måltider",typerKort(v.typer)||"Frit valg"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Handel",handelKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
+    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Måltider",typerKort(v.typer)||"Frit valg"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Butikker pr. uge",handelKort(v)],["Indkøb",indkobKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
     ${uden.length?`<p class="muted" style="margin-top:8px">Vi har ikke tilbud fra ${esc(uden.join(", "))} endnu. Ønsket bliver gemt, så de kan komme med senere.</p>`:""}`;
   }
   const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span><button class="btn ghost" data-w="luk">Luk</button>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">${t==="typer"&&sumTyper(v.typer)<v.M?"Næste (resten frit)":"Næste"}</button>`}</div>`;
@@ -1216,19 +1226,224 @@ function wizHandling(b,host){
   }
   else if(w==="maks")v.maksButikker=+b.dataset.n;
   else if(w==="graense")v.delGraense=+b.dataset.n;
+  else if(w==="indkob"){v.indkobGange=+b.dataset.n;wiz.trin++}
   else if(w==="tilbage")wiz.trin=Math.max(0,wiz.trin-1);
   else if(w==="naeste")wiz.trin=Math.min(WIZ_TRIN.length-1,wiz.trin+1);
   else if(w==="luk"){wiz=null;renderOps();return}
   else if(w==="gem"){wizGem();return}
   renderOps();
-  if(["P","M","tilbage","naeste"].includes(w))document.getElementById(wiz.host).scrollIntoView({behavior:"smooth",block:"start"});
+  if(["P","M","indkob","tilbage","naeste"].includes(w))document.getElementById(wiz.host).scrollIntoView({behavior:"smooth",block:"start"});
 }
 function wizGem(){
   const v=wiz.v;
-  Object.assign(st.settings,{P:v.P,M:v.M,typer:v.typer,butikker:v.butikker,egneButikker:v.egneButikker,maksButikker:v.maksButikker,delGraense:v.delGraense});
+  Object.assign(st.settings,{P:v.P,M:v.M,typer:v.typer,butikker:v.butikker,egneButikker:v.egneButikker,maksButikker:v.maksButikker,delGraense:v.delGraense,indkobGange:v.indkobGange});
   /* Butikker uden tilbudsdata: gem ønsket, så det kan sendes, når der er en fælles database */
   for(const b of v.butikker)if(!harTilbud(b)&&!st.butikOensker.some(o=>o.navn.toLowerCase()===b.toLowerCase()))st.butikOensker.push({navn:b,dato:todayIso(),sendt:false});
   st.opsat=true;wiz=null;changed();toast("Præferencerne er gemt");
+}
+
+/* ---------- Skabet og planen ----------
+   Det, der står på planen, regnes som spist, når dagen er gået. Det, der skal købes til en ret
+   (fx farsen til tirsdagens hakkebøffer), er reserveret til retten, også når det er lagt i skabet
+   efter et indkøb, og trækkes fra skabet, når retten er spist. */
+function retBehov(f){
+  const ud=[],r=f.opskrift&&ORMAP[f.opskrift],n=f.personer||st.settings.P;
+  for(const m of f.mangler||[]){
+    const id=oFind(m.navn);let mgd=null,e=null;
+    if(r){const l=r.ing.find(l=>(id&&l.i===id)||l.n.toLowerCase()===String(m.navn).toLowerCase());if(l&&l.m!=null){mgd=oTil(l,n,r.pb);e=l.e}}
+    if(mgd==null){const x=String(m.maengde||"").replace(",",".").match(/([\d.]+)\s*(kg|g|ml|dl|l|stk)\b/i);if(x){mgd=+x[1];e=x[2].toLowerCase();if(e==="kg"){mgd*=1000;e="g"}else if(e==="l"){mgd*=1000;e="ml"}}}
+    ud.push({navn:m.navn,id,m:mgd,e});
+  }
+  return ud;
+}
+/* Træk ét behov fra et skab (st.skab/st.fri eller en kopi). Kendes mængden ikke, fjernes varen helt. */
+function traekFra(skab,fri,b){
+  for(const k of Object.keys(skab)){
+    if(!b.id||OB.pTilBank[k]!==b.id)continue;
+    const vare=OI[b.id];let behov=b.m!=null&&b.e?oOmregn(b.m,b.e,vare):null;
+    if(behov!=null&&P[k].e!==vare.be){const g=oGram(b.m,b.e,vare);behov=(P[k].e==="g"||P[k].e==="ml")?g:null}
+    if(behov==null||behov>=skab[k].amt-1e-6)delete skab[k];else skab[k]={...skab[k],amt:skab[k].amt-behov};
+    return true;
+  }
+  const i=fri.findIndex(x=>(b.id&&oFind(x.navn)===b.id)||x.navn.toLowerCase()===String(b.navn).toLowerCase());
+  if(i>=0){fri.splice(i,1);return true}
+  return false;
+}
+/* Retter fra dage, der er gået: træk det købte fra skabet. Returnerer true, hvis noget blev ændret. */
+function afvikl(){
+  const t0=todayIso();let aendret=false;
+  for(const f of st.fast){if(f.dato>=t0||f.afviklet)continue;for(const b of retBehov(f))traekFra(st.skab,st.fri,b);f.afviklet=true;aendret=true}
+  return aendret;
+}
+/* Hvad er der tilbage i skabet på dagen "til", når planen indtil da er spist? */
+function forventetSkab(til){
+  const skab=JSON.parse(JSON.stringify(st.skab)),fri=JSON.parse(JSON.stringify(st.fri)),res=[];
+  for(const f of st.fast.filter(f=>!f.afviklet&&f.dato>=todayIso()&&f.dato<til).sort((a,b)=>a.dato.localeCompare(b.dato)))
+    for(const b of retBehov(f))if(traekFra(skab,fri,b))res.push({navn:b.navn,ret:f.navn,dato:f.dato});
+  return {skab,fri,res};
+}
+function skabLinjer(fs){return [...Object.entries(fs.skab).map(([k,v])=>({k,navn:P[k].n,tekst:`ca. ${fmt(k,v.amt)}`,dage:v.dage})),...fs.fri.map(f=>({fri:f.navn,navn:f.navn,tekst:f.niveau==="lidt"?"lidt":f.niveau==="noget"?"noget":"",dage:null}))]}
+
+/* ---------- Madplan for næste uge ----------
+   Påmindelse, når næste uges tilbudsaviser er klar. Flowet: tjek skabet → vælg, hvordan retterne findes
+   (forslag, kategori eller snak) → sæt flueben eller OK. */
+function naesteUge(){
+  const t0=todayIso();
+  const fra=(TB.meta?.aviser||[]).filter(a=>a.fra>t0&&tKaedeAktiv(a.kaede)).map(a=>a.fra).sort()[0];
+  return fra||null;
+}
+function ugeDage(start){return [...Array(7)].map((_,i)=>addDays(start,i))}
+function ugeErPlanlagt(start){const d=ugeDage(start);return st.fast.filter(f=>d.includes(f.dato)).length>=Math.min(st.settings.M,7)}
+function visPaamindelse(){const s=naesteUge();return !!s&&s<=addDays(todayIso(),4)&&st.ugeplanFor!==s&&st.ugeplanUdsat!==s&&!ugeErPlanlagt(s)}
+function vaelgDage(start,antal){
+  const fri=ugeDage(start).filter(d=>!fastPaa(d)),n=Math.min(antal,fri.length);
+  return [...Array(n)].map((_,i)=>fri[Math.floor(i*fri.length/n)]);
+}
+let up=null;
+function ugeplanStart(){
+  const t0=todayIso(),start=naesteUge()||(fastPaa(t0)?addDays(t0,1):t0);
+  up={trin:"skab",start,forslag:[],valgt:new Set(),aaben:-1,kategori:null,fejl:"",tilfoejTekst:""};
+  renderUgeplan();document.getElementById("ugeplan").scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.getElementById("ugeplanBtn").onclick=ugeplanStart;
+function renderUgeplan(){
+  const el=document.getElementById("ugeplan");
+  if(!up){
+    el.innerHTML=visPaamindelse()?`<div class="wiz"><h2>Næste uges tilbudsaviser er klar</h2><p class="muted" style="margin:0">Du er klar til at lave madplan for ugen fra ${esc(dayLabel(naesteUge(),true))}.</p><div class="nav"><button class="btn" data-u="start">Ja, lav madplan</button><button class="btn ghost" data-u="senere">Senere</button></div></div>`:"";
+  }else el.innerHTML=`<div class="wiz">${ugeplanHtml()}</div>`;
+  el.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>ugeplanHandling(b));
+  const ti=document.getElementById("upTilfoej");if(ti){ti.oninput=e=>{up.tilfoejTekst=e.target.value};ti.onkeydown=e=>{if(e.key==="Enter")el.querySelector('[data-u="tilfoej"]').click()}}
+}
+function ugeplanHtml(){
+  const slut=addDays(up.start,6),periode=`${dayLabel(up.start,true)} – ${dayLabel(slut,true)}`;
+  const luk=`<button class="btn ghost" data-u="luk">Luk</button>`;
+  if(up.trin==="skab"){
+    const fs=forventetSkab(addDays(up.start,7)),l=skabLinjer(fs);
+    return `<h2>Det har I i skabet</h2>
+    <p class="muted" style="margin:0">Det, der allerede står på planen, har jeg trukket fra. Er der noget, der skal ændres, før jeg laver forslag? Så bliver der mindst muligt spild.</p>
+    <div class="list" style="margin-top:10px">${l.length?l.map(x=>`<div class="item"><div class="grow">${esc(x.navn)}<div class="amt">${esc([x.tekst,x.dage!=null&&x.dage<=3?"bør bruges snart":""].filter(Boolean).join(" · "))}</div></div><button class="x" data-u="fjern" ${x.k?`data-k="${esc(x.k)}"`:`data-fri="${esc(x.fri)}"`} aria-label="${esc(x.navn)} er brugt eller smidt ud">×</button></div>`).join(""):`<div class="item"><div class="grow muted">Skabet er tomt.</div></div>`}</div>
+    <div class="addrow" style="padding:10px 0 0"><input id="upTilfoej" value="${esc(up.tilfoejTekst)}" placeholder="Har I noget mere? Fx 3 æbler" aria-label="Tilføj til skabet" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-u="tilfoej">Tilføj</button></div>
+    ${fs.res.length?`<details style="margin-top:10px"><summary class="muted">Bruges til retter, der allerede står på planen (${fs.res.length})</summary><p class="muted" style="margin:6px 0 0">${fs.res.map(r=>esc(r.navn)+" til "+esc(r.ret.toLowerCase())+" "+esc(dayLabel(r.dato,true))).join(", ")}</p></details>`:""}
+    <div class="nav"><span class="grow"></span>${luk}<button class="btn" data-u="hvordan">Det passer</button></div>`;
+  }
+  if(up.trin==="hvordan")return `<h2>Hvordan vil du finde retterne?</h2><p class="muted" style="margin:0">Ugen ${esc(periode)}.</p>
+    <div class="tiles">
+      <button class="tile" data-u="anbefal"><span class="ik">✨</span><span class="lb">Anbefal til mig</span><span class="sm">${st.settings.M} retter ud fra skab, tilbud og jeres præferencer</span></button>
+      <button class="tile" data-u="kategorier"><span class="ik">🗂️</span><span class="lb">Vælg efter kategori</span><span class="sm">Sundt, hurtigt, billigt …</span></button>
+      <button class="tile" data-u="snak"><span class="ik">💬</span><span class="lb">Sig, hvad du har lyst til</span><span class="sm">Fx "jeg har lyst til lasagne"</span></button>
+    </div><div class="nav"><button class="btn ghost" data-u="tilbage" data-til="skab">Tilbage</button><span class="grow"></span>${luk}</div>`;
+  if(up.trin==="kategorier")return `<h2>Vælg en kategori</h2><div class="tiles">${MTYPER.map(([id,ik,lb])=>`<button class="tile" data-u="kategori" data-id="${id}"><span class="ik">${ik}</span><span class="lb">${lb}</span></button>`).join("")}</div><div class="nav"><button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button><span class="grow"></span>${luk}</div>`;
+  if(up.trin==="arbejder")return `<h2>${up.kategori?esc(MTYPER.find(m=>m[0]===up.kategori)[2]):"Forslag til ugen"}</h2><p class="muted">Finder retter ud fra skabet, tilbuddene og jeres præferencer …</p>`;
+  if(up.trin==="forslag"){
+    const kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
+    const valgte=[...up.valgt].filter(i=>!up.forslag[i]._fastId).length,aabne=up.forslag.filter(f=>!f._fastId).length;
+    return `<h2>${kat?esc(kat[2]):"Forslag til ugen"}</h2><p class="muted" style="margin:0">${esc(periode)}. Tryk på en ret for at se mere. Sæt flueben, eller sig OK til alle.</p>
+    ${up.fejl?`<p class="bad" style="margin-top:8px">${esc(up.fejl)}</p>`:""}
+    <div class="list" style="margin-top:10px">${up.forslag.map((f,i)=>forslagKort(f,i)).join("")}</div>
+    <div class="nav">${aabne?`<button class="btn" data-u="okAlle">OK til alle</button>${valgte?`<button class="btn ghost" data-u="okValgte">Tilføj valgte (${valgte})</button>`:""}`:`<button class="btn" data-u="luk">Færdig</button>`}<span class="grow"></span><button class="btn ghost" data-u="igen">Nye forslag</button></div>
+    <div class="nav" style="margin-top:6px"><button class="btn ghost" data-u="tilbage" data-til="${kat?"kategorier":"hvordan"}">Tilbage</button><span class="grow"></span>${aabne?luk:""}</div>`;
+  }
+  return "";
+}
+function forslagKort(f,i){
+  const r=f.opskrift&&ORMAP[f.opskrift],tilfoejet=!!f._fastId,aaben=up.aaben===i;
+  const ft=String(f.type||"").toLowerCase();
+  const type=MTYPER.find(m=>ft===m[0]||ft===m[3]||ft.startsWith(m[2].toLowerCase()));
+  const fav=isFav(f.navn)||(r&&isFav(r.t));
+  const tb=(f.mangler||[]).filter(m=>m.tilbud).map(m=>`${m.navn}: ${m.tilbud.k} ${tPris(m.tilbud.p)}`);
+  return `<div class="item" style="display:block">
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      ${tilfoejet?`<span aria-label="Tilføjet" style="color:var(--leaf);font-weight:700;width:22px">✓</span>`:`<input type="checkbox" data-u="vaelg" data-i="${i}" ${up.valgt.has(i)?"checked":""} aria-label="Vælg ${esc(f.navn)}" style="margin-top:4px;width:22px;height:22px">`}
+      <button data-u="aabn" data-i="${i}" style="flex:1;text-align:left;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer" aria-expanded="${aaben}">
+        <b>${esc(f.navn)}</b>${fav?` <span title="Favorit" style="color:var(--carrot)">♥</span>`:""}
+        <div class="amt">${esc([f.dag&&/^\d{4}-/.test(f.dag)?dayLabel(f.dag,true):"",type?type[1]+" "+type[2]:"",tilfoejet?"på planen":""].filter(Boolean).join(" · "))}</div>
+      </button>
+    </div>
+    ${aaben?`<div style="margin:8px 0 0 32px">
+      ${f.hvorfor?`<p style="margin:0">${esc(f.hvorfor)}</p>`:""}
+      ${(f.bruger||[]).length?`<p class="muted" style="margin:6px 0 0">Bruger fra skabet: ${esc(f.bruger.map(u=>u.navn).join(", "))}</p>`:""}
+      ${(f.mangler||[]).length?`<p class="muted" style="margin:6px 0 0">Skal købes: ${esc(f.mangler.map(m=>m.navn).join(", "))}</p>`:""}
+      ${tb.length?`<p class="muted" style="margin:6px 0 0">På tilbud: ${esc(tb.join(", "))}</p>`:""}
+      ${r?`<button class="x" data-oopen="${esc(r.id)}" style="padding-left:0;font-size:.9rem;color:var(--leaf)">Se opskrift</button>`:(f.trin||[]).length?`<ol style="margin:6px 0 0;padding-left:20px">${f.trin.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`:""}
+      ${tilfoejet?"":`<div style="margin-top:8px"><button class="btn" data-u="ok" data-i="${i}">OK</button></div>`}
+    </div>`:""}
+  </div>`;
+}
+function ugeplanHandling(b){
+  const u=b.dataset.u;
+  if(u==="start"){ugeplanStart();return}
+  if(u==="senere"){st.ugeplanUdsat=naesteUge();changed();return}
+  if(!up)return;
+  if(u==="luk"){if(up.forslag.some(f=>f._fastId))st.ugeplanFor=up.start;up=null;changed();return}
+  if(u==="fjern"){if(b.dataset.k)delete st.skab[b.dataset.k];else st.fri=st.fri.filter(x=>x.navn!==b.dataset.fri);changed();return}
+  if(u==="tilfoej"){const v=up.tilfoejTekst.trim();if(!v)return;st.fri.push({navn:v,niveau:"hel"});up.tilfoejTekst="";changed();return}
+  if(u==="hvordan"||u==="tilbage"){up.trin=b.dataset.til||"hvordan";up.aaben=-1;renderUgeplan();return}
+  if(u==="kategorier"){up.trin="kategorier";renderUgeplan();return}
+  if(u==="snak"){up=null;renderUgeplan();const c=document.getElementById("chatIn");c.placeholder="Fx: jeg har lyst til lasagne på søndag";c.scrollIntoView({behavior:"smooth",block:"center"});c.focus();return}
+  if(u==="anbefal"){up.kategori=null;hentUgeforslag();return}
+  if(u==="kategori"){up.kategori=b.dataset.id;hentUgeforslag();return}
+  if(u==="igen"){hentUgeforslag();return}
+  const i=+b.dataset.i;
+  if(u==="aabn"){up.aaben=up.aaben===i?-1:i;renderUgeplan();return}
+  if(u==="vaelg"){b.checked?up.valgt.add(i):up.valgt.delete(i);renderUgeplan();return}
+  if(u==="ok"){ugeTilfoej([i]);return}
+  if(u==="okAlle"){ugeTilfoej(up.forslag.map((_,j)=>j));return}
+  if(u==="okValgte"){ugeTilfoej([...up.valgt]);return}
+}
+function ugeTilfoej(idx){
+  let n=0;const ledige=ugeDage(up.start);
+  for(const i of idx){
+    const f=up.forslag[i];if(!f||f._fastId)continue;
+    let dato=/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")&&f.dag>=todayIso()&&!fastPaa(f.dag)?f.dag:ledige.find(d=>d>=todayIso()&&!fastPaa(d));
+    if(!dato){toast("Der er ikke flere ledige dage i ugen");break}
+    f.dag=dato;placer(f,dato);up.valgt.delete(i);n++;
+  }
+  st.ugeplanFor=up.start;
+  changed();if(n)toast(n===1?"1 ret er sat på planen":n+" retter er sat på planen");
+}
+/* Tilbud, der gælder i perioden fra-til: det bedste pr. ingrediens i banken */
+function tTekstPeriode(fra,til){
+  const best={};for(const x of TB.tilbud)if(x.i&&x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)&&(!best[x.i]||x.p<best[x.i].p))best[x.i]=x;
+  return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${x.k} ${tPris(x.p)}${x.m?" ("+x.m+")":""}`).join("; ");
+}
+async function hentUgeforslag(){
+  if(!sample){up.trin="forslag";up.forslag=[];up.fejl=fejlTekst({code:"no_key"});renderUgeplan();return}
+  up.trin="arbejder";up.fejl="";up.aaben=-1;renderUgeplan();
+  const s=st.settings,slut=addDays(up.start,6),kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
+  const dage=vaelgDage(up.start,kat?7:s.M);
+  const typeListe=MTYPER.flatMap(m=>Array(s.typer?.[m[0]]||0).fill(m[3]));
+  while(typeListe.length<dage.length)typeListe.push("frit valg");
+  const fs=forventetSkab(addDays(up.start,7));
+  const skabTxt=skabLinjer(fs).map(x=>x.navn+(x.tekst?" ("+x.tekst+")":"")+(x.dage!=null?`, holder ca. ${x.dage} dage`:"")).join("; ")||"tomt";
+  const favs=st.favoritter.filter(n=>!st.ikkeLide.some(x=>n.toLowerCase().includes(x.navn.toLowerCase())));
+  const tidl=up.forslag.filter(f=>!f._fastId).map(f=>f.navn);
+  const prompt=`Du er madassistenten i appen "Opbrugt". Lav forslag til aftensmad i ugen ${dayLabel(up.start,true)} – ${dayLabel(slut,true)}. Skriv på dansk.
+Husstand: ${s.P} personer. Butikker: ${s.butikker.join(", ")||"ikke angivet"}. ${handelTekst()} Læg det, der holder kortest (fisk, hakket kød, salat), lige efter en indkøbsdag.
+${kat?`Alle forslag skal være: ${kat[3]}. Giv 6 forskellige forslag. Sæt "dag" til en af disse datoer, helst forskellige: ${dage.join(", ")}.`:`Én ret pr. dag på præcis disse datoer: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}.
+Fordel disse måltidstyper på dagene og skriv typen i "type": ${typeListe.join(", ")}.`}
+Det har de i skabet, som ikke allerede er sat af til planen. Brug det først, og det, der holder kortest, først: ${skabTxt}
+Kan lide (favoritter): ${favs.join(", ")||"ingen gemt"}${favs.length?`. Mindst ét forslag SKAL være en af favoritterne; sæt "favorit": true på det.`:""}
+Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
+Har haft eller har på planen inden for 3 uger (undgå, medmindre det er en favorit): ${nyligTekst()||"intet"}
+${tidl.length?`Foreslå ikke disse igen: ${tidl.join(", ")}\n`:""}Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
+${TB.tilbud.length?`Tilbud i ugen (bedste pr. vare; brug dem gerne): ${tTekstPeriode(up.start,slut)||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer, og sæt "opskrift" til id'et:
+${oKatalogTekst()}
+Returnér KUN JSON: {"forslag":[{"navn","opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": én kort sætning,"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-5 korte trin}]}`;
+  try{
+    const r=await sample.json(prompt,{modelTier:"quick"});
+    let forslag=(r.forslag||[]).map(normForslag).map((f,i,a)=>({...f,type:a[i].type,favorit:!!a[i].favorit}));
+    /* Mindst én favorit blandt de almindelige forslag */
+    if(!kat&&favs.length&&forslag.length&&!forslag.some(f=>isFav(f.navn)||(f.opskrift&&isFav(ORMAP[f.opskrift].t)))){
+      const navn=favs.find(n=>!nyligNavne().includes(n))||favs[0];
+      const bank=oAlle().find(x=>x.t.toLowerCase()===navn.toLowerCase());
+      const sidste=forslag[forslag.length-1];
+      forslag[forslag.length-1]=normForslag({navn,opskrift:bank?bank.id:null,dag:sidste.dag,type:sidste.type,favorit:true,hvorfor:"En af jeres favoritter."});
+    }
+    await tAnnoter(forslag);
+    up.forslag=forslag;up.valgt=new Set(forslag.map((_,i)=>i));up.trin="forslag";
+    if(!forslag.length)up.fejl="Der kom ingen forslag. Prøv igen.";
+  }catch(e){up.trin="forslag";up.forslag=[];up.fejl=fejlTekst(e)}
+  renderUgeplan();document.getElementById("ugeplan").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 /* ---------- Dagsbånd ---------- */
@@ -1714,10 +1929,10 @@ function flag(m){document.getElementById("saveState").textContent=m}
 function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st={...JSON.parse(JSON.stringify(DEFAULT)),...d,settings:{...DEFAULT.settings,...(d.settings||{})}}}}
 
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
-historikSync();
+historikSync();afvikl();
 /* Kalenderen starter altid med i dag, også når appen hentes frem igen en senere dag */
 st.visStart=todayIso();let aabnetDag=todayIso();
-document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();render()});
+document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
 fillSelects();render();setupScan();
 
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
