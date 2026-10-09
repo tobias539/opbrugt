@@ -42,7 +42,7 @@ KAEDER = {
     "rema-1000": {"navn": "REMA 1000", "type": "rema"},
     # Butikken bruges kun til prisopslag; Netto og føtex har (næsten) samme priser i hele landet.
     "netto": {"navn": "Netto", "type": "salling", "feed": "nettoplus", "butik": "0b52d54b-66e1-4d8c-a4a4-e243b5120946"},
-    "foetex": {"navn": "føtex", "type": "salling", "feed": "foetexplus", "butik": None},
+    "foetex": {"navn": "føtex", "type": "salling", "feed": "foetexplus", "butik": "d6abf195-312b-4818-8933-bda8ecdd9fbd"},  # føtex Aalborg
 }
 
 
