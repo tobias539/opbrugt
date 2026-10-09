@@ -106,6 +106,14 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tile .ant{position:absolute;top:6px;right:6px;background:var(--leaf);color:var(--card);border-radius:99px;min-width:22px;height:22px;font-size:.8rem;font-weight:700;line-height:22px;padding:0 5px}
 .tiles .min{position:absolute;top:6px;left:6px;width:26px;height:26px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.05rem;line-height:1;padding:0;cursor:pointer}
 .tiles.tal .tile .lb{font-size:1.4rem;margin:0}
+.tiles.logo{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.tile.lg{padding:6px 4px;min-height:0}.tile.lg img{width:44px;height:44px;border-radius:10px;display:block;margin:0 auto;object-fit:contain;background:#fff}
+.tile.lg .txt{display:flex;align-items:center;justify-content:center;height:44px;font-weight:700;font-size:.68rem;line-height:1.1;overflow-wrap:normal;word-break:keep-all}
+.tile.lg .niv{display:block;font-size:.66rem;color:var(--muted);margin-top:3px}
+.tile.lg .tbm,.tbm-inline{background:var(--carrot);color:#fff;border-radius:99px;width:18px;height:18px;font-size:.66rem;line-height:18px;font-weight:700;display:inline-block;text-align:center}
+.tile.lg .tbm{position:absolute;top:2px;left:2px}
+.tile.lg .valgt{position:absolute;top:2px;right:2px;background:var(--leaf);color:var(--card);border-radius:99px;width:18px;height:18px;font-size:.7rem;line-height:18px;font-weight:700}
+.tile.lg[aria-pressed="false"] img{opacity:.7}
 .wiz .nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
 .wiz .nav .grow{flex:1}
 #t-pref.kunGuide > :not(header):not(#prefOpsat){display:none}
@@ -326,7 +334,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 21 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 22 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -484,7 +492,8 @@ function ugeStart(){if(!st.ugeStart)st.ugeStart=todayIso();return st.ugeStart}
 function slotDate(d){return addDays(ugeStart(),d-1)}
 function fastPaa(i){return st.fast.find(f=>f.dato===i)}
 /* Prisniveau er et groft skøn ud fra kædernes type, ikke målte priser */
-const BUTIKKER=[["Netto","discount"],["Lidl","discount"],["Rema 1000","discount"],["365discount","discount"],["Løvbjerg","mellem"],["Føtex","mellem"],["Bilka","mellem"],["SuperBrugsen","mellem"],["Kvickly","mellem"],["Nemlig.com","mellem"],["Meny","dyrere"],["Spar","dyrere"],["Dagli'Brugsen","dyrere"],["Min Købmand","dyrere"]];
+/* Logoerne er kædernes egne app-ikoner fra deres hjemmesider (Nemlig.com har intet, fordi siden står bag en kø-side) */
+const BUTIKKER=[["Netto","discount","netto.png"],["Lidl","discount","lidl.svg"],["Rema 1000","discount","rema-1000.png"],["365discount","discount","365discount.png"],["Løvbjerg","mellem","lovbjerg.png"],["Føtex","mellem","foetex.png"],["Bilka","mellem","bilka.png"],["SuperBrugsen","mellem","superbrugsen.png"],["Kvickly","mellem","kvickly.png"],["Nemlig.com","mellem",null],["Meny","dyrere","meny.png"],["Spar","dyrere","spar.png"],["Dagli'Brugsen","dyrere","dagli-brugsen.png"],["Min Købmand","dyrere","min-koebmand.png"]];
 const PRISNIVEAU={discount:"Discount",mellem:"Mellem",dyrere:"Dyrere"};
 function alleButikker(){return [...BUTIKKER.map(b=>b[0]),...(st.settings.egneButikker||[])]}
 /* Kæder, appen har tilbud fra (fra tilbudsfilerne; listen her bruges, indtil de er hentet) */
@@ -969,7 +978,11 @@ document.getElementById("addBtn").onclick=()=>{
   st.skab[k]={amt:(st.skab[k]?.amt||0)+a,dage:ho(k)};changed();toast(P[k].n+" lagt i skabet");
 };
 document.getElementById("justAdd").onclick=()=>{const k=document.getElementById("justKey").value;if(st.just[k]==null)st.just[k]=25;changed()};
-document.getElementById("clearChecks").onclick=()=>{st.checked=[];st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);changed()};
+document.getElementById("clearChecks").onclick=()=>{
+  if(!confirm("Tøm indkøbslisten? Alle varer fjernes. Retterne bliver stående på planen."))return;
+  st.ekstraIndkob=[];st.basisMangler=[];st.checked=[];st.valgte=[];st.tvungne=[];shopIkke.clear();shopAfd=null;
+  changed();toast("Indkøbslisten er tømt");
+};
 document.getElementById("endWeek").onclick=()=>{
   if(!last)return;
   st.skab={};for(const [k,c] of Object.entries(last.carry))st.skab[k]={amt:c.amt,dage:c.dage};
@@ -1335,10 +1348,10 @@ function wizHtml(){
     h=`<h2>Hvad skal de ${v.M} måltider være?</h2><p class="muted" style="margin:0">Tryk én gang for hvert måltid. Tryk flere gange på samme, hvis du vil have den flere gange.</p><p style="margin:8px 0 0;font-weight:700">${sum} af ${v.M} valgt</p>
     <div class="tiles">${MTYPER.map(([id,ik,lb])=>{const n=v.typer[id]||0;return `<div style="position:relative"><button class="tile" style="width:100%;height:100%" data-w="type" data-id="${id}" aria-pressed="${n>0}" aria-label="${lb}${n?", valgt "+n+" gange":""}"><span class="ik">${ik}</span><span class="lb">${lb}</span>${n?`<span class="ant">${n}</span>`:""}</button>${n?`<button class="min" data-w="typeMinus" data-id="${id}" aria-label="Én ${lb.toLowerCase()} mindre">−</button>`:""}</div>`}).join("")}</div>`;
   }
-  else if(t==="butikker")h=`<h2>Hvor handler du?</h2><p class="muted" style="margin:0">Vælg en eller flere. Butikker uden tilbud kan sagtens vælges, du får bare ikke deres tilbud endnu.</p>
-    <div class="tiles">${[...BUTIKKER,...v.egneButikker.map(b=>[b,null])].map(([n,niv])=>{const on=v.butikker.includes(n);return `<button class="tile" data-w="butik" data-n="${esc(n)}" aria-pressed="${on}"><span class="lb">${esc(n)}</span><span class="sm">${niv?PRISNIVEAU[niv]:"Egen"}<br>${harTilbud(n)?"Tilbud ✓":"Ingen tilbud endnu"}</span></button>`}).join("")}<button class="tile" data-w="egenButik" aria-expanded="${wiz.egenAaben}"><span class="ik">＋</span><span class="lb">Tilføj egen</span></button></div>
-    ${wiz.egenAaben?`<div class="addrow" style="padding:12px 0 0"><input id="wizEgen" value="${esc(wiz.egenTekst)}" placeholder="Butikkens navn" aria-label="Butikkens navn" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-w="egenTilfoej">Tilføj</button></div>`:""}
-    <p class="muted" style="margin-top:10px;font-size:.85rem">Prisniveauet er et groft skøn ud fra kædens type.</p>`;
+  else if(t==="butikker")h=`<h2>Hvor handler du?</h2><p class="muted" style="margin:0;font-size:.9rem">Vælg en eller flere. <span class="tbm-inline">%</span> = appen har deres tilbud.</p>
+    <div class="tiles logo">${[...BUTIKKER,...v.egneButikker.map(b=>[b,null,null])].map(([n,niv,logo])=>{const on=v.butikker.includes(n);return `<button class="tile lg" data-w="butik" data-n="${esc(n)}" aria-pressed="${on}" aria-label="${esc(n)}${niv?", "+PRISNIVEAU[niv].toLowerCase():""}${harTilbud(n)?", har tilbud":""}">${logo?`<img src="logoer/${logo}" alt="">`:`<span class="txt">${esc(n)}</span>`}<span class="niv">${niv?PRISNIVEAU[niv]:"Egen"}</span>${harTilbud(n)?`<span class="tbm" aria-hidden="true">%</span>`:""}${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}<button class="tile lg" data-w="egenButik" aria-expanded="${wiz.egenAaben}" aria-label="Tilføj egen butik"><span class="txt" style="font-size:1.4rem">＋</span><span class="niv">Tilføj egen</span></button></div>
+    ${wiz.egenAaben?`<div class="addrow" style="padding:10px 0 0"><input id="wizEgen" value="${esc(wiz.egenTekst)}" placeholder="Butikkens navn" aria-label="Butikkens navn" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-w="egenTilfoej">Tilføj</button></div>`:""}
+    <p class="muted" style="margin-top:6px;font-size:.78rem">Prisniveauet er et groft skøn ud fra kædens type.</p>`;
   else if(t==="handel")h=`<h2>Hvor mange butikker vil du handle i om ugen?</h2><p class="muted" style="margin:0">Flere butikker kan spare penge, men tager mere tid.</p>
     <div class="tiles">${[[1,"Én","Enklest"],[2,"Op til to","Hvis det sparer"],[3,"Op til tre","Mest besparelse"]].map(([n,lb,sm])=>`<button class="tile" data-w="maks" data-n="${n}" aria-pressed="${v.maksButikker===n}"><span class="ik">${"🛒".repeat(n)}</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>
     ${v.maksButikker>1?`<h3 style="margin-top:16px">Del kun op, hvis det sparer mindst</h3><div class="tiles tal">${[25,50,100,200].map(g=>`<button class="tile" data-w="graense" data-n="${g}" aria-pressed="${v.delGraense===g}"><span class="lb" style="font-size:1.1rem">${g} kr</span><span class="sm">pr. butik</span></button>`).join("")}</div>`:""}`;
@@ -2184,7 +2197,7 @@ forbind();tHent();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="21";
+const APP_VERSION="22";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
