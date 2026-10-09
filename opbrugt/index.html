@@ -320,14 +320,15 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 17 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 18 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
 <section class="tab" id="t-indkob" aria-labelledby="h-indkob">
   <header class="top"><h1 id="h-indkob">Indkøb</h1><button class="btn ghost" id="clearChecks">Nulstil</button></header>
   <p class="sub" id="shopSub"></p>
-  <div class="chips" id="shopStores" style="margin:-6px 0 6px"></div>
+  <div id="shopPlan"></div>
+  <div class="chips" id="shopStores" style="margin:6px 0 6px"></div>
   <div id="shop"></div>
   <div class="list" style="margin-top:14px"><div class="addrow"><input id="shopIn" placeholder="Tilføj vare, fx toiletpapir" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="shopAdd">Tilføj</button></div></div>
   <details class="fold" style="margin-top:22px"><summary id="routeHead">Rækkefølge i butikken</summary>
@@ -417,7 +418,7 @@ const S = [
 const DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
 
 /* ---------- State ---------- */
-const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5",typer:{},maksButikker:1,egneButikker:[],indkobGange:1},opsat:false,opsatSkjul:false,butikOensker:[],ugeplanFor:null,ugeplanUdsat:null,ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[],egne:[],historik:[],valgtAntal:{}};
+const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5",typer:{},maksButikker:1,egneButikker:[],indkobGange:1,hovedButik:null},opsat:false,opsatSkjul:false,butikOensker:[],ugeplanFor:null,ugeplanUdsat:null,ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[],egne:[],historik:[],valgtAntal:{}};
 let st = JSON.parse(JSON.stringify(DEFAULT));
 let saveTimer = null, sample = null;
 
@@ -725,35 +726,109 @@ function fmtKoeb(k,packs){
   if(p.e==="g")return tot>=1000?(tot/1000).toLocaleString("da-DK",{maximumFractionDigits:2})+" kg":tot+" g";
   return fmt(k,tot);
 }
-function aktivButik(){const b=st.settings.butikker;if(!b.length)return null;if(!b.includes(st.aktivButik))st.aktivButik=b[0];return st.aktivButik}
+function aktivButik(){const b=shopTur.length?shopTur:st.settings.butikker;if(!b.length)return null;if(!b.includes(st.aktivButik))st.aktivButik=b[0];return st.aktivButik}
+
+/* ---------- Fordeling af indkøbet på butikker ----------
+   Hovedbutikken er den, hvor tilbuddene sparer mest (eller den, man selv har valgt). Ekstra butikker
+   lægges til én ad gangen, hvis de sparer mindst delGraense, og højst op til maksButikker.
+   Besparelse = mængde × (appens cirkapris pr. kg/l/stk − tilbuddets pris pr. kg/l/stk). Kendes
+   cirkaprisen ikke, regnes der ingen besparelse, men tilbuddet bruges, hvis man alligevel er i butikken. */
+let shopTur=[];
+function normEP(id){
+  const k=Object.keys(OB.pTilBank).find(x=>OB.pTilBank[x]===id&&P[x]);if(!k)return null;
+  const v=P[k],pr=price(k);
+  if(v.e==="g")return {kg:pr/(v.pk/1000)};if(v.e==="ml")return {l:pr/(v.pk/1000)};
+  if(v.e==="stk"){const gps=OI[id]&&OI[id].gps;return gps?{stk:pr/v.pk,kg:pr/(v.pk*gps/1000)}:{stk:pr/v.pk}}
+  return null;
+}
+function parseMaengde(t){
+  const x=String(t||"").replace(/,/g,".").match(/([\d.]+)(?:\s*-\s*[\d.]+)?\s*(kg|g|ml|cl|dl|l|stk)\b/i);
+  return x?{q:+x[1],e:x[2].toLowerCase()}:null;
+}
+function iEnhed(m,pr){
+  if(!m||!(m.q>0))return null;const {q,e}=m;
+  if(pr==="kg")return e==="g"?q/1000:e==="kg"?q:null;
+  if(pr==="l")return e==="ml"?q/1000:e==="cl"?q/100:e==="dl"?q/10:e==="l"?q:null;
+  if(pr==="stk")return e==="stk"?q:null;
+  return null;
+}
+function butikFor(kaede){return st.settings.butikker.find(b=>T_NORM(b)===T_NORM(kaede))||null}
+function tilbudPrButik(id,dato){
+  const o={};if(!id)return o;
+  for(const x of tGyldige(dato)){if(x.i!==id)continue;const b=butikFor(x.k);if(!b)continue;const y=o[b];if(!y||((x.ep!=null&&y.ep!=null&&x.pr===y.pr)?x.ep<y.ep:x.p<y.p))o[b]=x}
+  return o;
+}
+function besparelse(v,b){
+  const o=v.tilbud[b];if(!o||o.ep==null||!o.pr)return 0;
+  const ne=v.id&&normEP(v.id);if(!ne||ne[o.pr]==null)return 0;
+  const gps=v.id&&OI[v.id]&&OI[v.id].gps;
+  const behov=v.behov&&v.behov.e==="stk"&&o.pr==="kg"&&gps?{q:v.behov.q*gps,e:"g"}:v.behov;
+  const q=iEnhed(behov,o.pr)??iEnhed(parseMaengde(o.m),o.pr);if(q==null)return 0;
+  return Math.max(0,q*(ne[o.pr]-o.ep));
+}
+function fordel(p){
+  const butikker=st.settings.butikker,varer=[];
+  for(const [k,n] of Object.entries(p.res.packs)){const id=OB.pTilBank[k];varer.push({key:"c-"+k,id,behov:{q:n*P[k].pk,e:P[k].e},tilbud:tilbudPrButik(id,tUge())})}
+  st.ekstraIndkob.forEach((x,i)=>{
+    const id=oFind(x.navn),f=x.fastId&&st.fast.find(y=>y.id===x.fastId),dato=x.dato||(f&&f.dato)||tUge();
+    const tilbud=tilbudPrButik(id,dato);
+    if(!Object.keys(tilbud).length&&x.tilbud&&x.tilbud.t>=todayIso()){const b=butikFor(x.tilbud.k);if(b)tilbud[b]=x.tilbud}
+    varer.push({key:"e-"+i,id,behov:parseMaengde(x.maengde),tilbud});
+  });
+  const sum=b=>varer.reduce((a,v)=>a+besparelse(v,b),0);
+  let hoved=butikker.includes(st.settings.hovedButik)?st.settings.hovedButik:null;
+  if(!hoved&&butikker.length){let bedst=-1;for(const b of butikker){const v=sum(b)+.01*varer.filter(x=>x.tilbud[b]).length;if(v>bedst+1e-9){bedst=v;hoved=b}}}
+  const tur=hoved?[hoved]:[],tildelt=new Map(varer.map(v=>[v.key,hoved]));
+  const spar=v=>besparelse(v,tildelt.get(v.key));
+  const maks=Math.max(1,st.settings.maksButikker||1),graense=st.settings.delGraense||0;
+  let misset=null;
+  while(hoved){
+    let bedst=null;
+    for(const b of butikker){if(tur.includes(b))continue;const g=varer.reduce((a,v)=>a+Math.max(0,besparelse(v,b)-spar(v)),0);if(g>0&&(!bedst||g>bedst.g))bedst={b,g}}
+    if(!bedst)break;
+    if(tur.length>=maks||bedst.g<graense){misset=bedst;break}
+    tur.push(bedst.b);for(const v of varer)if(besparelse(v,bedst.b)>spar(v))tildelt.set(v.key,bedst.b);
+  }
+  /* Tilbud uden beregnet besparelse: køb dem i en butik, man alligevel skal i */
+  for(const v of varer){const b=tildelt.get(v.key);if(spar(v)>0||(b&&v.tilbud[b]))continue;const alt=tur.filter(x=>v.tilbud[x]).sort((x,y)=>v.tilbud[x].p-v.tilbud[y].p)[0];if(alt)tildelt.set(v.key,alt)}
+  const prButik={};for(const b of tur)prButik[b]={antal:0,spar:0};
+  for(const v of varer){const b=tildelt.get(v.key);if(!b)continue;prButik[b].antal++;prButik[b].spar+=besparelse(v,b)}
+  return {hoved,tur,tildelt,prButik,misset,tilbud:new Map(varer.map(v=>[v.key,v.tilbud[tildelt.get(v.key)]||null]))};
+}
 function rute(){const b=aktivButik()||"_";const r=(Array.isArray(st.ruter[b])?st.ruter[b]:[]).filter(a=>AFD[a]);for(const a of STD_RUTE)if(!r.includes(a)){const i=r.indexOf("andet");if(a!=="andet"&&i>=0)r.splice(i,0,a);else r.push(a)}return r}
 function mTxt(m){if(typeof m==="string")return m;return ((m.maengde?m.maengde+" ":"")+(m.navn||"")).trim()}
 
 function renderShop(p){
   const sh=document.getElementById("shop");
-  const rows={};const add=(a,html)=>(rows[a]=rows[a]||[]).push(html);
+  const F=fordel(p);shopTur=F.tur;
+  const ab0=aktivButik(),delt=F.tur.length>1;
+  const rows={};const add=(a,html,key)=>{if(delt&&key&&F.tildelt.get(key)!==ab0)return;(rows[a]=rows[a]||[]).push(html)};
+  const tbHtml=key=>{const o=F.tilbud.get(key);return o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:""};
   for(const [k,n] of Object.entries(p.res.packs)){
     const id="c-"+k, done=st.checked.includes(k);
     const L=p.res.left[k], brug=n*P[k].pk-(L?.fresh||0);
     const bruger=brug>0&&L&&L.fresh>1e-6?" · du bruger ca. "+fmt(k,brug):"";
     const sub=P[k].loes?"løs vægt":P[k].e==="fed"?`${n*P[k].pk} fed${bruger}`:`${n} ${n===1?"pakke":"pakker"} à ${fmtKoeb(k,1)}${bruger}`;
-    add(afdOf(k),`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="${k}" ${done?"checked":""}><div class="grow"><b>${fmtKoeb(k,n)}</b> ${pname(k).replace(/ \(løs\)/,"").toLowerCase()}<div class="amt">${sub}</div></div><div class="price">${kr(n*price(k))}</div></label>`);
+    add(afdOf(k),`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="${k}" ${done?"checked":""}><div class="grow"><b>${fmtKoeb(k,n)}</b> ${pname(k).replace(/ \(løs\)/,"").toLowerCase()}<div class="amt">${sub}</div>${tbHtml("c-"+k)}</div><div class="price">${kr(n*price(k))}</div></label>`,"c-"+k);
   }
   for(const b of p.basis){
     const id="b-"+b, done=st.checked.includes("basis:"+b);
+    if(delt&&ab0!==F.hoved)continue;
     add("toer",`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="basis:${b}" ${done?"checked":""}><div class="grow"><b>${BASIS_PAK[b]||"1"}</b> ${BASIS[b].toLowerCase()}<div class="amt">basisvare, du er løbet tør for</div></div></label>`);
   }
   st.ekstraIndkob.forEach((x,i)=>{
     const afd=AFD[x.kat]?x.kat:gaetAfd(x.navn);
-    add(afd,`<label class="item ${x.done?"done":""}"><input type="checkbox" data-ei="${i}" ${x.done?"checked":""}><div class="grow">${x.maengde?`<b>${esc(x.maengde)}</b> `+esc(x.navn.charAt(0).toLowerCase()+x.navn.slice(1)):esc(x.navn)}${x.til?`<div class="amt">til ${esc(x.til)}</div>`:""}${x.tilbud?`<div class="amt tbtxt">Tilbud: ${esc(tKort(x.tilbud,x.dato))}</div>`:""}</div><button class="x" data-ex="${i}" aria-label="Fjern">×</button></label>`);
+    add(afd,`<label class="item ${x.done?"done":""}"><input type="checkbox" data-ei="${i}" ${x.done?"checked":""}><div class="grow">${x.maengde?`<b>${esc(x.maengde)}</b> `+esc(x.navn.charAt(0).toLowerCase()+x.navn.slice(1)):esc(x.navn)}${x.til?`<div class="amt">til ${esc(x.til)}</div>`:""}${tbHtml("e-"+i)}</div><button class="x" data-ex="${i}" aria-label="Fjern">×</button></label>`,"e-"+i);
   });
   let h="";
   for(const a of rute()){if(rows[a])h+=`<div class="cat">${AFD[a]}</div><div class="list">${rows[a].join("")}</div>`}
-  if(!h)h=`<p class="muted">Indkøbslisten er tom. Vælg retter under Ugeplan, eller spørg i Snak.</p>`;
+  if(!h)h=`<p class="muted">${delt?`Intet at købe i ${esc(ab0)}.`:"Indkøbslisten er tom. Vælg retter under Ugeplan, eller spørg i Snak."}</p>`;
   sh.innerHTML=h;
-  // butiksvalg
+  renderShopPlan(F,p);
+  // butiksvalg: ved opdelt indkøb én fane pr. butik på turen, ellers alle valgte butikker (til ruten)
   const ss=document.getElementById("shopStores");ss.innerHTML="";
-  if(st.settings.butikker.length>1)for(const b of st.settings.butikker){const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",b===aktivButik());el.textContent=b;el.onclick=()=>{st.aktivButik=b;changed()};ss.appendChild(el)}
+  const faner=delt?F.tur:st.settings.butikker;
+  if(faner.length>1)for(const b of faner){const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",b===aktivButik());el.textContent=delt?`${b} · ${F.prButik[b].antal+(b===F.hoved?[...p.basis].length:0)}`:b;el.onclick=()=>{st.aktivButik=b;changed()};ss.appendChild(el)}
   // rute-redigering
   const ab=aktivButik();
   document.getElementById("routeHead").textContent="Rækkefølge i butikken"+(ab?" · "+ab:"");
@@ -768,6 +843,18 @@ function renderShop(p){
     const k=cb.dataset.k; st.checked=cb.checked?[...st.checked,k]:st.checked.filter(x=>x!==k);
     cb.closest(".item").classList.toggle("done",cb.checked); save();
   });
+}
+function renderShopPlan(F,p){
+  const el=document.getElementById("shopPlan"),s=st.settings;
+  if(!F.hoved||!TB.tilbud.length){el.innerHTML="";return}
+  const kr0=x=>"ca. "+Math.round(x)+" kr";
+  const ekstra=F.tur.slice(1).map(b=>`${b}: ${F.prButik[b].antal} ${F.prButik[b].antal===1?"vare":"varer"}, sparer ${kr0(F.prButik[b].spar)}`);
+  let t=F.tur.length>1?`Handl i ${F.tur.join(" og ")}. ${ekstra.join(". ")}.`:`Alt i ${F.hoved}.`;
+  const maks=s.maksButikker||1;
+  if(F.misset){const m=F.misset;t+=F.tur.length>=maks?` ${m.b} kunne spare ${kr0(m.g)} mere, men du har valgt højst ${maks} ${maks===1?"butik":"butikker"}.`:` ${m.b} ville kun spare ${kr0(m.g)}, så den er ikke med (din grænse er ${s.delGraense} kr).`}
+  const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px"><p style="margin:0">${esc(t)}</p><p class="muted" style="margin:6px 0 0;font-size:.85rem">Besparelsen er regnet ud fra appens cirkapriser og ugens tilbud. Antal butikker og grænsen ændres under Præferencer.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
 }
 function renderSkab(){
   const L=document.getElementById("skabList");
