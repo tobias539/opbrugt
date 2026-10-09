@@ -103,6 +103,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.tal{grid-template-columns:repeat(auto-fill,minmax(62px,1fr))}
 .tile{position:relative;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;font:inherit;color:var(--ink);cursor:pointer;min-height:44px}
 .tile[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft)}
+.tile .valgt{position:absolute;top:4px;right:4px;background:var(--leaf);color:var(--card);border-radius:99px;width:18px;height:18px;font-size:.7rem;line-height:18px;text-align:center}
 .tile .ik{font-size:1.7rem;display:block;line-height:1.2}
 .tile .lb{font-weight:700;display:block;margin-top:4px;font-size:.95rem;line-height:1.2;overflow-wrap:anywhere;hyphens:auto}
 .tile .sm{display:block;font-size:.78rem;color:var(--muted);margin-top:3px;line-height:1.25}
@@ -376,7 +377,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 34 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 35 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1348,7 +1349,7 @@ async function hentAnbefalinger(soeg){
   const prompt=`Du foreslår hverdagsretter til en dansk husstand på ${st.settings.P} personer, der handler i ${st.settings.butikker.join(", ")||"almindelige supermarkeder"}.
 Retter de kan lide: ${st.favoritter.join(", ")||"ingen endnu"}
 Retter de har fravalgt: ${st.afvist.join(", ")||"ingen"}
-Den slags mad, de gerne vil have i løbet af ugen: ${typerTekst()||"ikke angivet"}
+Det er vigtigt for dem (prioriteter): ${typerTekst()||"ikke angivet"}
 Kan ikke lide / tåler ikke (undgå helt, også som ingrediens): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
 Foreslå ikke nogen af disse igen: ${kendte.join(", ")}
 ${soeg?`De søger efter: """${soeg}""". Giv 3-6 retter, der passer til søgningen. Hvis søgningen er navnet på én bestemt ret, så medtag den ret.`:"Giv 6 nye retter, der ligner det, de kan lide, med lidt variation. Almindelige råvarer, realistisk på en hverdag."}
@@ -1546,7 +1547,7 @@ async function sendChat(override){
   const prompt=`Du er madassistenten i appen "Mad app". Brugeren skriver eller dikterer på dansk. Sund fornuft, ikke gram-præcision. Mål: god hverdagsmad, brug det man har (det der bliver dårligt først), få indkøb, mindre spild.
 
 Husstand: ${st.settings.P} personer. Butikker: ${st.settings.butikker.join(", ")||"ikke angivet"}. ${handelTekst()} Appen kender ikke ugens tilbud eller priser – nævn dem ikke som fakta.
-Ugens måltider (${st.settings.M} gange madlavning; fordel forslagene efter dem, når der planlægges flere dage): ${typerTekst()||"ikke angivet"}
+Madlavning ${st.settings.M} gange om ugen. Det er vigtigt for dem (prioriteter): ${typerTekst()||"ikke angivet"}
 Skab: ${skabTekst()}
 Mangler af basisvarer: ${st.basisMangler.map(b=>BASIS[b]).join(", ")||"ingen kendte"}
 Kan lide: ${st.favoritter.join(", ")||"ingen gemt"}
@@ -1613,12 +1614,14 @@ const MTYPER=[
   ["klassiker","🥘","Dansk klassiker","dansk klassiker"],
   ["fisk","🐟","Fisk","med fisk"],
 ];
-function typerTekst(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[3]}`).join(", ")}
-function typerKort(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>`${t[m[0]]}× ${m[2]}`).join(", ")}
+/* Prioriteter (fx sund, billig, hurtig): så mange man vil, uafhængigt af hvor mange gange man laver mad.
+   Præferencerne er udgangspunktet; de kan ændres, hver gang man laver en ny madplan. */
+function typerTekst(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>m[3]).join(", ")}
+function typerKort(t){t=t||st.settings.typer||{};return MTYPER.filter(m=>t[m[0]]>0).map(m=>m[2]).join(", ")}
 function handelTekst(s){s=s||st.settings;const n=s.maksButikker||1,g=s.indkobGange||1;return `Handler ind ${g===1?"én gang":"op til "+g+" gange"} om ugen. `+(n<=1?"Vil kun handle i én butik pr. indkøbstur.":`Vil gerne handle i op til ${n} butikker på samme indkøbstur, men kun hvis hver ekstra butik sparer mindst ${s.delGraense} kr.`)}
 function indkobKort(v){const g=Math.min(3,v.indkobGange||1);return g===1?"Én indkøbstur om ugen":`Op til ${g} indkøbsture om ugen`}
 function handelKort(v){return (v.maksButikker||1)<=1?"Én butik pr. tur":`Op til ${v.maksButikker} butikker pr. tur, hvis det sparer mindst ${v.delGraense} kr`}
-function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}${typerKort()?": "+typerKort():""}. ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${indkobKort(s)}, ${handelKort(s).charAt(0).toLowerCase()+handelKort(s).slice(1)}.`}
+function opsatResume(){const s=st.settings;return `${s.M} måltider om ugen til ${s.P} ${s.P===1?"person":"personer"}.${typerKort()?" Vigtigt: "+typerKort()+".":""} ${s.butikker.join(", ")||"Ingen butikker valgt"}. ${indkobKort(s)}, ${handelKort(s).charAt(0).toLowerCase()+handelKort(s).slice(1)}.`}
 const WIZ_TRIN=["P","M","typer","butikker","indkob","handel","oversigt"];
 let wiz=null;
 function sumTyper(t){return Object.values(t).reduce((a,b)=>a+b,0)}
@@ -1650,9 +1653,8 @@ function wizHtml(){
   if(t==="P")h=`<h2>Hvor mange er I?</h2><p class="muted" style="margin:0">Så passer mængderne i opskrifter og indkøb.</p><div class="tiles tal">${[1,2,3,4,5,6,7,8].map(n=>`<button class="tile" data-w="P" data-n="${n}" aria-pressed="${v.P===n}"><span class="lb">${n}</span><span class="sm">${n===1?"person":"personer"}</span></button>`).join("")}</div>`;
   else if(t==="M")h=`<h2>Hvor mange gange vil du lave mad om ugen?</h2><p class="muted" style="margin:0">De andre dage bliver til rester eller noget nemt.</p><div class="tiles tal">${[1,2,3,4,5,6,7].map(n=>`<button class="tile" data-w="M" data-n="${n}" aria-pressed="${v.M===n}"><span class="lb">${n}</span><span class="sm">${n===1?"gang":"gange"}</span></button>`).join("")}</div>`;
   else if(t==="typer"){
-    const sum=sumTyper(v.typer);
-    h=`<h2>Hvad skal de ${v.M} måltider være?</h2><p class="muted" style="margin:0">Tryk én gang for hvert måltid. Tryk flere gange på samme, hvis du vil have den flere gange.</p><p style="margin:8px 0 0;font-weight:700">${sum} af ${v.M} valgt</p>
-    <div class="tiles">${MTYPER.map(([id,ik,lb])=>{const n=v.typer[id]||0;return `<div style="position:relative"><button class="tile" style="width:100%;height:100%" data-w="type" data-id="${id}" aria-pressed="${n>0}" aria-label="${lb}${n?", valgt "+n+" gange":""}"><span class="ik">${ik}</span><span class="lb">${lb}</span>${n?`<span class="ant">${n}</span>`:""}</button>${n?`<button class="min" data-w="typeMinus" data-id="${id}" aria-label="Én ${lb.toLowerCase()} mindre">−</button>`:""}</div>`}).join("")}</div>`;
+    h=`<h2>Hvad er vigtigt for jer?</h2><p class="muted" style="margin:0">Vælg så mange, du vil. Det er udgangspunktet – du kan ændre det, hver gang du laver en ny madplan.</p>
+    <div class="tiles">${MTYPER.map(([id,ik,lb])=>{const on=v.typer[id]>0;return `<button class="tile" data-w="type" data-id="${id}" aria-pressed="${on}"><span class="ik">${ik}</span><span class="lb">${lb}</span>${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}</div>`;
   }
   else if(t==="butikker")h=`<h2>Hvor handler du?</h2><p class="muted" style="margin:0;font-size:.9rem">Vælg en eller flere. <span class="tbm-inline">%</span> = appen har deres tilbud.</p>
     <div class="tiles logo">${[...BUTIKKER,...v.egneButikker.map(b=>[b,null,null])].map(([n,niv,logo])=>{const on=v.butikker.includes(n);return `<button class="tile lg" data-w="butik" data-n="${esc(n)}" aria-pressed="${on}" aria-label="${esc(n)}${niv?", "+PRISNIVEAU[niv].toLowerCase():""}${harTilbud(n)?", har tilbud":""}">${logo?`<img src="logoer/${logo}" alt="">`:`<span class="txt">${esc(n)}</span>`}<span class="niv">${niv?PRISNIVEAU[niv]:"Egen"}</span>${harTilbud(n)?`<span class="tbm" aria-hidden="true">%</span>`:""}${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}<button class="tile lg" data-w="egenButik" aria-expanded="${wiz.egenAaben}" aria-label="Tilføj egen butik"><span class="txt" style="font-size:1.4rem">＋</span><span class="niv">Tilføj egen</span></button></div>
@@ -1665,10 +1667,10 @@ function wizHtml(){
     <div class="tiles">${[[1,"Én gang","Storindkøb"],[2,"Op til to gange","Friskere varer og flere tilbud"],[3,"Op til tre gange","Friskt hele ugen"]].map(([n,lb,sm])=>`<button class="tile" data-w="indkob" data-n="${n}" aria-pressed="${v.indkobGange===n}"><span class="ik">🧺</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>`;
   else{
     const uden=v.butikker.filter(b=>!harTilbud(b));
-    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Måltider",typerKort(v.typer)||"Frit valg"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Indkøbsture",indkobKort(v)],["Butikker pr. tur",handelKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
+    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Vigtigt for jer",typerKort(v.typer)||"Intet valgt"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Indkøbsture",indkobKort(v)],["Butikker pr. tur",handelKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
     ${uden.length?`<p class="muted" style="margin-top:8px">Vi har ikke tilbud fra ${esc(uden.join(", "))} endnu. Ønsket bliver gemt, så de kan komme med senere.</p>`:""}`;
   }
-  const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span><button class="btn ghost" data-w="luk">Luk</button>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">${t==="typer"&&sumTyper(v.typer)<v.M?"Næste (resten frit)":"Næste"}</button>`}</div>`;
+  const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span><button class="btn ghost" data-w="luk">Luk</button>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">Næste</button>`}</div>`;
   return `<div class="wiz">${prik}${h}${nav}</div>`;
 }
 function wizHandling(b,host){
@@ -1680,10 +1682,8 @@ function wizHandling(b,host){
   if(w==="P"){v.P=+b.dataset.n;wiz.trin++}
   else if(w==="M"){
     v.M=+b.dataset.n;wiz.trin++;
-    while(sumTyper(v.typer)>v.M){const k=Object.keys(v.typer).pop();if(--v.typer[k]<=0)delete v.typer[k]}
   }
-  else if(w==="type"){if(sumTyper(v.typer)>=v.M){toast(`Du har valgt alle ${v.M}. Tryk − for at fjerne en.`);return}v.typer[b.dataset.id]=(v.typer[b.dataset.id]||0)+1}
-  else if(w==="typeMinus"){const id=b.dataset.id;if(--v.typer[id]<=0)delete v.typer[id]}
+  else if(w==="type"){const id=b.dataset.id;if(v.typer[id]>0)delete v.typer[id];else v.typer[id]=1}
   else if(w==="butik"){const n=b.dataset.n;v.butikker=v.butikker.includes(n)?v.butikker.filter(x=>x!==n):[...v.butikker,n]}
   else if(w==="egenButik")wiz.egenAaben=!wiz.egenAaben;
   else if(w==="egenTilfoej"){
@@ -1775,7 +1775,7 @@ function ugeplanStart(hvilken){
   if(hvilken==="naeste"&&!ny){toast("Næste uges tilbudsaviser er ikke klar endnu");return}
   const start=hvilken==="naeste"?ny:(fastPaa(t0)?addDays(t0,1):t0);
   const slut=hvilken==="naeste"||!ny?addDays(start,6):addDays(ny,-1);
-  up={trin:"skab",hvilken,start,slut,forslag:[],valgt:new Set(),aaben:-1,kategori:null,fejl:"",tilfoejTekst:""};
+  up={trin:"skab",hvilken,start,slut,prio:{...(st.settings.typer||{})},forslag:[],valgt:new Set(),aaben:-1,kategori:null,fejl:"",tilfoejTekst:""};
   renderUgeplan();window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
@@ -1802,7 +1802,9 @@ function ugeplanHtml(){
     ${fs.res.length?`<details style="margin-top:10px"><summary class="muted">Bruges til retter, der allerede står på planen (${fs.res.length})</summary><p class="muted" style="margin:6px 0 0">${fs.res.map(r=>esc(r.navn)+" til "+esc(r.ret.toLowerCase())+" "+esc(dayLabel(r.dato,true))).join(", ")}</p></details>`:""}
     <div class="nav"><span class="grow"></span>${luk}<button class="btn" data-u="hvordan">Det passer</button></div>`;
   }
-  if(up.trin==="hvordan")return `<h2>Hvordan vil du finde retterne?</h2><p class="muted" style="margin:0">${slut===up.start?"Kun":"Ugen"} ${esc(periode)}.</p>
+  if(up.trin==="hvordan")return `<h2>Hvad er vigtigt denne gang?</h2><p class="muted" style="margin:0">${slut===up.start?"Kun":"Ugen"} ${esc(periode)}. Valgt ud fra jeres præferencer – tryk for at ændre.</p>
+    <div class="chips" style="margin-top:8px">${MTYPER.map(([id,ik,lb])=>`<button class="chip" data-u="prio" data-id="${id}" aria-pressed="${up.prio[id]>0}">${ik} ${esc(lb)}</button>`).join("")}</div>
+    <h3 style="margin-top:16px">Hvordan vil du finde retterne?</h3>
     <div class="tiles">
       <button class="tile" data-u="anbefal"><span class="ik">✨</span><span class="lb">Anbefal til mig</span><span class="sm">${(n=>n===1?"1 ret":n+" retter")(Math.max(1,vaelgDage(up.start,st.settings.M,up.slut).length))} ud fra skab, tilbud og jeres præferencer</span></button>
       <button class="tile" data-u="kategorier"><span class="ik">🗂️</span><span class="lb">Vælg efter kategori</span><span class="sm">Sundt, hurtigt, billigt …</span></button>
@@ -1855,6 +1857,7 @@ function ugeplanHandling(b){
   if(u==="tilfoej"){const v=up.tilfoejTekst.trim();if(!v)return;st.fri.push({navn:v,niveau:"hel"});up.tilfoejTekst="";changed();return}
   if(u==="hvordan"||u==="tilbage"){up.trin=b.dataset.til||"hvordan";up.aaben=-1;renderUgeplan();return}
   if(u==="kategorier"){up.trin="kategorier";renderUgeplan();return}
+  if(u==="prio"){const id=b.dataset.id;if(up.prio[id]>0)delete up.prio[id];else up.prio[id]=1;renderUgeplan();return}
   if(u==="snak"){up=null;renderUgeplan();const c=document.getElementById("chatIn");c.placeholder="Fx: jeg har lyst til lasagne på søndag";c.scrollIntoView({behavior:"smooth",block:"center"});c.focus();return}
   if(u==="anbefal"){up.kategori=null;hentUgeforslag();return}
   if(u==="kategori"){up.kategori=b.dataset.id;hentUgeforslag();return}
@@ -1889,8 +1892,7 @@ async function hentUgeforslag(){
   up.trin="arbejder";up.fejl="";up.fejlDetalje="";up.aaben=-1;renderUgeplan();
   const s=st.settings,slut=up.slut||addDays(up.start,6),kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
   const dage=vaelgDage(up.start,kat?7:s.M,slut);
-  const typeListe=MTYPER.flatMap(m=>Array(s.typer?.[m[0]]||0).fill(m[3]));
-  while(typeListe.length<dage.length)typeListe.push("frit valg");
+  const prio=typerTekst(up.prio);
   const fs=forventetSkab(addDays(up.start,7));
   const skabTxt=skabLinjer(fs).map(x=>x.navn+(x.tekst?" ("+x.tekst+")":"")+(x.dage!=null?`, holder ca. ${x.dage} dage`:"")).join("; ")||"tomt";
   const favs=st.favoritter.filter(n=>!st.ikkeLide.some(x=>n.toLowerCase().includes(x.navn.toLowerCase())));
@@ -1898,7 +1900,7 @@ async function hentUgeforslag(){
   const prompt=`Du er madassistenten i appen "Mad app". Lav forslag til aftensmad i ugen ${dayLabel(up.start,true)} – ${dayLabel(slut,true)}. Skriv på dansk.
 Husstand: ${s.P} personer. Butikker: ${s.butikker.join(", ")||"ikke angivet"}. ${handelTekst()} Læg det, der holder kortest (fisk, hakket kød, salat), lige efter en indkøbsdag.
 ${kat?`Alle forslag skal være: ${kat[3]}. Giv 6 forskellige forslag. Sæt "dag" til en af disse datoer, helst forskellige: ${dage.join(", ")}.`:`Én ret pr. dag på præcis disse datoer: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}.
-Fordel disse måltidstyper på dagene og skriv typen i "type": ${typeListe.join(", ")}.`}
+${prio?`PRIORITETER denne gang: ${prio}. Vælg retter, så ugen samlet rammer prioriteterne (en ret kan ramme flere, og der kan være flere prioriteter end retter). Skriv i "type" den prioritet, retten især rammer.`:`Ingen særlige prioriteter: vælg frit og varieret.`}`}
 ${(s.indkobGange||1)>1?`INDKØBSDAGE: De handler ind op til ${Math.min(3,s.indkobGange)} gange i perioden. Vælg selv indkøbsdagene (højst ${Math.min(3,s.indkobGange)} forskellige datoer, den første senest på dagen for den første ret), og sæt "indkob" på hver ret til datoen, hvor dens varer købes. Brug indkøbsdagene til to ting: 1) friskhed – kød, fisk og friske grøntsager købes højst 2 dage før retten; 2) besparelse – læg indkøbet på en dag, hvor tilbuddet på rettens hovedingrediens gælder (se [gælder …] ved tilbuddene), fx en lørdag, hvis weekendtilbuddet er godt.`:""}
 Det har de i skabet, som ikke allerede er sat af til planen. Brug det først, og det, der holder kortest, først: ${skabTxt}
 GRUND TIL HVER RET: Skriv i "hvorfor" én god og ægte grund, der starter med "Fordi" (højst 9 ord). Gode grunde:
@@ -2604,7 +2606,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="34";
+const APP_VERSION="35";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
