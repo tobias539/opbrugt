@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Opbrugt">
 <meta name="theme-color" content="#23523F">
+<link rel="apple-touch-icon" href="ikon-180.png">
+<link rel="icon" type="image/png" href="ikon-180.png">
 <title>Opbrugt – madplan uden rester</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -274,6 +276,17 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <h2>Ny uge</h2>
   <p class="muted">Det, der kan holde sig, flyttes over i skabet, og pakkeberegningen starter forfra.</p>
   <button class="btn" id="endWeek">Afslut ugen</button>
+  <h2>Dine data</h2>
+  <p class="muted">Skab, plan, indkøbsliste og præferencer ligger kun på denne telefon. Gem en kopi, før du skifter telefon, og hent den ind igen bagefter.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn ghost" id="eksportBtn">Gem kopi</button>
+    <label class="btn ghost" style="display:inline-block">Hent fra fil<input type="file" id="importFil" accept=".json,application/json,text/plain" hidden></label>
+    <button class="btn ghost" id="importTekstBtn">Indsæt tekst</button>
+  </div>
+  <div id="importTekstWrap" style="display:none;margin-top:10px">
+    <textarea id="importTekst" rows="4" placeholder="Indsæt teksten fra en gemt kopi" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;color:inherit"></textarea>
+    <button class="btn" id="importTekstOk" style="margin-top:8px">Hent ind</button>
+  </div>
   <h2>Forbindelse til Claude</h2>
   <p class="muted">Appen bruger Claude med en API-nøgle. Nøglen gemmes kun i denne browser.</p>
   <div class="list"><div class="addrow"><input id="keyIn" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="keySave">Gem</button></div></div>
@@ -282,7 +295,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
     <div class="addrow"><label for="modelScan" style="flex:1">Kvitteringer</label><select id="modelScan"></select></div>
   </div>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 13 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 14 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1514,6 +1527,30 @@ document.getElementById("keySave").onclick=()=>{
   inp.value="";forbind();toast("Nøglen er gemt");
 };
 for(const id of ["modelHurtig","modelScan"])document.getElementById(id).onchange=e=>{st.settings[id]=e.target.value;changed();forbind()};
+
+/* ---------- Kopi af data: flyt til en anden telefon eller hent fra den gamle artifact ---------- */
+document.getElementById("eksportBtn").onclick=async()=>{
+  const navn=`opbrugt-data-${todayIso()}.json`;
+  const tekst=JSON.stringify({app:"opbrugt",eksporteret:new Date().toISOString(),data:st});
+  const fil=new File([tekst],navn,{type:"application/json"});
+  try{if(navigator.canShare&&navigator.canShare({files:[fil]})){await navigator.share({files:[fil],title:"Opbrugt-data"});return}}
+  catch(e){if(e&&e.name==="AbortError")return}
+  const a=document.createElement("a");a.href=URL.createObjectURL(fil);a.download=navn;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+};
+function importer(tekst){
+  let d;try{d=JSON.parse(tekst)}catch(e){toast("Teksten kunne ikke læses");return}
+  if(d&&d.app==="opbrugt"&&d.data)d=d.data;
+  if(!d||typeof d!=="object"||!d.settings||!Array.isArray(d.fast)){toast("Det ligner ikke data fra Opbrugt");return}
+  if(!confirm(`Erstat det, der ligger i appen nu, med den gemte kopi? (${(d.favoritter||[]).length} favoritter, ${d.fast.length} retter på planen)`))return;
+  merge(d);changed();forbind();
+  document.getElementById("importTekst").value="";document.getElementById("importTekstWrap").style.display="none";
+  toast("Data er hentet ind");
+}
+document.getElementById("importFil").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)importer(await f.text())};
+document.getElementById("importTekstBtn").onclick=()=>{const w=document.getElementById("importTekstWrap");w.style.display=w.style.display==="none"?"":"none"};
+document.getElementById("importTekstOk").onclick=()=>importer(document.getElementById("importTekst").value);
+
 forbind();tHent();
 </script>
 </body>
