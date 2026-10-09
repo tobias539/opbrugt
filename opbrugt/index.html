@@ -108,6 +108,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.tal .tile .lb{font-size:1.4rem;margin:0}
 .wiz .nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
 .wiz .nav .grow{flex:1}
+#t-pref.kunGuide > :not(header):not(#prefOpsat){display:none}
 
 .set{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
 .set:last-child{border-bottom:0}
@@ -125,6 +126,15 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .scanrow .grow{flex:1;min-width:0}
 .log{display:flex;flex-direction:column;gap:22px;margin:0 0 14px}
 .tur{display:flex;flex-direction:column;gap:14px}
+.ugehead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:4px}.ugehead h2{margin:0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}.stat b{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.1}.stat span{color:var(--muted);font-size:.9rem}
+.sitem{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:var(--card);border:0;border-bottom:1px solid var(--line);padding:10px 14px;font:inherit;color:inherit;cursor:pointer}
+.sitem:last-child{border-bottom:0}.sitem .grow{flex:1;min-width:0}.sitem.ikke .grow{text-decoration:line-through;opacity:.5}
+.sitem .ikketag{font-size:.8rem;color:var(--carrot)}
+.sitem{padding:8px 12px}.sitem .amt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#shopAfd,#shopStores{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}#shopAfd::-webkit-scrollbar,#shopStores::-webkit-scrollbar{display:none}
+#shopAfd .chip,#shopStores .chip{flex:0 0 auto}
 .me{align-self:flex-end;background:var(--leaf);color:var(--bg);border-radius:16px 16px 4px 16px;padding:9px 14px;max-width:85%}
 .bot p{margin:0 0 8px}
 .dish{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
@@ -198,17 +208,12 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- PLAN -->
 <section class="tab on" id="t-snak" aria-labelledby="h-snak">
   <header class="top"><h1 id="h-snak">Opbrugt</h1><span class="muted" id="saveState"></span></header>
-  <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indtast API-nøglen under Præferencer → Forbindelse til Claude. Planen, skabet og indkøbslisten virker også uden.</p></div>
+  <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indsæt API-nøglen her. Planen, skabet og indkøbslisten virker også uden.</p><div class="addrow" style="padding:10px 0 0"><input id="keyIn2" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" aria-label="API-nøgle" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn" id="keySave2">Gem</button></div></div>
 
-  <div class="strip" role="group" aria-label="Dage">
-    <button class="arrow" id="prevDays" aria-label="Tidligere dage">‹</button>
-    <div class="days" id="days"></div>
-    <button class="arrow" id="nextDays" aria-label="Senere dage">›</button>
-  </div>
+  <div id="ugeInfo"></div>
+  <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"><button class="btn" id="ugeplanBtn">Planlæg ugen</button></div>
   <div id="opsStart"></div>
   <div id="ugeplan"></div>
-  <div id="dayInfo"></div>
-  <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"><button class="btn" id="anbefalBtn">Anbefal</button><button class="btn ghost" id="ryddage">Fravælg dage</button><button class="btn ghost" id="ugeplanBtn">Planlæg ugen</button></div>
 
   <div class="ask" style="margin-top:18px">
     <label for="chatIn" class="muted">Skriv eller tal – fx "vi får gæster", "jeg har rødbeder" eller "jeg mangler toiletpapir"</label>
@@ -275,14 +280,14 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <p class="sub">Det, appen tager hensyn til, hver gang den foreslår noget.</p>
   <h2 style="margin-top:6px">Dine præferencer</h2>
   <div id="prefOpsat"></div>
-  <h2>Forbindelse til Claude</h2>
+  <details class="fold" id="flere" style="margin-top:22px"><summary>Flere indstillinger</summary>
+  <h2 style="margin-top:12px">Forbindelse til Claude</h2>
   <p class="muted">Appen bruger Claude med en API-nøgle. Nøglen gemmes kun i denne browser.</p>
   <div class="list"><div class="addrow"><input id="keyIn" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="keySave">Gem</button></div></div>
   <div class="list" style="margin-top:10px">
     <div class="addrow"><label for="modelHurtig" style="flex:1">Snak</label><select id="modelHurtig"></select></div>
     <div class="addrow"><label for="modelScan" style="flex:1">Kvitteringer og nye opskrifter</label><select id="modelScan"></select></div>
   </div>
-  <details class="fold" id="flere" style="margin-top:22px"><summary>Flere indstillinger</summary>
   <h2 style="margin-top:12px">Dine instruktioner</h2>
   <p class="muted">Fx "vi vil spise flere grøntsager", "jeg er begyndt at træne", "fisk mindst én gang om ugen". Du kan også sige det i samtalen.</p>
   <div class="list" id="instrList"></div>
@@ -321,7 +326,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 20 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 21 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -330,6 +335,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <p class="sub" id="shopSub"></p>
   <div id="shopPlan"></div>
   <div class="chips" id="shopStores" style="margin:6px 0 6px"></div>
+  <div class="chips" id="shopAfd" style="margin:4px 0 8px" aria-label="Afdelinger"></div>
   <div id="shop"></div>
   <div class="list" style="margin-top:14px"><div class="addrow"><input id="shopIn" placeholder="Tilføj vare, fx toiletpapir" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="shopAdd">Tilføj</button></div></div>
   <details class="fold" style="margin-top:22px"><summary id="routeHead">Rækkefølge i butikken</summary>
@@ -767,15 +773,13 @@ function besparelse(v,b){
   const q=iEnhed(behov,o.pr)??iEnhed(parseMaengde(o.m),o.pr);if(q==null)return 0;
   return Math.max(0,q*(ne[o.pr]-o.ep));
 }
-function fordel(p){
+function fordel(grupper){
   const butikker=st.settings.butikker,varer=[];
-  for(const [k,n] of Object.entries(p.res.packs)){const id=OB.pTilBank[k];varer.push({key:"c-"+k,id,behov:{q:n*P[k].pk,e:P[k].e},tilbud:tilbudPrButik(id,tUge())})}
-  st.ekstraIndkob.forEach((x,i)=>{
-    const id=oFind(x.navn),f=x.fastId&&st.fast.find(y=>y.id===x.fastId),dato=x.dato||(f&&f.dato)||tUge();
-    const tilbud=tilbudPrButik(id,dato);
-    if(!Object.keys(tilbud).length&&x.tilbud&&x.tilbud.t>=todayIso()){const b=butikFor(x.tilbud.k);if(b)tilbud[b]=x.tilbud}
-    varer.push({key:"e-"+i,id,behov:parseMaengde(x.maengde),tilbud});
-  });
+  for(const g of grupper){
+    const tilbud=tilbudPrButik(g.id,g.dato||tUge());
+    if(!Object.keys(tilbud).length&&g.fastTilbud&&g.fastTilbud.t>=todayIso()){const b=butikFor(g.fastTilbud.k);if(b)tilbud[b]=g.fastTilbud}
+    varer.push({key:g.key,id:g.id,behov:g.behov>0&&g.enhed?{q:g.behov,e:g.enhed}:null,tilbud});
+  }
   const sum=b=>varer.reduce((a,v)=>a+besparelse(v,b),0);
   let hoved=butikker.includes(st.settings.hovedButik)?st.settings.hovedButik:null;
   if(!hoved&&butikker.length){let bedst=-1;for(const b of butikker){const v=sum(b)+.01*varer.filter(x=>x.tilbud[b]).length;if(v>bedst+1e-9){bedst=v;hoved=b}}}
@@ -796,65 +800,119 @@ function fordel(p){
   for(const v of varer){const b=tildelt.get(v.key);if(!b)continue;prButik[b].antal++;prButik[b].spar+=besparelse(v,b)}
   return {hoved,tur,tildelt,prButik,misset,tilbud:new Map(varer.map(v=>[v.key,v.tilbud[tildelt.get(v.key)]||null]))};
 }
+/* ---------- Samlet indkøbsliste ----------
+   Samme vare fra flere retter (og fra pakkeberegningen) bliver til én linje. Mængden er det, opskrifterne
+   faktisk bruger, lagt sammen og rundet op til hele pakker én gang, så en pose løg dækker flere retter.
+   Varer, der er samme vare i banken (fx kyllingebryst, -inderfilet og -strimler), lægges sammen. */
+function normMaengde(q,e){if(e==="kg")return [q*1000,"g"];if(e==="l")return [q*1000,"ml"];if(e==="dl")return [q*100,"ml"];if(e==="cl")return [q*10,"ml"];return [q,e]}
+function pNoegle(id){return id?Object.keys(OB.pTilBank).find(k=>OB.pTilBank[k]===id&&P[k])||null:null}
+function samletIndkob(p){
+  const g=new Map();
+  const put=(key,init)=>{if(!g.has(key))g.set(key,{key,...init,behov:0,ukendt:0,kilder:[],retter:new Set(),tekster:[],dato:null});return g.get(key)};
+  for(const [k,n] of Object.entries(p.res.packs)){const v=put("p:"+k,{navn:pname(k).replace(/ \(løs\)/,""),pk:k,id:OB.pTilBank[k]||null,afd:afdOf(k),enhed:P[k].e});v.behov+=n*P[k].pk}
+  st.ekstraIndkob.forEach((x,i)=>{
+    if(x.done)return;
+    const id=oFind(x.navn),pk=pNoegle(id),f=x.fastId&&st.fast.find(y=>y.id===x.fastId),r=f&&f.opskrift&&ORMAP[f.opskrift];
+    let m=null,e=null;
+    if(r&&id){const l=r.ing.find(l=>l.i===id);if(l&&l.m!=null){m=oTil(l,f.personer||st.settings.P,r.pb);e=l.e}}
+    if(m==null){const pm=parseMaengde(x.maengde);if(pm)[m,e]=normMaengde(pm.q,pm.e)}
+    const key=pk?"p:"+pk:id?"i:"+id:"n:"+x.navn.toLowerCase().trim();
+    const afd=pk?afdOf(pk):AFD[x.kat]?x.kat:(id&&AFD[OI[id].afd]?OI[id].afd:gaetAfd(x.navn));
+    const v=put(key,{navn:pk?pname(pk).replace(/ \(løs\)/,""):id?OI[id].n:x.navn,pk,id,afd,enhed:pk?P[pk].e:id?OI[id].be:null});
+    let q=null;
+    if(m!=null&&e){
+      if(e===v.enhed)q=m;
+      else if(id&&OI[id]){
+        const vare=OI[id];
+        if(pk&&(P[pk].e==="g"||P[pk].e==="ml"))q=oGram(m,e,vare);
+        else if(pk&&P[pk].e==="stk"&&vare.gps){const gr=oGram(m,e,vare);q=gr!=null?gr/vare.gps:oOmregn(m,e,vare)}
+        else q=oOmregn(m,e,vare);
+      }else if(!v.enhed){v.enhed=e;q=m}
+    }
+    if(q!=null&&q>0)v.behov+=q;else v.ukendt++;
+    v.kilder.push(i);if(x.til)v.retter.add(x.til);if(x.maengde)v.tekster.push(x.maengde);
+    if(x.tilbud&&!v.fastTilbud)v.fastTilbud=x.tilbud;
+    const d=x.dato||(f&&f.dato);if(d&&(!v.dato||d<v.dato))v.dato=d;
+  });
+  for(const b of p.basis)put("b:"+b,{navn:BASIS[b],afd:"toer",basis:b,enhed:null});
+  for(const v of g.values()){
+    if(v.basis){v.koeb=BASIS_PAK[v.basis]||"1";continue}
+    if(v.pk){const pk=P[v.pk].pk;v.pakker=v.behov>0?Math.ceil(v.behov/pk-1e-9):1;v.koeb=fmtKoeb(v.pk,v.pakker);v.pris=v.pakker*price(v.pk);continue}
+    if(v.behov>0&&v.enhed)v.koeb=oFmt(v.behov,v.enhed)+(v.ukendt?" +":"");
+    else v.koeb=v.tekster.length===1?v.tekster[0]:"";
+  }
+  return [...g.values()];
+}
 function rute(){const b=aktivButik()||"_";const r=(Array.isArray(st.ruter[b])?st.ruter[b]:[]).filter(a=>AFD[a]);for(const a of STD_RUTE)if(!r.includes(a)){const i=r.indexOf("andet");if(a!=="andet"&&i>=0)r.splice(i,0,a);else r.push(a)}return r}
 function mTxt(m){if(typeof m==="string")return m;return ((m.maengde?m.maengde+" ":"")+(m.navn||"")).trim()}
 
+let shopAfd=null;const shopIkke=new Set();
+const visAfd=a=>a==="ost"?"mejeri":a;
+const afdNavn=a=>a==="mejeri"?"Mejeri, køl og ost":AFD[a];
 function renderShop(p){
   const sh=document.getElementById("shop");
-  const F=fordel(p);shopTur=F.tur;
-  const ab0=aktivButik(),delt=F.tur.length>1;
-  const rows={};const add=(a,html,key)=>{if(delt&&key&&F.tildelt.get(key)!==ab0)return;(rows[a]=rows[a]||[]).push(html)};
-  const tbHtml=key=>{const o=F.tilbud.get(key);return o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:""};
-  for(const [k,n] of Object.entries(p.res.packs)){
-    const id="c-"+k, done=st.checked.includes(k);
-    const L=p.res.left[k], brug=n*P[k].pk-(L?.fresh||0);
-    const bruger=brug>0&&L&&L.fresh>1e-6?" · du bruger ca. "+fmt(k,brug):"";
-    const sub=P[k].loes?"løs vægt":P[k].e==="fed"?`${n*P[k].pk} fed${bruger}`:`${n} ${n===1?"pakke":"pakker"} à ${fmtKoeb(k,1)}${bruger}`;
-    add(afdOf(k),`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="${k}" ${done?"checked":""}><div class="grow"><b>${fmtKoeb(k,n)}</b> ${pname(k).replace(/ \(løs\)/,"").toLowerCase()}<div class="amt">${sub}</div>${tbHtml("c-"+k)}</div><div class="price">${kr(n*price(k))}</div></label>`,"c-"+k);
-  }
-  for(const b of p.basis){
-    const id="b-"+b, done=st.checked.includes("basis:"+b);
-    if(delt&&ab0!==F.hoved)continue;
-    add("toer",`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="basis:${b}" ${done?"checked":""}><div class="grow"><b>${BASIS_PAK[b]||"1"}</b> ${BASIS[b].toLowerCase()}<div class="amt">basisvare, du er løbet tør for</div></div></label>`);
-  }
-  st.ekstraIndkob.forEach((x,i)=>{
-    const afd=AFD[x.kat]?x.kat:gaetAfd(x.navn);
-    add(afd,`<label class="item ${x.done?"done":""}"><input type="checkbox" data-ei="${i}" ${x.done?"checked":""}><div class="grow">${x.maengde?`<b>${esc(x.maengde)}</b> `+esc(x.navn.charAt(0).toLowerCase()+x.navn.slice(1)):esc(x.navn)}${x.til?`<div class="amt">til ${esc(x.til)}</div>`:""}${tbHtml("e-"+i)}</div><button class="x" data-ex="${i}" aria-label="Fjern">×</button></label>`,"e-"+i);
-  });
-  let h="";
-  for(const a of rute()){if(rows[a])h+=`<div class="cat">${AFD[a]}</div><div class="list">${rows[a].join("")}</div>`}
-  if(!h)h=`<p class="muted">${delt?`Intet at købe i ${esc(ab0)}.`:"Indkøbslisten er tom. Vælg retter under Ugeplan, eller spørg i Snak."}</p>`;
-  sh.innerHTML=h;
-  renderShopPlan(F,p);
-  // butiksvalg: ved opdelt indkøb én fane pr. butik på turen, ellers alle valgte butikker (til ruten)
-  const ss=document.getElementById("shopStores");ss.innerHTML="";
-  const faner=delt?F.tur:st.settings.butikker;
-  if(faner.length>1)for(const b of faner){const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",b===aktivButik());el.textContent=delt?`${b} · ${F.prButik[b].antal+(b===F.hoved?[...p.basis].length:0)}`:b;el.onclick=()=>{st.aktivButik=b;changed()};ss.appendChild(el)}
+  const G=samletIndkob(p),F=fordel(G);shopTur=F.tur;
+  const butik=aktivButik(),delt=F.tur.length>1;
+  const iButik=G.filter(v=>!delt||F.tildelt.get(v.key)===butik);
+  const afdeling=[...new Set(rute().map(visAfd))].filter(a=>iButik.some(v=>visAfd(v.afd)===a));
+  if(!afdeling.includes(shopAfd))shopAfd=afdeling[0]||null;
+  // butikker og afdelinger som faner
+  const ss=document.getElementById("shopStores");
+  ss.innerHTML=delt?F.tur.map(b=>`<button class="chip" data-butik="${esc(b)}" aria-pressed="${b===butik}">${esc(b)} · ${G.filter(v=>F.tildelt.get(v.key)===b).length}</button>`).join(""):"";
+  ss.querySelectorAll("[data-butik]").forEach(x=>x.onclick=()=>{st.aktivButik=x.dataset.butik;shopAfd=null;changed()});
+  const af=document.getElementById("shopAfd");
+  af.innerHTML=afdeling.length>1?afdeling.map(a=>`<button class="chip" data-afd="${a}" aria-pressed="${a===shopAfd}">${esc(afdNavn(a))} · ${iButik.filter(v=>visAfd(v.afd)===a).length}</button>`).join(""):"";
+  af.querySelectorAll("[data-afd]").forEach(x=>x.onclick=()=>{shopAfd=x.dataset.afd;renderShop(last)});
+  // varerne i den valgte afdeling
+  const liste=iButik.filter(v=>visAfd(v.afd)===shopAfd);
+  const naeste=afdeling[afdeling.indexOf(shopAfd)+1]||(delt&&F.tur[F.tur.indexOf(butik)+1])||null;
+  if(!G.length)sh.innerHTML=`<p class="muted">Indkøbslisten er tom. Planlæg ugen, eller spørg i Snak.</p>`;
+  else if(!liste.length)sh.innerHTML=`<p class="muted">Intet at købe i ${esc(butik||"butikken")}.</p>`;
+  else sh.innerHTML=`${afdeling.length<=1?`<div class="cat">${esc(afdNavn(shopAfd))}</div>`:""}<div class="list">${liste.map(v=>{
+      const o=F.tilbud.get(v.key),ikke=shopIkke.has(v.key);
+      const info=[v.retter.size>1?"til "+v.retter.size+" retter":v.retter.size?"til "+[...v.retter][0].toLowerCase():"",v.basis?"basisvare, du er løbet tør for":""].filter(Boolean).join(" · ");
+      return `<button class="sitem ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}"><div class="grow">${v.koeb?`<b>${esc(v.koeb)}</b> `:""}${esc(v.navn.toLowerCase())}${info?`<div class="amt">${esc(info)}</div>`:""}${o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:""}</div>${ikke?`<span class="ikketag">ikke købt</span>`:v.pris?`<span class="price">${kr(v.pris)}</span>`:""}</button>`}).join("")}</div>
+    <p class="muted" style="margin:8px 2px 0;font-size:.85rem">Tryk på en vare, du ikke fik købt.</p>
+    <button class="btn" id="shopOk" style="margin-top:10px;width:100%">OK, købt${naeste?` – videre til ${esc(F.tur.includes(naeste)?naeste:afdNavn(naeste))}`:""}</button>`;
+  sh.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const k=b.dataset.sk;shopIkke.has(k)?shopIkke.delete(k):shopIkke.add(k);renderShop(last)});
+  const ok=document.getElementById("shopOk");
+  if(ok)ok.onclick=()=>{
+    const koebt=liste.filter(v=>!shopIkke.has(v.key));
+    koebVarer(koebt);
+    for(const v of liste)shopIkke.delete(v.key);
+    if(naeste&&F.tur.includes(naeste)&&!afdeling.includes(naeste)){st.aktivButik=naeste;shopAfd=null}else shopAfd=naeste;
+    changed();toast(koebt.length?`${koebt.length} ${koebt.length===1?"vare":"varer"} lagt i skabet`:"Videre");
+  };
+  renderShopPlan(F);
   // rute-redigering
   const ab=aktivButik();
   document.getElementById("routeHead").textContent="Rækkefølge i butikken"+(ab?" · "+ab:"");
   const r=rute(), rl=document.getElementById("routeList");
   rl.innerHTML=r.map((a,i)=>`<div class="set"><div>${i+1}. ${AFD[a]}</div><div class="step"><button data-ru="${i}" data-d="-1" aria-label="Flyt ${AFD[a]} op" ${i===0?"disabled":""}>↑</button><button data-ru="${i}" data-d="1" aria-label="Flyt ${AFD[a]} ned" ${i===r.length-1?"disabled":""}>↓</button></div></div>`).join("");
   rl.querySelectorAll("[data-ru]").forEach(b=>b.onclick=()=>{const i=+b.dataset.ru,j=i+ +b.dataset.d;const nr=[...rute()];[nr[i],nr[j]]=[nr[j],nr[i]];st.ruter[aktivButik()||"_"]=nr;changed()});
-  const tbB={};for(const x of st.ekstraIndkob)if(x.tilbud&&!x.done&&x.tilbud.t>=todayIso())tbB[x.tilbud.k]=(tbB[x.tilbud.k]||0)+1;
-  document.getElementById("shopSub").textContent=`${kr(p.total)} i alt${st.settings.oko?" · økologi på grundvarer":""}. Cirkapriser.`+(Object.keys(tbB).length?" På tilbud: "+Object.entries(tbB).map(([k,n])=>`${n} ${n===1?"vare":"varer"} i ${k}`).join(", ")+".":"");
-  sh.querySelectorAll("[data-ei]").forEach(cb=>cb.onchange=()=>{st.ekstraIndkob[+cb.dataset.ei].done=cb.checked;cb.closest(".item").classList.toggle("done",cb.checked);save()});
-  sh.querySelectorAll("[data-ex]").forEach(b=>b.onclick=ev=>{ev.preventDefault();st.ekstraIndkob.splice(+b.dataset.ex,1);changed()});
-  sh.querySelectorAll("input[data-k]").forEach(cb=>cb.onchange=()=>{
-    const k=cb.dataset.k; st.checked=cb.checked?[...st.checked,k]:st.checked.filter(x=>x!==k);
-    cb.closest(".item").classList.toggle("done",cb.checked); save();
-  });
+  const total=G.reduce((a,v)=>a+(v.pris||0),0);
+  document.getElementById("shopSub").textContent=G.length?`${G.length} ${G.length===1?"vare":"varer"}${total?` · ca. ${kr(total)} (cirkapriser)`:""}${st.settings.oko?" · økologi på grundvarer":""}.`:"";
 }
-function renderShopPlan(F,p){
+/* Købte varer lægges i skabet og fjernes fra listen. Planlagte retter tager dem fra skabet på dagen. */
+function koebVarer(liste){
+  const fjern=new Set();
+  for(const v of liste){
+    v.kilder.forEach(i=>fjern.add(i));
+    if(v.basis){st.basisMangler=st.basisMangler.filter(b=>b!==v.basis);continue}
+    if(v.pk){const k=v.pk;st.skab[k]={amt:(st.skab[k]?.amt||0)+v.pakker*P[k].pk,dage:st.skab[k]?.dage??ho(k)};continue}
+    if(!st.fri.some(x=>x.navn.toLowerCase()===v.navn.toLowerCase()))st.fri.push({navn:v.navn,niveau:"hel"});
+  }
+  st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
+}
+function renderShopPlan(F){
   const el=document.getElementById("shopPlan"),s=st.settings;
   if(!F.hoved||!TB.tilbud.length){el.innerHTML="";return}
   const kr0=x=>"ca. "+Math.round(x)+" kr";
-  const ekstra=F.tur.slice(1).map(b=>`${b}: ${F.prButik[b].antal} ${F.prButik[b].antal===1?"vare":"varer"}, sparer ${kr0(F.prButik[b].spar)}`);
-  let t=F.tur.length>1?`Handl i ${F.tur.join(" og ")}. ${ekstra.join(". ")}.`:`Alt i ${F.hoved}.`;
-  const maks=s.maksButikker||1;
-  if(F.misset){const m=F.misset;t+=F.tur.length>=maks?` ${m.b} kunne spare ${kr0(m.g)} mere, men du har valgt højst ${maks} ${maks===1?"butik":"butikker"}.`:` ${m.b} ville kun spare ${kr0(m.g)}, så den er ikke med (din grænse er ${s.delGraense} kr).`}
+  const spar=F.tur.reduce((a,b)=>a+F.prButik[b].spar,0);
+  let t=`Køb ind i ${F.tur.join(" og ")}${spar>=1?` og spar ${kr0(spar)} på tilbud`:""}.`;
+  if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, sparer du ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
   const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px"><p style="margin:0">${esc(t)}</p><p class="muted" style="margin:6px 0 0;font-size:.85rem">Besparelsen er regnet ud fra appens cirkapriser og ugens tilbud. Antal butikker og grænsen ændres under Præferencer.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)} <span class="muted" style="font-weight:400;font-size:.8rem">(skøn)</span></p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
   const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
 }
 function renderSkab(){
@@ -1081,7 +1139,7 @@ function placer(f,dato,antaget){
     const id="f"+Date.now().toString(36);
     fx={id,dato,navn:String(f.navn),mangler:(f.mangler||[]).map(m=>typeof m==="string"?{navn:m}:{...m})};
     st.fast.push(fx); f._fastId=id;
-    for(const m of fx.mangler)if(!st.ekstraIndkob.some(x=>x.navn.toLowerCase()===m.navn.toLowerCase()&&!x.done))st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde||"",kat:m.kat||gaetAfd(m.navn),til:fx.navn,fastId:id,...(m.tilbud?{tilbud:m.tilbud,dato}:{})});
+    for(const m of fx.mangler)st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde||"",kat:m.kat||gaetAfd(m.navn),til:fx.navn,fastId:id,...(m.tilbud?{tilbud:m.tilbud,dato}:{})});
     for(const u of f.bruger||[]){
       const navn=String(u.navn||u), alt=!!u.alt, k=skabNoegle(u.k,navn);
       if(k&&st.skab[k]){if(alt)delete st.skab[k];else st.skab[k].amt/=2}
@@ -1100,7 +1158,7 @@ function actInner(a,ti,fi,dag){
   if(a==="saet"){
     const t=todayIso();
     const onsket=/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")&&f.dag>=t?f.dag:null;
-    const dato=onsket||t, opt=fastPaa(dato);
+    const dato=onsket||ledigIUgen()||t, opt=fastPaa(dato);
     if(opt){f._velg=1;f._velgTekst=`${relLabel(dato).replace(/^./,c=>c.toUpperCase())} er allerede sat til ${opt.navn}. Hvornår regner du med at lave den?`}
     else placer(f,dato,!onsket);
   }
@@ -1160,7 +1218,7 @@ async function sendChat(override){
   const inp=document.getElementById("chatIn");
   const typed=inp.value.trim();
   const t=typed||override||""; if(!t)return;
-  const btn=document.getElementById("chatBtn"), ab=document.getElementById("anbefalBtn");
+  const btn=document.getElementById("chatBtn"), ab=document.getElementById("anbefalBtn")||{};
   if(typed&&!override){
     const hv=hurtigIndkob(typed);
     if(hv){st.chat.push({role:"user",text:typed});st.chat.push({role:"bot",data:{svar:"Sat på indkøbslisten: "+hv.join(", ")+"."}});inp.value="";st.chat=st.chat.slice(-20);changed();return}
@@ -1188,6 +1246,7 @@ ${TB.tilbud.length?`Ugens tilbud på deres ingredienser (bedste pr. vare; brug d
 ${oKatalogTekst()}
 Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
 Dage: i dag er ${dayLabel(t0,true)}. ${dagsListe}
+Nuværende uge: uge ${isoUge(t0)} (${ugeMandag(t0)} til ${addDays(ugeMandag(t0),6)}). Nævner brugeren ikke en dag, så planlæg i den uge.
 Måltider på planen: ${st.fast.map(f=>dayLabel(f.dato,true)+": "+f.navn).join("; ")||"ingen"}
 ${dage.length?`VALGTE DAGE: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}. Giv præcis ét forslag pr. valgt dag med "dag" sat til den dato, medmindre beskeden siger noget andet.`:""}
 
@@ -1259,6 +1318,7 @@ function wizStart(host){
 function renderOps(){
   const ps=document.getElementById("opsStart"),pp=document.getElementById("prefOpsat");
   ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():nyBruger()?`<div class="wiz"><h2>Velkommen til Opbrugt</h2><p class="muted" style="margin:0">Et par hurtige valg, så passer forslag, mængder og tilbud til dig.</p><div class="nav"><button class="btn" data-w="start">Opret præferencer</button><button class="btn ghost" data-w="skjul">Senere</button></div></div>`:"";
+  document.getElementById("t-pref").classList.toggle("kunGuide",!!(wiz&&wiz.host==="prefOpsat"));
   pp.innerHTML=wiz&&wiz.host==="prefOpsat"?wizHtml():st.opsat?`<div class="list"><div class="item"><div class="grow">${esc(opsatResume())}</div></div></div><button class="btn ghost" data-w="ret" style="margin-top:10px">Ret præferencer</button>`:`<p class="muted">Hvor mange I er, hvad I vil spise, og hvor I handler. Det tager under et minut.</p><button class="btn" data-w="ret">Opret præferencer</button>`;
   for(const el of [ps,pp])el.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>wizHandling(b,el.id));
   const ei=document.getElementById("wizEgen");
@@ -1544,31 +1604,23 @@ function dagRet(di,p){
   if(x)return {navn:x.kind==="rest"?"Rester: "+x.s.r.n.toLowerCase():x.s.r.n,beregnet:1};
   return null;
 }
+/* ISO-ugenummer og ugens mandag */
+function isoUge(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.getDay()+6)%7)+3);const f=new Date(t.getFullYear(),0,4,12);return 1+Math.round(((t-f)/864e5-3+((f.getDay()+6)%7))/7)}
+function ugeMandag(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.getDay()+6)%7));return iso(t)}
+/* Første ledige dag fra i dag og ugen ud */
+function ledigIUgen(){const t0=todayIso(),son=addDays(ugeMandag(t0),6);for(let d=t0;d<=son;d=addDays(d,1))if(!fastPaa(d))return d;return null}
+function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)}
 function renderStrip(p){
-  const d=document.getElementById("days");d.innerHTML="";
-  const t0=todayIso();
-  for(let i=0;i<5;i++){
-    const di=addDays(visStart(),i), r=dagRet(di,p);
-    const b=document.createElement("button");
-    b.className="dcell"+(di===t0?" today":"");b.setAttribute("aria-pressed",selDays.has(di));
-    b.innerHTML=`<span class="wd">${di===t0?"I dag":dayLabel(di).split(" ")[0]}</span><span class="dt">${dayLabel(di).split(" ")[1]}</span><span class="dish-s">${r?esc(r.navn):"–"}</span>`;
-    b.setAttribute("aria-label",dayLabel(di,true)+(r?": "+r.navn:": intet planlagt"));
-    b.onclick=()=>{selDays.has(di)?selDays.delete(di):selDays.add(di);renderStrip(last)};
-    d.appendChild(b);
-  }
-  const info=document.getElementById("dayInfo"), sel=[...selDays].sort();
-  const ab=document.getElementById("anbefalBtn");
-  ab.textContent=sel.length?`Anbefal til ${sel.length===1?dayLabel(sel[0],true):sel.length+" dage"}`:"Anbefal";
-  ab.disabled=!sel.length;
-  document.getElementById("ryddage").style.display=sel.length?"":"none";
-  if(!sel.length){info.innerHTML=`<p class="muted" style="margin-top:8px">Tryk på en eller flere dage og så Anbefal. Eller skriv, hvad du har lyst til.</p>`;return}
-  info.innerHTML=`<div class="dinfo">`+sel.map(di=>{const r=dagRet(di,p);return `<div class="item"><div class="grow"><b>${esc(dayLabel(di,true))}</b><div class="amt">${r?esc(r.navn)+(r.beregnet?" (fra pakkeberegningen)":""):"Intet planlagt"}</div></div>${r&&r.fast?`<button class="x" data-fdel2="${esc(r.fast.id)}" aria-label="Fjern ${esc(r.navn)}" style="font-size:.9rem">Fjern</button>`:""}</div>`}).join("")+`</div>`;
-  info.querySelectorAll("[data-fdel2]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel2);changed();toast("Fjernet fra planen")});
+  const el=document.getElementById("ugeInfo"),t0=todayIso(),man=ugeMandag(t0),son=addDays(man,6);
+  const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son).sort((a,b)=>a.dato.localeCompare(b.dato));
+  const koebt=retter.filter(erIndkoebt).length,naeste=st.fast.filter(f=>f.dato>son&&f.dato<=addDays(son,7)).length;
+  el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(t0)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span></div>
+  <div class="stats"><div class="stat"><b>${retter.length}</b><span>Planlagte måltider</span></div><div class="stat"><b>${koebt}</b><span>Indkøbt</span></div></div>
+  ${retter.length?`<div class="list" style="margin-top:10px">${retter.map(f=>`<div class="item"><div class="grow"><span class="muted">${esc(dayLabel(f.dato).split(" ")[0])}</span> ${esc(f.navn)}${f.dato<t0?` <span class="muted">· spist</span>`:erIndkoebt(f)?"":` <span class="muted">· mangler indkøb</span>`}</div>${f.opskrift&&ORMAP[f.opskrift]?`<button class="x" data-oopen="${esc(f.opskrift)}" style="font-size:.9rem;color:var(--leaf)">Se</button>`:""}<button class="x" data-fdel3="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen">×</button></div>`).join("")}</div>`:""}
+  ${naeste?`<p class="muted" style="margin-top:8px">Næste uge: ${naeste} ${naeste===1?"måltid":"måltider"} planlagt.</p>`:""}`;
+  el.querySelectorAll("[data-fdel3]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel3);changed();toast("Fjernet fra planen")});
 }
-document.getElementById("prevDays").onclick=()=>{st.visStart=addDays(visStart(),-5);renderStrip(last);save()};
-document.getElementById("nextDays").onclick=()=>{st.visStart=addDays(visStart(),5);renderStrip(last);save()};
-document.getElementById("ryddage").onclick=()=>{selDays.clear();renderStrip(last)};
-document.getElementById("anbefalBtn").onclick=()=>{const sel=[...selDays].sort();if(!sel.length)return;sendChat("Anbefal aftensmad til "+sel.map(d=>dayLabel(d,true)).join(", ")+".")};
+
 function renderPref(){
   const l=document.getElementById("instrList");
   l.innerHTML=st.instrukser.length?st.instrukser.map((x,i)=>`<div class="item"><div class="grow">${esc(x)}</div><button class="x" data-ix="${i}" aria-label="Fjern instruktion">×</button></div>`).join(""):`<div class="item"><div class="grow muted">Ingen instruktioner endnu.</div></div>`;
@@ -2019,7 +2071,7 @@ function flag(m){document.getElementById("saveState").textContent=m}
 function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st={...JSON.parse(JSON.stringify(DEFAULT)),...d,settings:{...DEFAULT.settings,...(d.settings||{})}}}}
 
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
-historikSync();afvikl();
+historikSync();afvikl();st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);
 /* Kalenderen starter altid med i dag, også når appen hentes frem igen en senere dag */
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
@@ -2095,8 +2147,8 @@ function forbind(){
   }
   setupScan();
 }
-document.getElementById("keySave").onclick=()=>{
-  const inp=document.getElementById("keyIn"),v=inp.value.trim();
+for(const [knap,felt] of [["keySave","keyIn"],["keySave2","keyIn2"]])document.getElementById(knap).onclick=()=>{
+  const inp=document.getElementById(felt),v=inp.value.trim();
   if(!v){toast(noegle()?"Nøglen er uændret":"Skriv nøglen først");return}
   try{localStorage.setItem(NOEGLE,v)}catch(e){toast("Kunne ikke gemme nøglen");return}
   inp.value="";forbind();toast("Nøglen er gemt");
@@ -2132,7 +2184,7 @@ forbind();tHent();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="20";
+const APP_VERSION="21";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
