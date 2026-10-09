@@ -160,7 +160,8 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .vt .mg{font-size:.82rem;font-weight:700;color:var(--muted)}
 .vt.tb{background:var(--tilbud)}
 .vt.tb .mg{color:var(--ink)}
-.vt.ikke{opacity:.4}.vt.ikke .nv{text-decoration:line-through}
+.vt.vis{border-color:var(--leaf)}
+.vt .til{font-size:.78rem;line-height:1.25;color:var(--leaf);font-weight:700;margin-top:2px}
 .vt.tip{background:transparent;border:2px dashed var(--tilbud-kant)}
 .valg{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;margin-top:6px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
 .valg[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft)}
@@ -373,7 +374,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 32 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 33 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1012,7 +1013,12 @@ function samletIndkob(p){
 function rute(){const b=aktivButik()||"_";const r=(Array.isArray(st.ruter[b])?st.ruter[b]:[]).filter(a=>AFD[a]);for(const a of STD_RUTE)if(!r.includes(a)){const i=r.indexOf("andet");if(a!=="andet"&&i>=0)r.splice(i,0,a);else r.push(a)}return r}
 function mTxt(m){if(typeof m==="string")return m;return ((m.maengde?m.maengde+" ":"")+(m.navn||"")).trim()}
 
-let shopAfd=null,shopDag="";const shopIkke=new Set();
+let shopAfd=null,shopDag="",shopVis=null;const shopIkke=new Set();
+function tilTekst(v){
+  const r=[...(v.retter||[])].map(kortRet).filter(Boolean);
+  if(r.length)return "Til "+r.join(" · ");
+  return v.basis?"Basisvare, I er løbet tør for":v.kilder&&v.kilder.length?"Sat på listen af dig":"Til ugens madplan";
+}
 /* Et billede (emoji) pr. vare ud fra navnet; ellers afdelingens */
 const VARE_EMOJI=[[/hakkede tomater|flåede tomater|tomatpur|passata|dåse|suppe|kokosmælk|kidney|sorte bønner|kikærter|linser/,"🥫"],[/frost|frossen|frosne/,"🧊"],
  [/soja|ketchup|mayo|sennep|pesto|sauce|dressing|chilisauce|teriyaki/,"🫙"],[/citron|lime/,"🍋"],[/æble/,"🍎"],[/pære/,"🍐"],[/banan/,"🍌"],[/appelsin|mandarin|clementin|citrus/,"🍊"],
@@ -1030,9 +1036,35 @@ function vareEmoji(v){const n=String(v.navn||"").toLowerCase();for(const [r,e] o
 function stort(t){t=String(t||"");return t.charAt(0).toUpperCase()+t.slice(1)}
 /* Tilbudsnavne uden kædens eller mærkets navn foran, fx "REMA 1000 Mørbrad" → "Mørbrad" */
 function kortNavn(t){return String(t||"").replace(/^(rema 1000|netto|føtex|lidl|365discount|365)\s+/i,"").replace(/^([A-ZÆØÅ0-9][A-ZÆØÅ0-9&.'-]+\s+)+(?=[A-ZÆØÅ]?[a-zæøå])/,"")}
+/* Kort navn på en ret til indkøbslisten: uden fyldord foran og uden tilbehør efter "med" */
+const FYLDORD=/^(hurtig(e)?|nem(me)?|cremet|cremede|sprød(e)?|lækker|lækre|klassisk(e)?|rustik(ke)?|simpel|simple|let|lette|super|mild|krydret|hjemmelavet|hjemmelavede)\s+/i;
+function kortRet(t){
+  let x=String(t||"").replace(/\s*\(.*?\)\s*/g," ").split(/\s+[–-]\s+|:|,/)[0].trim();
+  for(let i=0;i<2;i++)x=x.replace(FYLDORD,"");
+  const ord=y=>y.split(/\s+/).length;
+  if(ord(x)>3){const f=x.split(/\s+med\s+/i)[0];if(ord(f)>=2)x=f}
+  if(ord(x)>4){const m=x.match(/^(.*?[^-])\s+og\s+/);if(m&&ord(m[1])>=2)x=m[1]}
+  return stort(x.trim());
+}
+/* Hvad frugt og grønt hedder i hele pakker */
+function pakkeOrd(navn){
+  const n=String(navn||"").toLowerCase();
+  if(/persille|basilikum|koriander|dild|purløg|mynte|forårsløg|radise|timian|rosmarin/.test(n))return ["bundt","bundter"];
+  if(/tomat|champignon|svamp|bær|druer|vindrue/.test(n))return ["bakke","bakker"];
+  return ["pose","poser"];
+}
+/* Frugt og grønt i hele pakker ud fra butikkens pakkestørrelse; null, hvis varen sælges enkeltvis eller pakken er ukendt */
+function pakkeMaengde(v,butik){
+  const h=v.id&&hylde(v.id,butik),pm=h&&parseMaengde(h.m);if(!pm)return null;
+  const enh=pm.e==="stk"?"stk":/^(g|kg)$/.test(pm.e)?"kg":/^(ml|cl|dl|l)$/.test(pm.e)?"l":null;if(!enh)return null;
+  const pakke=iEnhed(pm,enh),behov=behovI(vareFra(v),enh);
+  if(!pakke||(enh==="stk"&&pakke<=1))return null;
+  const n=behov==null?1:Math.max(1,Math.ceil(behov/pakke-1e-9)),o=pakkeOrd(v.navn);
+  return n+" "+(n>1?o[1]:o[0]);
+}
 /* Det, der skal købes: frugt og grønt i hele stk, kød, fisk og tørvarer i det, man skal bruge (rundet op til 50 g),
    resten i hele pakker */
-function koebMaengde(v){
+function koebMaengde(v,butik){
   if(v.basis)return v.koeb||"";
   const gps=v.id&&OI[v.id]&&OI[v.id].gps,a=visAfd(v.afd),q=v.behov>0?v.behov:null,e=v.enhed;
   const op=(x,t)=>Math.ceil(x/t-1e-9)*t,vaegt=g=>g>=1000?(Math.round(g/100)/10).toLocaleString("da-DK")+" kg":g+" g";
@@ -1041,6 +1073,7 @@ function koebMaengde(v){
   const tekst=parseMaengde(v.koeb);
   if(q==null&&tekst&&tekst.e==="stk")return stk(tekst.q);
   if(a==="gront"){
+    if(st.settings.koebForm==="pakke"){const pm=pakkeMaengde(v,butik);if(pm)return pm}
     if(q!=null&&e==="stk")return stk(q);
     if(gram!=null&&gps)return stk(gram/gps);
     if(v.pk)return fmtKoeb(v.pk,v.pakker||1);
@@ -1089,12 +1122,12 @@ function renderShop(p){
   else if(!liste.length)sh.innerHTML=`<p class="muted">Intet at købe i ${esc(butik||"butikken")}.</p>`;
   else sh.innerHTML=`<div class="side"><button class="pil" data-pil="-1" aria-label="Forrige afdeling" ${i<=0?"disabled":""}>‹</button><h2>${esc(afdNavn(shopAfd))}</h2>${afdeling.length>1?`<span class="muted">${i+1}/${afdeling.length}</span>`:""}<button class="pil" data-pil="1" aria-label="Næste afdeling" ${sidst?"disabled":""}>›</button></div>
     <div class="vgrid">${liste.map(v=>{
-      const o=F.tilbud.get(v.key),ikke=shopIkke.has(v.key);
-      return `<button class="vt ${o?"tb":""} ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}" aria-label="${esc(v.navn)} ${esc(koebMaengde(v))}${o?", på tilbud":""}${ikke?", ikke købt":""}"><span class="em" aria-hidden="true">${vareEmoji(v)}</span><span class="nv">${esc(stort(v.navn))}</span><span class="mg">${esc(koebMaengde(v))}</span></button>`}).join("")}${mineTips.map(t=>`<button class="vt tip" data-tip="${tips.indexOf(t)}" aria-label="Forresten: ${esc(t.navn)} er på tilbud og kan gemmes. Tryk for at tage den med"><span class="em" aria-hidden="true">${vareEmoji({navn:t.navn,afd:t.afd})}</span><span class="nv">${esc(stort(kortNavn(t.navn)))}</span><span class="mg">+ ${t.frys?"kan fryses":"kan gemmes"}</span></button>`).join("")}</div>
-    <p class="muted" style="margin:8px 2px 0;font-size:.8rem">Gul = på tilbud${mineTips.length?" · stiplet = godt tilbud, der kan gemmes":""}. Tryk på en vare, du ikke fik.</p>
+      const o=F.tilbud.get(v.key),vis=shopVis===v.key,m=koebMaengde(v,butik);
+      return `<button class="vt ${o?"tb":""} ${vis?"vis":""}" data-sk="${esc(v.key)}" aria-expanded="${vis}" aria-label="${esc(v.navn)} ${esc(m)}${o?", på tilbud":""}"><span class="em" aria-hidden="true">${vareEmoji(v)}</span><span class="nv">${esc(stort(v.navn))}</span><span class="mg">${esc(m)}</span>${vis?`<span class="til">${esc(tilTekst(v))}</span>`:""}</button>`}).join("")}${mineTips.map(t=>`<button class="vt tip" data-tip="${tips.indexOf(t)}" aria-label="Forresten: ${esc(t.navn)} er på tilbud og kan gemmes. Tryk for at tage den med"><span class="em" aria-hidden="true">${vareEmoji({navn:t.navn,afd:t.afd})}</span><span class="nv">${esc(stort(kortNavn(t.navn)))}</span><span class="mg">+ ${t.frys?"kan fryses":"kan gemmes"}</span></button>`).join("")}</div>
+    <p class="muted" style="margin:8px 2px 0;font-size:.8rem">Gul = på tilbud${mineTips.length?" · stiplet = godt tilbud, der kan gemmes":""}. Tryk på en vare for at se, hvad den skal bruges til.</p>
     ${sidst?`<button class="btn" id="shopOk" style="margin-top:12px;width:100%">Færdig${delt?" i "+esc(butik):""} – læg i skabet${naesteButik?` og gå til ${esc(naesteButik)}`:""}</button>`:""}`;
   sh.querySelectorAll("[data-pil]").forEach(b=>b.onclick=()=>shopFlyt(+b.dataset.pil));
-  sh.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const k=b.dataset.sk;shopIkke.has(k)?shopIkke.delete(k):shopIkke.add(k);renderShop(last)});
+  sh.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const k=b.dataset.sk;shopVis=shopVis===k?null:k;renderShop(last)});
   sh.querySelectorAll("[data-tip]").forEach(b=>b.onclick=()=>{const t=tips[+b.dataset.tip],afd=AFD[t.afd]?t.afd:gaetAfd(t.navn);st.ekstraIndkob.push({navn:kortNavn(t.navn),maengde:t.x.m||"",kat:afd,tilbud:t.x,dato:todayIso(),...(shopDag?{koebDato:shopDag}:{})});changed();toast(stort(kortNavn(t.navn))+" er sat på listen")});
   const ok=document.getElementById("shopOk");
   if(ok)ok.onclick=()=>{
@@ -1200,10 +1233,12 @@ function renderSet(){
   const s=document.getElementById("setList");
   s.innerHTML=stepper("Personer","P")+stepper("Aftener","N")+stepper("Gange madlavning","M",0,0,"Færre gange betyder større portioner og flere restedage.")+
    `<div class="set"><div>Økologi på grundvarer<div class="muted">Mælk, æg, fløde, smør, løg, gulerødder, kartofler, pasta, oksekød</div></div><button class="toggle" id="oko" aria-pressed="${st.settings.oko}" aria-label="Økologi på grundvarer"></button></div>`+
+   `<div class="set"><div>Frugt og grønt<div class="muted">Skal du bruge 2 æbler: køb dem enkeltvis, når det kan lade sig gøre, eller en hel pose?</div><div class="chips" style="margin-top:8px"><button class="chip" data-kf="enkelt" aria-pressed="${st.settings.koebForm!=="pakke"}">Enkeltvis</button><button class="chip" data-kf="pakke" aria-pressed="${st.settings.koebForm==="pakke"}">Hele pakker</button></div></div></div>`+
    `<div class="set"><div>Butikker du handler i<div class="chips" id="butikker" style="margin-top:8px"></div></div></div>`+
    `<div class="set"><div>Del indkøbet op, hvis besparelsen er over<div class="muted">Pr. ekstra butik. Bruges, når appen får ugens tilbud.</div></div><div class="step"><button data-g="-25" aria-label="Lavere">−</button><output>${st.settings.delGraense} kr</output><button data-g="25" aria-label="Højere">+</button></div></div>`;
   s.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.settings[k]=Math.min(LIM[k][1],Math.max(LIM[k][0],st.settings[k]+ +b.dataset.d));changed()});
   document.getElementById("oko").onclick=()=>{st.settings.oko=!st.settings.oko;changed()};
+  s.querySelectorAll("[data-kf]").forEach(b=>b.onclick=()=>{st.settings.koebForm=b.dataset.kf;changed()});
   const bw=document.getElementById("butikker");
   for(const b of alleButikker()){const on=st.settings.butikker.includes(b);const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",on);el.textContent=b;el.onclick=()=>{st.settings.butikker=on?st.settings.butikker.filter(x=>x!==b):[...st.settings.butikker,b];changed()};bw.appendChild(el)}
   s.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{st.settings.delGraense=Math.max(0,Math.min(500,st.settings.delGraense+ +b.dataset.g));changed()});
@@ -1876,7 +1911,7 @@ ${koedTilbud(up.start,slut)||"ingen"}
 Andre tilbud på ingredienser fra opskrifterne (bedste pr. vare): ${tTekstPeriode(up.start,slut)||"ingen"}
 Andre friske tilbud i deres butikker: ${friskeTilbud(up.start,slut)||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer, og sæt "opskrift" til id'et:
 ${oKatalogTekst()}
-Returnér KUN JSON: {"forslag":[{"navn","opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": "Fordi …" (én grund, højst 9 ord),${(s.indkobGange||1)>1?`"indkob": "YYYY-MM-DD" (indkøbsdag),`:""}"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-4 korte trin, men kun når "opskrift" er null (ellers [])}]}`;
+Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili con carne", "Laks med kartofler"),"opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": "Fordi …" (én grund, højst 9 ord),${(s.indkobGange||1)>1?`"indkob": "YYYY-MM-DD" (indkøbsdag),`:""}"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-4 korte trin, men kun når "opskrift" er null (ellers [])}]}`;
   try{
     let r;
     try{r=await sample.json(prompt,{modelTier:"quick"})}
@@ -2561,7 +2596,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="32";
+const APP_VERSION="33";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
