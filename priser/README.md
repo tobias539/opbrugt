@@ -4,7 +4,7 @@ Almindelige priser (ikke tilbud) fra kæderne, så Opbrugt kan regne ud, hvad et
 
 | Fil | Indhold |
 |---|---|
-| `hent_priser.py` | Henter REMA 1000's sortiment fra webshoppens API (højst én gang om ugen) og bygger prisfilen. Køres af den daglige opgave. |
+| `hent_priser.py` | Henter REMA 1000's sortiment fra webshoppens API (højst én gang om måneden) og bygger prisfilen. Køres af den daglige opgave. |
 | `match-rema-1000.json` | Hvilken REMA-vare hver ingrediens i opskriftbanken svarer til. Rettes i hånden. `null` = REMA's webshop har ikke varen. |
 | `foreslaa_match.py` | Foreslår matches til nye ingredienser. Gennemgå altid forslagene; de automatiske valg er ofte forkerte (fx "agurk" → agurkerelish). |
 | `til_opbrugt/rema-1000.json` | Hyldepris pr. ingrediens, som appen henter. |
@@ -12,7 +12,11 @@ Almindelige priser (ikke tilbud) fra kæderne, så Opbrugt kan regne ud, hvad et
 
 ## Sådan bruger appen priserne
 
-- **Normalpris** for en ingrediens er REMA 1000's hyldepris pr. kg, liter eller stk. Findes den ikke, bruges appens gamle cirkapriser, og ellers skønnes det, at tilbuddet er 20 % under normalprisen.
+- **Normalpris** for en ingrediens i en butik findes i denne rækkefølge:
+  1. Prisen fra brugerens egne kvitteringer fra den butik (appen lærer dem, når en kvittering scannes; linjer med rabat og priser, der ligner et tilbud, springes over).
+  2. REMA 1000's hyldepris. Den bruges også for Netto, Lidl og 365discount, som ikke lægger deres priser ud.
+  3. Appens gamle cirkapriser, og ellers et skøn: tilbuddet regnes som 20 % under normalprisen.
+- Netto, Lidl og 365discount har ingen offentlige hyldepriser. føtex' dagligvarepriser findes kun via Salling Groups API (Bilka-priser) og kræver en nøgle i `priser/salling-noegle.txt` (ikke i git).
 - Et tilbud tæller kun, hvis det er mindst 2 % billigere pr. kg/l/stk end normalprisen. I uge 41 2026 var 84 af 129 sammenlignelige tilbud ikke billigere end REMA's billigste almindelige vare (typisk mærkevarer på tilbud).
 
 ## Når opskriftbanken får nye ingredienser

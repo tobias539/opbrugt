@@ -1,12 +1,12 @@
 """Hent hyldepriser fra REMA 1000's webshop og lav en lille prisfil til Opbrugt-appen.
 
-Brug:  python priser/hent_priser.py              (hent kataloget, hvis det er over 6 dage gammelt, og byg prisfilen)
+Brug:  python priser/hent_priser.py              (hent kataloget, hvis det er over 4 uger gammelt, og byg prisfilen)
        python priser/hent_priser.py --tving      (hent kataloget nu)
        python priser/hent_priser.py --kun-byg    (byg prisfilen ud fra det hentede katalog)
 
 REMA's webshop (shop.rema1000.dk) henter varer og priser fra api.digital.rema1000.dk. Hele sortimentet
 (ca. 4.000 varer) hentes med ca. 40 forespørgsler og en pause imellem. API'et er ikke officielt åbent, så
-det hentes højst én gang om ugen, og det rå katalog bliver på computeren (ikke i git).
+det hentes højst én gang om måneden, og det rå katalog bliver på computeren (ikke i git).
 
 Filer:
   raa/rema-1000.json.gz            hele kataloget, kompakt (ikke i git)
@@ -92,7 +92,7 @@ def byg():
 def main():
     log = []
     try:
-        gammel = not RAA.exists() or (time.time() - RAA.stat().st_mtime) > 6 * 86400
+        gammel = not RAA.exists() or (time.time() - RAA.stat().st_mtime) > 28 * 86400
         if "--kun-byg" not in sys.argv and ("--tving" in sys.argv or gammel):
             n, sider = hent_katalog()
             log.append(f"hentede {n} varer fra REMA 1000 ({sider} sider)")

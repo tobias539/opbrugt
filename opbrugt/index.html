@@ -337,7 +337,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 24 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 25 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -759,7 +759,14 @@ let HP={varer:{}};
 function hyldeMaengde(u){const x=String(u||"").toUpperCase().match(/([\d.,]+)\s*(KG|GR|LTR|L|ML|CL|STK)\./);if(!x)return "";return x[1].replace(",",".")+" "+({KG:"kg",GR:"g",LTR:"l",L:"l",ML:"ml",CL:"cl",STK:"stk"})[x[2]]}
 function hylde(id){const h=id&&HP.varer[id];return h&&h.ep!=null&&h.pr?{p:h.p,ep:h.ep,pr:h.pr,m:hyldeMaengde(h.u),n:h.n,k:HP.kaede}:null}
 async function hentHyldepriser(){try{const r=await fetch("../priser/til_opbrugt/rema-1000.json",{cache:"no-cache"});if(r.ok){HP=await r.json();render()}}catch(e){}}
-function normEP(id){
+/* Priser lært fra brugerens egne kvitteringer: st.laertePriser[butik][ingrediens] = {ep, pr, dato, tekst} */
+function laertEP(id,butik){
+  const L=butik&&st.laertePriser&&st.laertePriser[butik]&&st.laertePriser[butik][id];if(!L)return null;
+  const gps=OI[id]&&OI[id].gps,o={[L.pr]:L.ep};if(L.pr==="stk"&&gps)o.kg=L.ep/(gps/1000);if(L.pr==="kg"&&gps)o.stk=L.ep*gps/1000;return o;
+}
+function butikFraTekst(t){const n=T_NORM(t);if(!n)return null;return alleButikker().find(b=>n.includes(T_NORM(b))||T_NORM(b).includes(n))||null}
+function normEP(id,butik){
+  const l=laertEP(id,butik);if(l)return l;
   const h=hylde(id);
   if(h){const gps=OI[id]&&OI[id].gps,o={[h.pr]:h.ep};if(h.pr==="stk"&&gps)o.kg=h.ep/(gps/1000);if(h.pr==="kg"&&gps)o.stk=h.ep*gps/1000;return o}
   const k=Object.keys(OB.pTilBank).find(x=>OB.pTilBank[x]===id&&P[x]);if(!k)return null;
@@ -795,13 +802,15 @@ function tilbudMaengde(v,o){
 }
 function besparelse(v,b){
   const o=v.tilbud[b];if(!o)return 0;
-  const q=tilbudMaengde(v,o),ne=v.id&&normEP(v.id);
+  const q=tilbudMaengde(v,o),ne=v.id&&normEP(v.id,b);
   if(ne&&o.pr&&ne[o.pr]!=null&&q!=null)return Math.max(0,q*(ne[o.pr]-o.ep));
   return SKOEN_RABAT*(q!=null?q*o.ep:o.p);
 }
 /* Hvad koster varen ca.: tilbudsprisen, hvis den købes på tilbud, ellers appens cirkapris */
-function varePris(v,o){
+function varePris(v,o,butik){
   if(o){const q=tilbudMaengde(v,o);return Math.max(o.p,q!=null?q*o.ep:0)}
+  const l=laertEP(v.id,butik),lpr=l&&Object.keys(l)[0];
+  if(l){const q=tilbudMaengde(v,{ep:l[lpr],pr:lpr});if(q!=null)return q*l[lpr]}
   const h=hylde(v.id);if(h){const q=tilbudMaengde(v,h);return Math.max(h.p,q!=null?q*h.ep:0)}
   return v.pris||0;
 }
@@ -905,7 +914,7 @@ function renderShop(p){
   else sh.innerHTML=`${afdeling.length<=1?`<div class="cat">${esc(afdNavn(shopAfd))}</div>`:""}<div class="list">${liste.map(v=>{
       const o=F.tilbud.get(v.key),ikke=shopIkke.has(v.key);
       const info=[v.retter.size>1?"til "+v.retter.size+" retter":v.retter.size?"til "+[...v.retter][0].toLowerCase():"",v.basis?"basisvare, du er løbet tør for":""].filter(Boolean).join(" · ");
-      return `<button class="sitem ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}"><div class="grow">${v.koeb?`<b>${esc(v.koeb)}</b> `:""}${esc(v.navn.toLowerCase())}${info?`<div class="amt">${esc(info)}</div>`:""}${o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:""}</div>${ikke?`<span class="ikketag">ikke købt</span>`:varePris(v,o)?`<span class="price">${kr(varePris(v,o))}</span>`:""}</button>`}).join("")}</div>
+      return `<button class="sitem ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}"><div class="grow">${v.koeb?`<b>${esc(v.koeb)}</b> `:""}${esc(v.navn.toLowerCase())}${info?`<div class="amt">${esc(info)}</div>`:""}${o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:""}</div>${ikke?`<span class="ikketag">ikke købt</span>`:varePris(v,o,F.tildelt.get(v.key))?`<span class="price">${kr(varePris(v,o,F.tildelt.get(v.key)))}</span>`:""}</button>`}).join("")}</div>
     <p class="muted" style="margin:8px 2px 0;font-size:.85rem">Tryk på en vare, du ikke fik købt.</p>
     <button class="btn" id="shopOk" style="margin-top:10px;width:100%">OK, købt${naeste?` – videre til ${esc(F.tur.includes(naeste)?naeste:afdNavn(naeste))}`:""}</button>`;
   sh.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const k=b.dataset.sk;shopIkke.has(k)?shopIkke.delete(k):shopIkke.add(k);renderShop(last)});
@@ -924,7 +933,7 @@ function renderShop(p){
   const r=rute(), rl=document.getElementById("routeList");
   rl.innerHTML=r.map((a,i)=>`<div class="set"><div>${i+1}. ${AFD[a]}</div><div class="step"><button data-ru="${i}" data-d="-1" aria-label="Flyt ${AFD[a]} op" ${i===0?"disabled":""}>↑</button><button data-ru="${i}" data-d="1" aria-label="Flyt ${AFD[a]} ned" ${i===r.length-1?"disabled":""}>↓</button></div></div>`).join("");
   rl.querySelectorAll("[data-ru]").forEach(b=>b.onclick=()=>{const i=+b.dataset.ru,j=i+ +b.dataset.d;const nr=[...rute()];[nr[i],nr[j]]=[nr[j],nr[i]];st.ruter[aktivButik()||"_"]=nr;changed()});
-  const total=G.reduce((a,v)=>a+varePris(v,F.tilbud.get(v.key)),0),nTb=G.filter(v=>F.tilbud.get(v.key)).length;
+  const total=G.reduce((a,v)=>a+varePris(v,F.tilbud.get(v.key),F.tildelt.get(v.key)),0),nTb=G.filter(v=>F.tilbud.get(v.key)).length;
   document.getElementById("shopSub").textContent=G.length?`${G.length} ${G.length===1?"vare":"varer"}${nTb?` · ${nTb} på tilbud`:""}${total?` · ca. ${kr(total)}`:""}${st.settings.oko?" · økologi på grundvarer":""}.`:"";
 }
 /* Købte varer lægges i skabet og fjernes fra listen. Planlagte retter tager dem fra skabet på dagen. */
@@ -938,6 +947,21 @@ function koebVarer(liste){
   }
   st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
 }
+const LAGERVARER=["aeg","hvedemel","sukker","olie","smoer","ris","pasta","hakkede-tomater","maelk"];
+function lagerTips(F,G){
+  const ud=[];
+  for(const id of LAGERVARER){
+    if(!OI[id]||G.some(v=>v.id===id))continue;
+    let bedst=null;
+    for(const x of tGyldige(tUge())){
+      if(x.i!==id||!aegteTilbud(x))continue;const b=butikFor(x.k);if(!b||!F.tur.includes(b))continue;
+      const ne=normEP(id,b),r=ne&&x.pr&&ne[x.pr]&&x.ep!=null?1-x.ep/ne[x.pr]:0;
+      if(!bedst||r>bedst.r)bedst={id,x,b,r};
+    }
+    if(bedst)ud.push(bedst);
+  }
+  return ud.sort((a,b)=>b.r-a.r).slice(0,3);
+}
 function renderShopPlan(F){
   const el=document.getElementById("shopPlan"),s=st.settings;
   if(!F.hoved||!TB.tilbud.length){el.innerHTML="";return}
@@ -946,8 +970,13 @@ function renderShopPlan(F){
   let t=`Køb ind i ${F.tur.join(" og ")}: ${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)}`:""}.`;
   if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, får du ${m.n} ${m.n===1?"vare":"varer"} mere på tilbud og sparer ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
   const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = REMA 1000's hyldepris, hvor den findes. Ellers skøn: tilbuddet regnes som 20 % billigere.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers REMA 1000's hyldepris (bruges også for Netto, Lidl og 365discount), ellers skøn.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
   const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
+  const tips=lagerTips(F,samletIndkob(last));
+  if(tips.length){
+    el.insertAdjacentHTML("beforeend",`<div class="sugg" style="margin:0 0 6px;padding:10px 12px;background:var(--leaf-soft)"><p style="margin:0;font-weight:700;font-size:.9rem">Forresten, når du alligevel er der:</p>${tips.map((t,i)=>`<div class="addrow" style="padding:6px 0 0"><span style="flex:1;font-size:.88rem">${esc(OI[t.id].n)} i ${esc(t.b)}: ${esc(tPris(t.x.p))}${t.x.m?" ("+esc(t.x.m)+")":""}${t.r>=.05?` · ca. ${Math.round(t.r*100)} % under normalprisen`:""}</span><button class="btn ghost" data-lager="${i}" style="padding:4px 10px;font-size:.85rem">På listen</button></div>`).join("")}</div>`);
+    el.querySelectorAll("[data-lager]").forEach(b=>b.onclick=()=>{const t=tips[+b.dataset.lager];st.ekstraIndkob.push({navn:OI[t.id].n,maengde:t.x.m||"",kat:AFD[OI[t.id].afd]?OI[t.id].afd:gaetAfd(OI[t.id].n),tilbud:t.x,dato:todayIso()});changed();toast(OI[t.id].n+" er sat på listen")});
+  }
 }
 function renderSkab(){
   const L=document.getElementById("skabList");
@@ -1688,7 +1717,9 @@ document.getElementById("scanFile").onchange=async e=>{
 Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
 Basisvarer (nøgler): ${JSON.stringify(BASIS)}
 Regler: "maengde" er i katalogets enhed (g, ml, stk, fed) og er den samlede købte mængde, fx 2 pakker oksekød á 500 g = 1000. Løsvægt i kg omregnes til stk ud fra en normal størrelse (1 gulerod ca. 80 g, 1 løg ca. 120 g). Varer der ikke passer til kataloget, men er basisvarer, lægges i "basis". Alt andet spiseligt i "andet" med et almindeligt dansk varenavn (fx "Rødkål", ikke kvitteringens forkortelse). Non-food udelades. Pant, poser og rabatlinjer ignoreres.
-Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst]}`;
+Priser: læg desuden hver madvare-linje i "priser" med "i" = id fra ingredienskataloget nedenfor (eller null), "pris" = det, linjen kostede i kr efter evt. rabat, "maengde" + "enhed" (g, ml eller stk) for den samlede købte mængde, og "rabat": true, hvis linjen havde rabat, tilbud, "x for y" eller lignende.
+Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
+Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst],"priser":[{"i","tekst","pris","maengde","enhed","rabat"}]}`;
   try{
     const r=await sample.json(prompt,{images:f,modelTier:"default"});
     scanItems=(r.varer||[]).filter(v=>P[v.k]&&v.maengde>0).map(v=>({...v,on:true}));
@@ -1697,6 +1728,8 @@ Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvi
     h+=scanItems.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-i="${i}" checked><div class="grow">${P[v.k].n}<div class="amt muted">${fmt(v.k,v.maengde)} · "${(v.tekst||"").replace(/[<>]/g,"")}"</div></div></label>`).join("");
     if(basis.length)h+=`<p class="muted" style="margin-top:10px">Basisvarer købt: ${basis.map(b=>BASIS[b]).join(", ")}.</p>`;
     if((r.andet||[]).length)h+=`<p class="muted">Lægges også i skabet som fri varer: ${r.andet.map(x=>String(x).replace(/[<>]/g,"")).join(", ")}.</p>`;
+    const nPriser=(r.priser||[]).filter(x=>OI[x&&x.i]&&!x.rabat&&x.pris>0).length,kbutik=butikFraTekst(r.butik);
+    if(nPriser&&kbutik)h+=`<p class="muted">${nPriser} ${nPriser===1?"pris":"priser"} fra ${esc(kbutik)} gemmes, så appen lærer butikkens normalpriser.</p>`;
     h+=`<button class="btn" id="scanOk" style="margin-top:10px">Læg i skabet</button>`;
     out.innerHTML=h;
     out.querySelectorAll("input[data-i]").forEach(cb=>cb.onchange=()=>{scanItems[+cb.dataset.i].on=cb.checked});
@@ -1705,13 +1738,35 @@ Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvi
       for(const v of scanItems){if(!v.on)continue;st.skab[v.k]={amt:(st.skab[v.k]?.amt||0)+v.maengde,dage:P[v.k].h};n++}
       for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){st.fri.push({navn:nm,niveau:"hel"});n++}}
       st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
+      const np=laerPriser(r);
       scanItems=[];out.innerHTML="";document.getElementById("scanFile").value="";
-      changed();toast(n+" varer lagt i skabet");
+      changed();toast(n+" varer lagt i skabet"+(np?` · ${np} priser gemt`:""));
     };
   }catch(err){
     out.innerHTML=`<p class="bad">Kvitteringen kunne ikke læses. ${err&&err.code==="upstream_error"||err&&err.code==="invalid_json"?"Prøv et skarpere billede taget lige ovenfra.":esc(fejlTekst(err))}</p>`;
   }
 };
+
+/* Gem normalpriser fra en kvittering. Linjer med rabat springes over, og det samme gør varer,
+   som butikken har haft i tilbudsavisen den sidste uge (så er prisen nok en tilbudspris). */
+function laerPriser(r){
+  const butik=butikFraTekst(r&&r.butik);if(!butik)return 0;
+  const dato=todayIso(),uge=addDays(dato,-7),set=new Set();let n=0;
+  st.laertePriser=st.laertePriser||{};const L=st.laertePriser[butik]=st.laertePriser[butik]||{};
+  for(const x of (r.priser||[])){
+    const id=x&&OI[x.i]?x.i:null;if(!id||x.rabat||!(x.pris>0)||!(x.maengde>0))continue;
+    const pr=x.enhed==="g"?"kg":x.enhed==="ml"?"l":x.enhed==="stk"?"stk":null;if(!pr)continue;
+    const q=pr==="stk"?x.maengde:x.maengde/1000,ep=x.pris/q;
+    /* ligner prisen et tilbud, butikken har haft den sidste uge, er det nok ikke normalprisen */
+    if(TB.tilbud.some(t=>t.i===id&&T_NORM(t.k)===T_NORM(butik)&&t.f<=addDays(dato,1)&&t.t>=uge&&t.pr===pr&&t.ep!=null&&Math.abs(ep-t.ep)<=t.ep*0.1))continue;
+    /* mere end 30 % under REMA's normalpris er næppe en normalpris */
+    const h=hylde(id);if(h&&h.pr===pr&&ep<h.ep*0.7)continue;
+    /* samme vare flere gange på kvitteringen: den højeste pris er normalprisen */
+    if(set.has(id)&&L[id].ep>=ep)continue;
+    L[id]={ep:Math.round(ep*100)/100,pr,dato,tekst:String(x.tekst||"").slice(0,40)};if(!set.has(id))n++;set.add(id);
+  }
+  return n;
+}
 
 /* ---------- Opskriftbanken ----------
    Data kommer fra opskrifter.js (eksporteret fra opskriftbanken). Ingredienser i banken har deres egne id'er;
@@ -1798,7 +1853,7 @@ function tKaedeAktiv(k){const valgt=st.settings.butikker.map(T_NORM);if(!valgt.l
 function tGyldige(dato){const t0=todayIso();if(!dato||dato<t0)dato=t0;return TB.tilbud.filter(x=>x.f<=dato&&x.t>=t0&&tKaedeAktiv(x.k))}
 function tUge(){return addDays(todayIso(),6)}
 /* Et tilbud tæller kun, hvis det er mindst 2 % billigere pr. kg/l/stk end normalprisen (når den kendes) */
-function aegteTilbud(x){const ne=x.i&&normEP(x.i);return !(ne&&x.pr&&x.ep!=null&&ne[x.pr]!=null&&x.ep>=ne[x.pr]*0.98)}
+function aegteTilbud(x){const ne=x.i&&normEP(x.i,alleButikker().find(b=>T_NORM(b)===T_NORM(x.k)));return !(ne&&x.pr&&x.ep!=null&&ne[x.pr]!=null&&x.ep>=ne[x.pr]*0.98)}
 function tBedst(id,dato){let b=null;for(const x of tGyldige(dato)){if(x.i!==id||!aegteTilbud(x))continue;if(!b||((x.ep!=null&&b.ep!=null&&x.pr===b.pr)?x.ep<b.ep:x.p<b.p))b=x}return b}
 function tPris(p){return String(p).replace(".",",")+" kr"}
 /* "Netto 35 kr (400 g) · senest tor 9/10". Med dato: siger "senest", hvis tilbuddet slutter før dato. */
@@ -2234,7 +2289,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="24";
+const APP_VERSION="25";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
