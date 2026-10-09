@@ -16,6 +16,7 @@
 :root{
   --bg:#F2F5F0; --card:#FFFFFF; --ink:#17231D; --muted:#5B6B62; --line:#D3DDD5;
   --leaf:#23523F; --leaf-soft:#DDEBE2; --carrot:#D9661A; --carrot-soft:#FBE4D3;
+  --felt:#E9EDEA; --tilbud:#FBE38E; --tilbud-kant:#D9B53A;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
 }
@@ -23,11 +24,13 @@
   :root:not([data-theme="light"]){
     --bg:#111915; --card:#1A2520; --ink:#E4EDE7; --muted:#9DB0A5; --line:#2D3C34;
     --leaf:#86C9A5; --leaf-soft:#22382D; --carrot:#F29A55; --carrot-soft:#3A2819;
+    --felt:#25302B; --tilbud:#5C4B12; --tilbud-kant:#B8962E;
   }
 }
 :root[data-theme="dark"]{
   --bg:#111915; --card:#1A2520; --ink:#E4EDE7; --muted:#9DB0A5; --line:#2D3C34;
   --leaf:#86C9A5; --leaf-soft:#22382D; --carrot:#F29A55; --carrot-soft:#3A2819;
+  --felt:#25302B; --tilbud:#5C4B12; --tilbud-kant:#B8962E;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -143,6 +146,22 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .sitem{padding:8px 12px}.sitem .amt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #shopAfd,#shopStores{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}#shopAfd::-webkit-scrollbar,#shopStores::-webkit-scrollbar{display:none}
 #shopAfd .chip,#shopStores .chip{flex:0 0 auto}
+.kobi{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 10px}
+.kobi .hoved{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:1.1rem;font-weight:700}
+.kobi .alt{flex:none;border:1.5px solid var(--leaf);color:var(--leaf);background:var(--card);border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.side{display:flex;align-items:center;gap:8px;margin:6px 0 10px}
+.side h2{flex:1;margin:0;font-size:1.15rem;min-width:0}
+.side .pil{flex:none;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer}
+.side .pil:disabled{opacity:.3;cursor:default}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.vt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px 10px;border-radius:14px;border:2px solid transparent;background:var(--felt);color:var(--ink);font:inherit;text-align:center;cursor:pointer;min-height:116px}
+.vt .em{font-size:2.1rem;line-height:1.1}
+.vt .nv{font-size:.86rem;line-height:1.2;overflow-wrap:anywhere}
+.vt .mg{font-size:.82rem;font-weight:700;color:var(--muted)}
+.vt.tb{background:var(--tilbud)}
+.vt.tb .mg{color:var(--ink)}
+.vt.ikke{opacity:.4}.vt.ikke .nv{text-decoration:line-through}
+.vt.tip{background:transparent;border:2px dashed var(--tilbud-kant)}
 .valg{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;margin-top:6px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
 .valg[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft)}
 .valg .logos{display:flex;gap:3px;flex:none}
@@ -354,7 +373,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 30 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 31 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -770,7 +789,7 @@ function aktivButik(){const b=shopTur.length?shopTur:st.settings.butikker;if(!b.
    Anbefalingen er den butik, hvor hele indkøbet samlet er billigst (reel pris). Alternativet er de to
    butikker, der tilsammen er billigst ("gå i to butikker og spar x kr"). Har man i præferencerne sagt ja
    til flere butikker, og sparer to butikker mindst grænsen, anbefales de to. Man kan selv vælge en anden. */
-let shopTur=[];
+let shopTur=[],shopFlyt=()=>{};
 /* Hyldepriser: REMA 1000's almindelige priser pr. ingrediens (priser/hent_priser.py). Bruges som normalpris. */
 /* Hyldepriser pr. kæde (priser/til_opbrugt/<kæde>.json). Kæder uden egne priser bruger REMA 1000's. */
 const PRISFILER={rema1000:"rema-1000",netto:"netto",føtex:"foetex"};
@@ -992,7 +1011,52 @@ function rute(){const b=aktivButik()||"_";const r=(Array.isArray(st.ruter[b])?st
 function mTxt(m){if(typeof m==="string")return m;return ((m.maengde?m.maengde+" ":"")+(m.navn||"")).trim()}
 
 let shopAfd=null,shopDag="";const shopIkke=new Set();
+/* Et billede (emoji) pr. vare ud fra navnet; ellers afdelingens */
+const VARE_EMOJI=[[/hakkede tomater|flåede tomater|tomatpur|passata|dåse|suppe|kokosmælk|kidney|sorte bønner|kikærter|linser/,"🥫"],[/frost|frossen|frosne/,"🧊"],
+ [/soja|ketchup|mayo|sennep|pesto|sauce|dressing|chilisauce|teriyaki/,"🫙"],[/citron|lime/,"🍋"],[/æble/,"🍎"],[/pære/,"🍐"],[/banan/,"🍌"],[/appelsin|mandarin|clementin|citrus/,"🍊"],
+ [/vindrue|druer/,"🍇"],[/jordbær/,"🍓"],[/bær/,"🫐"],[/mango/,"🥭"],[/ananas/,"🍍"],[/melon/,"🍈"],[/avocado/,"🥑"],[/kokos/,"🥥"],[/tomat/,"🍅"],[/agurk|squash|zucchini/,"🥒"],
+ [/peberfrugt|paprika/,"🫑"],[/chili/,"🌶️"],[/hvidløg/,"🧄"],[/løg|skalot|porre/,"🧅"],[/kartof/,"🥔"],[/gulerod|gulerød/,"🥕"],[/majs/,"🌽"],[/broccoli|blomkål/,"🥦"],
+ [/aubergine/,"🍆"],[/salat|spinat|rucola|kål/,"🥬"],[/champignon|svamp/,"🍄"],[/ingefær/,"🫚"],[/ærter|edamame|bønne/,"🫛"],
+ [/basilikum|persille|koriander|dild|purløg|mynte|timian|rosmarin|krydderurt/,"🌿"],[/kylling|høne|kalkun|and\b/,"🍗"],[/bacon/,"🥓"],[/pølse|medister|chorizo/,"🌭"],
+ [/rejer|skaldyr|muslinger/,"🦐"],[/laks|torsk|fisk|sej\b|rødspætte|tun\b|makrel|sild/,"🐟"],[/hakket|fars|okse|svin|gris|kalv|lam|bøf|steak|mørbrad|kotelet|flæsk|ribben|skinke|kød|prosciutto/,"🥩"],
+ [/æg\b|^æg/,"🥚"],[/smør/,"🧈"],[/ost\b|ost |parmesan|mozzarella|feta|cheddar|gouda|halloumi/,"🧀"],[/mælk|fløde|yoghurt|skyr|kefir|creme fraiche|crème/,"🥛"],
+ [/tortilla|pita|wrap|naan/,"🫓"],[/croissant/,"🥐"],[/baguette|brød|bolle|pizzadej/,"🍞"],[/ris\b|risotto/,"🍚"],[/pasta|spaghetti|nudl|tortelloni|lasagne|penne|fusilli|makaroni/,"🍝"],
+ [/mel\b|panko|rasp|havregryn/,"🌾"],[/sukker|honning|sirup/,"🍯"],[/olie|eddike|balsamico/,"🫒"],[/salt\b|peber|krydderi|bouillon|kanel|karry|spidskommen/,"🧂"],
+ [/nød|peanut|mandel|frø|kerner/,"🥜"],[/chips/,"🍿"],[/kaffe/,"☕"],[/toiletpapir|køkkenrulle/,"🧻"],[/opvask|vaskemiddel|sæbe/,"🧼"]];
+const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"🛒"};
+function vareEmoji(v){const n=String(v.navn||"").toLowerCase();for(const [r,e] of VARE_EMOJI)if(r.test(n))return e;return AFD_EMOJI[v.afd]||"🛒"}
+function stort(t){t=String(t||"");return t.charAt(0).toUpperCase()+t.slice(1)}
+/* Tilbudsnavne uden kædens eller mærkets navn foran, fx "REMA 1000 Mørbrad" → "Mørbrad" */
+function kortNavn(t){return String(t||"").replace(/^(rema 1000|netto|føtex|lidl|365discount|365)\s+/i,"").replace(/^([A-ZÆØÅ0-9][A-ZÆØÅ0-9&.'-]+\s+)+(?=[A-ZÆØÅ]?[a-zæøå])/,"")}
+/* Det, der skal købes: frugt og grønt i hele stk, kød, fisk og tørvarer i det, man skal bruge (rundet op til 50 g),
+   resten i hele pakker */
+function koebMaengde(v){
+  if(v.basis)return v.koeb||"";
+  const gps=v.id&&OI[v.id]&&OI[v.id].gps,a=visAfd(v.afd),q=v.behov>0?v.behov:null,e=v.enhed;
+  const op=(x,t)=>Math.ceil(x/t-1e-9)*t,vaegt=g=>g>=1000?(Math.round(g/100)/10).toLocaleString("da-DK")+" kg":g+" g";
+  const stk=x=>Math.max(1,Math.ceil(x-0.1))+" stk";
+  const gram=q==null?null:e==="g"?q:e==="stk"&&gps?q*gps:null;
+  const tekst=parseMaengde(v.koeb);
+  if(q==null&&tekst&&tekst.e==="stk")return stk(tekst.q);
+  if(a==="gront"){
+    if(q!=null&&e==="stk")return stk(q);
+    if(gram!=null&&gps)return stk(gram/gps);
+    if(v.pk)return fmtKoeb(v.pk,v.pakker||1);
+    return gram!=null?vaegt(op(gram,50)):(v.koeb||"");
+  }
+  if(a==="kod"||a==="toer"||a==="frost"){
+    if(gram!=null)return vaegt(Math.max(a==="kod"?100:50,op(gram,50)));
+    if(q!=null&&e==="ml")return q>=1000?(Math.round(q/100)/10).toLocaleString("da-DK")+" l":Math.ceil(q/100-1e-9)+" dl";
+    if(q!=null&&e==="stk")return stk(q);
+    return v.koeb||"";
+  }
+  if(v.pk)return fmtKoeb(v.pk,v.pakker||1);
+  if(q!=null&&e==="stk")return stk(q);
+  return v.koeb||"";
+}
 const visAfd=a=>a==="ost"?"mejeri":a;
+/* Swipe mellem afdelingerne i indkøbslisten */
+(()=>{const el=document.getElementById("shop");let x0=null,y0=0;el.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});el.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))shopFlyt(dx<0?1:-1)},{passive:true})})();
 const afdNavn=a=>a==="mejeri"?"Mejeri, køl og ost":AFD[a];
 function renderShop(p){
   const sh=document.getElementById("shop");
@@ -1003,43 +1067,40 @@ function renderShop(p){
   const sd=document.getElementById("shopDage");
   sd.innerHTML=dage.length>1?dage.map(d=>`<button class="chip" data-dag="${d}" aria-pressed="${d===shopDag}">${d?"Køb "+esc(dayLabel(d,true)):"Køb nu"} · ${alleG.filter(v=>(v.koebDag||"")===d).length}</button>`).join(""):"";
   sd.querySelectorAll("[data-dag]").forEach(x=>x.onclick=()=>{shopDag=x.dataset.dag;shopAfd=null;st.aktivButik=null;renderShop(last)});
-  const pris=v=>varePris(vareFra(v),F.tilbud.get(v.key),F.tildelt.get(v.key));
-  const tbHtml=key=>{
-    const o=F.tilbud.get(key),ki=F.koeb.get(key),k=ki&&ki.koeb;
-    let h=o?`<div class="amt tbtxt">Tilbud: ${esc(tKort(o))}</div>`:"";
-    if(o&&k&&k.pakke&&k.q!=null&&k.rest>k.pakke*0.05)h+=`<div class="amt">${k.pakker>1?k.pakker+" × ":""}${esc(fmtQ(k.pakke,k.pr))} for ${esc(kr(k.betal))} · du bruger ${esc(fmtQ(k.q,k.pr))} · resten ${esc(holdbarTekst(k.dage))}</div>`;
-    return h;
-  };
   const butik=aktivButik(),delt=F.tur.length>1;
   const iButik=G.filter(v=>!delt||F.tildelt.get(v.key)===butik);
   const afdeling=[...new Set(rute().map(visAfd))].filter(a=>iButik.some(v=>visAfd(v.afd)===a));
   if(!afdeling.includes(shopAfd))shopAfd=afdeling[0]||null;
-  // butikker og afdelinger som faner
+  // butikkerne som faner, når man går i to
   const ss=document.getElementById("shopStores");
   ss.innerHTML=delt?F.tur.map(b=>`<button class="chip bchip" data-butik="${esc(b)}" aria-pressed="${b===butik}" aria-label="${esc(b)}">${logoHtml(b,22)||esc(b)} ${G.filter(v=>F.tildelt.get(v.key)===b).length}</button>`).join(""):"";
   ss.querySelectorAll("[data-butik]").forEach(x=>x.onclick=()=>{st.aktivButik=x.dataset.butik;shopAfd=null;changed()});
-  const af=document.getElementById("shopAfd");
-  af.innerHTML=afdeling.length>1?afdeling.map(a=>`<button class="chip" data-afd="${a}" aria-pressed="${a===shopAfd}">${esc(afdNavn(a))} · ${iButik.filter(v=>visAfd(v.afd)===a).length}</button>`).join(""):"";
-  af.querySelectorAll("[data-afd]").forEach(x=>x.onclick=()=>{shopAfd=x.dataset.afd;renderShop(last)});
-  // varerne i den valgte afdeling
-  const liste=iButik.filter(v=>visAfd(v.afd)===shopAfd);
-  const naeste=afdeling[afdeling.indexOf(shopAfd)+1]||(delt&&F.tur[F.tur.indexOf(butik)+1])||null;
+  document.getElementById("shopAfd").innerHTML="";
+  /* Forresten: gode tilbud på noget, der kan gemmes, som stiplede felter i deres afdeling */
+  const tips=TB.tilbud.length&&butik?lagerTips(F,alleG).filter(t=>t.b===butik):[];
+  const tipAfd=t=>{const a=visAfd(t.afd);return afdeling.includes(a)?a:afdeling[afdeling.length-1]};
+  // én afdeling pr. side; pil eller swipe til næste
+  const liste=iButik.filter(v=>visAfd(v.afd)===shopAfd),mineTips=tips.filter(t=>tipAfd(t)===shopAfd);
+  const i=afdeling.indexOf(shopAfd),sidst=i===afdeling.length-1,naesteButik=delt?F.tur[F.tur.indexOf(butik)+1]:null;
+  shopFlyt=d=>{const j=i+d;if(j>=0&&j<afdeling.length){shopAfd=afdeling[j];renderShop(last)}};
   if(!G.length)sh.innerHTML=`<p class="muted">Indkøbslisten er tom. Planlæg ugen, eller spørg i Snak.</p>`;
   else if(!liste.length)sh.innerHTML=`<p class="muted">Intet at købe i ${esc(butik||"butikken")}.</p>`;
-  else sh.innerHTML=`${afdeling.length<=1?`<div class="cat">${esc(afdNavn(shopAfd))}</div>`:""}<div class="list">${liste.map(v=>{
+  else sh.innerHTML=`<div class="side"><button class="pil" data-pil="-1" aria-label="Forrige afdeling" ${i<=0?"disabled":""}>‹</button><h2>${esc(afdNavn(shopAfd))}</h2>${afdeling.length>1?`<span class="muted">${i+1}/${afdeling.length}</span>`:""}<button class="pil" data-pil="1" aria-label="Næste afdeling" ${sidst?"disabled":""}>›</button></div>
+    <div class="vgrid">${liste.map(v=>{
       const o=F.tilbud.get(v.key),ikke=shopIkke.has(v.key);
-      const info=[v.retter.size>1?"til "+v.retter.size+" retter":v.retter.size?"til "+[...v.retter][0].toLowerCase():"",v.basis?"basisvare, du er løbet tør for":""].filter(Boolean).join(" · ");
-      return `<button class="sitem ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}"><div class="grow">${v.koeb?`<b>${esc(v.koeb)}</b> `:""}${esc(v.navn.toLowerCase())}${info?`<div class="amt">${esc(info)}</div>`:""}${tbHtml(v.key)}</div>${ikke?`<span class="ikketag">ikke købt</span>`:pris(v)?`<span class="price">${kr(pris(v))}</span>`:""}</button>`}).join("")}</div>
-    <p class="muted" style="margin:8px 2px 0;font-size:.85rem">Tryk på en vare, du ikke fik købt.</p>
-    <button class="btn" id="shopOk" style="margin-top:10px;width:100%">OK, købt${naeste?` – videre til ${esc(F.tur.includes(naeste)?naeste:afdNavn(naeste))}`:""}</button>`;
+      return `<button class="vt ${o?"tb":""} ${ikke?"ikke":""}" data-sk="${esc(v.key)}" aria-pressed="${!ikke}" aria-label="${esc(v.navn)} ${esc(koebMaengde(v))}${o?", på tilbud":""}${ikke?", ikke købt":""}"><span class="em" aria-hidden="true">${vareEmoji(v)}</span><span class="nv">${esc(stort(v.navn))}</span><span class="mg">${esc(koebMaengde(v))}</span></button>`}).join("")}${mineTips.map(t=>`<button class="vt tip" data-tip="${tips.indexOf(t)}" aria-label="Forresten: ${esc(t.navn)} er på tilbud og kan gemmes. Tryk for at tage den med"><span class="em" aria-hidden="true">${vareEmoji({navn:t.navn,afd:t.afd})}</span><span class="nv">${esc(stort(kortNavn(t.navn)))}</span><span class="mg">+ ${t.frys?"kan fryses":"kan gemmes"}</span></button>`).join("")}</div>
+    <p class="muted" style="margin:8px 2px 0;font-size:.8rem">Gul = på tilbud${mineTips.length?" · stiplet = godt tilbud, der kan gemmes":""}. Tryk på en vare, du ikke fik.</p>
+    ${sidst?`<button class="btn" id="shopOk" style="margin-top:12px;width:100%">Færdig${delt?" i "+esc(butik):""} – læg i skabet${naesteButik?` og gå til ${esc(naesteButik)}`:""}</button>`:""}`;
+  sh.querySelectorAll("[data-pil]").forEach(b=>b.onclick=()=>shopFlyt(+b.dataset.pil));
   sh.querySelectorAll("[data-sk]").forEach(b=>b.onclick=()=>{const k=b.dataset.sk;shopIkke.has(k)?shopIkke.delete(k):shopIkke.add(k);renderShop(last)});
+  sh.querySelectorAll("[data-tip]").forEach(b=>b.onclick=()=>{const t=tips[+b.dataset.tip],afd=AFD[t.afd]?t.afd:gaetAfd(t.navn);st.ekstraIndkob.push({navn:kortNavn(t.navn),maengde:t.x.m||"",kat:afd,tilbud:t.x,dato:todayIso(),...(shopDag?{koebDato:shopDag}:{})});changed();toast(stort(kortNavn(t.navn))+" er sat på listen")});
   const ok=document.getElementById("shopOk");
   if(ok)ok.onclick=()=>{
-    const koebt=liste.filter(v=>!shopIkke.has(v.key));
+    const koebt=iButik.filter(v=>!shopIkke.has(v.key));
     koebVarer(koebt);
-    for(const v of liste)shopIkke.delete(v.key);
-    if(naeste&&F.tur.includes(naeste)&&!afdeling.includes(naeste)){st.aktivButik=naeste;shopAfd=null}else shopAfd=naeste;
-    changed();toast(koebt.length?`${koebt.length} ${koebt.length===1?"vare":"varer"} lagt i skabet`:"Videre");
+    for(const v of iButik)shopIkke.delete(v.key);
+    shopAfd=null;if(naesteButik)st.aktivButik=naesteButik;
+    changed();toast(koebt.length?`${koebt.length} ${koebt.length===1?"vare":"varer"} lagt i skabet`:"Færdig");
   };
   renderShopPlan(F);
   // rute-redigering
@@ -1048,8 +1109,8 @@ function renderShop(p){
   const r=rute(), rl=document.getElementById("routeList");
   rl.innerHTML=r.map((a,i)=>`<div class="set"><div>${i+1}. ${AFD[a]}</div><div class="step"><button data-ru="${i}" data-d="-1" aria-label="Flyt ${AFD[a]} op" ${i===0?"disabled":""}>↑</button><button data-ru="${i}" data-d="1" aria-label="Flyt ${AFD[a]} ned" ${i===r.length-1?"disabled":""}>↓</button></div></div>`).join("");
   rl.querySelectorAll("[data-ru]").forEach(b=>b.onclick=()=>{const i=+b.dataset.ru,j=i+ +b.dataset.d;const nr=[...rute()];[nr[i],nr[j]]=[nr[j],nr[i]];st.ruter[aktivButik()||"_"]=nr;changed()});
-  const total=G.reduce((a,v)=>a+pris(v),0),nTb=G.filter(v=>F.tilbud.get(v.key)).length;
-  document.getElementById("shopSub").textContent=G.length?`${G.length} ${G.length===1?"vare":"varer"}${nTb?` · ${nTb} på tilbud`:""}${total?` · ca. ${kr(total)}`:""}${st.settings.oko?" · økologi på grundvarer":""}.`:"";
+  const nTb=G.filter(v=>F.tilbud.get(v.key)).length;
+  document.getElementById("shopSub").textContent=G.length?`${G.length} ${G.length===1?"vare":"varer"}${nTb?` · ${nTb} på tilbud`:""}${st.settings.oko?" · økologi på grundvarer":""}`:"";
 }
 /* Købte varer lægges i skabet og fjernes fra listen. Planlagte retter tager dem fra skabet på dagen. */
 function koebVarer(liste){
@@ -1091,38 +1152,22 @@ function lagerTips(F,G){
       }
       if(r<0.1)continue;
       const k=navn.toLowerCase();if(set.has(k))continue;set.add(k);
-      kand.push({id:bank?x.i:null,navn,x,b,r,frys});
+      const afd=bank?bank.afd:KOED.test(x.o)&&!KOED_IKKE.test(x.o)?"kod":/frost|frossen|frosne/i.test(x.o+" "+(x.b||""))?"frost":/toiletpapir|køkkenrulle|opvask|vaskemiddel|tandpasta|skraldeposer|affaldsposer/i.test(x.o)?"hus":"toer";
+      kand.push({id:bank?x.i:null,navn,x,b,r,frys,afd});
     }
     ud.push(...kand.sort((a,c)=>c.r-a.r).slice(0,2));
   }
   return ud;
 }
 function renderShopPlan(F){
-  const el=document.getElementById("shopPlan"),s=st.settings;
-  if(!F.valgt||!TB.tilbud.length||st.settings.butikker.length<2){el.innerHTML="";return}
-  const kr0=x=>"ca. "+Math.round(x)+" kr";
-  const spar=F.tur.reduce((a,b)=>a+F.prButik[b].spar,0),nTb=[...F.tilbud.values()].filter(Boolean).length,nAlle=F.tilbud.size;
-  const navn=x=>x.tur.join("+"),billigst=Math.min(...F.muligheder.map(x=>x.sum));
-  const kort=x=>{
-    const valgt=navn(x)===navn(F.valgt),anb=navn(x)===navn(F.anbefalet),dyrere=x.sum-billigst;
-    const titel=x.tur.length>1?`Gå i ${x.tur.join(" og ")}`:`Køb alt i ${x.tur[0]}`;
-    const e0=F.enkelt[0],merKasse=x.kasse-e0.kasse;
-    const under=x.tur.length>1?(merKasse>=1?`${kr0(merKasse)} mere ved kassen, men større pakker – reelt ${kr0(e0.sum-x.sum).replace("ca. ","")} billigere end kun ${e0.tur[0]}`:`spar ${kr0(e0.sum-x.sum)} mod kun ${e0.tur[0]}`):navn(x)===navn(e0)?"billigste butik samlet":`${kr0(x.sum-e0.sum)} dyrere end ${e0.tur[0]}`;
-    return `<button class="valg" data-valg="${esc(JSON.stringify(x.tur))}" aria-pressed="${valgt}"><span class="logos">${x.tur.map(b=>logoHtml(b,28)||esc(b)).join("")}</span><span class="grow"><b>${esc(titel)}</b>${anb?` <span class="anb">Anbefalet</span>`:""}<span class="sm">${kr0(x.kasse)} ved kassen · ${esc(under)}</span></span></button>`;
-  };
-  const andre=F.enkelt.filter(x=>!F.muligheder.some(m=>navn(m)===navn(x)));
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px">
-    <p style="margin:0 0 2px;font-weight:700;font-size:.95rem">Anbefalet indkøb</p>
-    ${F.muligheder.map(kort).join("")}
-    ${andre.length?`<div class="andre">Andre: ${andre.map(x=>`<button class="chip" data-valg="${esc(JSON.stringify(x.tur))}">${esc(x.tur[0])} ${kr0(x.kasse)}</button>`).join("")}</div>`:""}
-    <p style="margin:8px 0 0;font-size:.88rem">${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)} mod normalpris`:""}.</p>
-    <p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris, ellers REMA 1000's pris plus et tillæg efter butikkens prisniveau. Jo flere kvitteringer du scanner, jo mere præcist.</p></div>`;
-  el.querySelectorAll("[data-valg]").forEach(b=>b.onclick=()=>{const tur=JSON.parse(b.dataset.valg);st.indkobValg=navn({tur})===navn(F.anbefalet)?null:{tur,dato:todayIso()};st.aktivButik=null;changed()});
-  const tips=lagerTips(F,samletIndkob(last));
-  if(tips.length){
-    el.insertAdjacentHTML("beforeend",`<div class="sugg" style="margin:0 0 6px;padding:10px 12px;background:var(--leaf-soft)"><p style="margin:0;font-weight:700;font-size:.9rem">Forresten, når du alligevel er der (kan gemmes):</p>${tips.map((t,i)=>`<div class="addrow" style="padding:6px 0 0">${logoHtml(t.b,22)}<span style="flex:1;font-size:.88rem">${esc(t.navn)}: ${esc(tPris(t.x.p))}${t.x.m?" ("+esc(t.x.m)+")":""} · ca. ${Math.round(t.r*100)} % billigere${t.frys?" · kan fryses":""}</span><button class="btn ghost" data-lager="${i}" style="padding:4px 10px;font-size:.85rem">På listen</button></div>`).join("")}</div>`);
-    el.querySelectorAll("[data-lager]").forEach(b=>b.onclick=()=>{const t=tips[+b.dataset.lager],afd=t.id&&AFD[OI[t.id].afd]?OI[t.id].afd:gaetAfd(t.navn);st.ekstraIndkob.push({navn:t.navn,maengde:t.x.m||"",kat:afd,tilbud:t.x,dato:todayIso()});changed();toast(t.navn+" er sat på listen")});
-  }
+  const el=document.getElementById("shopPlan");
+  if(!F.valgt){el.innerHTML="";return}
+  const navn=x=>x.tur.join("+"),e0=F.enkelt[0],valgtPar=F.valgt.tur.length>1;
+  const par=F.muligheder.find(x=>x.tur.length>1);
+  const alt=valgtPar?e0:navn(F.valgt)!==navn(e0)?e0:par;
+  const altTekst=!alt?"":alt.tur.length>1?`Spar ${Math.round(e0.sum-alt.sum)} kr i 2 butikker`:valgtPar?`Kun ${alt.tur[0]}`:`Billigst: ${alt.tur[0]}`;
+  el.innerHTML=`<div class="kobi"><div class="hoved">${F.valgt.tur.map(b=>logoHtml(b,30)).join("")}<span>Køb ind i ${F.valgt.tur.map(esc).join(" og ")}</span></div>${alt?`<button class="alt" data-valg="${esc(JSON.stringify(alt.tur))}">${esc(altTekst)}</button>`:""}</div>`;
+  el.querySelectorAll("[data-valg]").forEach(b=>b.onclick=()=>{const tur=JSON.parse(b.dataset.valg);st.indkobValg=navn({tur})===navn(F.anbefalet)?null:{tur,dato:todayIso()};st.aktivButik=null;shopAfd=null;changed()});
 }
 function renderSkab(){
   const L=document.getElementById("skabList");
@@ -1716,7 +1761,7 @@ function ugeplanHtml(){
     return `<h2>${kat?esc(kat[2]):"Forslag til ugen"}</h2><p class="muted" style="margin:0">${esc(periode)}. Tryk på en ret for at se mere. Sæt flueben, eller sig OK til alle.</p>
     ${up.fejl?`<p class="bad" style="margin-top:8px">${esc(up.fejl)}</p>`:""}
     <div class="list" style="margin-top:10px">${up.forslag.map((f,i)=>forslagKort(f,i)).join("")}</div>
-    <div class="nav">${aabne?`<button class="btn" data-u="okAlle">OK til alle</button>${valgte?`<button class="btn ghost" data-u="okValgte">Tilføj valgte (${valgte})</button>`:""}`:`<button class="btn" data-u="luk">Færdig</button>`}<span class="grow"></span><button class="btn ghost" data-u="igen">Nye forslag</button></div>
+    <div class="nav"><button class="btn ghost" data-u="igen">Nye forslag</button><span class="grow"></span>${aabne?`${valgte&&valgte<aabne?`<button class="btn ghost" data-u="okValgte">Tilføj valgte (${valgte})</button>`:""}<button class="btn" data-u="okAlle">OK til alle</button>`:`<button class="btn" data-u="luk">Færdig</button>`}</div>
     <div class="nav" style="margin-top:6px"><button class="btn ghost" data-u="tilbage" data-til="${kat?"kategorier":"hvordan"}">Tilbage</button><span class="grow"></span>${aabne?luk:""}</div>`;
   }
   return "";
@@ -2483,7 +2528,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="30";
+const APP_VERSION="31";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
