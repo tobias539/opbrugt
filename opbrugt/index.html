@@ -215,10 +215,13 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div id="opskListe">
     <header class="top"><h1 id="h-opsk">Opskrifter</h1><span class="muted" id="opskAntal"></span></header>
     <p class="sub" id="opskSub">Jeres egne opskrifter. Dem, der bruger mest af det, I har i skabet, står øverst.</p>
+    <button class="btn ghost" id="egenNy" style="margin:0 0 12px">+ Tilføj din egen</button>
+    <div id="egenPanel" class="sugg" style="margin:0 0 14px" hidden></div>
     <label for="opskSoeg" class="muted">Søg i titler og ingredienser</label>
     <input id="opskSoeg" class="search" type="search" placeholder="Fx kylling, bowl, peberfrugt" autocomplete="off">
     <div class="chips filt" id="opskFilt" aria-label="Filtre"></div>
     <div class="rlist" id="opskRes"></div>
+    <div id="egneWrap"></div>
   </div>
   <div id="opskVis" class="vis" hidden></div>
 </section>
@@ -292,10 +295,10 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div class="list"><div class="addrow"><input id="keyIn" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="keySave">Gem</button></div></div>
   <div class="list" style="margin-top:10px">
     <div class="addrow"><label for="modelHurtig" style="flex:1">Snak</label><select id="modelHurtig"></select></div>
-    <div class="addrow"><label for="modelScan" style="flex:1">Kvitteringer</label><select id="modelScan"></select></div>
+    <div class="addrow"><label for="modelScan" style="flex:1">Kvitteringer og nye opskrifter</label><select id="modelScan"></select></div>
   </div>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 14 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 15 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -392,7 +395,7 @@ const S = [
 const DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
 
 /* ---------- State ---------- */
-const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5"},ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[]};
+const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100,modelHurtig:"claude-haiku-5-5",modelScan:"claude-sonnet-5-5"},ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[],egne:[],historik:[],valgtAntal:{}};
 let st = JSON.parse(JSON.stringify(DEFAULT));
 let saveTimer = null, sample = null;
 
@@ -567,6 +570,7 @@ function minHo(s){let m=99;for(const k in (s.absd||{}))m=Math.min(m,ho(k));retur
 /* ---------- Render ---------- */
 let last=null;
 function render(){
+  oOpdaterEgne();
   const p=plan(); last=p;
   const {P:pers,N,M}=st.settings;
   document.getElementById("subline").textContent=`${pers} ${pers===1?"person":"personer"} · ${N} aftener fra ${dayLabel(ugeStart(),true)} · ${M} gange madlavning`;
@@ -870,7 +874,7 @@ async function hentAnbefalinger(soeg){
     return;
   }
   note.textContent="Finder retter …";
-  const kendte=[...st.favoritter,...st.anbefalet.map(r=>r.navn),...st.afvist];
+  const kendte=[...st.favoritter,...st.anbefalet.map(r=>r.navn),...st.afvist,...nyligNavne()];
   const prompt=`Du foreslår hverdagsretter til en dansk husstand på ${st.settings.P} personer, der handler i ${st.settings.butikker.join(", ")||"almindelige supermarkeder"}.
 Retter de kan lide: ${st.favoritter.join(", ")||"ingen endnu"}
 Retter de har fravalgt: ${st.afvist.join(", ")||"ingen"}
@@ -1053,6 +1057,7 @@ Husstand: ${st.settings.P} personer. Butikker: ${st.settings.butikker.join(", ")
 Skab: ${skabTekst()}
 Mangler af basisvarer: ${st.basisMangler.map(b=>BASIS[b]).join(", ")||"ingen kendte"}
 Kan lide: ${st.favoritter.join(", ")||"ingen gemt"}
+Har haft eller har på planen inden for 3 uger (foreslå dem ikke, medmindre brugeren selv beder om dem): ${nyligTekst()||"intet"}
 Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
 ${TB.tilbud.length?`Ugens tilbud på deres ingredienser (bedste pr. vare; brug dem gerne, når det passer): ${tTekst()||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer til ønsket, og sæt "opskrift" til id'et:
 ${oKatalogTekst()}
@@ -1329,21 +1334,30 @@ function renderOpsk(){
   const har=oHar(),n=st.settings.P,harNoget=Object.keys(har).length>0||TB.tilbud.length>0;
   document.getElementById("opskSub").textContent=(Object.keys(har).length?"Jeres egne opskrifter. Dem, der bruger mest af det, I har i skabet og ugens tilbud, står øverst.":"Jeres egne opskrifter. Læg det, I har, i Skabet, så kommer de retter, der bruger det, øverst.")+(TB.meta?` Tilbud fra ${[...new Set(TB.tilbud.filter(x=>tKaedeAktiv(x.k)).map(x=>x.k))].join(", ")}, hentet ${dayLabel(iso(new Date(TB.meta.opdateret)),true)}.`:"");
   // filtre
-  const tael=(f)=>{const c={};for(const r of OB.opskrifter)for(const x of f(r))c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
+  const tael=(f)=>{const c={};for(const r of oAlle())for(const x of f(r))c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
   const fl=document.getElementById("opskFilt");
   const chip=(lbl,on,fn)=>`<button class="chip" aria-pressed="${on}" data-of="${fn}">${esc(lbl)}</button>`;
   fl.innerHTML=(TB.tilbud.length?chip("På tilbud",oFilt.tilbud,"t"):"")+chip("Højst 30 min",oFilt.hurtig,"h")+tael(r=>r.pr).filter(p=>p!=="Bønner og linser"&&p!=="Æg").map(p=>chip(p,oFilt.pr===p,"p:"+p)).join("")+tael(r=>r.reg).filter(x=>x!=="Andet").map(g=>chip(g,oFilt.reg===g,"r:"+g)).join("");
   fl.querySelectorAll("[data-of]").forEach(b=>b.onclick=()=>{const f=b.dataset.of;if(f==="t")oFilt.tilbud=!oFilt.tilbud;else if(f==="h")oFilt.hurtig=!oFilt.hurtig;else if(f.startsWith("p:"))oFilt.pr=oFilt.pr===f.slice(2)?null:f.slice(2);else oFilt.reg=oFilt.reg===f.slice(2)?null:f.slice(2);renderOpsk()});
   const q=oFilt.soeg.toLowerCase().trim();
-  let rs=OB.opskrifter.filter(r=>(!oFilt.hurtig||(r.tid&&r.tid[1]<=30))&&(!oFilt.pr||r.pr.includes(oFilt.pr))&&(!oFilt.reg||r.reg.includes(oFilt.reg))&&(!q||(r.t+" "+r.u+" "+r.k.join(" ")+" "+r.ing.map(l=>l.n).join(" ")).toLowerCase().includes(q)));
+  const passer=r=>(!oFilt.hurtig||(r.tid&&r.tid[1]<=30))&&(!oFilt.pr||r.pr.includes(oFilt.pr))&&(!oFilt.reg||r.reg.includes(oFilt.reg))&&(!q||(r.t+" "+r.u+" "+r.k.join(" ")+" "+r.ing.map(l=>l.n).join(" ")).toLowerCase().includes(q));
+  let rs=OB.opskrifter.filter(passer),es=st.egne.filter(passer);
   const mt={},uge=tUge();
-  for(const r of rs){const m=mt[r.id]=oMatch(r,n,har,oValg[r.id]);m.tb=m.koeb.map(x=>[x,tBedst(x.id,uge)]).filter(y=>y[1]);m.score+=m.tb.length*.6}
-  if(oFilt.tilbud)rs=rs.filter(r=>mt[r.id].tb.length);
-  rs.sort((a,b)=>harNoget?(mt[b.id].score-mt[a.id].score)||a.t.localeCompare(b.t,"da"):a.t.localeCompare(b.t,"da"));
-  document.getElementById("opskAntal").textContent=rs.length===OB.opskrifter.length?`${rs.length} retter`:`${rs.length} af ${OB.opskrifter.length}`;
+  for(const r of [...rs,...es]){const m=mt[r.id]=oMatch(r,n,har,oValg[r.id]);m.tb=m.koeb.map(x=>[x,tBedst(x.id,uge)]).filter(y=>y[1]);m.score+=m.tb.length*.6;m.ny=nyligFor(r)}
+  if(oFilt.tilbud){rs=rs.filter(r=>mt[r.id].tb.length);es=es.filter(r=>mt[r.id].tb.length)}
+  /* Retter fra de sidste 3 uger (og dem på planen) står nederst, medmindre de er favoritter */
+  const sorter=(a,b)=>(!!mt[a.id].ny-!!mt[b.id].ny)||(harNoget?(mt[b.id].score-mt[a.id].score):0)||a.t.localeCompare(b.t,"da");
+  rs.sort(sorter);
+  es.sort((a,b)=>(!!mt[a.id].ny-!!mt[b.id].ny)||((st.valgtAntal[b.id]||0)-(st.valgtAntal[a.id]||0))||sorter(a,b));
+  const ialt=OB.opskrifter.length+st.egne.length,vist=rs.length+es.length;
+  document.getElementById("opskAntal").textContent=vist===ialt?`${vist} retter`:`${vist} af ${ialt}`;
   const res=document.getElementById("opskRes");
-  if(!rs.length){res.innerHTML=`<p class="muted">Ingen retter passer til søgningen. Fjern et filter, eller søg på noget andet.</p>`;return}
-  res.innerHTML=rs.map(r=>{const m=mt[r.id],nej=oIkkeLide(r);return `<button class="rcard" data-oopen="${r.id}">${r.img?`<img src="${r.img}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))} · ${esc(r.k.join(", "))}${m.koeb.length?" · køb "+m.koeb.length:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`}).join("");
+  res.innerHTML=vist?rs.map(r=>oKort(r,mt[r.id])).join(""):`<p class="muted">Ingen retter passer til søgningen. Fjern et filter, eller søg på noget andet.</p>`;
+  document.getElementById("egneWrap").innerHTML=es.length?`<div class="cat">Tilføjet af brugere · ${es.length}</div><div class="rlist">${es.map(r=>oKort(r,mt[r.id])).join("")}</div>`:"";
+}
+function oKort(r,m){
+  const nej=oIkkeLide(r),n=st.valgtAntal[r.id]||0;
+  return `<button class="rcard" data-oopen="${r.id}">${r.img?`<img src="${r.img}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${m.koeb.length?" · køb "+m.koeb.length:""}${r.egen&&n?` · valgt ${n} ${n===1?"gang":"gange"}`:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${m.ny?`<span class="muted" style="display:block;font-size:.85rem">${esc(nyligLabel(m.ny))}</span>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`;
 }
 function renderOpskVis(){
   const r=ORMAP[oAaben],vis=document.getElementById("opskVis");
@@ -1367,7 +1381,9 @@ function renderOpskVis(){
   vis.innerHTML=`<button class="back" id="oTilbage">‹ Alle opskrifter</button>
   ${r.img?`<img class="hero" src="${r.img}" alt="${esc(r.t)}">`:""}
   <h2 class="titel">${esc(r.t)}</h2>${r.u?`<p class="muted" style="margin:4px 0 0">${esc(r.u)}</p>`:""}
-  <p class="rmeta" style="margin-top:6px">${esc(oTid(r))} · ${esc(r.k.join(", "))}${r.kilde?" · "+esc(r.kilde):""}</p>
+  <p class="rmeta" style="margin-top:6px">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${r.kilde?" · "+esc(r.kilde):""}${r.egen?" · tilføjet af dig":""}</p>
+  <button class="btn ghost" id="oFav" style="margin-top:8px" aria-pressed="${isFav(r.t)}">${isFav(r.t)?"♥ Favorit":"♡ Gør til favorit"}</button>
+  ${nyligFor(r)?`<p class="muted" style="margin-top:6px">${esc(nyligLabel(nyligFor(r)))}. Den bliver ikke anbefalet igen før om 3 uger, medmindre den er favorit.</p>`:""}
   ${nej.length?`<p class="note">Indeholder ${esc(nej.join(", ").toLowerCase())}, som står under "Kan ikke lide / tåler ikke".</p>`:""}
   <div class="set" style="padding:12px 0"><div>Personer</div><div class="step"><button data-op="-1" aria-label="Færre personer">−</button><output>${n}</output><button data-op="1" aria-label="Flere personer">+</button></div></div>
   <h2 style="margin-top:8px">Ingredienser</h2>
@@ -1380,8 +1396,11 @@ function renderOpskVis(){
   <ol class="trinl">${r.trin.map(t=>`<li><b>${esc(t.t)}</b>${t.x.map(p=>`<p>${esc(p)}</p>`).join("")}${t.vig?`<p class="note">Vigtigt: ${esc(t.vig)}</p>`:""}${t.tip?`<p class="tip">Tip: ${esc(t.tip)}</p>`:""}</li>`).join("")}</ol>
   ${r.al&&r.al.indeholder.length?`<p class="muted" style="margin-top:16px">Allergener: ${esc(r.al.indeholder.join(", "))}${r.al.spor_af.length?". Kan indeholde spor af: "+esc(r.al.spor_af.join(", ")):""}.</p>`:""}
   ${r.noter?`<p class="muted">${esc(r.noter)}</p>`:""}
-  ${r.url?`<p class="muted"><a href="${esc(r.url)}" target="_blank" rel="noopener">Se retten på hellofresh.dk</a></p>`:""}`;
+  ${r.url?`<p class="muted"><a href="${esc(r.url)}" target="_blank" rel="noopener">Se retten på hellofresh.dk</a></p>`:""}
+  ${r.egen?`<button class="btn ghost" id="oSlet" style="margin-top:16px">Slet opskriften</button>`:""}`;
   document.getElementById("oTilbage").onclick=()=>{oAaben=null;renderOpsk();window.scrollTo(0,0)};
+  document.getElementById("oFav").onclick=()=>{if(isFav(r.t))st.favoritter=st.favoritter.filter(x=>x.toLowerCase()!==r.t.toLowerCase());else st.favoritter.push(r.t);changed()};
+  const sl=document.getElementById("oSlet");if(sl)sl.onclick=()=>{if(!confirm(`Slet "${r.t}"? Den forsvinder fra Opskrifter, men bliver på planen, hvis den står der.`))return;st.egne=st.egne.filter(x=>x.id!==r.id);oAaben=null;changed();toast("Opskriften er slettet")};
   vis.querySelectorAll("[data-op]").forEach(b=>b.onclick=()=>{oPers=Math.min(10,Math.max(1,n+ +b.dataset.op));renderOpskVis()});
   vis.querySelectorAll("[data-ob]").forEach(s=>s.onchange=()=>{(oValg[r.id]=oValg[r.id]||{})[+s.dataset.ob]=s.value;renderOpskVis()});
   vis.querySelectorAll("[data-odag]").forEach(b=>b.onclick=()=>{oPlacer(r,b.dataset.odag);changed();toast(r.t+" er sat på "+relLabel(b.dataset.odag))});
@@ -1419,12 +1438,126 @@ function fjernFast(id){
     else if(b.fri){const x=st.fri.find(y=>y.navn===b.fri);if(x)x.niveau=b.niveau;else st.fri.push({navn:b.fri,niveau:b.niveau})}
   }
   st.fast=st.fast.filter(x=>x.id!==id);st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==id);
+  /* fjernet før dagen: den blev ikke lavet, så den tæller ikke som valgt */
+  if(f&&f.dato>=todayIso()&&st.historik.some(h=>h.id===id)){st.historik=st.historik.filter(h=>h.id!==id);if(f.opskrift&&st.valgtAntal[f.opskrift])st.valgtAntal[f.opskrift]--}
 }
 /* Til Claude: kort katalog over banken, med det skabet kan bruges til */
 function oKatalogTekst(){
   const har=oHar(),n=st.settings.P;
-  return OB.opskrifter.map(r=>{const m=oMatch(r,n,har,oValg[r.id]);return `${r.id} | ${r.t}${r.u?" "+r.u:""} | ${oTid(r)} | ${r.k.join("/")}${m.harL.length?" | bruger fra skabet: "+m.harL.map(x=>(OI[x.id]||{n:x.navn}).n.toLowerCase()).join(", "):""}`}).join("\n");
+  return oAlle().filter(r=>!nyligFor(r)).map(r=>{const m=oMatch(r,n,har,oValg[r.id]);return `${r.id} | ${r.t}${r.u?" "+r.u:""} | ${oTid(r)} | ${r.k.join("/")}${m.harL.length?" | bruger fra skabet: "+m.harL.map(x=>(OI[x.id]||{n:x.navn}).n.toLowerCase()).join(", "):""}`}).join("\n");
 }
+/* ---------- Egne opskrifter ----------
+   Gemmes i st.egne i samme format som opskriftbanken, så skab, indkøbsliste, plan og tilbud virker ens.
+   Ingredienser, der ikke findes i bankens katalog, får et id med "x-" foran. */
+function oAlle(){return [...OB.opskrifter,...st.egne]}
+function oOpdaterEgne(){
+  for(const k of Object.keys(ORMAP))if(ORMAP[k].egen)delete ORMAP[k];
+  for(const r of st.egne||[])ORMAP[r.id]=r;
+}
+function oSlug(s){return String(s||"").toLowerCase().replace(/æ/g,"ae").replace(/ø/g,"oe").replace(/å/g,"aa").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50)||"ret"}
+
+/* ---------- Historik og 3-ugers-reglen ----------
+   Alt, der kommer på planen, noteres. En ret, der har været eller er på planen inden for 21 dage,
+   anbefales ikke igen, medmindre den er favorit. valgtAntal tæller, hvor mange gange en opskrift er valgt. */
+const NYLIG_DAGE=21;
+function historikSync(){
+  const kendt=new Map(st.historik.map(h=>[h.id,h]));
+  for(const f of st.fast){
+    const h=kendt.get(f.id);
+    if(h){h.dato=f.dato;continue}
+    st.historik.push({id:f.id,navn:f.navn,opskrift:f.opskrift||null,dato:f.dato});
+    if(f.opskrift)st.valgtAntal[f.opskrift]=(st.valgtAntal[f.opskrift]||0)+1;
+  }
+  const graense=addDays(todayIso(),-90);
+  st.historik=st.historik.filter(h=>h.dato>=graense);
+}
+function nyligListe(){const g=addDays(todayIso(),-NYLIG_DAGE);return st.historik.filter(h=>h.dato>=g)}
+function nyligFor(r){
+  if(isFav(r.t))return null;
+  const t=r.t.toLowerCase();
+  const hs=nyligListe().filter(h=>h.opskrift===r.id||h.navn.toLowerCase()===t);
+  if(!hs.length)return null;
+  const t0=todayIso(),frem=hs.filter(h=>h.dato>=t0).sort((a,b)=>a.dato.localeCompare(b.dato));
+  return frem[0]||hs.sort((a,b)=>b.dato.localeCompare(a.dato))[0];
+}
+function nyligLabel(h){const t0=todayIso();return h.dato>=t0?"På planen "+(h.dato===t0?"i dag":dayLabel(h.dato,true)):"I havde den "+dayLabel(h.dato,true)}
+function nyligNavne(){return [...new Set(nyligListe().map(h=>h.navn))].filter(n=>!isFav(n))}
+function nyligTekst(){return nyligNavne().join(", ")}
+
+/* ---------- Tilføj din egen ---------- */
+let egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};
+function renderEgen(){
+  const p=document.getElementById("egenPanel"),knap=document.getElementById("egenNy");
+  p.hidden=egen.trin==="luk";knap.hidden=!p.hidden;
+  if(p.hidden)return;
+  if(egen.trin==="arbejder"){p.innerHTML=`<h3>Tilføj din egen opskrift</h3><p class="muted">Claude sætter opskriften op … det kan tage op til et minut.</p>`;return}
+  if(egen.trin==="vis"){
+    const r=egen.forslag,ukendt=r.ing.filter(l=>!OI[l.i]&&!l.b).length;
+    p.innerHTML=`<h3>${esc(r.t)}</h3>${r.u?`<p class="muted" style="margin:2px 0 0">${esc(r.u)}</p>`:""}
+    <p class="rmeta" style="margin-top:6px">${esc(oTid(r))} · til ${r.pb} ${r.pb===1?"person":"personer"}${r.k.length?" · "+esc(r.k.join(", ")):""}${r.kilde?" · "+esc(r.kilde):""}</p>
+    <h3 style="margin-top:10px">Ingredienser</h3>
+    <ul style="margin:4px 0 0;padding-left:20px">${r.ing.map(l=>`<li>${esc(oFmt(l.m,l.e))} ${esc(l.n)}${l.b?` <span class="muted">(basisvare)</span>`:""}</li>`).join("")}</ul>
+    ${ukendt?`<p class="muted" style="margin-top:6px">${ukendt} ${ukendt===1?"ingrediens findes":"ingredienser findes"} ikke i appens varekatalog. De kommer stadig på indkøbslisten, men kan ikke matches med skabet eller tilbud.</p>`:""}
+    <h3 style="margin-top:10px">Sådan gør du</h3>
+    <ol style="margin:4px 0 0;padding-left:20px">${r.trin.map(t=>`<li>${t.t?`<b>${esc(t.t)}</b> `:""}${esc(t.x.join(" "))}</li>`).join("")}</ol>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenGem">Gem opskriften</button><button class="btn ghost" id="egenRet">Ret teksten</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
+    document.getElementById("egenGem").onclick=()=>{st.egne.push(r);egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast("Opskriften er gemt")};
+    document.getElementById("egenRet").onclick=()=>{egen.trin="input";renderEgen()};
+    document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";renderEgen()};
+    return;
+  }
+  p.innerHTML=`<h3>Tilføj din egen opskrift</h3>
+  <p class="muted" style="margin:2px 0 8px">Indsæt opskriften (fx kopieret fra en hjemmeside), skriv den med dine egne ord, eller tag et billede af en side i en kogebog. Claude sætter den op som de andre opskrifter.</p>
+  <textarea id="egenTekst" rows="6" placeholder="Fx: Chili sin carne til 4. 2 dåser hakkede tomater, 1 dåse kidneybønner, 2 løg …" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;color:inherit">${esc(egen.tekst)}</textarea>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px"><label class="btn ghost" style="display:inline-block">${egen.billede?"Skift billede":"Tag billede"}<input type="file" id="egenBillede" accept="image/*" hidden></label><span class="muted">${egen.billede?esc(egen.billede.name||"Billede valgt"):""}</span></div>
+  ${egen.fejl?`<p class="bad" style="margin-top:8px">${esc(egen.fejl)}</p>`:""}
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenLav">Lav opskrift</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
+  document.getElementById("egenTekst").oninput=e=>{egen.tekst=e.target.value};
+  document.getElementById("egenBillede").onchange=e=>{egen.billede=e.target.files&&e.target.files[0]||null;renderEgen()};
+  document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";renderEgen()};
+  document.getElementById("egenLav").onclick=egenLav;
+}
+document.getElementById("egenNy").onclick=()=>{egen.trin="input";egen.fejl="";renderEgen()};
+async function egenLav(){
+  const tekst=egen.tekst.trim();
+  if(!tekst&&!egen.billede){egen.fejl="Skriv eller indsæt opskriften, eller tag et billede af den.";renderEgen();return}
+  if(!sample){egen.fejl=fejlTekst({code:"no_key"});renderEgen();return}
+  egen.trin="arbejder";egen.fejl="";renderEgen();
+  const vaerdier=f=>[...new Set(OB.opskrifter.flatMap(f))].join(", ");
+  const prompt=`Lav brugerens opskrift om til appens opskriftsformat. Opskriften står ${egen.billede&&tekst?"på billedet og i teksten nedenfor":egen.billede?"på billedet":"i teksten nedenfor"}.
+Regler:
+- Skriv på dansk. Brug opskriftens egne mængder og trin, og opfind ikke ingredienser. Mangler der mængder, så skøn dem fornuftigt.
+- "pb": antal personer, opskriften er til (4, hvis den ikke siger det).
+- Ingredienser: "i" er id'et fra kataloget, hvis varen findes der (også under et andet navn), ellers null. "n" er navnet, som det står i opskriften. "m" er mængden som tal, eller null ved "efter smag". "e" er enheden: g, ml, dl, stk, fed, tsk, spsk, daase, pose, nip eller "efter smag". Omregn kg til g og liter til ml. "b": true for basisvarer, man normalt har i skabet (salt, peber, olie, vand, sukker, mel).
+- "k": køkken, fx ${vaerdier(r=>r.k)}. "reg": region blandt ${vaerdier(r=>r.reg)}. "pr": hovedprotein blandt ${vaerdier(r=>r.pr)} (tom liste, hvis der ikke er noget).
+- "tid": [mindst, højst] minutter i alt. "trin": 3-8 trin, hver med en kort overskrift "t" og sætninger "x".
+- "kilde": bog og side eller hjemmeside, hvis det fremgår, ellers null.
+Er det ikke en opskrift, så svar {"ok":false,"fejl":"kort forklaring på dansk"}.
+Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
+${tekst?`\nOpskriften:\n"""${tekst}"""\n`:""}
+Returnér KUN JSON: {"ok":true,"t":titel,"u":kort undertitel eller "","k":[...],"reg":[...],"pr":[...],"tid":[min,max],"pb":tal,"ing":[{"i","n","m","e","b"}],"trin":[{"t","x":[...]}],"kilde":tekst eller null}`;
+  try{
+    const x=await sample.json(prompt,{images:egen.billede||undefined,modelTier:"default"});
+    if(!x||x.ok===false){egen.trin="input";egen.fejl=(x&&x.fejl)||"Det ligner ikke en opskrift.";renderEgen();return}
+    const r=egenNorm(x);
+    if(!r.ing.length||!r.trin.length){egen.trin="input";egen.fejl="Claude kunne ikke finde både ingredienser og fremgangsmåde. Prøv med hele opskriften.";renderEgen();return}
+    egen.forslag=r;egen.trin="vis";renderEgen();
+  }catch(e){egen.trin="input";egen.fejl=fejlTekst(e);renderEgen()}
+}
+function egenNorm(x){
+  const liste=v=>Array.isArray(v)?v.map(String).map(s=>s.trim()).filter(Boolean):(v?[String(v)]:[]);
+  const tal=v=>typeof v==="number"&&isFinite(v)&&v>0?v:null;
+  const ing=(Array.isArray(x.ing)?x.ing:[]).filter(l=>l&&l.n).map(l=>{
+    const i=typeof l.i==="string"&&OI[l.i]?l.i:"x-"+oSlug(l.n),m=tal(l.m),o={i,n:String(l.n),m,e:m==null?"efter smag":String(l.e||"stk")};
+    if(l.b===true||(OI[i]&&OI[i].bv))o.b=1;return o;
+  });
+  const trin=(Array.isArray(x.trin)?x.trin:[]).map(t=>({t:String(t&&t.t||""),x:liste(t&&t.x)})).filter(t=>t.x.length);
+  const tid=Array.isArray(x.tid)?x.tid.map(tal).filter(Boolean):[];
+  return {id:"egen-"+oSlug(x.t)+"-"+Date.now().toString(36),t:String(x.t||"Egen ret").trim(),u:String(x.u||"").trim(),
+    k:liste(x.k).slice(0,2),reg:liste(x.reg),pr:liste(x.pr),tags:[],pb:Math.max(1,Math.round(+x.pb||4)),ing,trin,
+    tid:tid.length?[tid[0],tid[tid.length-1]]:null,kilde:x.kilde?String(x.kilde):"",egen:true,oprettet:todayIso()};
+}
+
 document.getElementById("opskSoeg").oninput=e=>{oFilt.soeg=e.target.value;renderOpsk()};
 document.addEventListener("click",e=>{const b=e.target.closest("[data-oopen]");if(b){e.preventDefault();oVis(b.dataset.oopen);window.scrollTo(0,0)}});
 
@@ -1440,6 +1573,7 @@ function changed(){render();save()}
 function save(){
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{
+    historikSync();
     local(JSON.parse(JSON.stringify(st)));
   },600);
 }
@@ -1448,6 +1582,7 @@ function flag(m){document.getElementById("saveState").textContent=m}
 function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st={...JSON.parse(JSON.stringify(DEFAULT)),...d,settings:{...DEFAULT.settings,...(d.settings||{})}}}}
 
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
+historikSync();
 fillSelects();render();setupScan();
 
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
