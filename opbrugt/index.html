@@ -321,7 +321,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 19 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 20 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -2127,6 +2127,25 @@ document.getElementById("importTekstBtn").onclick=()=>{const w=document.getEleme
 document.getElementById("importTekstOk").onclick=()=>importer(document.getElementById("importTekst").value);
 
 forbind();tHent();
+
+/* ---------- Opdatering ----------
+   Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
+   hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
+   adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
+const APP_VERSION="20";
+async function tjekOpdatering(){
+  try{
+    const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
+    const v=String((await r.json()).v||"");
+    if(!v||v===APP_VERSION)return;
+    const noegle="opbrugt_opdateret_til";
+    if(sessionStorage.getItem(noegle)===v)return; /* allerede prøvet i denne session: undgå en løkke */
+    sessionStorage.setItem(noegle,v);
+    location.replace(location.pathname+"?v="+encodeURIComponent(v));
+  }catch(e){}
+}
+tjekOpdatering();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});
 </script>
 </body>
 </html>
