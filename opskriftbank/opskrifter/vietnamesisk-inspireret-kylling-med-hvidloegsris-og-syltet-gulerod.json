@@ -1,0 +1,436 @@
+{
+  "id": "vietnamesisk-inspireret-kylling-med-hvidloegsris-og-syltet-gulerod",
+  "titel": "Vietnamesisk-inspireret kylling",
+  "undertitel": "med hvidløgsris og syltet gulerod",
+  "billede": "billeder/vietnamesisk-inspireret-kylling-med-hvidloegsris-og-syltet-gulerod.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U04",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 1,
+      "bagside": 2
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 520
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "vietnamesisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Langkornede hvide ris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "mynte-koriander",
+      "navn": "Mynte & koriander",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "peanuts-saltede",
+      "navn": "Saltede peanuts",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "jordnoedder"
+      ],
+      "spor_af": [
+        "noedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "pak-choi",
+      "navn": "Pak choi",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "note": "Tallet for 2P er delvist dækket af en plet på kortet fra 2026-U04; kortet fra 2025-U46 skriver 1 stk."
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryststrimler",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 600
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "hvidvinseddike",
+      "navn": "Hvidvinseddike",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 24,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Chili",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "srirachamayonnaise-vegansk",
+      "navn": "Vegansk srirachamayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "note": "Skalotteløg ifølge fremgangsmåden",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 5.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til syltning",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til syltning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Mel til kød",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til marinade",
+      "maengde": 2,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til syltning og pak choi",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'et nip salt' i trin 3 og 4"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog hvidløgsris",
+      "tekst": [
+        "Pres eller hak hvidløg fint.",
+        "Smelt smør i en mellemstor gryde på middel varme.",
+        "Svits halvdelen af hvidløg i 30 sek, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på middellav varme i 14 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, skræl gulerod til lange, tynde bånd, og hak det sidste stykke fint.",
+        "Hak pak choi og skalotteløg groft.",
+        "Skær citrusfrugt i både."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Sylt gulerod",
+      "tekst": [
+        "Bland hvidvinseddike, sukker, vand og et nip salt i en lille skål.",
+        "Vend gulerod i skålen.",
+        "Hæld lage fra inden servering.",
+        "Vend kylling med hvedemel, salt og et nip peber i en stor skål.",
+        "Bland sojasauce, sukker, et stort skvæt citrusfrugtsaft og resterende hvidløg i en lille skål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg pak choi i 2-3 min, eller indtil blød. Krydr med et nip salt og peber, og overfør til en skål med låg.",
+        "Opvarm samme stegepande (tilsæt en smule ved behov) på middelhøj varme.",
+        "Steg kylling og skalotteløg i 4-5 min, eller indtil gennemstegt.",
+        "Tag panden af varmen, tilsæt marinade, og vend sammen."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, hak peanuts groft.",
+        "Hak mynte og koriander groft.",
+        "Flæk chili, fjern kerner, og skær i tynde skiver."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret hvidløgsris, kylling, pak choi og gulerod i dybe tallerkener.",
+        "Top med peanuts, mynte, koriander og chili.",
+        "Server med srirachamayonnaise og resterende citrusfrugtbåde."
+      ],
+      "tip": "Spring chilien over, eller brug mindre, hvis du ikke er til stærk mad."
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 673,
+      "energi_kcal": 161,
+      "fedt_g": 6.1,
+      "maettet_fedt_g": 1,
+      "kulhydrat_g": 17.5,
+      "sukker_g": 2.7,
+      "protein_g": 9.3,
+      "fiber_g": 1.2,
+      "salt_g": 0.91
+    },
+    "pr_portion": {
+      "energi_kj": 3489,
+      "energi_kcal": 834,
+      "fedt_g": 31.5,
+      "maettet_fedt_g": 5.1,
+      "kulhydrat_g": 91,
+      "sukker_g": 14.1,
+      "protein_g": 48.3,
+      "fiber_g": 6,
+      "salt_g": 4.74
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "jordnoedder",
+      "soja",
+      "gluten",
+      "svovldioxid"
+    ],
+    "spor_af": [
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Samme ret er også scannet med forside 15 og bagside 16 fra 2025-U46: mængder og trin er de samme, men dér står sojasauce kun med 13) 11) (uden 15) Hvede), og kulhydrat er 17,6 g pr. 100 g og 91,1 g pr. portion og energien 3490 kJ pr. portion. Kortet fra 2026-U04 mærker sojasaucen med 15) Hvede, men hvede står ikke i kortets samlede allergenliste. Ingredienslisten skriver 'Løg', mens trinene bruger skalotteløg."
+}

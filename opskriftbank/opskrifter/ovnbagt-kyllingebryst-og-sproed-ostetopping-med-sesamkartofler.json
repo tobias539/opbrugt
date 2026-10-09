@@ -1,0 +1,353 @@
+{
+  "id": "ovnbagt-kyllingebryst-og-sproed-ostetopping-med-sesamkartofler",
+  "titel": "Ovnbagt kyllingebryst og sprød ostetopping",
+  "undertitel": "med sesamkartofler og gyldenbagt broccoli",
+  "billede": "billeder/ovnbagt-kyllingebryst-og-sproed-ostetopping-med-sesamkartofler.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/ovnbagt-kyllingebryst-og-sprod-ostetopping-67c811ef8f112f54d1d75ba8",
+    "menunummer": 2,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 15,
+      "bagside": 16
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 700
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "broccoli",
+      "navn": "Broccoli",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 500,
+        "4": 500
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "balsamico",
+      "navn": "Balsamico",
+      "maengde": 6,
+      "enhed": "ml",
+      "tabel": {
+        "3": 12,
+        "4": 12
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "revet-gouda",
+      "navn": "Revet gouda",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "rucola",
+      "navn": "Rucola",
+      "maengde": 40,
+      "enhed": "g",
+      "tabel": {
+        "3": 70,
+        "4": 70
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "aioli",
+      "navn": "Aioli",
+      "maengde": 42,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 80
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "jorden-rundt",
+      "navn": "Jorden Rundt",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "sesamfroe",
+      "navn": "Sesamfrø",
+      "maengde": 10,
+      "enhed": "g",
+      "tabel": {
+        "3": 20,
+        "4": 20
+      },
+      "allergener": [
+        "sesam"
+      ],
+      "spor_af": [
+        "noedder",
+        "jordnoedder"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 125,
+      "enhed": "g",
+      "tabel": {
+        "3": 250,
+        "4": 250
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kartofler",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til kartofler, kylling og broccoli"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til broccoli og salat",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'Et nip'"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Skær kartofler",
+      "tekst": [
+        "Forvarm ovnen til 240°C/220°C (varmluft).",
+        "Skær kartofler (uskrællet) i 2 cm tern."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Bag kartofler",
+      "tekst": [
+        "Fordel kartofler på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 25-35 min, eller indtil møre."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, skær broccoli i buketter (inklusive stokken) i 1 cm tern.",
+        "Skyl rucola.",
+        "Hak peberfrugt groft.",
+        "Halver cherrytomater.",
+        "Vend kylling med en smule olivenolie, Jorden Rundt og salt i en mellemstor skål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag kylling og broccoli",
+      "tekst": [
+        "Tag bagepladen ud af ovnen, når kartoflerne har 20 min tilbage.",
+        "Placer kylling og broccoli på samme bageplade. Dryp broccoli med en smule olivenolie, og krydr med et nip salt og peber.",
+        "Bag i ovnen i 17-19 min."
+      ],
+      "tip": "Benyt flere bageplader, hvis der ikke er plads på en."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav rucolasalat",
+      "tekst": [
+        "Top kylling med gouda, når der er 5 min tilbage.",
+        "Bag i resterende tid, eller indtil osten er smeltet og kyllingen er gennemtilberedt.",
+        "Bland rucola, peberfrugt, cherrytomater, balsamico, olivenolie og et nip salt og peber i en mellemstor skål."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret broccoli, kartofler, kylling og rucolasalat på tallerkener.",
+        "Top kartofler med sesamfrø.",
+        "Server med aioli."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 421,
+      "energi_kcal": 101,
+      "fedt_g": 4.4,
+      "maettet_fedt_g": 1.1,
+      "kulhydrat_g": 7.9,
+      "sukker_g": 1.7,
+      "protein_g": 7.4,
+      "fiber_g": 1.4,
+      "salt_g": 0.49
+    },
+    "pr_portion": {
+      "energi_kj": 2965,
+      "energi_kcal": 709,
+      "fedt_g": 30.7,
+      "maettet_fedt_g": 7.5,
+      "kulhydrat_g": 55.4,
+      "sukker_g": 11.9,
+      "protein_g": 52,
+      "fiber_g": 10.2,
+      "salt_g": 3.48
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "maelk",
+      "aeg",
+      "sennep",
+      "svovldioxid"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder"
+    ]
+  },
+  "noter": "Begyndelsen af titlen er revet af forsiden, så titel og undertitel er bekræftet på hellofresh.dk. Tiden står på forsiden (hellofresh.dk skriver 25 min). Ugekoden er revet af bagsiden. Hellofresh.dk angiver 40 g aioli til 2 personer, kortet 42 g. Jorden Rundt er HelloFresh' egen krydderiblanding; kortet og hellofresh.dk angiver, at den indeholder æg og sennep."
+}

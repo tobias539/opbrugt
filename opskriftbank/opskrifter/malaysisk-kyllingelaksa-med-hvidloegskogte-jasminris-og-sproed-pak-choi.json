@@ -1,0 +1,339 @@
+{
+  "id": "malaysisk-kyllingelaksa-med-hvidloegskogte-jasminris-og-sproed-pak-choi",
+  "titel": "Malaysisk kyllingelaksa",
+  "undertitel": "med hvidløgskogte jasminris og sprød pak choi",
+  "billede": "billeder/malaysisk-kyllingelaksa-med-hvidloegskogte-jasminris-og-sproed-pak-choi.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/malaysisk-kyllingelaksa-61c1f63e6375811e41544850",
+    "uge": "2026-U09",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 25,
+      "bagside": 26
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 580
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "malaysisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "karry"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "curry-on",
+      "navn": "Curry-On",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "ga-laksa",
+      "navn": "Ga-Laksa",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "pak-choi",
+      "navn": "Pak choi",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryststrimler",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 600
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "kokosmaelk",
+      "navn": "Kokosmælk",
+      "maengde": 180,
+      "enhed": "ml",
+      "tabel": {
+        "3": 360,
+        "4": 360
+      },
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog hvidløgsris",
+      "tekst": [
+        "Pres eller hak hvidløg fint.",
+        "Smelt smør i en gryde på middelhøj varme.",
+        "Svits hvidløg i 30 sek, eller indtil velduftende.",
+        "Bring vand i kog i en mellemstor gryde. Tilsæt ris og salt, og kog under låg på middellav varme i 12 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, skær peberfrugt i 2 cm tern.",
+        "Hak pak choi fint.",
+        "Skær citrusfrugt i både."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Opvarm olivenolie i en stegepande på middelhøj varme.",
+        "Krydr kylling med salt, og steg i 4-5 min, eller indtil gennemstegt.",
+        "Overfør til en tallerken."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Steg peberfrugt",
+      "tekst": [
+        "Opvarm en smule olivenolie i samme stegepande på middelhøj varme.",
+        "Steg peberfrugt med Curry-on og Ga-Laksa i 2-3 min, eller indtil mør."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav laksa",
+      "tekst": [
+        "Tilsæt kokosmælk, sojasauce, sukker, et skvæt citrusfrugtsaft og kylling, og lad simre i 3-4 min, eller indtil gennemvarmet.",
+        "Tilsæt pak choi, når der er 1 min tilbage.",
+        "Krydr med salt og et nip peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris og laksa i dybe tallerkener.",
+        "Server med resterende citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 536,
+      "energi_kcal": 128,
+      "fedt_g": 5.1,
+      "maettet_fedt_g": 3,
+      "kulhydrat_g": 13.7,
+      "sukker_g": 1.7,
+      "protein_g": 8.5,
+      "fiber_g": 1,
+      "salt_g": 1.14
+    },
+    "pr_portion": {
+      "energi_kj": 3124,
+      "energi_kcal": 747,
+      "fedt_g": 29.7,
+      "maettet_fedt_g": 17.3,
+      "kulhydrat_g": 79.5,
+      "sukker_g": 10.1,
+      "protein_g": 49.5,
+      "fiber_g": 6,
+      "salt_g": 6.61
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "soja",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og ingen tid; titel, undertitel og tid (20 min) er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave med 200 ml kokosmælk og 25 ml sojasauce til 2 personer. Mængderne her er fra kortet (2026-U09). Kortet har en boks 'Hello chili!', der foreslår at lade børnene smage laksa med chili, men der er ingen chili på ingredienslisten. Kortets allergenliste nævner ikke mælk, selvom risen koges med smør (basisvare)."
+}

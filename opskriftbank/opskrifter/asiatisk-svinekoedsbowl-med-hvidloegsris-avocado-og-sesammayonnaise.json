@@ -1,0 +1,352 @@
+{
+  "id": "asiatisk-svinekoedsbowl-med-hvidloegsris-avocado-og-sesammayonnaise",
+  "titel": "Asiatisk svinekødsbowl",
+  "undertitel": "med hvidløgsris, avocado og sesammayonnaise",
+  "billede": "billeder/asiatisk-svinekoedsbowl-med-hvidloegsris-avocado-og-sesammayonnaise.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U02",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 27,
+      "bagside": 28
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 480
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce med lavt saltindhold",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "sesammayonnaise-vegansk",
+      "navn": "Vegansk sesammayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket svinekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "spidskaal-skaaret",
+      "navn": "Spidskål, skåret",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "ga-laksa",
+      "navn": "Ga-Laksa",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "asiatisk-dressing",
+      "navn": "Asiatisk dressing",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "avocado",
+      "navn": "Avocado",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til sauce",
+      "maengde": 1,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog hvidløgsris",
+      "tekst": [
+        "Pres eller hak hvidløg fint.",
+        "Opvarm olivenolie i en gryde på middel varme.",
+        "Svits hvidløg i 30 sek, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på lav varme i 12 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, halver avocado, og fjern sten. Grav indmad ud med en ske, og skær i tynde skiver.",
+        "Skær gulerod (uskrællet) i tynde, halve skiver.",
+        "Hak pak choi groft."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg gulerod i 3-4 min, eller indtil møre.",
+        "Tilsæt pak choi, og steg videre i 2 min.",
+        "Krydr med salt og et nip peber, og overfør til en skål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kød",
+      "tekst": [
+        "Opvarm samme stegepande (tilsæt en smule olivenolie ved behov) på middelhøj varme.",
+        "Steg hakket svinekød med Ga-Laksa og salt i 4-5 min, eller indtil brunet."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt grøntsager",
+      "tekst": [
+        "Tilsæt gulerod, pak choi, sojasauce og sukker til stegepanden, og steg i 1-2 min, eller indtil gennemvarmet.",
+        "Krydr med salt og et nip peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret hvidløgsris, svinekød og grøntsager i dybe tallerkener.",
+        "Dryp med sesammayonnaise.",
+        "Top med avocado og asiatisk dressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 824,
+      "energi_kcal": 197,
+      "fedt_g": 11.1,
+      "maettet_fedt_g": 2.3,
+      "kulhydrat_g": 16.9,
+      "sukker_g": 3.2,
+      "protein_g": 7.9,
+      "fiber_g": 1.6,
+      "salt_g": 1.44
+    },
+    "pr_portion": {
+      "energi_kj": 3928,
+      "energi_kcal": 939,
+      "fedt_g": 53.1,
+      "maettet_fedt_g": 10.9,
+      "kulhydrat_g": 80.7,
+      "sukker_g": 15.3,
+      "protein_g": 37.7,
+      "fiber_g": 7.4,
+      "salt_g": 6.84
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "soja",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Trin 2, 3 og 5 på kortet nævner pak choi, men ingredienslisten har kun spidskål, skåret (og trinbillederne viser spidskål), så brug spidskålen dér. Samme ret er også scannet med bagside fra 2025-U48 (side 43/44), hvor trinene skriver spidskål, 3 personer får 225 g spidskål i stedet for 300 g, og næringsindholdet er lidt anderledes (460 g og 904 kcal pr. portion)."
+}

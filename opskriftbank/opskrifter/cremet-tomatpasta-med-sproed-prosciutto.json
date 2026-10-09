@@ -1,0 +1,350 @@
+{
+  "id": "cremet-tomatpasta-med-sproed-prosciutto",
+  "titel": "Cremet tomatpasta med sprød prosciutto",
+  "billede": "billeder/cremet-tomatpasta-med-sproed-prosciutto.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U16",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 33,
+      "bagside": 34
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 440
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "ingredienser": [
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Pasta",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 270,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "note": "Rigatoni på billederne",
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "mamas-favorit",
+      "navn": "Mamas Favorit",
+      "maengde": 8,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 16
+      },
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "balsamico",
+      "navn": "Balsamico",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 12,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "prosciutto",
+      "navn": "Prosciutto crudo",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Basilikum",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "tomatpure",
+      "navn": "Tomatpuré",
+      "maengde": 35,
+      "enhed": "g",
+      "tabel": {
+        "3": 70,
+        "4": 70
+      }
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Crème fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 120,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Står på ingredienslisten, men nævnes ikke i trinene",
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 240,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt pastavand",
+      "maengde": 2,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til grøntsager",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Kog pasta i 11-12 min, eller indtil 'al dente'.",
+        "Gem en kop pastavand, og hæld resten fra.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg prosciutto i 3-4 min, eller indtil sprød.",
+        "Overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Vandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Imens, skær løg i tynde, halve skiver.",
+        "Skyl spinat.",
+        "Pluk basilikum.",
+        "Pres eller hak hvidløg fint.",
+        "Skær tomat i 2 cm tern.",
+        "Opvarm samme stegepande (tilsæt en smule olivenolie ved behov) på middel varme.",
+        "Steg tomat, løg, balsamico, sukker, salt og et nip peber i 3-4 min, eller indtil bløde og karamelliseret."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Tilsæt tomatpuré, hvidløg og Mamas Favorit, og steg videre i 1 min, eller indtil velduftende.",
+        "Tilsæt pasta, pastavand, madlavningsfløde, bouillon, spinat og basilikum, og sænk til middel varme.",
+        "Lad simre 1-2 min, eller indtil saucen er tyknet og spinaten faldet sammen.",
+        "Krydr med salt og et nip peber."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret pasta i dybe tallerkener.",
+        "Top med prosciutto."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 804,
+      "energi_kcal": 192,
+      "fedt_g": 10,
+      "maettet_fedt_g": 6,
+      "kulhydrat_g": 19.6,
+      "sukker_g": 4.1,
+      "protein_g": 5.8,
+      "fiber_g": 1.4,
+      "salt_g": 1.17
+    },
+    "pr_portion": {
+      "energi_kj": 3539,
+      "energi_kcal": 846,
+      "fedt_g": 43.9,
+      "maettet_fedt_g": 26.3,
+      "kulhydrat_g": 86.2,
+      "sukker_g": 18,
+      "protein_g": 25.7,
+      "fiber_g": 6,
+      "salt_g": 5.16
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Retten blev ikke fundet på hellofresh.dk; nærmeste slægtning er 'Sprød prosciutto-ricottapasta' (https://www.hellofresh.dk/recipes/sprod-prosciutto-ricottapasta-63496998971d5eddb3ff7192), som bruger ricotta og cherrytomater. Crème fraiche står på ingredienslisten, men nævnes ikke i trinene – den kan nok røres i saucen sammen med fløden. Under trin 3 er der et tip, som er skåret af i scanningen og ikke kan læses."
+}

@@ -1,0 +1,82 @@
+{
+ "2g2CAjpP": {
+  "kaede": "REMA 1000",
+  "label": "Uge 41",
+  "fra": "2026-10-03T22:00:00+0000",
+  "til": "2026-10-10T21:59:59+0000",
+  "antal": 123,
+  "fil": "raa/REMA 1000/2026-10-03_2g2CAjpP.json.gz"
+ },
+ "VRknURDg": {
+  "kaede": "Netto",
+  "label": "Netto uge 41",
+  "fra": "2026-10-02T22:00:00+0000",
+  "til": "2026-10-09T21:59:59+0000",
+  "antal": 230,
+  "fil": "raa/Netto/2026-10-02_VRknURDg.json.gz"
+ },
+ "lU_YDFnh": {
+  "kaede": "føtex",
+  "label": "Uge 41",
+  "fra": "2026-10-01T22:00:00+0000",
+  "til": "2026-10-08T21:59:59+0000",
+  "antal": 401,
+  "fil": "raa/føtex/2026-10-01_lU_YDFnh.json.gz"
+ },
+ "ta8mAXfO": {
+  "kaede": "Lidl",
+  "label": "Weekendavis (uge 41)",
+  "fra": "2026-10-07T22:00:00+0000",
+  "til": "2026-10-10T21:59:59+0000",
+  "antal": 236,
+  "fil": "raa/Lidl/2026-10-07_ta8mAXfO.json.gz"
+ },
+ "VE4dDRAN": {
+  "kaede": "Lidl",
+  "label": "Lidl avis (uge 41)",
+  "fra": "2026-10-03T22:00:00+0000",
+  "til": "2026-10-10T21:59:59+0000",
+  "antal": 235,
+  "fil": "raa/Lidl/2026-10-03_VE4dDRAN.json.gz"
+ },
+ "fLCJBame": {
+  "kaede": "REMA 1000",
+  "label": "Uge 41 Indstik",
+  "fra": "2026-10-07T22:00:00+0000",
+  "til": "2026-10-10T21:59:59+0000",
+  "antal": 8,
+  "fil": "raa/REMA 1000/2026-10-07_fLCJBame.json.gz"
+ },
+ "0lfB7rI1": {
+  "kaede": "Netto",
+  "label": "Netto uge 42",
+  "fra": "2026-10-09T22:00:00+0000",
+  "til": "2026-10-16T21:59:59+0000",
+  "antal": 192,
+  "fil": "raa/Netto/2026-10-09_0lfB7rI1.json.gz"
+ },
+ "1JBfaxkf": {
+  "kaede": "Lidl",
+  "label": "Lidl avis (uge 42)",
+  "fra": "2026-10-10T22:00:00+0000",
+  "til": "2026-10-17T21:59:59+0000",
+  "antal": 212,
+  "fil": "raa/Lidl/2026-10-10_1JBfaxkf.json.gz"
+ },
+ "LsFVgdcr": {
+  "kaede": "REMA 1000",
+  "label": "Uge 42",
+  "fra": "2026-10-10T22:00:00+0000",
+  "til": "2026-10-17T21:59:59+0000",
+  "antal": 140,
+  "fil": "raa/REMA 1000/2026-10-10_LsFVgdcr.json.gz"
+ },
+ "nIYwBzZL": {
+  "kaede": "føtex",
+  "label": "Uge 42",
+  "fra": "2026-10-08T22:00:00+0000",
+  "til": "2026-10-15T21:59:59+0000",
+  "antal": 395,
+  "fil": "raa/føtex/2026-10-08_nIYwBzZL.json.gz"
+ }
+}

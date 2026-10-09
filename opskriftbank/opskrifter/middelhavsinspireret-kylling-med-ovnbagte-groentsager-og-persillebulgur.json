@@ -1,0 +1,373 @@
+{
+  "id": "middelhavsinspireret-kylling-med-ovnbagte-groentsager-og-persillebulgur",
+  "titel": "Middelhavsinspireret kylling",
+  "undertitel": "med ovnbagte grøntsager og persillebulgur",
+  "billede": "billeder/middelhavsinspireret-kylling-med-ovnbagte-groentsager-og-persillebulgur.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U44",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 45,
+      "bagside": 46
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "middelhavs"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 2,
+      "enhed": "g",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "graeskarkerner",
+      "navn": "Græskarkerner",
+      "maengde": 10,
+      "enhed": "g",
+      "tabel": {
+        "3": 15,
+        "4": 20
+      },
+      "spor_af": [
+        "noedder",
+        "jordnoedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 120,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 85,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 170
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "byg",
+        "gluten",
+        "kamut",
+        "khorasan",
+        "havre",
+        "rug"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 2
+      },
+      "note": "Trinene bruger rødløg",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til bulgur",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3.5,
+        "4": 4.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bulgur",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til bulgur",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til grøntsagerne og til stegning af kyllingen"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag grøntsager",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C (varmluft).",
+        "Skær peberfrugt og tomat i 2 cm tern.",
+        "Skær rødløg i 2 cm både.",
+        "Fordel grøntsager på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med Middelhavsdrøm, bouillon, salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 10-15 min, eller indtil møre."
+      ],
+      "tip": "Benyt flere bageplader, hvis der ikke er plads på en."
+    },
+    {
+      "nr": 2,
+      "titel": "Kog bulgur",
+      "tekst": [
+        "Bring vand i kog i en gryde.",
+        "Tilsæt bulgur og salt, og kog under låg på middellav varme i 9-10 min, eller indtil 'al dente'."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt.",
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling med salt i 3 min på hver side, eller indtil brunet og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Imens, hak persille fint.",
+        "Skær citron i både."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Bland bulgur",
+      "tekst": [
+        "Bland yoghurt, et skvæt citronsaft og et nip salt og peber i en lille skål.",
+        "Tilsæt bagte grøntsager, persille, olivenolie, et skvæt citronsaft og et nip salt og peber til gryden med færdigkogt bulgur, og vend sammen."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret bulgur og grøntsager i dybe tallerkener.",
+        "Top med kylling.",
+        "Drys med græskarkerner.",
+        "Server med citronyoghurt."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 442,
+      "energi_kcal": 106,
+      "fedt_g": 3.4,
+      "maettet_fedt_g": 1,
+      "kulhydrat_g": 10.1,
+      "sukker_g": 2.6,
+      "protein_g": 8.6,
+      "fiber_g": 2,
+      "salt_g": 0.86
+    },
+    "pr_portion": {
+      "energi_kj": 2389,
+      "energi_kcal": 571,
+      "fedt_g": 18.2,
+      "maettet_fedt_g": 5.3,
+      "kulhydrat_g": 54.5,
+      "sukker_g": 14.1,
+      "protein_g": 46.7,
+      "fiber_g": 10.7,
+      "salt_g": 4.67
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "sesam",
+      "gluten",
+      "byg",
+      "havre",
+      "rug",
+      "kamut",
+      "khorasan"
+    ]
+  },
+  "noter": "Ingredienslisten skriver 'Citrusfrugt' og 'Løg', men trinene skriver citron og rødløg. HelloFresh har en ældre udgave af retten med samme titel og undertitel på https://www.hellofresh.dk/recipes/middelhavsinspireret-kylling-63e6bbf8838062841f0e726e (25 min og lidt andre mængder); tallene her er fra kortet."
+}

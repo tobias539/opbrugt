@@ -1,0 +1,321 @@
+{
+  "id": "gyldenstegt-kyllingebryst-med-ovnbagte-rodfrugter-og-bbq-sauce",
+  "titel": "Gyldenstegt kyllingebryst",
+  "undertitel": "med ovnbagte rodfrugter og BBQ-sauce",
+  "billede": "billeder/gyldenstegt-kyllingebryst-med-ovnbagte-rodfrugter-og-bbq-sauce.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U43",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 35,
+      "bagside": 36
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 790
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 2,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "bbq-sauce",
+      "navn": "BBQ-sauce",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 120,
+        "4": 120
+      },
+      "allergener": [
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "pastinak",
+      "navn": "Pastinak",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "roedbede",
+      "navn": "Rødbede",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Kruspersille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "note": "Trinene bruger rødløg",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag rodfrugter",
+      "tekst": [
+        "Forvarm ovnen til 240°C/220°C (varmluft).",
+        "Skær kartofler (uskrællet), rødbede (uskrællet), pastinak (uskrællet) og gulerod (uskrællet) i 2 cm tern.",
+        "Fordel på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 25-35 min, eller indtil møre."
+      ],
+      "tip": "Benyt flere bageplader, hvis der ikke er plads på en."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Skær rødløg i 2 cm både.",
+        "Skær peberfrugt i 1 cm strimler.",
+        "Hak persille groft."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Brun kylling",
+      "tekst": [
+        "Krydr kylling med salt.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Brun kylling i 2 min på hver side."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag kylling og grøntsager",
+      "tekst": [
+        "Overfør kylling til en bageplade med bagepapir.",
+        "Fordel rødløg og peberfrugt på samme bageplade, og bag i ovnen i 11-12 min, eller indtil kyllingen er gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Opvarm BBQ-sauce",
+      "tekst": [
+        "Opvarm samme stegepande på middel varme, når kyllingen og grøntsagerne har 5 min tilbage.",
+        "Tilsæt bouillon, BBQ-sauce og vand, og lad simre i 2-3 min, eller indtil tyknet.",
+        "Krydr med salt og et nip peber.",
+        "Bland grøntsager med rodfrugter og persille på bagepladen.",
+        "Skær kylling i skiver."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret grøntsager, rodfrugter og kylling på tallerkener.",
+        "Top kylling med BBQ-sauce."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 335,
+      "energi_kcal": 80,
+      "fedt_g": 1.6,
+      "maettet_fedt_g": 0.3,
+      "kulhydrat_g": 11.1,
+      "sukker_g": 5.4,
+      "protein_g": 5.7,
+      "fiber_g": 1.9,
+      "salt_g": 0.61
+    },
+    "pr_portion": {
+      "energi_kj": 2657,
+      "energi_kcal": 635,
+      "fedt_g": 12.4,
+      "maettet_fedt_g": 2.3,
+      "kulhydrat_g": 87.9,
+      "sukker_g": 42.5,
+      "protein_g": 45.2,
+      "fiber_g": 14.7,
+      "salt_g": 4.85
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sennep"
+    ]
+  },
+  "noter": "Kortet angiver 300 g kartofler til både 2, 3 og 4 personer. Ingredienslisten skriver 'Løg', men trinene bruger rødløg."
+}

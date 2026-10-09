@@ -1,0 +1,339 @@
+{
+  "id": "hurtig-oksekoedsragu-med-linguine-og-grana-padano",
+  "titel": "Hurtig oksekødsragù",
+  "undertitel": "med linguine og Grana Padano",
+  "billede": "billeder/hurtig-oksekoedsragu-med-linguine-og-grana-padano.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/hurtig-oksekodsragu-694309310a853ea8158211b6",
+    "uge": "2026-U03",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 59,
+      "bagside": 60
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 520
+  },
+  "tid": {
+    "min": 15,
+    "max": 15
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 120,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 2,
+      "enhed": "g",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "hvide-loejer-og-urter",
+      "navn": "Hvide Løjer & Urter",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater",
+      "maengde": 390,
+      "enhed": "g",
+      "tabel": {
+        "3": 585,
+        "4": 780
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Basilikum",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "worcestershiresauce",
+      "navn": "Worcestershiresauce",
+      "maengde": 15,
+      "enhed": "g",
+      "tabel": {
+        "3": 15,
+        "4": 30
+      },
+      "allergener": [
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Linguine",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 360,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod, Julienne",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "note": "HelloFresh' færdigskårne gulerodsstrimler; én pakke til alle portionsstørrelser",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Kyllingefond",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 7.5,
+        "4": 10
+      },
+      "note": "Trinene kalder den 'bouillon'"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Grana Padano, flager",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt pastavand",
+      "maengde": 1,
+      "enhed": "dl",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker",
+      "maengde": null,
+      "enhed": "nip",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'et nip sukker'"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til servering",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "valgfri": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Kog pasta i 8 min, eller indtil 'al dente'.",
+        "Gem en kop pastavand, og hæld resten fra.",
+        "Imens, pres eller hak hvidløg fint.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme. Steg hakket oksekød, hvidløg og gulerod med Middelhavsdrøm, Hvide Løjer & Urter og salt i 4-5 min, eller indtil brunet."
+      ],
+      "tip": "Vandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid.",
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 2,
+      "titel": "Lav ragù",
+      "tekst": [
+        "Tilsæt worcestershiresauce, bouillon, hakkede tomater, madlavningsfløde, pastavand og et nip sukker, og bring i kog.",
+        "Sænk til middel varme, og lad simre i 5-6 min, eller indtil tyknet."
+      ],
+      "tip": "Tilsæt et ekstra skvæt vand, hvis saucen er for tyk.",
+      "vigtigt": "I denne opskrift bruges halvdelen af mængden af visse ingredienser – dobbelttjek ingredienslisten!"
+    },
+    {
+      "nr": 3,
+      "titel": "Vend sammen",
+      "tekst": [
+        "Imens, hak basilikum groft.",
+        "Vend basilikum og pasta i ragù.",
+        "Krydr med et nip salt og peber."
+      ],
+      "tip": "Vend eventuelt retten sammen i pastagryden, hvis det er nemmere."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret oksekødsragù i dybe tallerkener.",
+        "Top med Grana Padano.",
+        "Dryp eventuelt med en smule olivenolie."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 648,
+      "energi_kcal": 155,
+      "fedt_g": 5.9,
+      "maettet_fedt_g": 3,
+      "kulhydrat_g": 16.7,
+      "sukker_g": 3.5,
+      "protein_g": 8.1,
+      "fiber_g": 1.2,
+      "salt_g": 0.85
+    },
+    "pr_portion": {
+      "energi_kj": 3366,
+      "energi_kcal": 805,
+      "fedt_g": 30.8,
+      "maettet_fedt_g": 15.6,
+      "kulhydrat_g": 86.8,
+      "sukker_g": 18.4,
+      "protein_g": 42.2,
+      "fiber_g": 6.2,
+      "salt_g": 4.44
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "soja",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og en Grana Padano-reklame; titel, undertitel og tid er fra hellofresh.dk. Versionen dér bruger passata i stedet for hakkede tomater; ellers er mængderne de samme som på kortet. Kortet angiver 360 g linguine til både 3 og 4 personer."
+}

@@ -1,0 +1,325 @@
+{
+  "id": "hurtige-japanske-svine-og-kalvekoedstacos-med-sproed-kaalsalat-og-staerk-chili",
+  "titel": "Hurtige japanske svine- og kalvekødstacos",
+  "undertitel": "med sprød kålsalat og stærk chili",
+  "billede": "billeder/hurtige-japanske-svine-og-kalvekoedstacos-med-sproed-kaalsalat-og-staerk-chili.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U07",
+    "menunummer": 1,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 5,
+      "bagside": 6
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 520
+  },
+  "tid": {
+    "min": 15,
+    "max": 20,
+    "pr_portioner": {
+      "4": {
+        "min": 20,
+        "max": 25
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "japansk",
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "wraps-tacos"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "staerk"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "tortillabroed",
+      "navn": "Små tortillabrød",
+      "maengde": 8,
+      "enhed": "stk",
+      "tabel": {
+        "3": 12,
+        "4": 16
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "asiatisk-woksauce",
+      "navn": "Asiatisk woksauce",
+      "maengde": 37.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "asiatisk-mayonnaise-vegansk",
+      "navn": "Vegansk asiatisk mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Chili",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "kaalsalat-snittet",
+      "navn": "Snittet kålsalat",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "hakket-svine-kalvekoed",
+      "navn": "Hakket svine-/kalvekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Ingefær",
+      "maengde": 2,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "note": "Kortet angiver ingefær i tsk, men trin 1 siger 'Riv ingefær (uskrællet)'"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "porre",
+      "navn": "Porre",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C varmluft (hvis du ikke har en mikrobølgeovn).",
+        "Riv ingefær (uskrællet) og hvidløg fint, og skær citrusfrugt i både.",
+        "Flæk chili, fjern kerner, og hak fint.",
+        "Riv gulerod (uskrællet) groft.",
+        "Rens porre, og skær i tynde, halve skiver."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kød",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket svine-/kalvekød og porre med salt i 5-6 min, eller indtil brunet.",
+        "Imens, bland snittet kålsalat, gulerod, et skvæt citrusfrugtsaft, olivenolie, salt og et nip peber i en skål."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Varm tortillabrød",
+      "tekst": [
+        "Tilsæt hvidløg og ingefær til stegepanden, og steg videre i 1 min.",
+        "Tilsæt asiatisk woksauce, og rør rundt.",
+        "Krydr med et stort nip peber.",
+        "Varm tortillabrød i 30-60 sek i mikrobølgeovnen, eller pak ind i sølvpapir, og varm i ovnen i 4-5 min."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Smør tortillabrød med asiatisk mayonnaise. Fyld med salat, svine-/kalvekød og chili. Server med resterende citrusfrugtbåde."
+      ],
+      "tip": "Undlad chilien, eller brug mindre, hvis du ikke er til stærk mad."
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 732,
+      "energi_kcal": 175,
+      "fedt_g": 9.9,
+      "maettet_fedt_g": 1.9,
+      "kulhydrat_g": 14.9,
+      "sukker_g": 3.3,
+      "protein_g": 7,
+      "fiber_g": 1.8,
+      "salt_g": 0.96
+    },
+    "pr_portion": {
+      "energi_kj": 3813,
+      "energi_kcal": 911,
+      "fedt_g": 51.6,
+      "maettet_fedt_g": 9.8,
+      "kulhydrat_g": 77.5,
+      "sukker_g": 17.4,
+      "protein_g": 36.7,
+      "fiber_g": 9.5,
+      "salt_g": 4.99
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "soja",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  }
+}

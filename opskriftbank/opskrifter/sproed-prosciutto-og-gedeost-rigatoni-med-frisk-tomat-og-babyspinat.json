@@ -1,0 +1,337 @@
+{
+  "id": "sproed-prosciutto-og-gedeost-rigatoni-med-frisk-tomat-og-babyspinat",
+  "titel": "Sprød prosciutto- og gedeost-rigatoni",
+  "undertitel": "med frisk tomat og babyspinat",
+  "billede": "billeder/sproed-prosciutto-og-gedeost-rigatoni-med-frisk-tomat-og-babyspinat.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U14",
+    "menunummer": 2,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 57,
+      "bagside": 58
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 410
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater",
+      "maengde": 195,
+      "enhed": "g",
+      "tabel": {
+        "3": 390,
+        "4": 390
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 30,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 60
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hello-sunrise",
+      "navn": "Hello Sunrise",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri",
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Pasta",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 270,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "note": "Rigatoni ifølge titlen",
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "gedeost",
+      "navn": "Gedeost",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 200
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "spor_af": [
+        "maelk"
+      ],
+      "variabel": "smuldreost"
+    },
+    {
+      "ingrediens": "prosciutto",
+      "navn": "Prosciutto",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Crème fraiche",
+      "maengde": 37.5,
+      "enhed": "ml",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt pastavand",
+      "maengde": 1,
+      "enhed": "dl",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag prosciutto",
+      "tekst": [
+        "Forvarm ovnen til 200°C/180°C (varmluft).",
+        "Bring en stor gryde med saltet vand i kog.",
+        "Fordel prosciutto på en bageplade med bagepapir, og bag i ovnen i 8-10 min, eller indtil gylden og sprød."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, hak tomat groft.",
+        "Skyl spinat."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Kog pasta i 11-12 min, eller indtil 'al dente'.",
+        "Gem en kop pastavand, og hæld resten fra."
+      ],
+      "tip": "Kogevandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 4,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Imens, opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg tomat, Hello Sunrise, hakkede tomater, bouillon, creme fraiche, pastavand, salt og sukker, og lad simre i 3-4 min, eller indtil lidt tyknet."
+      ],
+      "vigtigt": "I denne opskrift bruges halvdelen af mængden af visse ingredienser – dobbelttjek ingredienslisten!"
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt pasta",
+      "tekst": [
+        "Imens, hak persille groft.",
+        "Riv prosciutto i mindre stykker.",
+        "Tilsæt pasta og spinat til stegepanden, og vend sammen.",
+        "Krydr med et nip salt og peber."
+      ],
+      "tip": "Tilsæt et skvæt vand, hvis saucen er for tør."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret pasta i dybe tallerkener.",
+        "Top med gedeost, persille og prosciutto."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 722,
+      "energi_kcal": 173,
+      "fedt_g": 7.3,
+      "maettet_fedt_g": 3.6,
+      "kulhydrat_g": 18.9,
+      "sukker_g": 3,
+      "protein_g": 7.2,
+      "fiber_g": 1.6,
+      "salt_g": 1.49
+    },
+    "pr_portion": {
+      "energi_kj": 2990,
+      "energi_kcal": 715,
+      "fedt_g": 30.1,
+      "maettet_fedt_g": 15.1,
+      "kulhydrat_g": 78.4,
+      "sukker_g": 12.6,
+      "protein_g": 29.9,
+      "fiber_g": 6.7,
+      "salt_g": 6.19
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "sennep",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "maelk",
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Fotoet på forsiden viser hvid ost og basilikum, men kortet bruger gedeost og bredbladet persille. Kortet 2026-U05 (side 47/48) er en anden udgave med mozzarella, madlavningsfløde, basilikum og penne og ligger som 'sproed-prosciutto-og-mozzarellapasta-med-frisk-tomat-og-babyspinat'."
+}

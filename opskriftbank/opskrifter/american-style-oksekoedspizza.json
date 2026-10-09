@@ -1,0 +1,320 @@
+{
+  "id": "american-style-oksekoedspizza",
+  "titel": "American style oksekødspizza",
+  "undertitel": "med tomat-avocadosalsa og kraftig BBQ-sauce",
+  "billede": "billeder/american-style-oksekoedspizza.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U10",
+    "menunummer": 4,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 01.pdf",
+    "sider": {
+      "forside": 2,
+      "bagside": 1
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 650
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pizza"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "spis-mig-foerst",
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "panamad",
+      "navn": "Panamad",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "bbq-sauce",
+      "navn": "BBQ-sauce",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 90,
+        "4": 120
+      },
+      "allergener": [
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "revet-gouda",
+      "navn": "Revet gouda",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "tomatpure",
+      "navn": "Tomatpuré",
+      "maengde": 70,
+      "enhed": "g",
+      "tabel": {
+        "3": 140,
+        "4": 140
+      }
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "pizzadej",
+      "navn": "Pizzadej",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "avocado",
+      "navn": "Avocado",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til kød",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel til bordpladen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered pizzadej",
+      "tekst": [
+        "Forvarm ovnen til 250°C/240°C (varmluft).",
+        "Tag pizzadejen ud af køleskabet og pakken mindst 10 min før tilberedning. Strø bordpladen med hvedemel, og lad pizzadejen hvile på bordpladen. Rul pizzadej ud med hænderne (eller en kagerulle) indtil den er 25 cm i diameter.",
+        "Skær løg i tynde, halve skiver.",
+        "Pres eller hak hvidløg fint."
+      ],
+      "tip": "Hvis dejen er svær at rulle ud, så lad den hvile et par minutter og prøv igen."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg oksekød",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket oksekød i 3-4 min, eller indtil brunet."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Tilsæt tomatpuré",
+      "tekst": [
+        "Tilsæt tomatpuré, hvidløg, vand og Panamad, og steg 1-2 min, eller indtil let tyknet.",
+        "Krydr med salt og et nip peber."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Bag pizza",
+      "tekst": [
+        "Fordel kødsauce på pizzadej, og top med løg.",
+        "Dryp med BBQ-sauce, og top med gouda.",
+        "Bag pizza i ovnen i 12-13 min, eller indtil gylden og gennembagt."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav salsa",
+      "tekst": [
+        "Imens, hak tomat fint, og overfør til en lille skål.",
+        "Halver avocado, og fjern sten. Grav indmad ud med en ske, og skær i 2 cm tern. Overfør til skålen, og vend sammen.",
+        "Krydr med et nip salt og peber, og vend eventuelt med en smule olivenolie."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Skær pizza ud i mindre stykker.",
+        "Server med salsa."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 702,
+      "energi_kcal": 168,
+      "fedt_g": 7.2,
+      "maettet_fedt_g": 2.3,
+      "kulhydrat_g": 17.8,
+      "sukker_g": 3.3,
+      "protein_g": 8,
+      "fiber_g": 1.8,
+      "salt_g": 1.08
+    },
+    "pr_portion": {
+      "energi_kj": 4527,
+      "energi_kcal": 1082,
+      "fedt_g": 46.4,
+      "maettet_fedt_g": 14.7,
+      "kulhydrat_g": 114.9,
+      "sukker_g": 21.5,
+      "protein_g": 51.3,
+      "fiber_g": 11.4,
+      "salt_g": 6.96
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "sennep",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sesam"
+    ]
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "id": "sproed-baconsandwich-med-balsamicostegt-champignon",
+  "titel": "Sprød baconsandwich",
+  "undertitel": "med balsamicostegt champignon og grøn salat",
+  "billede": "billeder/sproed-baconsandwich-med-balsamicostegt-champignon.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/sprod-baconsandwich-62165323a8fe042b4b54f4a2",
+    "uge": "2025-U50",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 3,
+      "bagside": 4
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 460
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad",
+      "frokost"
+    ],
+    "ret_type": [
+      "burger-sandwich"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 2,
+      "enhed": "fed",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacon, skiver",
+      "maengde": 125,
+      "enhed": "g",
+      "tabel": {
+        "3": 250,
+        "4": 250
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "balsamico",
+      "navn": "Balsamico",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 24,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "blandet-salat",
+      "navn": "Blandet salat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 100
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "baguette",
+      "navn": "Baguette",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Champignon",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 400
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til hvidløgsolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag bacon",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C (varmluft).",
+        "Fordel bacon på en bageplade med bagepapir.",
+        "Bag i ovnen i 13-15 min, eller indtil gylden og sprød."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, skær svampe i tynde skiver.",
+        "Skær løg i tynde, halve skiver.",
+        "Skyl salat."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg svampe",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg løg i 1-2 min, eller indtil bløde.",
+        "Tilsæt svampe, og steg videre i 3-5 min.",
+        "Tilsæt balsamico og salt, og steg i yderligere 3-5 min, eller indtil karamelliseret."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bland persilleolie",
+      "tekst": [
+        "Imens, hak persille fint.",
+        "Pres eller hak løg fint.",
+        "Bland løg, persille, olivenolie og et nip salt i en lille skål."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Varm brød",
+      "tekst": [
+        "Del brød på midten, og smør med persilleolie.",
+        "Varm i ovnen i 6-8 min, eller indtil sprøde.",
+        "Imens, skær æble i tynde skiver."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Smør underbolle med mayonnaise.",
+        "Fyld med svampe, løg, bacon, salat og æble.",
+        "Top med overbolle."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 848,
+      "energi_kcal": 203,
+      "fedt_g": 12.6,
+      "maettet_fedt_g": 3,
+      "kulhydrat_g": 17.7,
+      "sukker_g": 5,
+      "protein_g": 5,
+      "fiber_g": 1.8,
+      "salt_g": 0.87
+    },
+    "pr_portion": {
+      "energi_kj": 3934,
+      "energi_kcal": 940,
+      "fedt_g": 58.3,
+      "maettet_fedt_g": 13.7,
+      "kulhydrat_g": 82.3,
+      "sukker_g": 23.4,
+      "protein_g": 23.3,
+      "fiber_g": 8.3,
+      "salt_g": 4.05
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "sennep",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ]
+  },
+  "noter": "Titlen er skåret af forsiden i scanningen; titel og undertitel er hentet fra hellofresh.dk (hvor ingredienserne passer), tiden fra kortet. Kortet skriver 'løg' i trin 4, men det er hvidløgsfeddene, der skal presses og blandes i persilleolien (hellofresh.dk skriver hvidløg)."
+}

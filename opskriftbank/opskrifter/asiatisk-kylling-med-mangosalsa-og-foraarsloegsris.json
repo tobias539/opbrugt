@@ -1,0 +1,356 @@
+{
+  "id": "asiatisk-kylling-med-mangosalsa-og-foraarsloegsris",
+  "titel": "Asiatisk kylling",
+  "undertitel": "med mangosalsa & forårsløgsris",
+  "billede": "billeder/asiatisk-kylling-med-mangosalsa-og-foraarsloegsris.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/asiatisk-kylling-6569aa9c2db9273db6a3c797",
+    "uge": "2025-U49",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 41,
+      "bagside": 42
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 500
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 10,
+      "enhed": "ml",
+      "tabel": {
+        "3": 20,
+        "4": 20
+      },
+      "allergener": [
+        "gluten",
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Chili",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "asiatisk-woksauce",
+      "navn": "Asiatisk woksauce",
+      "maengde": 37.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "mango",
+      "navn": "Mango",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "radiser",
+      "navn": "Radiser",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 125,
+        "4": 125
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "roedkaal-skaaret",
+      "navn": "Rødkål, skåret",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til ris",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salsa",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'en smule olivenolie'"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ris",
+      "tekst": [
+        "Snit forårsløg fint.",
+        "Opvarm olivenolie i en gryde på middelhøj varme.",
+        "Svits halvdelen af forårsløg i 1-2 min.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på lav varme i 12 min. Tag gryden af varmen, og lad hvile under låg i 10 min, eller indtil vandet er absorberet."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Skær mango over på langs ca. 1 cm fra midten uden om stenen, og skær i 1 cm tern.",
+        "Skær radiser i tynde skiver.",
+        "Skær citrusfrugt i både.",
+        "Flæk chili, fjern kerner, og hak fint."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav mangosalsa",
+      "tekst": [
+        "Bland mango, radiser, rødkål, et stort skvæt citrusfrugtsaft, chili og resterende forårsløg i en skål, og krydr med salt og et nip peber."
+      ],
+      "tip": "Undlad chilien, hvis ikke alle er til stærk mad."
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i 3 cm tykke strimler på et andet skærebræt.",
+        "Vend kylling med asiatisk woksauce og salt i en skål.",
+        "Opvarm en smule olivenolie i en stegepande på middelhøj varme.",
+        "Steg kylling i 4-5 min, eller indtil brunet og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Bland sojamayonnaise",
+      "tekst": [
+        "Imens, bland mayonnaise og sojasauce i en lille skål."
+      ],
+      "vigtigt": "I denne opskrift bruges halvdelen af mængden af visse ingredienser – dobbelttjek ingredienslisten!"
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret forårsløgsris og kylling i dybe tallerkener.",
+        "Top med mangosalsa.",
+        "Server med sojamayonnaise og citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 629,
+      "energi_kcal": 150,
+      "fedt_g": 5.7,
+      "maettet_fedt_g": 0.7,
+      "kulhydrat_g": 17.7,
+      "sukker_g": 4.1,
+      "protein_g": 9,
+      "fiber_g": 1,
+      "salt_g": 0.97
+    },
+    "pr_portion": {
+      "energi_kj": 3146,
+      "energi_kcal": 752,
+      "fedt_g": 28.4,
+      "maettet_fedt_g": 3.6,
+      "kulhydrat_g": 88.4,
+      "sukker_g": 20.3,
+      "protein_g": 45.1,
+      "fiber_g": 5.2,
+      "salt_g": 4.87
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "aeg",
+      "sennep",
+      "soja",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og tiden; titel og undertitel er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave som grillede kyllingespyd uden rødkål og med 62,5 g radiser til 2 personer. Mængderne her er fra kortet (2025-U49). Kyllingen er ikke paneret; den vendes i asiatisk woksauce og steges."
+}

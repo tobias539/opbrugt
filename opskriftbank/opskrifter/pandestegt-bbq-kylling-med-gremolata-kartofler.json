@@ -1,0 +1,353 @@
+{
+  "id": "pandestegt-bbq-kylling-med-gremolata-kartofler",
+  "titel": "Pandestegt BBQ-kylling",
+  "undertitel": "med 'gremolata'-kartofler og frisk salat",
+  "billede": "billeder/pandestegt-bbq-kylling-med-gremolata-kartofler.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/pan-fried-spiced-chicken-659e86a670cc438cf4f78164",
+    "uge": "2025-U49",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 27,
+      "bagside": 28
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 660
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk",
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "pestodressing",
+      "navn": "Cremet pestodressing",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Små kartofler",
+      "maengde": 400,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 800
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "radiser",
+      "navn": "Radiser",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 125,
+        "4": 125
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "hvidvinseddike",
+      "navn": "Hvidvinseddike",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 24,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "roedkaal-skaaret",
+      "navn": "Rødkål, skåret",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "blandet-salat",
+      "navn": "Blandet salat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 80,
+        "4": 100
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "glaskaal",
+      "navn": "Glaskål, hvid",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til gremolata",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til gremolata",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kogevand",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog kartofler",
+      "tekst": [
+        "Bring en mellemstor gryde med saltet vand i kog.",
+        "Kog kartofler i 12-15 min, eller indtil de nemt kan deles med en kniv, og hæld vand fra.",
+        "Krydr med et nip salt og peber, og stil til side med låg på."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Krydr kylling med salt.",
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling i 2-3 min på hver side, eller indtil brunet. Sænk til middel varme, og steg videre i 3-4 min på hver side, eller indtil gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Lav gremolata",
+      "tekst": [
+        "Hak persille fint.",
+        "Pres eller hak hvidløg fint.",
+        "Halver citrusfrugt.",
+        "Bland persille, hvidløg, et nip chiliflager, citrusfrugtsaft, olivenolie, sukker og et nip salt og peber i en lille skål."
+      ],
+      "tip": "Spring chiliflagerne over, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 4,
+      "titel": "Lav salat",
+      "tekst": [
+        "Skær radiser i kvarte.",
+        "Skræl glaskål, og skær i 1/2 stave.",
+        "Skyl blandet salat.",
+        "Bland blandet salat, rødkål, radiser, glaskål, hvidvinseddike, olivenolie, salt og et nip peber i en stor skål."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt gremolata",
+      "tekst": [
+        "Vend gremolata i gryden med kogte kartofler.",
+        "Skær kylling i skiver."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kartofler, kylling og salat på tallerkener.",
+        "Top med pestodressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 470,
+      "energi_kcal": 112,
+      "fedt_g": 5.9,
+      "maettet_fedt_g": 0.8,
+      "kulhydrat_g": 7.6,
+      "sukker_g": 1.9,
+      "protein_g": 6.6,
+      "fiber_g": 1.5,
+      "salt_g": 0.44
+    },
+    "pr_portion": {
+      "energi_kj": 3078,
+      "energi_kcal": 736,
+      "fedt_g": 38.7,
+      "maettet_fedt_g": 5.1,
+      "kulhydrat_g": 49.6,
+      "sukker_g": 12.6,
+      "protein_g": 42.9,
+      "fiber_g": 9.9,
+      "salt_g": 2.87
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "svovldioxid"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet. Titel, undertitel og tid (20 min) er hentet fra HelloFresh' side for samme ret; den version bruger rucola i stedet for blandet salat og har ingen glaskål, men resten passer. Kortet findes to gange i scanningen (forside 27/bagside 28 og forside 29/bagside 30, begge 2025-U49) med samme indhold. Kortet angiver ingen allergener ved den cremede pestodressing."
+}

@@ -1,0 +1,380 @@
+{
+  "id": "yoghurtmarineret-kylling-med-honningbagte-groentsager",
+  "titel": "Yoghurtmarineret kylling",
+  "undertitel": "med honningbagte grøntsager og perlecouscous",
+  "billede": "billeder/yoghurtmarineret-kylling-med-honningbagte-groentsager.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U42",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 21,
+      "bagside": 22
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 590
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "mellemoestlig"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "honning",
+      "navn": "Honning",
+      "maengde": 12.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 25,
+        "4": 25
+      }
+    },
+    {
+      "ingrediens": "mamas-favorit",
+      "navn": "Mamas Favorit",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 125,
+      "enhed": "g",
+      "tabel": {
+        "3": 250,
+        "4": 250
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "perlecouscous",
+      "navn": "Perlecouscous",
+      "maengde": 170,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 335
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryststrimler",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 600
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til marinade",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til marinade",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til perlecouscous",
+      "maengde": 4,
+      "enhed": "dl",
+      "tabel": {
+        "3": 6,
+        "4": 8
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til perlecouscous",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til grøntsager",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag grøntsager",
+      "tekst": [
+        "Forvarm ovnen til 240°C/220°C (varmluft).",
+        "Skær gulerod (uskrællet) i 2 cm tern.",
+        "Halver cherrytomater.",
+        "Skær løg i 2 cm både.",
+        "Fordel grøntsager på en bageplade med bagepapir. Dryp med honning og en smule olivenolie, krydr med salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 20-30 min, eller indtil møre."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Mariner kylling",
+      "tekst": [
+        "Imens, pres eller hak hvidløg fint.",
+        "Skær citrusfrugt i både.",
+        "Bland kylling, Mamas Favorit, hvidløg, olivenolie, halvdelen af yoghurt, salt og et nip peber i en mellemstor skål."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Kog perlecouscous",
+      "tekst": [
+        "Bring vand, bouillon og salt i kog i en mellemstor gryde.",
+        "Tilsæt perlecouscous, og kog under låg på middellav varme i 12-15 min, eller indtil bløde.",
+        "Hæld overskydende vand fra."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Smelt smør i en stor stegepande på middel varme, når perlecouscousen har 10 min tilbage.",
+        "Steg kylling og marinade i 4-5 min, eller indtil brunet og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt persilleyoghurt",
+      "tekst": [
+        "Imens, hak persille fint.",
+        "Bland persille og resterende yoghurt i en lille skål.",
+        "Vend persilleyoghurt i gryden med færdigkogt perlecouscous.",
+        "Krydr med et nip salt og peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret perlecouscous, grøntsager og kylling i dybe tallerkener.",
+        "Server med citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 550,
+      "energi_kcal": 131,
+      "fedt_g": 3.7,
+      "maettet_fedt_g": 1.5,
+      "kulhydrat_g": 14.8,
+      "sukker_g": 3.4,
+      "protein_g": 8.9,
+      "fiber_g": 1.7,
+      "salt_g": 0.79
+    },
+    "pr_portion": {
+      "energi_kj": 3247,
+      "energi_kcal": 776,
+      "fedt_g": 22.1,
+      "maettet_fedt_g": 9.1,
+      "kulhydrat_g": 87.2,
+      "sukker_g": 20.1,
+      "protein_g": 52.7,
+      "fiber_g": 10,
+      "salt_g": 4.67
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Mamas Favorit er HelloFresh' egen krydderiblanding (indeholder æg ifølge kortet). Kortet nævner ikke citrusfrugtsaft i marinaden; citrusfrugten serveres kun som både."
+}

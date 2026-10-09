@@ -1,0 +1,339 @@
+{
+  "id": "mexicansk-kyllinge-bulgurbowl",
+  "titel": "Mexicansk kyllinge-bulgurbowl",
+  "undertitel": "med avocado-tomatsalat og tortillachips",
+  "billede": "billeder/mexicansk-kyllinge-bulgurbowl.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U10",
+    "menunummer": 1,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 01.pdf",
+    "sider": {
+      "forside": 3,
+      "bagside": 4
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "mexicansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "tortillachips",
+      "navn": "Tortillachips",
+      "maengde": 1,
+      "enhed": "pose",
+      "tabel": {
+        "3": 0.8,
+        "4": 1
+      },
+      "spor_af": [
+        "maelk"
+      ],
+      "note": "Kortet skriver 4/5 stk til 3 personer"
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 50
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "avocado",
+      "navn": "Avocado",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 85,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 170
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "gluten",
+        "byg",
+        "havre",
+        "rug",
+        "kamut",
+        "khorasan"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryststrimler",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 600
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "tex-mex-krydderi",
+      "navn": "Tex-Mex",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 10
+      }
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til bulgur",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3.5,
+        "4": 4.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bulgur",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog bulgur",
+      "tekst": [
+        "Bring vand i kog i en mellemstor gryde.",
+        "Tilsæt bulgur, halvdelen af bouillon og salt, og kog under låg på middellav varme i 9-10 min, eller indtil bløde."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, halver cherrytomater.",
+        "Halver citrusfrugt.",
+        "Skær løg i tynde, halve skiver."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling og løg med salt, resterende bouillon og Tex-Mex i 4-5 min, eller indtil gylden og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Lav dressing",
+      "tekst": [
+        "Bland mayonnaise, citrusfrugtsaft, vand og et nip salt og peber i en lille skål."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Forbered avocado",
+      "tekst": [
+        "Halver avocado, og fjern sten. Grav indmad ud med en ske, og skær i tynde skiver.",
+        "Krydr med et nip salt og peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret bulgur i dybe tallerkener.",
+        "Top med kylling, tomat og avocado.",
+        "Dryp med citrusfrugtdressing.",
+        "Server med tortillachips."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 626,
+      "energi_kcal": 150,
+      "fedt_g": 7.1,
+      "maettet_fedt_g": 1.2,
+      "kulhydrat_g": 13.5,
+      "sukker_g": 1.8,
+      "protein_g": 8.7,
+      "fiber_g": 2.5,
+      "salt_g": 0.67
+    },
+    "pr_portion": {
+      "energi_kj": 3385,
+      "energi_kcal": 809,
+      "fedt_g": 38.3,
+      "maettet_fedt_g": 6.3,
+      "kulhydrat_g": 72.8,
+      "sukker_g": 9.5,
+      "protein_g": 46.9,
+      "fiber_g": 13.6,
+      "salt_g": 3.62
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "sennep",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "maelk",
+      "gluten",
+      "byg",
+      "havre",
+      "rug",
+      "kamut",
+      "khorasan"
+    ]
+  }
+}

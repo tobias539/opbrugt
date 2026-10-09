@@ -1,0 +1,390 @@
+{
+  "id": "graesk-hakkeboef-med-lun-bulgurtabouleh-og-smuldret-salatost",
+  "titel": "Græsk hakkebøf",
+  "undertitel": "med lun bulgurtabouleh og smuldret salatost",
+  "billede": "billeder/graesk-hakkeboef-med-lun-bulgurtabouleh-og-smuldret-salatost.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/graesk-hakkebof-63ab1054d624bae7112f5a24",
+    "uge": "2026-U07",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 41,
+      "bagside": 42
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 500
+  },
+  "tid": {
+    "min": 25,
+    "max": 25
+  },
+  "kategorier": {
+    "koekken": [
+      "graesk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "salat"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "rasp",
+      "navn": "Rasp",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 85,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 170
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "byg",
+        "gluten",
+        "kamut",
+        "khorasan",
+        "havre",
+        "rug"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "graesk-ost",
+      "navn": "Græsk ost",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 200
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "smuldreost"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til bulgur",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3.5,
+        "4": 4.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bulgur",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til bøffer",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bøffer",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til bulgur",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "note": "Trinene bruger olivenolien i taboulehsalaten (trin 5), ikke i kogningen"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af hakkebøfferne"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog bulgur",
+      "tekst": [
+        "Bring vand i kog i en mellemstor gryde.",
+        "Tilsæt bulgur, bouillon og salt, og kog under låg på middellav varme i 9-10 min, eller indtil 'al dente'."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Bland fars",
+      "tekst": [
+        "Hak løg fint.",
+        "Bland hakket oksekød, halvdelen af løg, rasp, Middelhavsdrøm, æg og halvdelen af græsk ost med salt og et nip peber i en skål.",
+        "Form fars til hakkebøffer (1 pr. person)."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg hakkebøffer",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stegepande på middelhøj varme.",
+        "Steg hakkebøffer i 4-5 min på hver side."
+      ],
+      "vigtigt": "Hakkebøfferne er færdige, når kødet er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Bland persilledressing",
+      "tekst": [
+        "Skær citrusfrugt i både.",
+        "Hak persille fint.",
+        "Bland yoghurt, et nip persille, salt, et skvæt citrusfrugtsaft og et nip peber i en lille skål."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Bland taboulehsalat",
+      "tekst": [
+        "Hak agurk og tomat fint.",
+        "Bland færdigkogt bulgur, agurk, tomat og resterende løg i en skål.",
+        "Vend resterende persille, et skvæt citrusfrugtsaft og olivenolie i skålen, og krydr med et nip salt og peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret taboulehsalat og hakkebøffer på tallerkener.",
+        "Top med resterende græsk ost.",
+        "Dryp med persilledressing.",
+        "Server med resterende citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 604,
+      "energi_kcal": 144,
+      "fedt_g": 7.6,
+      "maettet_fedt_g": 3.4,
+      "kulhydrat_g": 11.6,
+      "sukker_g": 1.4,
+      "protein_g": 8.6,
+      "fiber_g": 1.6,
+      "salt_g": 1.2
+    },
+    "pr_portion": {
+      "energi_kj": 3028,
+      "energi_kcal": 724,
+      "fedt_g": 38.3,
+      "maettet_fedt_g": 17.2,
+      "kulhydrat_g": 58,
+      "sukker_g": 6.8,
+      "protein_g": 43.3,
+      "fiber_g": 7.9,
+      "salt_g": 6.02
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "gluten",
+      "byg",
+      "havre",
+      "rug",
+      "kamut",
+      "khorasan"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; linjen med tiden øverst er skåret over og kan ikke læses sikkert. Titel, undertitel og tid (25 min) er derfor taget fra hellofresh.dk, hvor retten ligger i en ældre udgave med samme fremgangsmåde, men med panko i stedet for rasp, lime i stedet for citrusfrugt, 250 g hakket oksekød, ½ løg, 30 g panko og en ekstra 'Græsk salatost' til 2 personer. Mængderne her er fra kortet (2026-U07). Det er ikke samme ret som 'Græsk inspireret hakkebøf med couscoussalat' (den er med svine-/kalvekød, couscous og zucchini). 'Rasp' er lagt på panko-id'et, fordi kataloget har rasp som synonym for panko."
+}

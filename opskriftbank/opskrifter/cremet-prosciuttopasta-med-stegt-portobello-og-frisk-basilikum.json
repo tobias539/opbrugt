@@ -1,0 +1,314 @@
+{
+  "id": "cremet-prosciuttopasta-med-stegt-portobello-og-frisk-basilikum",
+  "titel": "Cremet prosciuttopasta",
+  "undertitel": "med stegt portobello og frisk basilikum",
+  "billede": "billeder/cremet-prosciuttopasta-med-stegt-portobello-og-frisk-basilikum.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/cremet-prosciuttopasta-693acbd31101204cae74e563",
+    "uge": "2026-U08",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 49,
+      "bagside": 50
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 400
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "zucchini",
+      "navn": "Zucchini",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "portobello",
+      "navn": "Portobello",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 30,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 60
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 2,
+      "enhed": "fed",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "prosciutto",
+      "navn": "Prosciutto",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Basilikum",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Grana Padano, flager",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Orecchiette",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 270,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "aeg",
+        "sennep",
+        "soja"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'en smule olivenolie'"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Skær portobello i tynde skiver.",
+        "Hak løg og hvidløg fint.",
+        "Hak basilikum og prosciutto groft.",
+        "Skyl spinat.",
+        "Skær zucchini i 2 cm tern."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Tilsæt pasta til gryden med kogende vand, og kog i 11-12 min, eller indtil 'al dente'.",
+        "Hæld vand fra, og vend eventuelt pasta med en smule olivenolie i gryden."
+      ],
+      "tip": "Vandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 3,
+      "titel": "Steg prosciutto",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg prosciutto i 3-4 min, eller indtil sprød, og overfør til en tallerken med køkkenrulle."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Opvarm samme stegepande (tilsæt en smule olivenolie ved behov) på middelhøj varme.",
+        "Steg løg, portobello, zucchini og hvidløg i 4-5 min, eller indtil møre.",
+        "Tilsæt bouillon, madlavningsfløde, salt og basilikum, og lad simre i 2-3 min, eller indtil let tyknet."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt pasta",
+      "tekst": [
+        "Tilsæt pasta, spinat og halvdelen af prosciutto til stegepanden, og rør rundt.",
+        "Krydr med et stort nip peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret pasta i dybe tallerkener.",
+        "Top med Grana Padano og resterende prosciutto."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 731,
+      "energi_kcal": 175,
+      "fedt_g": 7.8,
+      "maettet_fedt_g": 5,
+      "kulhydrat_g": 19.6,
+      "sukker_g": 2.7,
+      "protein_g": 7.2,
+      "fiber_g": 1.5,
+      "salt_g": 0.84
+    },
+    "pr_portion": {
+      "energi_kj": 2901,
+      "energi_kcal": 693,
+      "fedt_g": 30.9,
+      "maettet_fedt_g": 19.9,
+      "kulhydrat_g": 77.6,
+      "sukker_g": 10.7,
+      "protein_g": 28.5,
+      "fiber_g": 6.1,
+      "salt_g": 3.35
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "aeg",
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Bygget på kortet fra 2026-U08 (side 49/50), hvis forside kun viser billedet og en Grana Padano-reklame; titel, undertitel, tid og billede er fra den samme ret fra 2025-U46 (side 53/54), hvor mængder og trin er ens, men pastaen er 'Pasta' (rigatoni på billedet), osten er 'Italiensk hård ost, høvlet' (kun mælk, ikke æg) og næringen afviger lidt (688 kcal, 30,3 g fedt, 27,6 g protein og 3,42 g salt pr. portion). hellofresh.dk kalder 2026-U08-udgaven 'med stegt portobello og Grana Padano' (20 min)."
+}

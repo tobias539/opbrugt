@@ -1,0 +1,351 @@
+{
+  "id": "kylling-med-persillesauce-og-aeblesalat",
+  "titel": "Kylling med persillesauce",
+  "undertitel": "med kogte kartofler og æblesalat med tranebær",
+  "billede": "billeder/kylling-med-persillesauce-og-aeblesalat.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U46",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 23,
+      "bagside": 24
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 650
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "spidskaal-skaaret",
+      "navn": "Spidskål, skåret",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 300
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "hvide-loejer-og-urter",
+      "navn": "Hvide Løjer & Urter",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "tranebaer-toerrede",
+      "navn": "Tranebær",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "spor_af": [
+        "noedder",
+        "jordnoedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Små kartofler",
+      "maengde": 400,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 800
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til marinade",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kogevand",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til stegning og spidskål",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Halver kartofler (uskrællet).",
+        "Hak persille groft."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog kartofler",
+      "tekst": [
+        "Kog kartofler i 12-15 min, eller indtil møre, og hæld vand fra.",
+        "Krydr med et nip salt og peber, stil til side, og dæk til med låg."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Imens, skær kylling i 3 cm tykke strimler på et andet skærebræt.",
+        "Opvarm en smule olivenolie i en stegepande på middelhøj varme.",
+        "Vend kylling med olivenolie, salt og Hvide Løjer & Urter i en skål.",
+        "Steg kylling i 3 min på hver side, eller indtil gennemstegt, og overfør til en tallerken."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Lav æblesalat",
+      "tekst": [
+        "Imens, skær æble i tynde, halve skiver.",
+        "Skær agurk i halve skiver.",
+        "Kom spidskål i en stor skål, og masser med en smule olivenolie i 30 sek.",
+        "Tilsæt æble, agurk, tranebær, salt og et nip peber, og vend sammen."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav persillesauce",
+      "tekst": [
+        "Pres eller hak hvidløg fint.",
+        "Smelt smør i samme stegepande på middelhøj varme.",
+        "Svits hvidløg i 1 min, eller indtil velduftende.",
+        "Tilsæt madlavningsfløde, bouillon og persille, og lad simre i 1-2 min, eller indtil gennemvarmet.",
+        "Krydr med salt og et stort nip peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kartofler, kylling og æblesalat på tallerkener.",
+        "Top kylling med persillesauce."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 486,
+      "energi_kcal": 116,
+      "fedt_g": 5.9,
+      "maettet_fedt_g": 3.4,
+      "kulhydrat_g": 9.2,
+      "sukker_g": 3.8,
+      "protein_g": 6.4,
+      "fiber_g": 1,
+      "salt_g": 0.53
+    },
+    "pr_portion": {
+      "energi_kj": 3170,
+      "energi_kcal": 758,
+      "fedt_g": 38.7,
+      "maettet_fedt_g": 22.1,
+      "kulhydrat_g": 59.8,
+      "sukker_g": 25,
+      "protein_g": 41.8,
+      "fiber_g": 6.7,
+      "salt_g": 3.47
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Retten ligner HelloFresh' 'Cremet basilikumkylling med kogte kartofler og fyldig tranebærsalat' (https://www.hellofresh.dk/recipes/cremet-basilikumkylling-66e1aae2ab5003dbd1aa2070), men her med persille i stedet for basilikum og med agurk i salaten, så den er ikke brugt som kilde. Kortet nævner ikke salt til kogevandet og olie til panden og spidskålen på ingredienslisten."
+}

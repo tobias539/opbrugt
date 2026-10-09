@@ -1,0 +1,332 @@
+{
+  "id": "bbq-marineret-kylling-med-hvidloegstegte-groentsager-og-soed-chilisauce",
+  "titel": "BBQ-marineret kylling",
+  "undertitel": "med hvidløgstegte grøntsager og sød chilisauce",
+  "billede": "billeder/bbq-marineret-kylling-med-hvidloegstegte-groentsager-og-soed-chilisauce.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/bbq-marineret-kylling-62a71903b69eb23bebb10e7d",
+    "uge": "2026-U15",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 21,
+      "bagside": 22
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 530
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Zucchini",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "ginger-ninja",
+      "navn": "Ginger Ninja",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 10
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "pak-choi",
+      "navn": "Pak choi",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "soed-chilisauce",
+      "navn": "Sød chilisauce",
+      "maengde": 40,
+      "enhed": "g",
+      "tabel": {
+        "3": 80,
+        "4": 80
+      }
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ris",
+      "tekst": [
+        "Forvarm ovnen til 200°C/180°C (varmluft).",
+        "Bring vand i kog i en gryde.",
+        "Tilsæt ris og salt, og kog under låg på middellav varme i 12 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling med salt i 2 min på hver side, eller indtil brunet.",
+        "Overfør kylling til en bageplade med bagepapir, og bag i ovnen i 11-12 min, eller indtil gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt.",
+      "vigtigt": "En let lugt, når du åbner kyllingen, er helt normalt – det skyldes emballagen, som holder den frisk og god i smagen. Lad kyllingen få et par minutters luft, så er den klar til tilberedning!"
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, skær gulerod (uskrællet) i 1/2 cm tern.",
+        "Hak pak choi groft.",
+        "Skær zucchini i tynde, halve skiver.",
+        "Pres eller hak hvidløg fint.",
+        "Skær citrusfrugt i både."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg gulerod og zucchini med Ginger Ninja i 3-4 min.",
+        "Tilsæt pak choi og hvidløg, og steg videre i 1 min.",
+        "Krydr med salt og et nip peber, og overfør til en skål.",
+        "Bland sød chilisauce, sojasauce og et stort skvæt citrusfrugtsaft i en lille skål."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Varm chilisauce",
+      "tekst": [
+        "Opvarm samme stegepande på middellav varme.",
+        "Tilsæt chilisauce, og lad simre i 30 sek, eller indtil gennemvarmet.",
+        "Skær kylling i skiver."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris og grøntsager i dybe tallerkener.",
+        "Top med kylling og chilisauce.",
+        "Server med citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 494,
+      "energi_kcal": 118,
+      "fedt_g": 2.2,
+      "maettet_fedt_g": 0.3,
+      "kulhydrat_g": 17.4,
+      "sukker_g": 3.8,
+      "protein_g": 9.2,
+      "fiber_g": 1.3,
+      "salt_g": 1.62
+    },
+    "pr_portion": {
+      "energi_kj": 2639,
+      "energi_kcal": 631,
+      "fedt_g": 11.6,
+      "maettet_fedt_g": 1.4,
+      "kulhydrat_g": 93.1,
+      "sukker_g": 20.2,
+      "protein_g": 49.1,
+      "fiber_g": 6.8,
+      "salt_g": 8.64
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "sennep",
+      "soja",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Titlen øverst på forsiden er skåret af i scanningen, men tiden kan læses. Titel og undertitel er taget fra hellofresh.dk, hvor retten også har forårsløg og 2,5 g Ginger Ninja til 2 personer. Kortet er scannet to gange (side 21/22 og 23/24); begge er fra 2026-U15 med samme mængder, trin og næringsindhold, så der er kun lavet én opskrift."
+}

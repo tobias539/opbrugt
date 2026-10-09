@@ -1,0 +1,335 @@
+{
+  "id": "teriyakistegt-svinekoed-med-ingefaerris-wokgroentsager-og-radiser",
+  "titel": "Teriyakistegt svinekød",
+  "undertitel": "med ingefærris, wokgrøntsager og radiser",
+  "billede": "billeder/teriyakistegt-svinekoed-med-ingefaerris-wokgroentsager-og-radiser.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U16",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 31,
+      "bagside": 32
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 480
+  },
+  "kategorier": {
+    "koekken": [
+      "japansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket svinekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "teriyakisauce",
+      "navn": "Teriyakisauce",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ],
+      "spor_af": [
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "asiatisk-mayonnaise-vegansk",
+      "navn": "Vegansk asiatisk mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "wokblanding",
+      "navn": "Wokblanding",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 400,
+        "4": 400
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "sesamfroe",
+      "navn": "Sesamfrø",
+      "maengde": 10,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 20
+      },
+      "allergener": [
+        "sesam"
+      ],
+      "spor_af": [
+        "noedder",
+        "jordnoedder"
+      ]
+    },
+    {
+      "ingrediens": "porre",
+      "navn": "Porre",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "radiser",
+      "navn": "Radiser",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 125,
+        "4": 150
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "ingefaerpasta",
+      "navn": "Ingefærpasta",
+      "maengde": 10,
+      "enhed": "g",
+      "tabel": {
+        "3": 15,
+        "4": 20
+      }
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til grøntsager",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ris",
+      "tekst": [
+        "Opvarm olivenolie i en mellemstor gryde på middel varme. Steg ingefærpasta i 1-2 min, eller indtil velduftende. Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på middellav varme i 14 min. Tag gryden af varmen, og lad hvile under låg indtil servering.",
+        "Imens, pres eller hak hvidløg fint.",
+        "Halver porre, rens, og skær i tynde, halve skiver.",
+        "Skær radiser i kvarte."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler. Rens porre grundigt for jord."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Tilsæt den hvide del af porre, wokblanding, radiser, hvidløg, sesamfrø, salt og et nip peber, og steg i 3-4 min, eller indtil møre.",
+        "Overfør til en tallerken."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg hakket kød",
+      "tekst": [
+        "Opvarm olivenolie i samme stegepande på middelhøj varme.",
+        "Steg hakket svinekød i 3-4 min, eller indtil brunet.",
+        "Tilsæt teriyakisauce og vand, og steg videre i 1-2 min, eller indtil gennemvarmet."
+      ],
+      "tip": "Tilsæt et ekstra skvæt vand, hvis saucen virker tyk.",
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris, kød og grøntsager i dybe tallerkener.",
+        "Dryp med asiatisk mayonnaise.",
+        "Drys med den grønne del af porre."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 792,
+      "energi_kcal": 189,
+      "fedt_g": 10,
+      "maettet_fedt_g": 1.8,
+      "kulhydrat_g": 17.8,
+      "sukker_g": 3.9,
+      "protein_g": 8.3,
+      "fiber_g": 2.3,
+      "salt_g": 1.29
+    },
+    "pr_portion": {
+      "energi_kj": 3786,
+      "energi_kcal": 905,
+      "fedt_g": 47.8,
+      "maettet_fedt_g": 8.8,
+      "kulhydrat_g": 85.2,
+      "sukker_g": 18.5,
+      "protein_g": 39.6,
+      "fiber_g": 10.8,
+      "salt_g": 6.16
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "soja",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "soja"
+    ]
+  },
+  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Den nærmeste ret på hellofresh.dk er 'Teriyaki-stegt svinekød med ingefærris og sesamstegte grøntsager' (https://www.hellofresh.dk/recipes/teriyaki-stegt-svinekod-65116438adeb498a75282a5b, Total: 20 minutter), men dén bruger frisk ingefær, forårsløg og almindelig asiatisk mayonnaise og har ingen radiser og porre, så den er ikke brugt som kilde."
+}

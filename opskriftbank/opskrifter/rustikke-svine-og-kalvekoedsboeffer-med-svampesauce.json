@@ -1,0 +1,373 @@
+{
+  "id": "rustikke-svine-og-kalvekoedsboeffer-med-svampesauce",
+  "titel": "Rustikke svine- og kalvekødsbøffer",
+  "undertitel": "med cremet svampesauce og saftig æblesalat",
+  "billede": "billeder/rustikke-svine-og-kalvekoedsboeffer-med-svampesauce.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U04",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 7,
+      "bagside": 8
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 690
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "svinekoed",
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 10,
+      "enhed": "ml",
+      "tabel": {
+        "3": 20,
+        "4": 20
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "rasp",
+      "navn": "Rasp",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Champignon",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 400
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hakket-svine-kalvekoed",
+      "navn": "Hakket svine-/kalvekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Små kartofler",
+      "maengde": 400,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 800
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kartofler",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til bøffer",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til bøffer",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "ketchup",
+      "navn": "Ketchup til bøffer",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bøffer",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til svampe",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til kartofler",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog kartofler",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Kog kartofler i 12-15 min, eller indtil de nemt kan deles med en kniv, og hæld vand fra.",
+        "Krydr med salt og et nip peber, og stil til side med låg på."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg bøffer",
+      "tekst": [
+        "Imens, riv løg groft.",
+        "Bland hakket svine-/kalvekød, løg, æg, rasp, ketchup og salt i en stor skål.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Form fars til bøffer (3 pr. person) direkte i panden, tryk flade med en palet, og steg i 2-3 min, eller indtil gyldne og gennemstegte.",
+        "Overfør til en tallerken, og dæk med sølvpapir."
+      ],
+      "vigtigt": "Bøfferne er færdige, når kødet er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Steg svampe",
+      "tekst": [
+        "Imens, hak svampe fint.",
+        "Opvarm samme stegepande (tilsæt en smule olivenolie ved behov) på middelhøj varme.",
+        "Steg svampe i 3-4 min, eller indtil gyldne, og krydr med salt."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav æblesalat",
+      "tekst": [
+        "Imens, skær æble i tynde, halve skiver.",
+        "Riv gulerod (uskrællet) groft.",
+        "Hak persille groft.",
+        "Bland æble, gulerod, persille og et nip salt i en mellemstor skål.",
+        "Tilsæt eventuelt en smule olivenolie."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav svampesauce",
+      "tekst": [
+        "Sænk varmen på stegepanden til lav.",
+        "Tilsæt madlavningsfløde, sojasauce, salt og et stort nip peber, og lad simre i 1-2 min.",
+        "Vend kartofler med smør i gryden lige inden servering."
+      ],
+      "vigtigt": "I denne opskrift bruges halvdelen af mængden af visse ingredienser – dobbelttjek ingredienslisten!"
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret bøffer, kartofler og æblesalat på tallerkener.",
+        "Top bøffer med svampesauce."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 532,
+      "energi_kcal": 127,
+      "fedt_g": 7.6,
+      "maettet_fedt_g": 4,
+      "kulhydrat_g": 9.1,
+      "sukker_g": 2.7,
+      "protein_g": 5.8,
+      "fiber_g": 1.2,
+      "salt_g": 0.85
+    },
+    "pr_portion": {
+      "energi_kj": 3685,
+      "energi_kcal": 881,
+      "fedt_g": 52.4,
+      "maettet_fedt_g": 27.5,
+      "kulhydrat_g": 63.2,
+      "sukker_g": 18.9,
+      "protein_g": 40.2,
+      "fiber_g": 8.2,
+      "salt_g": 5.91
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "soja",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Også scannet som forside 5/bagside 6 (2026-U04, identisk) og forside 25/bagside 26 (2025-U49). 2025-U49 har samme mængder og trin, men sojasaucen er ikke mærket med hvede, og næringsindholdet afviger lidt (fx 3696 kJ/883 kcal, 65 g kulhydrat og 40,3 g protein pr. portion)."
+}

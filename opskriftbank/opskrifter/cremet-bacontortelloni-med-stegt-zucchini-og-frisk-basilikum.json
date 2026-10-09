@@ -1,0 +1,284 @@
+{
+  "id": "cremet-bacontortelloni-med-stegt-zucchini-og-frisk-basilikum",
+  "titel": "Cremet bacontortelloni",
+  "undertitel": "med stegt zucchini og frisk basilikum",
+  "billede": "billeder/cremet-bacontortelloni-med-stegt-zucchini-og-frisk-basilikum.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/cremet-bacontortelloni-63e6bbe0838062841f0e7247",
+    "uge": "2025-U47",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 45,
+      "bagside": 46
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 530
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "zucchini",
+      "navn": "Zucchini",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "mamas-favorit",
+      "navn": "Mamas Favorit",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      },
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "tortelloni",
+      "navn": "Tortelloni",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 450,
+        "4": 600
+      },
+      "allergener": [
+        "aeg",
+        "gluten",
+        "maelk",
+        "hvede"
+      ],
+      "spor_af": [
+        "selleri",
+        "krebsdyr",
+        "fisk",
+        "bloeddyr",
+        "sennep",
+        "noedder",
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Basilikum",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "finrevet-ost",
+      "navn": "Finrevet ost",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacon, tern",
+      "maengde": 140,
+      "enhed": "g",
+      "tabel": {
+        "3": 210,
+        "4": 280
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 1,
+      "enhed": "dl",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til pasta",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true,
+      "note": "Kommes i saucen ifølge fremgangsmåden"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg bacon og grøntsager",
+      "tekst": [
+        "Skær tomat og zucchini i 2 cm tern.",
+        "Opvarm en mellemstor stegepande på middelhøj varme.",
+        "Steg bacon, tomat og zucchini i 4-5 min, eller indtil baconen er gennemstegt og zucchinien er mør."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Tilsæt pasta",
+      "tekst": [
+        "Sænk til middel varme.",
+        "Tilsæt tortelloni, og steg videre i 1 min."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Tilsæt madlavningsfløde, vand, bouillon, Mamas Favorit og salt, og lad simre i 3-4 min, eller indtil pastaen er 'al dente' og saucen er let tyknet."
+      ],
+      "tip": "'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret tortelloni i dybe tallerkener.",
+        "Top med finrevet ost, chiliflager og basilikum."
+      ],
+      "tip": "Spring chiliflagerne over, eller brug mindre, hvis du ikke er til stærk mad."
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 710,
+      "energi_kcal": 170,
+      "fedt_g": 9.8,
+      "maettet_fedt_g": 5.4,
+      "kulhydrat_g": 13.9,
+      "sukker_g": 3.3,
+      "protein_g": 6.3,
+      "fiber_g": 1.3,
+      "salt_g": 1.05
+    },
+    "pr_portion": {
+      "energi_kj": 3728,
+      "energi_kcal": 891,
+      "fedt_g": 51.5,
+      "maettet_fedt_g": 28.1,
+      "kulhydrat_g": 73.1,
+      "sukker_g": 17.4,
+      "protein_g": 33.3,
+      "fiber_g": 7,
+      "salt_g": 5.5
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "noedder",
+      "fisk",
+      "krebsdyr",
+      "bloeddyr",
+      "sennep",
+      "selleri",
+      "soja"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; titel, undertitel og tid er fra hellofresh.dk. Versionen på hellofresh.dk har også et hvidløgsfed og 2 dl vand; kortet fra 2025-U47 har intet hvidløg og 1 dl vand til 2 personer."
+}

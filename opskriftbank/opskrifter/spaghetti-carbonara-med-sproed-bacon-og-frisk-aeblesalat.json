@@ -1,0 +1,311 @@
+{
+  "id": "spaghetti-carbonara-med-sproed-bacon-og-frisk-aeblesalat",
+  "titel": "Spaghetti Carbonara",
+  "undertitel": "med sprød bacon og frisk æblesalat",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/spaghetti-carbonara-69642e33b2a0b177eea143d8",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "bagside": 61
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 510
+  },
+  "tid": {
+    "min": 25,
+    "max": 25
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "champignon",
+      "navn": "Champignon",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 400
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 2,
+      "enhed": "fed",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Spaghetti",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 270,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Parmigiano Reggiano BOB",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacon, tern",
+      "maengde": 140,
+      "enhed": "g",
+      "tabel": {
+        "3": 210,
+        "4": 280
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "romainesalat",
+      "navn": "Romainesalat",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 200,
+        "4": 200
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt pastavand",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til sauce",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ],
+      "note": "Kun blommerne bruges ifølge fremgangsmåden"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Bring en gryde med saltet vand i kog.",
+        "Pres eller hak hvidløg fint.",
+        "Skær æble i tynde, halve skiver.",
+        "Skær svampe i tynde skiver.",
+        "Skær roden af salat, og skil bladene ad. Hak groft."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Kog pasta i 8-9 min, eller indtil 'al dente'.",
+        "Gem en smule pastavand, og hæld resten fra."
+      ],
+      "tip": "Vandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 3,
+      "titel": "Steg bacon og svampe",
+      "tekst": [
+        "Imens, opvarm en stegepande på middelhøj varme.",
+        "Steg bacon i 4-5 min, eller indtil gylden.",
+        "Tilsæt svampe og hvidløg, og steg videre i 5-6 min.",
+        "Sænk til middel varme."
+      ],
+      "tip": "Tilsæt en smule olivenolie, hvis der ikke er nok stegefedt i panden."
+    },
+    {
+      "nr": 4,
+      "titel": "Lav æggeblanding",
+      "tekst": [
+        "Pisk madlavningsfløde, æggeblomme, finrevet ost, bouillon og et nip peber sammen i en skål."
+      ],
+      "tip": "Æggeblommen gør saucen tyk og cremet."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt pasta",
+      "tekst": [
+        "Tilsæt pasta, et skvæt pastavand og æggeblanding til panden, og lad simre under omrøring i 2 min, eller indtil pasta er dækket af sauce.",
+        "Smag til med salt og peber.",
+        "Bland æble, salat, olivenolie og et nip salt og peber i en stor skål."
+      ],
+      "tip": "Tilsæt mere pastavand, hvis saucen er for tyk."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret spaghetti på tallerkener.",
+        "Server med salat."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 791,
+      "energi_kcal": 189,
+      "fedt_g": 10.5,
+      "maettet_fedt_g": 5.5,
+      "kulhydrat_g": 16,
+      "sukker_g": 3,
+      "protein_g": 7.6,
+      "fiber_g": 1.3,
+      "salt_g": 0.57
+    },
+    "pr_portion": {
+      "energi_kj": 3993,
+      "energi_kcal": 954,
+      "fedt_g": 53.2,
+      "maettet_fedt_g": 27.8,
+      "kulhydrat_g": 80.9,
+      "sukker_g": 15.2,
+      "protein_g": 38.5,
+      "fiber_g": 6.6,
+      "salt_g": 2.86
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Titel og tid er sat ud fra hellofresh.dk; scanningen har kun bagsiden, og ugekoden er revet af kortet. Den nye udgave med Parmigiano Reggiano BOB, romainesalat og uden persille passer med hellofresh.dk-versionerne fra omkring 2026 (uge ukendt). Kortet skriver 'æggeblomme' i trin 4, selvom ingredienslisten skriver 'Æg til sauce'. Spor-nummeret for sennep er delvist revet af; 68 er antaget."
+}

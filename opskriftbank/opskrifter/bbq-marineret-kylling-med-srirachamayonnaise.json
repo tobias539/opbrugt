@@ -1,0 +1,316 @@
+{
+  "id": "bbq-marineret-kylling-med-srirachamayonnaise",
+  "titel": "BBQ-marineret kylling",
+  "undertitel": "med friske grøntsager og srirachamayonnaise",
+  "billede": "billeder/bbq-marineret-kylling-med-srirachamayonnaise.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U02",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 1,
+      "bagside": 38
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 170,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 340
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "byg",
+        "gluten",
+        "kamut",
+        "khorasan",
+        "havre",
+        "rug"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "hvidvinseddike",
+      "navn": "Hvidvinseddike",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 24,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "srirachamayonnaise-vegansk",
+      "navn": "Vegansk srirachamayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "note": "Rødløg ifølge fremgangsmåden",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "mango",
+      "navn": "Mango",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til syltning",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til syltning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til bulgur",
+      "maengde": 5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 7,
+        "4": 9
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bulgur",
+      "maengde": 1,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1.5,
+        "4": 1.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'en smule olivenolie'"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Sylt rødløg",
+      "tekst": [
+        "Skær løg i tynde, halve skiver.",
+        "Bland hvidvinseddike, sukker, vand og et nip salt i en lille skål.",
+        "Vend løg i skålen, og stil til side."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog bulgur",
+      "tekst": [
+        "Bring vand i kog i en mellemstor gryde.",
+        "Tilsæt bulgur og salt, og kog under låg på middellav varme i 9-10 min, eller indtil 'al dente'."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt.",
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling med salt i 3-4 min på hver side, eller indtil brunet og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Forbered frugt og grønt",
+      "tekst": [
+        "Skær mango over på langs ca. 1 cm fra midten uden om stenen, og skær i 1 cm tern.",
+        "Skær peberfrugt og agurk i 1 cm tern."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Hæld væde fra rødløg",
+      "tekst": [
+        "Hæld væde fra løg lige inden servering."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret bulgur i dybe tallerkener.",
+        "Top med kylling, peberfrugt, agurk, mango og løg.",
+        "Server med srirachamayonnaise."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 547,
+      "energi_kcal": 131,
+      "fedt_g": 3.9,
+      "maettet_fedt_g": 0.4,
+      "kulhydrat_g": 16.1,
+      "sukker_g": 3.8,
+      "protein_g": 8.8,
+      "fiber_g": 2.4,
+      "salt_g": 0.84
+    },
+    "pr_portion": {
+      "energi_kj": 2967,
+      "energi_kcal": 709,
+      "fedt_g": 21.1,
+      "maettet_fedt_g": 2.4,
+      "kulhydrat_g": 87.6,
+      "sukker_g": 20.6,
+      "protein_g": 47.6,
+      "fiber_g": 13.1,
+      "salt_g": 4.57
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ],
+    "spor_af": [
+      "gluten",
+      "byg",
+      "havre",
+      "rug",
+      "kamut",
+      "khorasan"
+    ]
+  },
+  "noter": "Samme ret er også scannet med bagside fra 2025-U48 (side 2): mængder og trin er de samme, kun fiberindholdet afviger (2,3 g pr. 100 g og 12,5 g pr. portion mod 2,4 g og 13,1 g i 2026-U02)."
+}

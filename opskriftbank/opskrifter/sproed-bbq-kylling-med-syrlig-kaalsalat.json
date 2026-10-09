@@ -1,0 +1,321 @@
+{
+  "id": "sproed-bbq-kylling-med-syrlig-kaalsalat",
+  "titel": "Sprød BBQ-kylling",
+  "undertitel": "med syrlig kålsalat og mild aioli",
+  "billede": "billeder/sproed-bbq-kylling-med-syrlig-kaalsalat.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U08",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 02.pdf",
+    "sider": {
+      "forside": 5,
+      "bagside": 2
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 630
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "boernevenlig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "panko",
+      "navn": "Panko",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "tranebaer-toerrede",
+      "navn": "Tranebær",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "spor_af": [
+        "noedder",
+        "jordnoedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "kaalsalat-snittet",
+      "navn": "Snittet kålsalat",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "aioli",
+      "navn": "Aioli",
+      "maengde": 42,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 80
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kartofler",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til panering",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til panering",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ],
+      "note": "Kan erstattes med 2 spsk mælk"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag fritter",
+      "tekst": [
+        "Forvarm ovnen til 240°C/220°C (varmluft).",
+        "Skær kartofler (uskrællet) til fritter.",
+        "Fordel på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 25-35 min, eller indtil møre."
+      ],
+      "tip": "Benyt flere bageplader, hvis der ikke er plads på en."
+    },
+    {
+      "nr": 2,
+      "titel": "Paner kylling",
+      "tekst": [
+        "Imens, bland panko, salt og et nip peber i en dyb tallerken.",
+        "Pisk æg i en anden dyb tallerken.",
+        "Skær kylling i 2 cm tykke strimler på et andet skærebræt, og krydr med salt.",
+        "Vend kylling i æg og derefter i panko."
+      ],
+      "tip": "Hvis du ikke har æg, kan det erstattes med 2 spsk mælk."
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Hæld olivenolie i en stegepande, så hele bunden er dækket, og varm op på middelhøj varme.",
+        "Steg kylling i 3-4 min på hver side, eller indtil gylden og gennemstegt, og overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Bland kålsalat",
+      "tekst": [
+        "Imens, skær æble i tynde, halve skiver.",
+        "Bland snittet salat, æble, halvdelen af fraiche, tranebær og et nip salt i en skål. Tilsæt eventuelt en smule olivenolie."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav hvidløgsdressing",
+      "tekst": [
+        "Bland aioli og resterende fraiche i en lille skål, og krydr med et nip salt og peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kylling, kålsalat og fritter på tallerkener.",
+        "Server med aiolidressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 549,
+      "energi_kcal": 131,
+      "fedt_g": 5.1,
+      "maettet_fedt_g": 1.1,
+      "kulhydrat_g": 13.6,
+      "sukker_g": 3.2,
+      "protein_g": 7.8,
+      "fiber_g": 1,
+      "salt_g": 0.78
+    },
+    "pr_portion": {
+      "energi_kj": 3454,
+      "energi_kcal": 826,
+      "fedt_g": 32.1,
+      "maettet_fedt_g": 6.8,
+      "kulhydrat_g": 85.3,
+      "sukker_g": 20.4,
+      "protein_g": 49.1,
+      "fiber_g": 6.5,
+      "salt_g": 4.88
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Retten er også sendt i uge 2025-U45 (samme scanning, bagside side 6). Forsiderne på side 1 og 5 er ens, så det kan ikke ses, hvilken der hører til hvilken uge. Den eneste forskel er 40 g aioli til 2 personer i stedet for 42 g og lidt andet næringsindhold (822 kcal pr. portion)."
+}

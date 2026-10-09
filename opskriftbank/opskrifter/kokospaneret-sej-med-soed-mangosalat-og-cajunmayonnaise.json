@@ -1,0 +1,428 @@
+{
+  "id": "kokospaneret-sej-med-soed-mangosalat-og-cajunmayonnaise",
+  "titel": "Kokospaneret sej",
+  "undertitel": "med sød mangosalat og cajunmayonnaise",
+  "billede": "billeder/kokospaneret-sej-med-soed-mangosalat-og-cajunmayonnaise.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/kokospaneret-sej-65cddd6b5d0250930594d505",
+    "uge": "2026-U11",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 29,
+      "bagside": 30
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 490
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret"
+    ],
+    "hovedprotein": [
+      "fisk"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "sej",
+      "navn": "Sej",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "allergener": [
+        "fisk"
+      ],
+      "variabel": "hvid-fisk"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "mango",
+      "navn": "Mango",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Langkornede hvide ris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "panko",
+      "navn": "Panko",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "ay-cajun-ba",
+      "navn": "Ay Cajun-ba",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "svovldioxid"
+      ]
+    },
+    {
+      "ingrediens": "kokosmel",
+      "navn": "Kokosmel",
+      "maengde": 15,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 30
+      },
+      "spor_af": [
+        "byg",
+        "gluten",
+        "noedder",
+        "havre",
+        "jordnoedder",
+        "rug",
+        "sesam",
+        "spelt",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Ingefær",
+      "maengde": 2,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 5.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Mel til panering",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til panering",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til panering",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til fisk",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til dressing",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'et skvæt vand'"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ingefærris",
+      "tekst": [
+        "Riv ingefær (uskrællet) fint.",
+        "Opvarm olivenolie i en mellemstor gryde på middel varme.",
+        "Svits ingefær i 30 sek, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog.",
+        "Tilsæt ris og salt, og kog under låg på middellav varme i 14 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Lav mangosalsa",
+      "tekst": [
+        "Imens, skræl mango, skær over på langs ca. 1 cm fra midten uden om stenen, og skær i 2 cm tern.",
+        "Hak tomat groft.",
+        "Bland mango, tomat, olivenolie, salt og et nip peber i en mellemstor skål."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Paner fisk",
+      "tekst": [
+        "Bland hvedemel, salt og et nip peber i en dyb tallerken.",
+        "Pisk æg i en anden dyb tallerken.",
+        "Bland panko, kokosmel og halvdelen af Ay Cajun-ba i en tredje dyb tallerken.",
+        "Dup fisk tør med køkkenrulle, og krydr med salt.",
+        "Vend fisk i hvedemel, derefter i æg og til sidst i panering."
+      ],
+      "tip": "Hvis du ikke har æg, kan det erstattes med 2 spsk mælk."
+    },
+    {
+      "nr": 4,
+      "titel": "Steg fisk",
+      "tekst": [
+        "Hæld olivenolie i en stegepande, så hele bunden er dækket, og varm op på middelhøj varme.",
+        "Steg fisk i 2-3 min på hver side, eller indtil gylden og gennemstegt, og overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Fisken er færdig, når kødet er mælkehvidt og mat."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav cajunmayonnaise",
+      "tekst": [
+        "Imens, bland mayonnaise, resterende Ay Cajun-ba, et skvæt vand, salt og et nip peber i en lille skål."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Kom hver portion ris i en lille skål, og pres let sammen. Placer en tallerken ovenpå, og vend på hovedet, så risen får form som en kuppel. Fortsæt med risen til resten af portionerne.",
+        "Anret fisk og mangosalsa ved siden af.",
+        "Server med cajunmayonnaise."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 772,
+      "energi_kcal": 185,
+      "fedt_g": 8.4,
+      "maettet_fedt_g": 1.9,
+      "kulhydrat_g": 19.9,
+      "sukker_g": 3,
+      "protein_g": 6.9,
+      "fiber_g": 1.2,
+      "salt_g": 1.21
+    },
+    "pr_portion": {
+      "energi_kj": 3774,
+      "energi_kcal": 902,
+      "fedt_g": 40.9,
+      "maettet_fedt_g": 9.4,
+      "kulhydrat_g": 97.5,
+      "sukker_g": 14.8,
+      "protein_g": 33.9,
+      "fiber_g": 6,
+      "salt_g": 5.89
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "fisk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "sesam",
+      "gluten",
+      "hvede",
+      "byg",
+      "havre",
+      "rug",
+      "spelt"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; tiden står på hovedet nederst på forsiden. Titel og undertitel er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave med frisk koriander i stedet for ingefær (og almindelige ris). Kortet kalder salaten 'mangosalsa' i trinene. Ingefær er angivet i teskeer på kortet, selvom trin 1 siger, at den skal rives."
+}

@@ -1,0 +1,366 @@
+{
+  "id": "thaiinspireret-kylling-kokosmaelksuppe-med-citrongraes-og-koriander",
+  "titel": "Thaiinspireret kylling-kokosmælksuppe",
+  "undertitel": "med citrongræs og koriander",
+  "billede": "billeder/thaiinspireret-kylling-kokosmaelksuppe-med-citrongraes-og-koriander.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U04",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 3,
+      "bagside": 4
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 510
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "thai"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "suppe"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "kokosmaelk",
+      "navn": "Kokosmælk",
+      "maengde": 180,
+      "enhed": "ml",
+      "tabel": {
+        "3": 360,
+        "4": 360
+      },
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "citrongraes",
+      "navn": "Citrongræs",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Koriander",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "peberfrugt",
+      "navn": "Peberfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "groen-karrypasta",
+      "navn": "Grøn karrypasta",
+      "maengde": 40,
+      "enhed": "g",
+      "tabel": {
+        "3": 80,
+        "4": 80
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "majsstivelse",
+      "navn": "Majsstivelse",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 6,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til suppe",
+      "maengde": 2,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til suppe",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til stivelsesblanding",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til chiliolie",
+      "maengde": 1.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling med salt i 2 min på hver side, eller indtil brunet.",
+        "Sænk til middel varme, og steg videre i 5-6 min på hver side, eller indtil gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, bank citrongræs med en kagerulle.",
+        "Skær løg i tynde, halve skiver.",
+        "Skær gulerod (uskrællet) i tynde, halve skiver.",
+        "Skær peberfrugt i 2 cm tern.",
+        "Opvarm olivenolie i en stor gryde på middelhøj varme.",
+        "Steg løg, gulerod, citrongræs og peberfrugt i 3-4 min, eller indtil let bløde."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav suppe",
+      "tekst": [
+        "Tilsæt karrypasta, og svits i 30 sek under omrøring, eller indtil velduftende.",
+        "Tilsæt kokosmælk, vand, salt, sojasauce og bouillon, og rør rundt.",
+        "Sænk til middel varme, dæk til med låg, og lad simre i 8-10 min.",
+        "Imens, bland majsstivelse og vand til en jævning i en lille skål.",
+        "Rør jævning ud i suppen lige inden servering, og lad koge i 30 sek, eller indtil tyknet."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav lime-chiliolie",
+      "tekst": [
+        "Hak koriander fint.",
+        "Halver citrusfrugt.",
+        "Bland koriander, et skvæt citrusfrugtsaft, olivenolie, chiliflager og et nip salt og peber."
+      ],
+      "tip": "Undlad chiliflagerne, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt kylling",
+      "tekst": [
+        "Overfør færdigstegt kylling til en skål.",
+        "Træk kødet i strimler med to gafler, og overfør til suppen.",
+        "Fjern citrongræs lige inden servering."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret suppe i skåle.",
+        "Top med citrusfrugt-chiliolie."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 437,
+      "energi_kcal": 105,
+      "fedt_g": 6.4,
+      "maettet_fedt_g": 3.2,
+      "kulhydrat_g": 4.6,
+      "sukker_g": 2.5,
+      "protein_g": 7.5,
+      "fiber_g": 1.3,
+      "salt_g": 1.38
+    },
+    "pr_portion": {
+      "energi_kj": 2217,
+      "energi_kcal": 530,
+      "fedt_g": 32.4,
+      "maettet_fedt_g": 16.1,
+      "kulhydrat_g": 23.3,
+      "sukker_g": 12.7,
+      "protein_g": 38.2,
+      "fiber_g": 6.4,
+      "salt_g": 7
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "soja",
+      "gluten"
+    ]
+  },
+  "noter": "Forsiden fra 2026-U04 (side 3) viser kun billedet; titel og tid er taget fra forsiden til samme ret fra 2025-U44 (side 11, bagside 12). Kortet fra 2025-U44 har samme mængder og trin, men sukkerarter er 2,4 g/12,2 g og fiber 1,1 g/5,8 g (pr. 100 g/pr. portion), sojasaucen er kun mærket 13) 11), og trin 4 hedder 'Lav citrus-chiliolie'. Kortet fra 2026-U04 mærker sojasaucen med 15) Hvede, men hvede står ikke i kortets samlede allergenliste."
+}

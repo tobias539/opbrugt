@@ -1,0 +1,353 @@
+{
+  "id": "sproed-bbq-kylling-med-radiseslaw",
+  "titel": "Sprød BBQ-kylling",
+  "undertitel": "med radiseslaw og ovnbagte grøntsager",
+  "billede": "billeder/sproed-bbq-kylling-med-radiseslaw.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U06",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 02.pdf",
+    "sider": {
+      "forside": 3,
+      "bagside": 4
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 790
+  },
+  "tid": {
+    "min": 30,
+    "max": 35,
+    "pr_portioner": {
+      "4": {
+        "min": 35,
+        "max": 40
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 0.5,
+      "enhed": "fed",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "panko",
+      "navn": "Panko",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "ay-cajun-ba",
+      "navn": "Ay Cajun-ba",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "svovldioxid"
+      ]
+    },
+    {
+      "ingrediens": "roedbede",
+      "navn": "Rødbede",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "radiser",
+      "navn": "Radiser",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 125,
+        "4": 125
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "roedkaal-skaaret",
+      "navn": "Rødkål, skåret",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "blomkaal",
+      "navn": "Blomkål",
+      "maengde": 275,
+      "enhed": "g",
+      "tabel": {
+        "3": 550,
+        "4": 550
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "pastinak",
+      "navn": "Pastinak",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til slaw",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til panering",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til panering",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag grøntsager",
+      "tekst": [
+        "Forvarm ovnen til 240°C/220°C (varmluft).",
+        "Skær gulerod, pastinak og rødbede (uskrællet) i 2 cm både.",
+        "Skær blomkål i 2 cm buketter.",
+        "Fordel grøntsager på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med Ay Cajun-ba, salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 25-35 min, eller indtil møre."
+      ],
+      "tip": "Benyt flere bageplader, hvis der ikke er plads på en."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered slaw",
+      "tekst": [
+        "Imens, skær citrusfrugt i både.",
+        "Bland rødkål, salt og et skvæt citrusfrugtsaft i en mellemstor skål."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Paner kylling",
+      "tekst": [
+        "Skær kylling i 3 cm tern på et andet skærebræt.",
+        "Pisk æg i en dyb tallerken.",
+        "Bland panko, salt og et nip peber i en anden dyb tallerken.",
+        "Vend kylling i æg og derefter i panko."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Hæld olivenolie i en stor stegepande, så hele bunden er dækket, og varm op på middelhøj varme.",
+        "Steg kylling i 3-4 min på hver side, eller indtil gylden og gennemstegt, og overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav radiseslaw",
+      "tekst": [
+        "Imens, skær radiser i tynde skiver.",
+        "Vend radiser i skålen med rødkål.",
+        "Pres eller hak hvidløg fint.",
+        "Bland fraiche, hvidløg og et nip salt i en lille skål."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret grøntsager, radiseslaw og kylling på tallerkener.",
+        "Server med hvidløgsyoghurt."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 344,
+      "energi_kcal": 82,
+      "fedt_g": 2.6,
+      "maettet_fedt_g": 0.7,
+      "kulhydrat_g": 8.1,
+      "sukker_g": 3.8,
+      "protein_g": 6.6,
+      "fiber_g": 1.9,
+      "salt_g": 0.52
+    },
+    "pr_portion": {
+      "energi_kj": 2708,
+      "energi_kcal": 647,
+      "fedt_g": 20.6,
+      "maettet_fedt_g": 5.9,
+      "kulhydrat_g": 63.6,
+      "sukker_g": 30,
+      "protein_g": 51.7,
+      "fiber_g": 14.7,
+      "salt_g": 4.13
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ]
+  },
+  "noter": "Kortet skriver 'hvidløgsyoghurt' i sidste trin, men dressingen laves af fraiche."
+}

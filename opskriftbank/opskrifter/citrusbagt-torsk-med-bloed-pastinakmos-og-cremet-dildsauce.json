@@ -1,0 +1,362 @@
+{
+  "id": "citrusbagt-torsk-med-bloed-pastinakmos-og-cremet-dildsauce",
+  "titel": "Citrusbagt torsk",
+  "undertitel": "med blød pastinakmos og cremet dildsauce",
+  "billede": "billeder/citrusbagt-torsk-med-bloed-pastinakmos-og-cremet-dildsauce.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/citrusbagt-torsk-63a45c1822d1e6678745d7b0",
+    "uge": "2026-U06",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 37,
+      "bagside": 38
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 740
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "fisk"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "torsk",
+      "navn": "Torsk",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "allergener": [
+        "fisk"
+      ],
+      "variabel": "hvid-fisk"
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 750,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "fennikel",
+      "navn": "Fennikel",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 2,
+      "enhed": "fed",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "ingrediens": "dild",
+      "navn": "Dild",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "pastinak",
+      "navn": "Pastinak",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Mælk til sauce",
+      "maengde": 3,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 5,
+        "4": 6
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Bruges i mosen ifølge fremgangsmåden"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til mos",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til dressing",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til dressing",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til fisk",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav pastinakmos",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C (varmluft), og bring en stor gryde med saltet vand i kog.",
+        "Skræl kartoffel (uskrællet) og pastinak (uskrællet), og skær i 2 cm tern. Skræl hvidløg.",
+        "Kog kartofler, pastinak og halvdelen af hvidløg i 11-13 min, eller indtil de nemt kan deles med en kniv. Hæld vand fra, og tilsæt mælk, salt og et nip peber. Mos med en kartoffelmoser eller en gaffel, og stil til side med låg på."
+      ],
+      "tip": "Tilsæt en klat smør for en mere cremet mos."
+    },
+    {
+      "nr": 2,
+      "titel": "Mariner fennikel og æble",
+      "tekst": [
+        "Skær citrusfrugt i både.",
+        "Skær fennikel i tynde, halve skiver.",
+        "Skær æble i tynde, halve skiver.",
+        "Bland olivenolie, et skvæt citrusfrugtsaft, sukker og et nip salt og peber i en mellemstor skål.",
+        "Vend fennikel og æble i skålen, og lad marinere indtil servering."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bag fisk",
+      "tekst": [
+        "Dub fisk tør med køkkenrulle.",
+        "Placer fisk på en bageplade med bagepapir. Dryp med olivenolie og et skvæt citrusfrugtsaft, og krydr med et nip salt og peber.",
+        "Bag i ovnen i 12-15 min, eller indtil gylden og gennemstegt."
+      ],
+      "tip": "Fisken er færdig, når kødet er mælkehvidt og mat."
+    },
+    {
+      "nr": 4,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, pres eller hak resterende hvidløg fint.",
+        "Hak dild groft."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav dildsauce",
+      "tekst": [
+        "Opvarm olivenolie i en anden mellemstor gryde på middelhøj varme.",
+        "Svits hvidløg i 30 sek, eller indtil velduftende.",
+        "Tilsæt bouillon, madlavningsfløde, salt og peber, og lad simre i 2-3 min, eller indtil tyknet.",
+        "Tilsæt halvdelen af dild, og rør rundt."
+      ],
+      "tip": "Tilsæt et skvæt vand, hvis saucen virker tyk."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret pastinakmos og fisk på tallerkener.",
+        "Top med dildsauce.",
+        "Server med fennikel og æble.",
+        "Drys med resterende dild."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 440,
+      "energi_kcal": 105,
+      "fedt_g": 5,
+      "maettet_fedt_g": 2.6,
+      "kulhydrat_g": 10.4,
+      "sukker_g": 2.9,
+      "protein_g": 4.6,
+      "fiber_g": 1.5,
+      "salt_g": 0.62
+    },
+    "pr_portion": {
+      "energi_kj": 3244,
+      "energi_kcal": 775,
+      "fedt_g": 37,
+      "maettet_fedt_g": 18.8,
+      "kulhydrat_g": 76.4,
+      "sukker_g": 21.7,
+      "protein_g": 34,
+      "fiber_g": 11.2,
+      "salt_g": 4.56
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "fisk",
+      "maelk",
+      "selleri"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; titel, undertitel og tid er fra hellofresh.dk. Kortet skriver 'Skræl kartoffel (uskrællet) og pastinak (uskrællet)' – grøntsagerne skal nok bare skæres i tern med skrællen på. 'Mælk til sauce' bruges i mosen."
+}

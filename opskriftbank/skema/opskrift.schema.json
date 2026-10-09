@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opskrift.schema.json",
+  "title": "Opskrift",
+  "description": "Én opskrift i opskriftbanken. Uafhængig af kilde (HelloFresh, kogebog, nettet, egen).",
+  "type": "object",
+  "required": ["id", "titel", "kilde", "portioner", "kategorier", "ingredienser", "trin"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Fast id, samme som filnavnet uden .json. Kun a-z, 0-9 og bindestreg (æ→ae, ø→oe, å→aa)."
+    },
+    "titel": { "type": "string" },
+    "undertitel": { "type": "string" },
+    "beskrivelse": { "type": "string" },
+    "variant_af": { "type": "string", "description": "Id på den opskrift, denne er en variant af (fx samme ret i en anden HelloFresh-uge med andre ingredienser)" },
+    "billede": { "type": "string", "description": "Sti relativt til opskriftbank-mappen, fx billeder/<id>.jpg" },
+
+    "kilde": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "enum": ["hellofresh", "kogebog", "web", "egen", "familie", "andet"] },
+        "navn": { "type": "string", "description": "Fx 'HelloFresh', bogens titel eller hjemmesidens navn" },
+        "url": { "type": "string" },
+        "side": { "type": "string", "description": "Sidetal i en bog" },
+        "uge": { "type": "string", "description": "HelloFresh-ugekode fra kortet, fx 2026-U10" },
+        "menunummer": { "type": "integer", "description": "Nummeret i cirklen på HelloFresh-kortet" },
+        "scanning": { "type": "string", "description": "Sti til scanningen, relativt til opskriftbank-mappen" },
+        "sider": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "forside": { "type": "integer" }, "bagside": { "type": "integer" } },
+          "description": "Sidenumre (1-baseret) i scanningen"
+        },
+        "tilfoejet": { "type": "string", "format": "date" }
+      }
+    },
+
+    "portioner": {
+      "type": "object",
+      "required": ["basis"],
+      "additionalProperties": false,
+      "properties": {
+        "basis": { "type": "integer", "minimum": 1, "description": "Antal portioner, som 'maengde' på ingredienserne gælder for" },
+        "valg": {
+          "type": "array", "items": { "type": "integer", "minimum": 1 },
+          "description": "Portionsstørrelser, kilden selv angiver (fx [2,3,4] hos HelloFresh). Appen kan stadig skalere til andre."
+        },
+        "portion_g": { "type": "number", "description": "Vægt af én portion i gram, hvis kendt" }
+      }
+    },
+
+    "tid": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Samlet tid i minutter for basis-portioner",
+      "properties": {
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "pr_portioner": {
+          "type": "object",
+          "description": "Afvigende tid for andre portionsstørrelser, nøgle = antal portioner",
+          "patternProperties": { "^[0-9]+$": {
+            "type": "object", "additionalProperties": false,
+            "properties": { "min": { "type": "integer" }, "max": { "type": "integer" } }
+          } },
+          "additionalProperties": false
+        }
+      }
+    },
+
+    "kategorier": {
+      "type": "object",
+      "required": ["koekken", "maaltid", "ret_type", "hovedprotein"],
+      "additionalProperties": false,
+      "description": "Værdier skal findes i kategorier.json",
+      "properties": {
+        "koekken": { "type": "array", "minItems": 1, "items": { "type": "string" }, "description": "Første værdi er det primære køkken" },
+        "maaltid": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "ret_type": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "hovedprotein": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" }, "description": "Værdier skal findes i kategorier.json under 'tags'" },
+
+    "ingredienser": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/ingredienslinje" }
+    },
+
+    "trin": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["nr", "tekst"],
+        "additionalProperties": false,
+        "properties": {
+          "nr": { "type": "integer", "minimum": 1 },
+          "titel": { "type": "string" },
+          "tekst": { "type": "array", "minItems": 1, "items": { "type": "string" }, "description": "Ét afsnit pr. element" },
+          "tip": { "type": "string" },
+          "vigtigt": { "type": "string" }
+        }
+      }
+    },
+
+    "naering": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pr_100g": { "$ref": "#/$defs/naeringstal" },
+        "pr_portion": { "$ref": "#/$defs/naeringstal" },
+        "note": { "type": "string" }
+      }
+    },
+
+    "allergener": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Som kilden angiver dem. Værdier skal findes i kategorier.json under 'allergener'",
+      "properties": {
+        "indeholder": { "type": "array", "items": { "type": "string" } },
+        "spor_af": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "noter": { "type": "string", "description": "Egne noter, fx 'brug mindre chili', 'god til madpakke'" }
+  },
+
+  "$defs": {
+    "ingredienslinje": {
+      "type": "object",
+      "required": ["ingrediens", "navn", "enhed"],
+      "additionalProperties": false,
+      "properties": {
+        "ingrediens": { "type": "string", "description": "Id i ingredienser.json. Det er den, der kobler til køleskab og tilbud." },
+        "navn": { "type": "string", "description": "Navnet som det står i kilden" },
+        "maengde": { "type": ["number", "null"], "description": "Mængde til basis-portioner. Null ved 'efter smag'." },
+        "enhed": { "enum": ["g", "kg", "ml", "dl", "l", "tsk", "spsk", "stk", "fed", "pose", "daase", "pakke", "nip", "efter smag"] },
+        "tabel": {
+          "type": "object",
+          "description": "Kildens egne mængder for andre portionsantal (nøgle = portioner). Bruges i stedet for lineær skalering.",
+          "patternProperties": { "^[0-9]+$": { "type": "number" } },
+          "additionalProperties": false
+        },
+        "basisvare": { "type": "boolean", "description": "Noget man normalt har i skabet (olie, salt, vand). HelloFresh: 'ikke inkluderet'." },
+        "valgfri": { "type": "boolean" },
+        "fra_fremgangsmaade": { "type": "boolean", "description": "Står ikke på ingredienslisten, men bruges i trinene" },
+        "variabel": { "type": ["string", "null"], "description": "Id på en gruppe i variabler.json: ingrediensen kan byttes med de andre i gruppen. null = bevidst låst fast." },
+        "allergener": { "type": "array", "items": { "type": "string" } },
+        "spor_af": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" }
+      }
+    },
+    "naeringstal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "energi_kj": { "type": "number" },
+        "energi_kcal": { "type": "number" },
+        "fedt_g": { "type": "number" },
+        "maettet_fedt_g": { "type": "number" },
+        "kulhydrat_g": { "type": "number" },
+        "sukker_g": { "type": "number" },
+        "protein_g": { "type": "number" },
+        "fiber_g": { "type": "number" },
+        "salt_g": { "type": "number" }
+      }
+    }
+  }
+}

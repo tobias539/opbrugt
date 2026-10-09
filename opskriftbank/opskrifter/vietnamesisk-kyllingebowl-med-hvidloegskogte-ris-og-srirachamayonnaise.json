@@ -1,0 +1,360 @@
+{
+  "id": "vietnamesisk-kyllingebowl-med-hvidloegskogte-ris-og-srirachamayonnaise",
+  "titel": "Vietnamesisk kyllingebowl",
+  "undertitel": "med hvidløgskogte ris og srirachamayonnaise",
+  "billede": "billeder/vietnamesisk-kyllingebowl-med-hvidloegskogte-ris-og-srirachamayonnaise.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/vietnamesisk-kyllingebowl-64143ec4fd78b79c42eb5189",
+    "uge": "2025-U50",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 17,
+      "bagside": 18
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 520
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "vietnamesisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ginger-ninja",
+      "navn": "Ginger Ninja",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 10
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "mynte-koriander",
+      "navn": "Mynte & koriander",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "asiatisk-woksauce",
+      "navn": "Asiatisk woksauce",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 112,
+        "4": 150
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "hvidvinseddike",
+      "navn": "Hvidvinseddike",
+      "maengde": 12,
+      "enhed": "ml",
+      "tabel": {
+        "3": 24,
+        "4": 24
+      },
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "srirachamayonnaise-vegansk",
+      "navn": "Vegansk srirachamayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "note": "Rødløg ifølge trinbillederne",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod, Julienne",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "note": "Skåret i tynde strimler (julienne)",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til syltning",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til syltning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog hvidløgsris",
+      "tekst": [
+        "Pres eller hak løg fint.",
+        "Smelt smør i en mellemstor gryde på middel varme.",
+        "Svits løg i 30 sek, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på middellav varme i 12 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Sylt agurk",
+      "tekst": [
+        "Imens, skær agurk i tynde, halve skiver.",
+        "Skær løg i tynde, halve skiver.",
+        "Bland hvidvinseddike, sukker, vand og et nip salt i en lille skål.",
+        "Vend agurk i skålen, og stil til side.",
+        "Hæld væde fra inden servering."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg gulerod og løg",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg gulerod og løg med Ginger-Ninja og et nip salt i 3-4 min, eller indtil bløde.",
+        "Overfør til en skål, og dæk til med låg."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt, og krydr med salt.",
+        "Opvarm en smule olivenolie samme stegepande på middelhøj varme.",
+        "Steg kylling i 3 min på hver side, eller indtil brunet og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt woksauce",
+      "tekst": [
+        "Tag panden af varmen.",
+        "Tilsæt asiatisk woksauce, og vend sammen."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris, grøntsager, kylling og agurk i dybe tallerkener.",
+        "Top med resterende sauce fra stegepanden.",
+        "Drys med mynte og koriander.",
+        "Server med srirachamayonnaise."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 631,
+      "energi_kcal": 151,
+      "fedt_g": 5.7,
+      "maettet_fedt_g": 1,
+      "kulhydrat_g": 17.3,
+      "sukker_g": 4.2,
+      "protein_g": 8.6,
+      "fiber_g": 0.9,
+      "salt_g": 0.89
+    },
+    "pr_portion": {
+      "energi_kj": 3295,
+      "energi_kcal": 787,
+      "fedt_g": 29.6,
+      "maettet_fedt_g": 5.1,
+      "kulhydrat_g": 90.5,
+      "sukker_g": 21.7,
+      "protein_g": 44.9,
+      "fiber_g": 4.8,
+      "salt_g": 4.64
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "aeg",
+      "sennep",
+      "soja",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og ingen tid; titel, undertitel og tid (20 min) er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave (2023) med hoisinsauce i stedet for asiatisk woksauce, uden Ginger Ninja og med 2 gulerødder, 2 hvidløgsfed, 1 agurk og 25 ml hvidvinseddike til 2 personer. Mængderne her er fra kortet (2025-U50). Trin 1 hedder 'Kog hvidløgsris' og ingredienslisten har hvidløgsfed, men trinteksten skriver 'løg' – brug hvidløg i risen og løget i den syltede agurk og på panden. Kortets venstre kant er skåret lidt af i scanningen; ugekoden læses '…025-U50'."
+}

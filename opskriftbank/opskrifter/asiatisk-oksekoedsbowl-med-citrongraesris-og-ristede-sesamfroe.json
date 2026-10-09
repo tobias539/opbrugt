@@ -1,0 +1,347 @@
+{
+  "id": "asiatisk-oksekoedsbowl-med-citrongraesris-og-ristede-sesamfroe",
+  "titel": "Asiatisk oksekødsbowl",
+  "undertitel": "med citrongræsris og ristede sesamfrø",
+  "billede": "billeder/asiatisk-oksekoedsbowl-med-citrongraesris-og-ristede-sesamfroe.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U09",
+    "menunummer": 1,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 7,
+      "bagside": 8
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 480
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Langkornede hvide ris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "pak-choi",
+      "navn": "Pak choi",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "citrongraes",
+      "navn": "Citrongræs",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 20,
+      "enhed": "ml",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "srirachamayonnaise-vegansk",
+      "navn": "Vegansk srirachamayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 3
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "sesamfroe",
+      "navn": "Sesamfrø",
+      "maengde": 10,
+      "enhed": "g",
+      "tabel": {
+        "3": 20,
+        "4": 20
+      },
+      "allergener": [
+        "sesam"
+      ],
+      "spor_af": [
+        "noedder",
+        "jordnoedder"
+      ]
+    },
+    {
+      "ingrediens": "thaibasilikum",
+      "navn": "Thaibasilikum",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "asiatisk-woksauce",
+      "navn": "Asiatisk woksauce",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 112,
+        "4": 150
+      },
+      "allergener": [
+        "gluten",
+        "sesam",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 5.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered citrongræs",
+      "tekst": [
+        "Bank citrongræs med en kagerulle."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog citrongræsris",
+      "tekst": [
+        "Opvarm olivenolie i en mellemstor gryde på middel varme.",
+        "Svits citrongræs i 1-2 min, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på middellav varme i 14 min. Tag gryden af varmen, og lad hvile under låg i 10 min.",
+        "Fjern citrongræs."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, hak thaibasilikum fint.",
+        "Riv gulerod (uskrællet) groft.",
+        "Skær citrusfrugt i både.",
+        "Hak pak choi groft."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg hakket oksekød",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket oksekød i 4-5 min, eller indtil brunet."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt pak choi",
+      "tekst": [
+        "Tilsæt pak choi, sojasauce, asiatisk woksauce, salt, et nip peber og et stort skvæt citrusfrugtsaft.",
+        "Lad simre i 1-2 min, eller indtil saucen er tyknet og pak choien er mør."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris, gulerod og oksekød i dybe tallerkener.",
+        "Top med sesamfrø, thaibasilikum og srirachamayonnaise.",
+        "Server med resterende citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 729,
+      "energi_kcal": 174,
+      "fedt_g": 8.3,
+      "maettet_fedt_g": 1.6,
+      "kulhydrat_g": 18.6,
+      "sukker_g": 3.4,
+      "protein_g": 7,
+      "fiber_g": 1.1,
+      "salt_g": 1.8
+    },
+    "pr_portion": {
+      "energi_kj": 3491,
+      "energi_kcal": 834,
+      "fedt_g": 39.7,
+      "maettet_fedt_g": 7.6,
+      "kulhydrat_g": 89.1,
+      "sukker_g": 16.3,
+      "protein_g": 33.7,
+      "fiber_g": 5.5,
+      "salt_g": 8.6
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sesam",
+      "soja",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder"
+    ]
+  },
+  "noter": "Forsiden i scanningen ligger drejet; titlen står langs kanten. Kortet med forside 31 og bagside 32 (2026-U16) er en anden ret (teriyakistegt svinekød) og ligger i sin egen fil."
+}

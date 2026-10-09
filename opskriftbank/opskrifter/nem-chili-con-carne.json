@@ -1,0 +1,284 @@
+{
+  "id": "nem-chili-con-carne",
+  "titel": "Nem chili con carne",
+  "undertitel": "med sprøde tortillachips og chilidressing",
+  "billede": "billeder/nem-chili-con-carne.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U11",
+    "menunummer": 4,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 01.pdf",
+    "sider": {
+      "forside": 5,
+      "bagside": 6
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 520
+  },
+  "tid": {
+    "min": 15,
+    "max": 20,
+    "pr_portioner": {
+      "4": {
+        "min": 20,
+        "max": 25
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "tex-mex"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "gryderet"
+    ],
+    "hovedprotein": [
+      "oksekoed",
+      "boenner-linser"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "staerk"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "tortillachips",
+      "navn": "Tortillachips",
+      "maengde": 1,
+      "enhed": "pose",
+      "tabel": {
+        "3": 0.7,
+        "4": 1
+      },
+      "spor_af": [
+        "maelk"
+      ],
+      "note": "Kortet skriver 7/10 stk til 3 personer"
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Chili",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "note": "Oksebouillon ifølge fremgangsmåden"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater",
+      "maengde": 390,
+      "enhed": "g",
+      "tabel": {
+        "3": 780,
+        "4": 780
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "sorte-boenner",
+      "navn": "Sorte bønner",
+      "maengde": 390,
+      "enhed": "g",
+      "tabel": {
+        "3": 780,
+        "4": 780
+      }
+    },
+    {
+      "ingrediens": "tex-mex-krydderi",
+      "navn": "Tex-Mex",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 10
+      }
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 1,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered chili",
+      "tekst": [
+        "Flæk chili, fjern kerner, og hak fint.",
+        "Skyl sorte bønner under koldt vand i en si."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg oksekød",
+      "tekst": [
+        "Opvarm olivenolie i en stor gryde på middelhøj varme.",
+        "Steg hakket oksekød med Tex-Mex, salt og et nip peber i 4-5 min, eller indtil brunet."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Lav chili",
+      "tekst": [
+        "Tilsæt hakkede tomater, chili, sorte bønner, oksebouillon og vand, og lad simre uden låg i 8-10 min, eller indtil tyknet.",
+        "Smag til med salt og peber.",
+        "Imens, bland fraiche og chiliflager i en lille skål, og krydr med salt."
+      ],
+      "tip": "Spring chili og chiliflager over, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret chili i skåle.",
+        "Top med chilidressing.",
+        "Server med tortillachips."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 548,
+      "energi_kcal": 131,
+      "fedt_g": 6.5,
+      "maettet_fedt_g": 1.9,
+      "kulhydrat_g": 10.1,
+      "sukker_g": 2.2,
+      "protein_g": 6.7,
+      "fiber_g": 2.3,
+      "salt_g": 1.46
+    },
+    "pr_portion": {
+      "energi_kj": 2832,
+      "energi_kcal": 677,
+      "fedt_g": 33.4,
+      "maettet_fedt_g": 9.8,
+      "kulhydrat_g": 51.9,
+      "sukker_g": 11.2,
+      "protein_g": 34.4,
+      "fiber_g": 11.8,
+      "salt_g": 7.52
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ],
+    "spor_af": [
+      "maelk"
+    ]
+  }
+}

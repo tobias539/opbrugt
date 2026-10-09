@@ -1,0 +1,347 @@
+{
+  "id": "bbq-glaseret-kylling-med-persillekartofler",
+  "titel": "BBQ-glaseret kylling",
+  "undertitel": "med persillekartofler og majssalat",
+  "billede": "billeder/bbq-glaseret-kylling-med-persillekartofler.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U07",
+    "menunummer": 2,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 11,
+      "bagside": 12
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 750
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "kaalsalat-snittet",
+      "navn": "Kålblanding, skåret",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "bbq-sauce",
+      "navn": "BBQ-sauce",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 120,
+        "4": 120
+      },
+      "allergener": [
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "majs",
+      "navn": "Majs",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "glaskaal",
+      "navn": "Glaskål, hvid",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kogevandet og efter smag",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af kylling"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog kartofler",
+      "tekst": [
+        "Bring en mellemstor gryde med saltet vand i kog.",
+        "Skær kartofler (uskrællet) i 2 cm tern.",
+        "Kog i 11-13 min, eller indtil de nemt kan deles med en kniv, og hæld vand fra.",
+        "Stil til side med låg på."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Krydr kylling med salt.",
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling i 2 min på hver side, eller indtil brunet.",
+        "Sænk til middel varme. Steg videre i 2-3 min på hver side, eller indtil gennemstegt, og overfør til en tallerken."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Lav majssalat",
+      "tekst": [
+        "Imens, skræl glaskål, og skær i 1 cm tern.",
+        "Halver citrusfrugt.",
+        "Hæld væde fra majs.",
+        "Pisk olivenolie, citrusfrugtsaft, sukker og salt sammen i en stor skål.",
+        "Vend kålblanding, majs og glaskål i skålen."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Glaser kylling",
+      "tekst": [
+        "Smelt smør i samme stegepande på middel varme.",
+        "Tilsæt BBQ-sauce og vand, og lad simre i 2-3 min, eller indtil gennemvarmet.",
+        "Tilsæt kylling, og vend sammen."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt persille",
+      "tekst": [
+        "Hak persille fint.",
+        "Vend persille og mayonnaise i gryden med kartofler lige inden servering.",
+        "Smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret majssalat, kartofler, kylling og BBQ-sauce på tallerkener."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 462,
+      "energi_kcal": 110,
+      "fedt_g": 4.9,
+      "maettet_fedt_g": 1.1,
+      "kulhydrat_g": 11,
+      "sukker_g": 3.6,
+      "protein_g": 6.1,
+      "fiber_g": 1.4,
+      "salt_g": 0.49
+    },
+    "pr_portion": {
+      "energi_kj": 3470,
+      "energi_kcal": 829,
+      "fedt_g": 36.7,
+      "maettet_fedt_g": 8.2,
+      "kulhydrat_g": 83,
+      "sukker_g": 26.7,
+      "protein_g": 45.9,
+      "fiber_g": 10.7,
+      "salt_g": 3.66
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "sennep"
+    ]
+  },
+  "noter": "Kortets allergenliste nævner kun æg og sennep. Smør (basisvare) indeholder mælk."
+}

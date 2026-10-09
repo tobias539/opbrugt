@@ -1,0 +1,320 @@
+{
+  "id": "cremet-svinekoedsconchiglie-med-stegte-groentsager-og-grana-padano",
+  "titel": "Cremet svinekødsconchiglie",
+  "undertitel": "med stegte grøntsager og Grana Padano",
+  "billede": "billeder/cremet-svinekoedsconchiglie-med-stegte-groentsager-og-grana-padano.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/cremet-svinekodsconchiglie-690dc5959140c7b54ff26d13",
+    "uge": "2025-U42",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 55,
+      "bagside": 56
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 550
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "mamas-favorit",
+      "navn": "Mamas Favorit",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      },
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket svinekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Zucchini",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "finrevet-ost",
+      "navn": "Finrevet ost",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Conchiglie",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 270,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt pastavand",
+      "maengde": 1,
+      "enhed": "dl",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog pasta",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Kog pasta i 11-12 min, eller indtil 'al dente'.",
+        "Gem en kop pastavand, og hæld resten fra."
+      ],
+      "tip": "Kogevandet skal være salt som havvand. - 'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, skær zucchini i 1/2 cm halve skiver.",
+        "Halver cherrytomater.",
+        "Pres eller hak hvidløg fint."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kød",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket svinekød med salt og et nip peber i 3-4 min, eller indtil brunet."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Tilsæt zucchini og cherrytomater, og steg i 2-3 min, eller indtil møre.",
+        "Tilsæt hvidløg, Mamas Favorit og Middelhavsdrøm, og steg videre i 30 sek, eller indtil velduftende."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Tilsæt madlavningsfløde, pastavand, bouillon, salt og et nip peber, og lad simre i 1-2 min, eller indtil let tyknet.",
+        "Tilsæt pasta, og vend sammen."
+      ],
+      "tip": "Tilsæt et skvæt vand, hvis pastaen er for tør."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret pasta i dybe tallerkener.",
+        "Drys med finrevet ost."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 707,
+      "energi_kcal": 169,
+      "fedt_g": 8.6,
+      "maettet_fedt_g": 4.5,
+      "kulhydrat_g": 14.4,
+      "sukker_g": 2.7,
+      "protein_g": 8.3,
+      "fiber_g": 1.3,
+      "salt_g": 0.78
+    },
+    "pr_portion": {
+      "energi_kj": 3896,
+      "energi_kcal": 931,
+      "fedt_g": 47.6,
+      "maettet_fedt_g": 24.6,
+      "kulhydrat_g": 79.6,
+      "sukker_g": 15,
+      "protein_g": 45.5,
+      "fiber_g": 7.1,
+      "salt_g": 4.31
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; titel, undertitel og tid er fra hellofresh.dk. Undertitlen nævner Grana Padano, men kortet fra 2025-U42 skriver 'Finrevet ost'."
+}

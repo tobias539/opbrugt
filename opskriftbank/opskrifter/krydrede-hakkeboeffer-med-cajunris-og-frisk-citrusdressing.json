@@ -1,0 +1,413 @@
+{
+  "id": "krydrede-hakkeboeffer-med-cajunris-og-frisk-citrusdressing",
+  "titel": "Krydrede hakkebøffer",
+  "undertitel": "med cajunris og frisk citrusdressing",
+  "billede": "billeder/krydrede-hakkeboeffer-med-cajunris-og-frisk-citrusdressing.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U05",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 39,
+      "bagside": 40
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk",
+      "tex-mex"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "risret"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "staerk"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Langkornede hvide ris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "rasp",
+      "navn": "Rasp",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 225,
+      "enhed": "g",
+      "tabel": {
+        "3": 340,
+        "4": 450
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "ay-cajun-ba",
+      "navn": "Ay Cajun-ba",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "svovldioxid"
+      ]
+    },
+    {
+      "ingrediens": "tex-mex-krydderi",
+      "navn": "Tex-Mex",
+      "maengde": 5,
+      "enhed": "g",
+      "tabel": {
+        "3": 10,
+        "4": 10
+      }
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til ris",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4,
+        "4": 5.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til syltning",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til syltning",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til bøffer",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bøffer",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af bøfferne"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav cajunris",
+      "tekst": [
+        "Smelt smør i en mellemstor gryde på middel varme.",
+        "Svits Ay Cajun-ba i 30 sek, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt ris og salt, og kog under låg på middellav varme i 14 min. Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Sylt løg",
+      "tekst": [
+        "Imens, hak løg fint.",
+        "Skær citrusfrugt i både.",
+        "Bland løg, et stort skvæt citrusfrugtsaft, salt og sukker i en lille skål, og stil til side."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bland fars",
+      "tekst": [
+        "Bland hakket oksekød, rasp, Tex-Mex, æg, salt og et nip peber i en mellemstor skål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg hakkebøffer",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Form fars til hakkebøffer (3 pr. person) direkte i panden med en ske, og steg i 5-6 min, eller indtil brunet og gennemstegte."
+      ],
+      "tip": "Farsen er blød, så vent med at vende, indtil der er dannet stegeskorpe. Bøfferne er færdige, når kødet er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav citrusdressing",
+      "tekst": [
+        "Imens, hak tomat og agurk fint.",
+        "Bland agurk, tomat, olivenolie, salt og chiliflager i en skål.",
+        "Vend mayonnaise og fraiche i skålen med løg lige inden servering."
+      ],
+      "tip": "Spring chiliflagerne over, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret cajunris, hakkebøffer og tomatsalat på tallerkener.",
+        "Server med citrusfrugtdressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 698,
+      "energi_kcal": 167,
+      "fedt_g": 8.3,
+      "maettet_fedt_g": 2.4,
+      "kulhydrat_g": 16.9,
+      "sukker_g": 1.5,
+      "protein_g": 6.7,
+      "fiber_g": 1,
+      "salt_g": 1.34
+    },
+    "pr_portion": {
+      "energi_kj": 3743,
+      "energi_kcal": 895,
+      "fedt_g": 44.6,
+      "maettet_fedt_g": 13,
+      "kulhydrat_g": 90.4,
+      "sukker_g": 8.1,
+      "protein_g": 35.8,
+      "fiber_g": 5.6,
+      "salt_g": 7.19
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "svovldioxid",
+      "hvede"
+    ]
+  },
+  "noter": "Kortet skriver 'Rasp', som i kataloget hører under panko. 'Tex-Mex' er HelloFresh' Tex-Mex-krydderi. Den syltede løg-dressing kaldes både 'citrusdressing' og 'citrusfrugtdressing' på kortet."
+}

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Opbrugt">
+<meta name="theme-color" content="#23523F">
+<title>Opbrugt – madplan uden rester</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5F0; --card:#FFFFFF; --ink:#17231D; --muted:#5B6B62; --line:#D3DDD5;
+  --leaf:#23523F; --leaf-soft:#DDEBE2; --carrot:#D9661A; --carrot-soft:#FBE4D3;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111915; --card:#1A2520; --ink:#E4EDE7; --muted:#9DB0A5; --line:#2D3C34;
+    --leaf:#86C9A5; --leaf-soft:#22382D; --carrot:#F29A55; --carrot-soft:#3A2819;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111915; --card:#1A2520; --ink:#E4EDE7; --muted:#9DB0A5; --line:#2D3C34;
+  --leaf:#86C9A5; --leaf-soft:#22382D; --carrot:#F29A55; --carrot-soft:#3A2819;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+main{max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.3rem;font-weight:800;margin:28px 0 10px}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0 0 10px}
+.muted{color:var(--muted);font-size:.9rem}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--carrot);outline-offset:2px}
+.tab{display:none}.tab.on{display:block}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:18px}
+
+/* input */
+.ask{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.ask textarea{width:100%;border:0;background:transparent;resize:vertical;min-height:70px;outline:none}
+.ask .row{display:flex;gap:8px;justify-content:space-between;align-items:center}
+.btn{border:0;border-radius:999px;padding:10px 18px;background:var(--leaf);color:var(--bg);font-weight:700}
+.btn.ghost{background:transparent;color:var(--leaf);border:1.5px solid var(--leaf)}
+.btn:disabled{opacity:.5}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:.95rem}
+.chip[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:var(--bg)}
+.chip small{opacity:.75}
+
+/* week strip – the one bold element */
+.week{display:grid;grid-template-columns:repeat(auto-fill,minmax(100%,1fr));gap:0;margin-top:8px;border-left:4px solid var(--leaf)}
+.day{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:12px 0 12px 12px;border-bottom:1px solid var(--line)}
+.day:last-child{border-bottom:0}
+.day .d{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--leaf)}
+.day .d span{display:block;font:400 .78rem var(--body);color:var(--muted)}
+.day.rest .t h3{font-weight:600;color:var(--muted)}
+.day.cook .t h3{font-size:1.15rem}
+.day.empty .t h3{color:var(--carrot)}
+.uses{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.uses span{font-size:.8rem;border-radius:6px;padding:2px 8px;background:var(--leaf-soft)}
+.uses span.hot{background:var(--carrot-soft);color:var(--ink)}
+.uses span.tb,.tbm{background:transparent;border:1px solid var(--carrot);color:var(--ink);border-radius:6px;padding:1px 7px;font-size:.8rem}
+.tbtxt{color:var(--carrot)}
+.note{font-size:.85rem;color:var(--carrot);margin-top:4px}
+.why{font-size:.85rem;color:var(--muted);margin-top:4px}
+
+.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:18px 0 4px}
+.summary div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.summary b{display:block;font-family:var(--display);font-size:1.3rem}
+.summary span{font-size:.8rem;color:var(--muted)}
+
+.list{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item .grow{flex:1;min-width:0}
+.item .amt{color:var(--muted);font-size:.88rem}
+.item .price{font-variant-numeric:tabular-nums;white-space:nowrap}
+.item input[type=checkbox]{width:22px;height:22px;accent-color:var(--leaf)}
+.item.done .grow{text-decoration:line-through;opacity:.55}
+.cat{font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--muted);margin:18px 2px 6px}
+.bad{color:var(--carrot)}
+.sugg{background:var(--carrot-soft);border-radius:14px;padding:14px;margin-top:14px}
+.sugg h3{margin-bottom:4px}
+
+.set{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.set:last-child{border-bottom:0}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);font-weight:700}
+.step output{min-width:44px;text-align:center;font-variant-numeric:tabular-nums}
+select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;max-width:100%}
+.toggle{width:52px;height:30px;border-radius:999px;border:0;background:var(--line);position:relative}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--card);transition:left .15s}
+.toggle[aria-pressed="true"]{background:var(--leaf)}
+.toggle[aria-pressed="true"]::after{left:25px}
+.x{border:0;background:transparent;color:var(--muted);font-size:1.3rem;line-height:1;padding:4px 8px}
+.scanrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.scanrow input[type=checkbox]{width:22px;height:22px;accent-color:var(--leaf)}
+.scanrow .grow{flex:1;min-width:0}
+.log{display:flex;flex-direction:column;gap:14px;margin:0 0 14px}
+.me{align-self:flex-end;background:var(--leaf);color:var(--bg);border-radius:16px 16px 4px 16px;padding:9px 14px;max-width:85%}
+.bot p{margin:0 0 8px}
+.dish{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+.dish h3{font-size:1.1rem}
+.dish .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.dish .btn{padding:8px 14px;font-size:.92rem}
+.dish details{margin-top:8px}.dish summary{cursor:pointer;color:var(--leaf);font-weight:700}
+.dish ol{margin:6px 0 0;padding-left:20px}
+.lvl{border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px;font-size:.85rem}
+.strip{display:grid;grid-template-columns:26px minmax(0,1fr) 26px;gap:4px;align-items:stretch}
+.arrow{-webkit-tap-highlight-color:transparent;border:0;background:transparent;color:var(--leaf);font-size:1.8rem;line-height:1;font-weight:700}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;min-width:0}
+.dcell{min-width:0;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:8px 2px;text-align:center;min-height:92px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.dcell .wd{font-family:var(--display);font-weight:800;font-size:1rem}
+.dcell .dt{font-size:.75rem;color:var(--muted)}
+.dcell .dish-s{font-size:.72rem;line-height:1.2;margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word}
+.dcell.today{border-color:var(--leaf)}
+.dcell[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:var(--bg)}
+.dcell[aria-pressed="true"] .dt{color:var(--bg);opacity:.8}
+.dinfo{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:10px}
+.dinfo .item{padding:8px 0}
+.fold{border-top:1px solid var(--line);padding:12px 0}
+.fold summary{font-family:var(--display);font-weight:800;font-size:1.15rem;cursor:pointer;list-style-position:inside}
+.picker{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.picker button{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 10px;font-size:.9rem}
+.picker button:disabled{opacity:.45}
+.done-note{margin-top:10px;font-size:.92rem}
+.rec{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line)}
+.rec:last-child{border-bottom:0}.rec .grow{flex:1}
+.rec .ok{border:0;border-radius:999px;background:var(--leaf);color:var(--bg);font-weight:700;padding:6px 16px}
+.addrow{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;align-items:center}
+
+/* opskrifter */
+[hidden]{display:none!important}
+.search{width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.filt{margin-top:10px}
+.filt .chip{padding:5px 11px;font-size:.88rem}
+.rlist{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.rcard{display:grid;grid-template-columns:88px minmax(0,1fr);gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:left;width:100%}
+.rcard img,.rcard .ph{width:88px;height:70px;object-fit:cover;border-radius:10px;background:var(--leaf-soft);display:block}
+.rcard .tx{min-width:0;padding-top:2px}
+.rcard h3{font-size:1rem;text-wrap:balance}
+.rmeta{font-size:.82rem;color:var(--muted)}
+.rcard .uses{margin-top:5px}
+.back{border:0;background:transparent;color:var(--leaf);font-weight:700;padding:6px 0;font-size:1rem}
+.hero{width:100%;max-width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block;margin:6px 0 12px;background:var(--leaf-soft)}
+.vis h2.titel{font-size:1.6rem;margin:0;text-wrap:balance}
+.ingl .item{padding:9px 14px;align-items:flex-start}
+.ingl .mg{min-width:74px;font-variant-numeric:tabular-nums;font-weight:700}
+.ingl .st{font-size:.78rem;border-radius:6px;padding:1px 7px;background:var(--leaf-soft);white-space:nowrap}
+.ingl .st.koeb{background:var(--carrot-soft)}
+.ingl .st.basis{background:transparent;color:var(--muted);padding:1px 0}
+.ingl select{font-size:.85rem;padding:4px 6px;margin-top:4px;max-width:100%}
+.trinl{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px}
+.trinl b{font-family:var(--display)}
+.trinl p{margin:2px 0 0}
+.tip{font-size:.88rem;color:var(--muted);font-style:italic}
+nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.bar button{border:0;background:transparent;padding:10px 2px 12px;font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+nav.bar button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
+.toast.on{opacity:1}
+.foot{font-size:.8rem;color:var(--muted);margin-top:28px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+
+<!-- PLAN -->
+<section class="tab on" id="t-snak" aria-labelledby="h-snak">
+  <header class="top"><h1 id="h-snak">Opbrugt</h1><span class="muted" id="saveState"></span></header>
+  <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Appen kan ikke nå Claude i den visning, den er åbnet i. Planen, skabet og indkøbslisten virker stadig. Se linjen "Forbindelse" nederst under Præferencer.</p></div>
+
+  <div class="strip" role="group" aria-label="Dage">
+    <button class="arrow" id="prevDays" aria-label="Tidligere dage">‹</button>
+    <div class="days" id="days"></div>
+    <button class="arrow" id="nextDays" aria-label="Senere dage">›</button>
+  </div>
+  <div id="dayInfo"></div>
+  <div class="row" style="display:flex;gap:8px;margin-top:10px"><button class="btn" id="anbefalBtn">Anbefal</button><button class="btn ghost" id="ryddage">Fravælg dage</button></div>
+
+  <div class="log" id="log" style="margin-top:18px"></div>
+  <div class="ask">
+    <label for="chatIn" class="muted">Skriv eller tal – fx "vi får gæster", "jeg har rødbeder" eller "jeg mangler toiletpapir"</label>
+    <textarea id="chatIn"></textarea>
+    <div class="row"><button class="btn ghost" id="chatClear">Ryd samtalen</button><button class="btn" id="chatBtn">Send</button></div>
+  </div>
+
+  <details class="fold" style="margin-top:22px"><summary>Pakkeberegning for ugen</summary>
+    <p class="muted" style="margin-top:8px" id="subline"></p>
+    <p class="muted">Vælg faste retter, så regner appen hele pakker, rester og svamperetter ud og lægger dem på de ledige dage.</p>
+    <div class="chips" id="chips" aria-label="Vælg retter"></div>
+    <div class="summary" id="summary"></div>
+    <div class="week" id="week"></div>
+    <div id="suggest"></div>
+    <h2>Efter ugen</h2>
+    <div id="after"></div>
+  </details>
+</section>
+
+<!-- OPSKRIFTER -->
+<section class="tab" id="t-opsk" aria-labelledby="h-opsk">
+  <div id="opskListe">
+    <header class="top"><h1 id="h-opsk">Opskrifter</h1><span class="muted" id="opskAntal"></span></header>
+    <p class="sub" id="opskSub">Jeres egne opskrifter. Dem, der bruger mest af det, I har i skabet, står øverst.</p>
+    <label for="opskSoeg" class="muted">Søg i titler og ingredienser</label>
+    <input id="opskSoeg" class="search" type="search" placeholder="Fx kylling, bowl, peberfrugt" autocomplete="off">
+    <div class="chips filt" id="opskFilt" aria-label="Filtre"></div>
+    <div class="rlist" id="opskRes"></div>
+  </div>
+  <div id="opskVis" class="vis" hidden></div>
+</section>
+
+<!-- SKAB -->
+<section class="tab" id="t-skab" aria-labelledby="h-skab">
+  <header class="top"><h1 id="h-skab">Skabet</h1></header>
+  <p class="sub">Det, du har derhjemme. Varer herfra bruges først, før der købes nyt.</p>
+  <div class="ask" id="scanBox" style="margin-bottom:14px">
+    <h3>Scan kvittering</h3>
+    <p class="muted" id="scanNote">Tag et billede af bonen, eller vælg et skærmbillede af en digital kvittering. Så lægges varerne i skabet.</p>
+    <label class="btn" id="scanLabel" style="display:inline-block">Vælg billede<input type="file" id="scanFile" accept="image/*" hidden></label>
+    <div id="scanResult"></div>
+  </div>
+  <div class="list" id="skabList"></div>
+  <div class="list" style="margin-top:10px">
+    <div class="addrow">
+      <select id="addKey" aria-label="Vare"></select>
+      <input type="number" id="addAmt" min="0" step="any" style="width:90px" aria-label="Mængde">
+      <span class="muted" id="addUnit"></span>
+      <button class="btn" id="addBtn">Læg i skabet</button>
+    </div>
+  </div>
+  <h2>Basisvarer</h2>
+  <p class="muted">Dem holder appen ikke styr på i gram. Tryk på det, du er løbet tør for, så kommer det på indkøbslisten.</p>
+  <div class="chips" id="basis"></div>
+</section>
+
+<!-- PRÆFERENCER -->
+<section class="tab" id="t-pref" aria-labelledby="h-pref">
+  <header class="top"><h1 id="h-pref">Præferencer</h1></header>
+  <p class="sub">Det, appen tager hensyn til, hver gang den foreslår noget.</p>
+  <h2 style="margin-top:6px">Dine instruktioner</h2>
+  <p class="muted">Fx "vi vil spise flere grøntsager", "jeg er begyndt at træne", "fisk mindst én gang om ugen". Du kan også sige det i samtalen.</p>
+  <div class="list" id="instrList"></div>
+  <div class="list" style="margin-top:10px"><div class="addrow"><input id="instrIn" placeholder="Skriv en instruktion" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="instrAdd">Tilføj</button></div></div>
+
+  <details class="fold" style="margin-top:22px"><summary id="favHead">Retter vi kan lide</summary><div class="chips" id="favs" style="margin-top:10px"></div></details>
+  <details class="fold"><summary id="nopeHead">Kan ikke lide / tåler ikke</summary>
+    <div class="chips" id="nope" style="margin-top:10px"></div>
+    <div class="list" style="margin-top:10px"><div class="addrow"><input id="nopeIn" placeholder="Fx koriander eller leverpostej" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><select id="nopeGrund"><option>kan ikke lide</option><option>tåler ikke</option></select><button class="btn ghost" id="nopeAdd">Tilføj</button></div></div>
+  </details>
+  <details class="fold" id="recFold"><summary id="recHead">Anbefalede retter</summary><div id="recWrap"></div></details>
+  <div class="list" style="margin-top:14px"><div class="addrow"><input id="favIn" placeholder="Søg retter, fx 'noget med laks'" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="favAdd">Søg</button></div></div>
+  <button class="btn ghost" id="moreRec" style="margin-top:10px">Flere anbefalinger</button>
+  <p class="muted" id="recNote"></p>
+
+  <h2>Husstand og butikker</h2>
+  <div class="list" id="setList"></div>
+  <details class="fold" style="margin-top:14px"><summary>Dine justeringer af mængder</summary>
+    <p class="muted" style="margin-top:8px">Bruger du mere eller mindre af noget end opskrifterne, så ret det her.</p>
+    <div class="list" id="justList"></div>
+    <div class="list" style="margin-top:10px"><div class="addrow"><select id="justKey" aria-label="Vare"></select><button class="btn ghost" id="justAdd">Tilføj justering</button></div></div>
+  </details>
+  <h2>Ny uge</h2>
+  <p class="muted">Det, der kan holde sig, flyttes over i skabet, og pakkeberegningen starter forfra.</p>
+  <button class="btn" id="endWeek">Afslut ugen</button>
+  <p class="foot" id="diag">Forbindelse: tjekker …</p>
+  <p class="foot">Version 12 · 7/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+</section>
+
+<!-- INDKØB -->
+<section class="tab" id="t-indkob" aria-labelledby="h-indkob">
+  <header class="top"><h1 id="h-indkob">Indkøb</h1><button class="btn ghost" id="clearChecks">Nulstil</button></header>
+  <p class="sub" id="shopSub"></p>
+  <div class="chips" id="shopStores" style="margin:-6px 0 6px"></div>
+  <div id="shop"></div>
+  <div class="list" style="margin-top:14px"><div class="addrow"><input id="shopIn" placeholder="Tilføj vare, fx toiletpapir" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="shopAdd">Tilføj</button></div></div>
+  <details class="fold" style="margin-top:22px"><summary id="routeHead">Rækkefølge i butikken</summary>
+    <p class="muted" style="margin-top:8px">Flyt afdelingerne, så listen følger din vej gennem butikken.</p>
+    <div class="list" id="routeList"></div>
+  </details>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Faner">
+  <button data-tab="t-snak" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Plan</button>
+  <button data-tab="t-opsk"><svg viewBox="0 0 24 24"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg>Opskrifter</button>
+  <button data-tab="t-skab"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M8 5v2M8 13v3"/></svg>Skab</button>
+  <button data-tab="t-pref"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Præferencer</button>
+  <button data-tab="t-indkob"><svg viewBox="0 0 24 24"><path d="M4 5h2l2 11h10l2-8H7"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>Indkøb</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="opskrifter.js"></script>
+<script>
+/* ---------- Data: produkter (eksempeldata, cirkapriser) ----------
+   pk = pakningsstørrelse, e = enhed, p = pris pr. pakke, h = holdbar (dage, uåbnet), ho = holdbar efter åbning,
+   oko = økopris, grund = grundvare (økologi-indstilling gælder), loes = kan købes løst pr. stk */
+const P = {
+  okse:{n:"Hakket oksekød 8-12 %",k:"Kød og fisk",pk:500,e:"g",p:45,h:2,oko:58,grund:1},
+  kylling:{n:"Kyllingebryst",k:"Kød og fisk",pk:700,e:"g",p:60,h:2},
+  bacon:{n:"Bacontern",k:"Kød og fisk",pk:250,e:"g",p:22,h:10,ho:5},
+  laks:{n:"Laksefilet",k:"Kød og fisk",pk:250,e:"g",p:40,h:2},
+  pepperoni:{n:"Pepperoni",k:"Kød og fisk",pk:100,e:"g",p:15,h:20,ho:7},
+  aeg:{n:"Æg",k:"Mejeri og æg",pk:10,e:"stk",p:28,h:21,oko:38,grund:1},
+  floede:{n:"Piskefløde",k:"Mejeri og æg",pk:250,e:"ml",p:15,h:10,ho:4,oko:18,grund:1},
+  maelk:{n:"Letmælk",k:"Mejeri og æg",pk:1000,e:"ml",p:11,h:7,ho:4,oko:13,grund:1},
+  mozz:{n:"Revet mozzarella",k:"Mejeri og æg",pk:200,e:"g",p:18,h:14,ho:5},
+  parm:{n:"Parmesan",k:"Mejeri og æg",pk:100,e:"g",p:25,h:40,ho:21},
+  smoer:{n:"Smør",k:"Mejeri og æg",pk:250,e:"g",p:20,h:40,ho:30,oko:26,grund:1},
+  cremef:{n:"Creme fraiche 18 %",k:"Mejeri og æg",pk:200,e:"ml",p:10,h:14,ho:5},
+  loeg:{n:"Løg (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:2,h:21,ho:3,oko:3,grund:1,loes:1},
+  hvidloeg:{n:"Hvidløg",k:"Frugt og grønt",pk:10,e:"fed",p:5,h:30},
+  gulerod:{n:"Gulerødder (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:1.5,h:14,ho:3,oko:2.5,grund:1,loes:1},
+  broccoli:{n:"Broccoli",k:"Frugt og grønt",pk:400,e:"g",p:12,h:5},
+  porre:{n:"Porre (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:7,h:7,ho:4,loes:1},
+  peber:{n:"Peberfrugt (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:7,h:7,ho:3,loes:1},
+  squash:{n:"Squash (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:8,h:7,ho:3,loes:1},
+  champ:{n:"Champignon",k:"Frugt og grønt",pk:250,e:"g",p:12,h:5},
+  spinat:{n:"Babyspinat",k:"Frugt og grønt",pk:100,e:"g",p:12,h:3},
+  salat:{n:"Hjertesalat",k:"Frugt og grønt",pk:1,e:"stk",p:12,h:5},
+  tomat:{n:"Tomater",k:"Frugt og grønt",pk:500,e:"g",p:15,h:7},
+  agurk:{n:"Agurk",k:"Frugt og grønt",pk:1,e:"stk",p:8,h:7,ho:3},
+  kartof:{n:"Kartofler",k:"Frugt og grønt",pk:2000,e:"g",p:20,h:30,oko:28,grund:1},
+  citron:{n:"Citron (løs)",k:"Frugt og grønt",pk:1,e:"stk",p:4,h:21,ho:4,loes:1},
+  lasagne:{n:"Lasagneplader",k:"Kolonial",pk:500,e:"g",p:12,h:180},
+  spaghetti:{n:"Spaghetti",k:"Kolonial",pk:500,e:"g",p:8,h:180,oko:12,grund:1},
+  ris:{n:"Jasminris",k:"Kolonial",pk:1000,e:"g",p:18,h:180},
+  flaaede:{n:"Hakkede tomater",k:"Kolonial",pk:400,e:"g",p:5,h:365,ho:3},
+  kidney:{n:"Kidneybønner",k:"Kolonial",pk:400,e:"g",p:7,h:365,ho:3},
+  passata:{n:"Passata",k:"Kolonial",pk:500,e:"g",p:10,h:365,ho:5},
+  pure:{n:"Tomatpuré",k:"Kolonial",pk:140,e:"g",p:6,h:365,ho:14},
+  kokos:{n:"Kokosmælk",k:"Kolonial",pk:400,e:"ml",p:10,h:365,ho:3},
+  pizzadej:{n:"Pizzadej, færdig",k:"Køl",pk:400,e:"g",p:15,h:10,ho:2},
+  tortilla:{n:"Tortillas",k:"Kolonial",pk:8,e:"stk",p:15,h:30,ho:7},
+};
+const BASIS = {mel:"Hvedemel",sukker:"Sukker",olie:"Olie",salt:"Salt",peberk:"Peber",bouillon:"Bouillon",karry:"Karry",oregano:"Oregano",soja:"Sojasauce",bagepulver:"Bagepulver"};
+
+/* ---------- Hovedretter: skaleres efter ankervaren ---------- */
+const H = [
+  {k:"lasagne",n:"Lasagne",tags:["oksekød","klassiker"],a:"okse",ing:{okse:125,lasagne:60,flaaede:100,loeg:.5,gulerod:.5,hvidloeg:1,pure:15,maelk:125,smoer:12,mozz:40},b:["mel","salt","oregano"]},
+  {k:"pizza",n:"Pizza",tags:["fredag"],a:"pizzadej",ing:{pizzadej:200,passata:70,mozz:60,pepperoni:40,champ:50,peber:.5,loeg:.25},b:["oregano","olie"]},
+  {k:"kodsovs",n:"Spaghetti med kødsovs",tags:["oksekød","klassiker","pasta"],a:"okse",ing:{okse:125,spaghetti:100,flaaede:130,loeg:.5,gulerod:1,hvidloeg:1,pure:15,parm:10},b:["salt","oregano"]},
+  {k:"karry",n:"Kylling i karry med ris",tags:["proteinrig","kylling"],a:"kylling",ing:{kylling:150,ris:75,kokos:100,loeg:.5,peber:.5,broccoli:100},b:["karry","salt"]},
+  {k:"wraps",n:"Kyllingewraps",tags:["proteinrig","kylling","hurtig"],a:"kylling",ing:{kylling:125,tortilla:2,salat:.25,tomat:75,agurk:.25,cremef:50,mozz:25},b:["salt"]},
+  {k:"laks",n:"Ovnbagt laks med kartofler og broccoli",tags:["proteinrig","fisk"],a:"laks",ing:{laks:125,kartof:250,broccoli:125,citron:.25,smoer:10},b:["salt"]},
+  {k:"carbonara",n:"Pasta carbonara",tags:["pasta","hurtig"],a:"bacon",ing:{bacon:75,spaghetti:100,aeg:1,parm:20,floede:40},b:["peberk"]},
+  {k:"chili",n:"Chili con carne",tags:["proteinrig","oksekød"],a:"okse",ing:{okse:125,kidney:100,flaaede:100,loeg:.5,peber:.5,hvidloeg:1,ris:75,cremef:30},b:["salt"]},
+];
+/* ---------- Svamperetter: suger rester op ---------- */
+const S = [
+  {k:"taerte",n:"Grøntsagstærte",per:4,base:{smoer:75,aeg:3,mozz:50},abs:{floede:250,maelk:200,broccoli:300,porre:1,gulerod:2,squash:1,champ:200,spinat:100,peber:1,loeg:1,bacon:150,cremef:100},b:["mel","salt"]},
+  {k:"suppe",n:"Cremet grøntsagssuppe",base:{loeg:.5},abs:{gulerod:2,kartof:150,porre:.5,broccoli:150,squash:.5,floede:75,maelk:100,champ:75},b:["bouillon","salt"]},
+  {k:"frittata",n:"Frittata med rester",base:{aeg:2},abs:{kartof:100,peber:.5,spinat:50,champ:60,bacon:50,loeg:.5,floede:40,maelk:50,mozz:30,squash:.5,broccoli:80,parm:10},b:["salt"]},
+  {k:"wok",n:"Wok med ris og grønt",base:{ris:75},abs:{broccoli:120,peber:.5,gulerod:1,squash:.5,champ:60,kylling:100,porre:.5,loeg:.5,aeg:1},b:["soja"]},
+  {k:"flodepasta",n:"Pasta i flødesauce med grønt",base:{spaghetti:100},abs:{floede:100,champ:75,spinat:50,broccoli:100,bacon:50,parm:20,porre:.5,squash:.5,cremef:50},b:["salt"]},
+  {k:"tomatpasta",n:"Pasta med tomatsauce og grønt",base:{spaghetti:100},abs:{passata:120,flaaede:120,champ:60,peber:.5,squash:.5,loeg:.5,mozz:30,parm:15,pepperoni:30,bacon:40,spinat:40},b:["oregano"]},
+  {k:"pandekager",n:"Amerikanske pandekager",base:{aeg:1},abs:{maelk:150,smoer:10,cremef:30},b:["mel","sukker","bagepulver"]},
+  {k:"restwraps",n:"Wraps med rester",base:{tortilla:2},abs:{salat:.25,tomat:75,agurk:.25,mozz:30,cremef:40,kylling:80,peber:.5},b:[]},
+];
+const DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
+
+/* ---------- State ---------- */
+const DEFAULT = {settings:{P:2,N:7,M:4,oko:false,butikker:["Rema 1000","Netto"],delGraense:100},ugeStart:null,fast:[],ikkeLide:[],ruter:{},aktivButik:null,instrukser:[],visStart:null,valgte:[],tvungne:[],skab:{},fri:[],favoritter:[],anbefalet:null,afvist:[],ekstraIndkob:[],chat:[],basisMangler:[],just:{},checked:[]};
+let st = JSON.parse(JSON.stringify(DEFAULT));
+let db = null, docRef = null, saveTimer = null, sample = null;
+
+function price(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko)?p.oko:p.p}
+function pname(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko?"Øko ":"")+p.n}
+function ho(k){return P[k].ho??P[k].h}
+function fmt(k,a){
+  const e=P[k].e;
+  if(e==="g"){a=Math.round(a/5)*5;return a>=1000?(a/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" kg":a+" g"}
+  if(e==="ml"){a=Math.round(a/10)*10;return a>=1000?(a/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" l":(a>=100?(a/100).toLocaleString("da-DK",{maximumFractionDigits:1})+" dl":a+" ml")}
+  const w=Math.floor(a+1e-9),f=a-w,fr=f<.125?"":f<.375?"¼":f<.625?"½":f<.875?"¾":"";
+  const whole=f>=.875?w+1:w;
+  return ((whole||!fr)?whole:"")+fr+" "+e;
+}
+const kr=v=>Math.round(v).toLocaleString("da-DK")+" kr";
+
+/* ---------- Indkøb: brug skab først, køb hele pakker ---------- */
+function buy(need){
+  const res={packs:{},left:{}};
+  const keys=new Set([...Object.keys(need),...Object.keys(st.skab)]);
+  for(const k of keys){
+    if(!P[k])continue;
+    const n=need[k]||0, have=st.skab[k]?.amt||0;
+    const fromSkab=Math.min(have,n), rest=n-fromSkab;
+    let fresh=0, opened=false, packs=0;
+    if(rest>1e-6){packs=Math.ceil(rest/P[k].pk-1e-9);fresh=packs*P[k].pk-rest;opened=fresh>1e-6}
+    if(packs)res.packs[k]=packs;
+    const skabLeft=have-fromSkab;
+    if(fresh>1e-6||skabLeft>1e-6)res.left[k]={fresh,opened,skab:skabLeft,skabDage:st.skab[k]?.dage??0,tot:fresh+skabLeft};
+  }
+  return res;
+}
+function addNeed(t,m,f=1){for(const k in m)t[k]=(t[k]||0)+m[k]*f;return t}
+function mult(k){return 1+(st.just[k]||0)/100}
+
+function scoreSvamp(s,left,units,N){
+  let value=0,baseCost=0;const absd={};
+  for(const k in s.abs){
+    const av=left[k]?.tot||0; if(av<=1e-6)continue;
+    const use=Math.min(av,s.abs[k]*units); if(use<=1e-6)continue;
+    absd[k]=use;
+    const urgent=(left[k].opened?ho(k):P[k].h)<=N;
+    value+=use/P[k].pk*price(k)*(urgent?1:.15);
+  }
+  for(const k in s.base){const need=s.base[k]*units-(left[k]?.tot||0);if(need>0)baseCost+=Math.ceil(need/P[k].pk)*price(k)*(P[k].h<=N?1:.2)}
+  return {score:value-.4*baseCost,value,absd,baseCost};
+}
+
+/* ---------- Datoer ---------- */
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function todayIso(){return iso(new Date())}
+function addDays(i,n){const d=new Date(i+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)}
+function dayLabel(i,long){const d=new Date(i+"T12:00:00");const wd=DAYS[(d.getDay()+6)%7];return (long?wd.toLowerCase():wd.slice(0,3))+" "+d.getDate()+"/"+(d.getMonth()+1)}
+function relLabel(i){const t=todayIso();if(i===t)return "i aften ("+dayLabel(i,true)+")";if(i===addDays(t,1))return "i morgen ("+dayLabel(i,true)+")";return dayLabel(i,true)}
+function ugeStart(){if(!st.ugeStart)st.ugeStart=todayIso();return st.ugeStart}
+function slotDate(d){return addDays(ugeStart(),d-1)}
+function fastPaa(i){return st.fast.find(f=>f.dato===i)}
+const ALLE_BUTIKKER=["Rema 1000","Netto","Lidl","Meny","365discount","Føtex","Bilka"];
+
+function scoreHoved(r,left,eves,pers,N){
+  const a=r.ing[r.a], pk=P[r.a].pk, T=pers*eves;
+  const packs=Math.ceil(T*a/pk-1e-9), portions=Math.max(T,Math.floor(packs*pk/a+1e-9));
+  const n={};for(const k in r.ing)n[k]=k===r.a?packs*pk:r.ing[k]*portions*mult(k);
+  let value=0,baseCost=0;const absd={};
+  for(const k in n){
+    const av=left[k]?.tot||0;
+    if(k!==r.a&&av>1e-6){const use=Math.min(av,n[k]);absd[k]=use;const urgent=(left[k].opened?ho(k):P[k].h)<=N;value+=use/P[k].pk*price(k)*(urgent?1:.15)}
+    const rest=n[k]-av;if(rest>1e-6)baseCost+=Math.ceil(rest/P[k].pk-1e-9)*price(k)*(k===r.a?.2:(P[k].h<=N?1:.2));
+  }
+  return {score:value-.4*baseCost,value,absd,baseCost,portions,need:n,packs};
+}
+function plan(){
+  const {P:pers,N,M}=st.settings;
+  let fixedIn=0;for(let d=1;d<=N;d++)if(fastPaa(slotDate(d)))fixedIn++;
+  const Neff=Math.max(0,N-fixedIn);
+  const epS=Math.max(1,Math.ceil(Math.max(1,Neff)/M));
+  const sessions=[]; const need={};
+  for(const key of st.valgte){
+    const r=H.find(x=>x.k===key); if(!r)continue;
+    const a=r.ing[r.a], pk=P[r.a].pk;
+    const T=pers*epS, packs=Math.ceil(T*a/pk-1e-9);
+    const portions=Math.max(T,Math.floor(packs*pk/a+1e-9));
+    const eves=Math.floor(portions/pers), extra=portions%pers;
+    const n={};for(const k in r.ing){n[k]=k===r.a?packs*pk:r.ing[k]*portions*mult(k)}
+    addNeed(need,n);
+    sessions.push({type:"hoved",r,portions,eves,extra,need:n,anker:r.a,ankerPr:packs*pk/portions});
+  }
+  let res=buy(need);
+  let covered=sessions.reduce((s,x)=>s+x.eves,0);
+  let free=Math.max(0,M-sessions.length);
+  const svNeed={};
+  const forced=[...(st.tvungne||[])];
+  if(forced.length>free)free=forced.length;
+  while(free>0){
+    const R=Neff-covered;
+    const eves=R>0?Math.ceil(R/free):1;
+    let best=null;
+    const fk=forced.shift();
+    const brugt=new Set(sessions.filter(x=>x.type==="svamp").map(x=>x.r.k));
+    for(const s of S){
+      if(fk&&s.k!==fk)continue;
+      if(!fk&&brugt.has(s.k))continue;
+      let portions=pers*eves, units=portions;
+      if(s.per){units=Math.ceil(portions/s.per);portions=units*s.per}
+      const sc=scoreSvamp(s,res.left,units,N);
+      if((fk||(sc.value>=6&&Object.keys(sc.absd).length>=2))&&(!best||sc.score>best.sc.score))best={s,units,portions,sc};
+    }
+    /* hovedretter kan også være svamperetter: har man grøntsagerne, køber man bare kødet */
+    for(const r of H){
+      if(fk&&r.k!==fk)continue;
+      if(!fk&&(st.valgte.includes(r.k)||brugt.has(r.k)))continue;
+      const sc=scoreHoved(r,res.left,eves,pers,N);
+      if((fk||(sc.value>=6&&Object.keys(sc.absd).length>=2))&&(!best||sc.score>best.sc.score))best={s:r,hov:1,units:sc.portions,portions:sc.portions,sc};
+    }
+    if(!best)break;
+    let n;
+    if(best.hov){n=best.sc.need}else{n=addNeed({},best.s.base,best.units); addNeed(n,best.sc.absd)}
+    addNeed(svNeed,n);
+    const ev=Math.floor(best.portions/pers);
+    sessions.push({type:"svamp",r:best.s,portions:best.portions,eves:R>0?ev:0,extra:R>0?best.portions%pers:best.portions,need:n,absd:best.sc.absd,ekstra:R<=0,anker:best.hov?best.s.a:null});
+    covered+=R>0?ev:0; free--;
+    res=buy(addNeed(addNeed({},need),svNeed));
+  }
+  /* rækkefølge: hovedretter efter ankerets holdbarhed, svamperetter efter restens holdbarhed */
+  const hov=sessions.filter(s=>s.type==="hoved").sort((a,b)=>P[a.anker].h-P[b.anker].h);
+  const sv=sessions.filter(s=>s.type==="svamp").sort((a,b)=>minHo(a)-minHo(b));
+  const order=[];
+  /* flet: efter hver hovedret kommer den mest presserende svamperet, hvis der er nogen */
+  hov.forEach((h,i)=>{order.push(h); if(sv.length&&i<hov.length-1&&minHo(sv[0])<=3)order.push(sv.shift())});
+  order.push(...sv);
+  const days=[]; const openedDay={};
+  let d=1;
+  const skip=()=>{while(fastPaa(slotDate(d)))d++};
+  for(const s of order){
+    const span=s.ekstra?0:s.eves;
+    if(span===0){days.push({day:null,s,kind:"ekstra"});continue}
+    skip(); const cookDay=d; s.day=cookDay;
+    for(const k in s.need){ if(openedDay[k]==null)openedDay[k]=cookDay }
+    for(let i=0;i<span;i++){skip();days.push({day:d,s,kind:i===0?"cook":"rest",restNo:i});d++}
+  }
+  const used=new Set(days.filter(x=>x.day).map(x=>x.day));
+  const emptyDays=[];for(let i=1;i<=N;i++)if(!used.has(i)&&!fastPaa(slotDate(i)))emptyDays.push(i);
+  const leftEves=emptyDays.length;
+  /* efter ugen */
+  const carry={}, spild=[];
+  for(const k in res.left){
+    const L=res.left[k];
+    if(L.fresh>1e-6){
+      const lim=L.opened?(openedDay[k]??1)+ho(k):P[k].h;
+      if(lim>N+1)carry[k]={amt:L.fresh,dage:lim-N};
+      else spild.push({k,amt:L.fresh,val:L.fresh/P[k].pk*price(k)});
+    }
+    if(L.skab>1e-6){
+      const lim=L.skabDage;
+      if(lim>N){carry[k]={amt:(carry[k]?.amt||0)+L.skab,dage:Math.min(carry[k]?.dage??99,lim-N)}}
+      else spild.push({k,amt:L.skab,val:L.skab/P[k].pk*price(k)});
+    }
+  }
+  /* forslag til resterne */
+  const leftUrg={};for(const x of spild)leftUrg[x.k]={tot:x.amt,opened:true};
+  let sugg=null;
+  for(const r of H){if(st.valgte.includes(r.k))continue;const sc=scoreHoved(r,leftUrg,1,pers,N);const key=sc.value-.1*sc.baseCost;if(sc.value>=3&&Object.keys(sc.absd).length>=2&&(!sugg||key>sugg.key))sugg={s:r,sc,key}}
+  for(const s of S){const units=s.per?1:pers*2;const sc=scoreSvamp(s,leftUrg,units,N);const key=sc.value-.1*sc.baseCost;if(sc.value>=3&&(!sugg||key>sugg.key))sugg={s,sc,key}}
+  const total=Object.entries(res.packs).reduce((a,[k,n])=>a+n*price(k),0);
+  const spildKr=spild.reduce((a,x)=>a+x.val,0);
+  const basis=new Set(st.basisMangler);
+  return {sessions,days,leftEves,emptyDays,res,carry,spild,spildKr,sugg,total,openedDay,basis};
+}
+function ugeDagIdag(){const t=todayIso();let i=0;while(i<60&&slotDate(i+1)<t)i++;return i}
+function minHo(s){let m=99;for(const k in (s.absd||{}))m=Math.min(m,ho(k));return m}
+
+/* ---------- Render ---------- */
+let last=null;
+function render(){
+  const p=plan(); last=p;
+  const {P:pers,N,M}=st.settings;
+  document.getElementById("subline").textContent=`${pers} ${pers===1?"person":"personer"} · ${N} aftener fra ${dayLabel(ugeStart(),true)} · ${M} gange madlavning`;
+  // chips
+  const ch=document.getElementById("chips");ch.innerHTML="";
+  for(const r of H){
+    const c=st.valgte.filter(x=>x===r.k).length;
+    const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",c>0);
+    b.innerHTML=r.n+(c>1?` <small>×${c}</small>`:"");
+    b.onclick=()=>{ if(c>0)st.valgte=st.valgte.filter(x=>x!==r.k); else st.valgte.push(r.k); st.tvungne=[]; changed() };
+    ch.appendChild(b);
+  }
+  // summary
+  document.getElementById("summary").innerHTML=
+    `<div><b>${kr(p.total)}</b><span>indkøb i alt</span></div>`+
+    `<div><b>${Object.values(p.res.packs).reduce((a,b)=>a+b,0)}</b><span>varer at købe</span></div>`+
+    `<div><b class="${p.spildKr>5?"bad":""}">${kr(p.spildKr)}</b><span>risiko for spild</span></div>`;
+  // week
+  const w=document.getElementById("week");w.innerHTML="";
+  if(!p.sessions.length&&!st.fast.length){w.innerHTML=`<p class="muted" style="padding:12px">Vælg en ret, eller sig i Snak, hvad du har lyst til, så lægger appen ugen.</p>`}
+  const slots=[];
+  const maxDay=Math.max(N,...p.days.filter(x=>x.day).map(x=>x.day));
+  for(let i=1;i<=maxDay;i++){
+    const f=fastPaa(slotDate(i));
+    if(f)slots.push({day:i,fast:f});
+    else{const x=p.days.find(y=>y.day===i);if(x)slots.push(x);else if(i<=N)slots.push({day:i,kind:"empty"})}
+  }
+  /* faste retter uden for ugen (fremtid) */
+  const lastIso=slotDate(maxDay);
+  st.fast.filter(f=>f.dato>lastIso).sort((a,b)=>a.dato<b.dato?-1:1).forEach(f=>slots.push({fast:f,after:1}));
+  slots.push(...p.days.filter(x=>x.kind==="ekstra"));
+  for(const x of slots){
+    const el=document.createElement("div");
+    const s=x.s;
+    const di=x.fast?x.fast.dato:(x.day?slotDate(x.day):null);
+    const dHtml=di?`<div class="d">${dayLabel(di).split(" ")[0]}<span>${di===todayIso()?"i dag":dayLabel(di).split(" ")[1]}</span></div>`:"";
+    if(x.fast){
+      el.className="day cook";
+      const f=x.fast;
+      el.innerHTML=`${dHtml}<div class="t"><h3>${esc(f.navn)}</h3><div class="why">${f.opskrift?"Fra opskrifterne":"Fra snak"}${f.mangler&&f.mangler.length?". Mangler: "+f.mangler.map(m=>esc(mTxt(m))).join(", ")+" (på indkøbslisten)":". Du har det hele."}</div>${f.opskrift&&ORMAP[f.opskrift]?`<button class="x" data-oopen="${esc(f.opskrift)}" style="padding-left:0;font-size:.9rem;color:var(--leaf)">Se opskrift</button>`:""}<button class="x" data-fdel="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen" style="padding-left:0;font-size:.9rem">Fjern fra planen</button></div>`;
+      w.appendChild(el);continue;
+    }
+    if(x.kind==="empty"){
+      el.className="day empty";
+      el.innerHTML=`${dHtml}<div class="t"><h3>Ingen ret endnu</h3><div class="why">Vælg en ret mere, sig det i Snak, eller hæv antal madlavninger under Indstillinger.</div></div>`;
+      w.appendChild(el);continue;
+    }
+    if(x.kind==="ekstra"){
+      el.className="day cook";
+      el.innerHTML=`<div class="d">+<span>ekstra</span></div><div class="t"><h3>${s.r.n}</h3><div class="why">Frokost eller fryseren – bruger rester, der ellers ville blive smidt ud.</div>${usesHtml(s)}</div>`;
+      w.appendChild(el);continue;
+    }
+    el.className="day "+(x.kind==="cook"?"cook":"rest");
+    let inner="";
+    if(x.kind==="cook"){
+      inner=`<h3>${s.r.n}</h3>`;
+      if(s.type==="hoved"){
+        inner+=`<div class="why">${s.portions} portioner, så hele pakken ${P[s.anker].n.toLowerCase()} bruges (${fmt(s.anker,s.ankerPr)} pr. portion).${s.extra?` ${s.extra} portion${s.extra>1?"er":""} til frokost.`:""}</div>`;
+        if(x.day-ugeDagIdag()>P[s.anker].h)inner+=`<div class="note">Læg ${P[s.anker].n.toLowerCase()} i fryseren ved hjemkomst, og tag den op dagen før.</div>`;
+      }else{
+        inner+=`<div class="why">${s.anker?"Bruger resterne – du køber kun "+P[s.anker].n.toLowerCase()+" og det, der mangler.":"Bygget på det, der er tilovers."}</div>`+usesHtml(s);
+        if(s.anker&&x.day-ugeDagIdag()>P[s.anker].h)inner+=`<div class="note">Læg ${P[s.anker].n.toLowerCase()} i fryseren ved hjemkomst, og tag den op dagen før.</div>`;
+      }
+      if(s.eves>3)inner+=`<div class="note">Frys portionerne til dag 4 og frem.</div>`;
+    }else{
+      inner=`<h3>Rester: ${s.r.n.toLowerCase()}</h3>`;
+    }
+    el.innerHTML=`${dHtml}<div class="t">${inner}</div>`;
+    w.appendChild(el);
+  }
+  w.querySelectorAll("[data-fdel]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel);changed();toast("Fjernet fra planen")});
+  // suggestion
+  const sg=document.getElementById("suggest");sg.innerHTML="";
+  if(p.sugg){
+    const items=Object.keys(p.sugg.sc.absd).map(k=>P[k].n.toLowerCase().replace(/ \(løs\)/,"")).join(", ");
+    sg.innerHTML=`<div class="sugg"><h3>Resterne kan blive til ${p.sugg.s.n.toLowerCase()}</h3><p class="muted" style="color:inherit">Bruger ${items}.</p><button class="btn" id="addSess">Læg den ind i planen</button></div>`;
+    document.getElementById("addSess").onclick=()=>{st.tvungne=[...(st.tvungne||[]),p.sugg.s.k];changed();toast(p.sugg.s.n+" er lagt ind")};
+  }
+  // after
+  const af=document.getElementById("after");
+  const carry=Object.entries(p.carry), sp=p.spild.filter(x=>x.val>=.5);
+  let h="";
+  if(carry.length){h+=`<p class="muted">Går videre til næste uge:</p><div class="list">`+carry.map(([k,c])=>`<div class="item"><div class="grow">${pname(k)}<div class="amt">${fmt(k,c.amt)} · holder ca. ${c.dage} dage mere</div></div></div>`).join("")+`</div>`}
+  if(sp.length){h+=`<p class="muted" style="margin-top:14px">Risikerer at blive smidt ud:</p><div class="list">`+sp.map(x=>`<div class="item"><div class="grow">${pname(x.k)}<div class="amt">${fmt(x.k,x.amt)}</div></div><div class="price bad">${kr(x.val)}</div></div>`).join("")+`</div>`}
+  if(!carry.length&&!sp.length)h=`<p class="muted">Intet tilovers. Alt bliver brugt.</p>`;
+  af.innerHTML=h;
+  renderShop(p);renderSkab();renderSet();renderSnak();renderStrip(p);renderPref();renderOpsk();
+}
+function usesHtml(s){
+  if(!s.absd)return"";
+  return `<div class="uses">`+Object.entries(s.absd).map(([k,a])=>`<span class="${ho(k)<=4?"hot":""}">${fmt(k,a)} ${P[k].n.toLowerCase().replace(/ \(løs\)/,"")}</span>`).join("")+`</div>`;
+}
+/* ---------- Afdelinger i butikken ---------- */
+const AFD={gront:"Frugt og grønt",kod:"Kød og fisk",brod:"Brød",paalaeg:"Pålæg",ost:"Ost",frost:"Frost",mejeri:"Mejeri og køl",toer:"Tørvarer",hus:"Husholdning",andet:"Andet"};
+const STD_RUTE=["gront","kod","brod","paalaeg","ost","frost","mejeri","toer","hus","andet"];
+const BASIS_PAK={mel:"1 kg",sukker:"1 kg",olie:"1 l",salt:"1 pakke",peberk:"1 glas",bouillon:"1 pakke",karry:"1 glas",oregano:"1 glas",soja:"1 flaske",bagepulver:"1 pakke"};
+function afdOf(k){
+  const c=P[k].k;
+  if(k==="pepperoni")return "paalaeg";
+  if(k==="mozz"||k==="parm")return "ost";
+  if(k==="tortilla")return "brod";
+  return c==="Frugt og grønt"?"gront":c==="Kød og fisk"?"kod":c==="Kolonial"?"toer":"mejeri";
+}
+function gaetAfd(navn){
+  const n=String(navn||"").toLowerCase();
+  if(/toiletpapir|køkkenrulle|opvask|vaskepulver|vaskemiddel|skyllemiddel|sæbe|shampoo|balsam|tandpasta|tandbørste|batteri|affaldsposer|skraldeposer|fryseposer|bleer|servietter|stanniol|sølvpapir|bagepapir|husholdningsfilm|rengøring|klude|pærer|stearinlys|tændstik|deodorant|barberblad|vatrondeller|plaster/.test(n))return "hus";
+  if(/pålæg|skinke|salami|rullepølse|leverpostej|pepperoni|hamburgerryg|kalkunbryst|spegepølse/.test(n))return "paalaeg";
+  if(/\bost\b|ost$|mozzarella|parmesan|feta|cheddar|brie|halloumi|hytteost/.test(n))return "ost";
+  if(/frost|frossen|frosne|flødeis|\bis\b/.test(n))return "frost";
+  if(/kokosmælk|hakkede tomater|flåede tomater|lasagneplader|tomatpur|passata/.test(n))return "toer";
+  if(/mælk|fløde|yoghurt|skyr|smør|creme fra|crème fra|\bæg\b|kærnemælk|pizzadej|butterdej|tærtedej/.test(n))return "mejeri";
+  if(/kød|okse|svin|flæsk|kylling|bacon|pølse|fisk|laks|torsk|rejer|mørbrad|kotelet|ribben|hakket|bøf|lam|kalkun/.test(n))return "kod";
+  if(/brød|bolle|boller|rugbrød|toast|pita|tortilla|wrap|flute|baguette|naan/.test(n))return "brod";
+  if(/pasta|spaghetti|penne|\bris\b|nudler|mel\b|sukker|olie|eddike|dåse|bønner|linser|kikærter|krydderi|bouillon|havregryn|ketchup|sennep|mayo|remoulade|sauce|soja|honning|syltet|nødder|chips/.test(n))return "toer";
+  if(/salat|løg|gulerød|gulerod|kartof|tomat|agurk|peberfrugt|squash|broccoli|kål|rødbede|porre|selleri|æble|banan|citron|lime|avocado|champignon|svampe|spinat|persille|basilikum|koriander|ingefær|chili|majs|frugt|bær|pastinak|græskar/.test(n))return "gront";
+  return "andet";
+}
+function fmtKoeb(k,packs){
+  const p=P[k], tot=packs*p.pk;
+  if(p.e==="fed")return packs+" stk";
+  if(p.e==="ml"){
+    if(tot%250===0){const w=Math.floor(tot/1000),f=(tot%1000)/250;return (w||"")+(["","¼","½","¾"][f])+" l"}
+    return tot>=1000?(tot/1000).toLocaleString("da-DK",{maximumFractionDigits:2})+" l":(tot/100).toLocaleString("da-DK",{maximumFractionDigits:1})+" dl";
+  }
+  if(p.e==="g")return tot>=1000?(tot/1000).toLocaleString("da-DK",{maximumFractionDigits:2})+" kg":tot+" g";
+  return fmt(k,tot);
+}
+function aktivButik(){const b=st.settings.butikker;if(!b.length)return null;if(!b.includes(st.aktivButik))st.aktivButik=b[0];return st.aktivButik}
+function rute(){const b=aktivButik()||"_";const r=(Array.isArray(st.ruter[b])?st.ruter[b]:[]).filter(a=>AFD[a]);for(const a of STD_RUTE)if(!r.includes(a)){const i=r.indexOf("andet");if(a!=="andet"&&i>=0)r.splice(i,0,a);else r.push(a)}return r}
+function mTxt(m){if(typeof m==="string")return m;return ((m.maengde?m.maengde+" ":"")+(m.navn||"")).trim()}
+
+function renderShop(p){
+  const sh=document.getElementById("shop");
+  const rows={};const add=(a,html)=>(rows[a]=rows[a]||[]).push(html);
+  for(const [k,n] of Object.entries(p.res.packs)){
+    const id="c-"+k, done=st.checked.includes(k);
+    const L=p.res.left[k], brug=n*P[k].pk-(L?.fresh||0);
+    const bruger=brug>0&&L&&L.fresh>1e-6?" · du bruger ca. "+fmt(k,brug):"";
+    const sub=P[k].loes?"løs vægt":P[k].e==="fed"?`${n*P[k].pk} fed${bruger}`:`${n} ${n===1?"pakke":"pakker"} à ${fmtKoeb(k,1)}${bruger}`;
+    add(afdOf(k),`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="${k}" ${done?"checked":""}><div class="grow"><b>${fmtKoeb(k,n)}</b> ${pname(k).replace(/ \(løs\)/,"").toLowerCase()}<div class="amt">${sub}</div></div><div class="price">${kr(n*price(k))}</div></label>`);
+  }
+  for(const b of p.basis){
+    const id="b-"+b, done=st.checked.includes("basis:"+b);
+    add("toer",`<label class="item ${done?"done":""}" for="${id}"><input type="checkbox" id="${id}" data-k="basis:${b}" ${done?"checked":""}><div class="grow"><b>${BASIS_PAK[b]||"1"}</b> ${BASIS[b].toLowerCase()}<div class="amt">basisvare, du er løbet tør for</div></div></label>`);
+  }
+  st.ekstraIndkob.forEach((x,i)=>{
+    const afd=AFD[x.kat]?x.kat:gaetAfd(x.navn);
+    add(afd,`<label class="item ${x.done?"done":""}"><input type="checkbox" data-ei="${i}" ${x.done?"checked":""}><div class="grow">${x.maengde?`<b>${esc(x.maengde)}</b> `+esc(x.navn.charAt(0).toLowerCase()+x.navn.slice(1)):esc(x.navn)}${x.til?`<div class="amt">til ${esc(x.til)}</div>`:""}${x.tilbud?`<div class="amt tbtxt">Tilbud: ${esc(tKort(x.tilbud,x.dato))}</div>`:""}</div><button class="x" data-ex="${i}" aria-label="Fjern">×</button></label>`);
+  });
+  let h="";
+  for(const a of rute()){if(rows[a])h+=`<div class="cat">${AFD[a]}</div><div class="list">${rows[a].join("")}</div>`}
+  if(!h)h=`<p class="muted">Indkøbslisten er tom. Vælg retter under Ugeplan, eller spørg i Snak.</p>`;
+  sh.innerHTML=h;
+  // butiksvalg
+  const ss=document.getElementById("shopStores");ss.innerHTML="";
+  if(st.settings.butikker.length>1)for(const b of st.settings.butikker){const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",b===aktivButik());el.textContent=b;el.onclick=()=>{st.aktivButik=b;changed()};ss.appendChild(el)}
+  // rute-redigering
+  const ab=aktivButik();
+  document.getElementById("routeHead").textContent="Rækkefølge i butikken"+(ab?" · "+ab:"");
+  const r=rute(), rl=document.getElementById("routeList");
+  rl.innerHTML=r.map((a,i)=>`<div class="set"><div>${i+1}. ${AFD[a]}</div><div class="step"><button data-ru="${i}" data-d="-1" aria-label="Flyt ${AFD[a]} op" ${i===0?"disabled":""}>↑</button><button data-ru="${i}" data-d="1" aria-label="Flyt ${AFD[a]} ned" ${i===r.length-1?"disabled":""}>↓</button></div></div>`).join("");
+  rl.querySelectorAll("[data-ru]").forEach(b=>b.onclick=()=>{const i=+b.dataset.ru,j=i+ +b.dataset.d;const nr=[...rute()];[nr[i],nr[j]]=[nr[j],nr[i]];st.ruter[aktivButik()||"_"]=nr;changed()});
+  const tbB={};for(const x of st.ekstraIndkob)if(x.tilbud&&!x.done&&x.tilbud.t>=todayIso())tbB[x.tilbud.k]=(tbB[x.tilbud.k]||0)+1;
+  document.getElementById("shopSub").textContent=`${kr(p.total)} i alt${st.settings.oko?" · økologi på grundvarer":""}. Cirkapriser.`+(Object.keys(tbB).length?" På tilbud: "+Object.entries(tbB).map(([k,n])=>`${n} ${n===1?"vare":"varer"} i ${k}`).join(", ")+".":"");
+  sh.querySelectorAll("[data-ei]").forEach(cb=>cb.onchange=()=>{st.ekstraIndkob[+cb.dataset.ei].done=cb.checked;cb.closest(".item").classList.toggle("done",cb.checked);save()});
+  sh.querySelectorAll("[data-ex]").forEach(b=>b.onclick=ev=>{ev.preventDefault();st.ekstraIndkob.splice(+b.dataset.ex,1);changed()});
+  sh.querySelectorAll("input[data-k]").forEach(cb=>cb.onchange=()=>{
+    const k=cb.dataset.k; st.checked=cb.checked?[...st.checked,k]:st.checked.filter(x=>x!==k);
+    cb.closest(".item").classList.toggle("done",cb.checked); save();
+  });
+}
+function renderSkab(){
+  const L=document.getElementById("skabList");
+  const e=Object.entries(st.skab);
+  L.innerHTML=e.length?e.map(([k,v])=>`<div class="item"><div class="grow">${P[k].n}<div class="amt">${fmt(k,v.amt)} · holder ca. ${v.dage} dage</div></div><button class="x" data-k="${k}" aria-label="Fjern ${P[k].n}">×</button></div>`).join(""):`<div class="item"><div class="grow muted">Skabet er tomt. Læg det i, du allerede har, så køber appen ikke det samme igen.</div></div>`;
+  L.querySelectorAll(".x").forEach(b=>b.onclick=()=>{delete st.skab[b.dataset.k];changed()});
+  if(st.fri.length){
+    if(!e.length)L.innerHTML="";
+    L.innerHTML+=st.fri.map((f,i)=>`<div class="item"><div class="grow">${esc(f.navn)}</div><button class="lvl" data-fi="${i}" aria-label="Skift mængde">${esc(f.niveau||"hel")}</button><button class="x" data-fx="${i}" aria-label="Fjern ${esc(f.navn)}">×</button></div>`).join("");
+    const LV=["hel","noget","lidt"];
+    L.querySelectorAll("[data-fi]").forEach(b=>b.onclick=()=>{const f=st.fri[+b.dataset.fi];const i=LV.indexOf(f.niveau||"hel");if(i===LV.length-1)st.fri.splice(+b.dataset.fi,1);else f.niveau=LV[i+1];changed()});
+    L.querySelectorAll("[data-fx]").forEach(b=>b.onclick=()=>{st.fri.splice(+b.dataset.fx,1);changed()});
+  }
+  const bs=document.getElementById("basis");bs.innerHTML="";
+  for(const [k,n] of Object.entries(BASIS)){
+    const miss=st.basisMangler.includes(k);
+    const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",miss);
+    b.textContent=miss?n+" – mangler":n;
+    b.onclick=()=>{st.basisMangler=miss?st.basisMangler.filter(x=>x!==k):[...st.basisMangler,k];changed()};
+    bs.appendChild(b);
+  }
+}
+function stepper(label,key,min,max,sub){
+  return `<div class="set"><div>${label}${sub?`<div class="muted">${sub}</div>`:""}</div><div class="step"><button data-s="${key}" data-d="-1" aria-label="Færre">−</button><output>${st.settings[key]}</output><button data-s="${key}" data-d="1" aria-label="Flere">+</button></div></div>`;
+}
+const LIM={P:[1,10],N:[1,14],M:[1,14]};
+function renderSet(){
+  const s=document.getElementById("setList");
+  s.innerHTML=stepper("Personer","P")+stepper("Aftener","N")+stepper("Gange madlavning","M",0,0,"Færre gange betyder større portioner og flere restedage.")+
+   `<div class="set"><div>Økologi på grundvarer<div class="muted">Mælk, æg, fløde, smør, løg, gulerødder, kartofler, pasta, oksekød</div></div><button class="toggle" id="oko" aria-pressed="${st.settings.oko}" aria-label="Økologi på grundvarer"></button></div>`+
+   `<div class="set"><div>Butikker du handler i<div class="chips" id="butikker" style="margin-top:8px"></div></div></div>`+
+   `<div class="set"><div>Del indkøbet op, hvis besparelsen er over<div class="muted">Pr. ekstra butik. Bruges, når appen får ugens tilbud.</div></div><div class="step"><button data-g="-25" aria-label="Lavere">−</button><output>${st.settings.delGraense} kr</output><button data-g="25" aria-label="Højere">+</button></div></div>`;
+  s.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.settings[k]=Math.min(LIM[k][1],Math.max(LIM[k][0],st.settings[k]+ +b.dataset.d));changed()});
+  document.getElementById("oko").onclick=()=>{st.settings.oko=!st.settings.oko;changed()};
+  const bw=document.getElementById("butikker");
+  for(const b of ALLE_BUTIKKER){const on=st.settings.butikker.includes(b);const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",on);el.textContent=b;el.onclick=()=>{st.settings.butikker=on?st.settings.butikker.filter(x=>x!==b):[...st.settings.butikker,b];changed()};bw.appendChild(el)}
+  s.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{st.settings.delGraense=Math.max(0,Math.min(500,st.settings.delGraense+ +b.dataset.g));changed()});
+  const j=document.getElementById("justList");
+  const je=Object.entries(st.just);
+  j.innerHTML=je.length?je.map(([k,v])=>`<div class="set"><div>${P[k].n}</div><div class="step"><button data-j="${k}" data-d="-25" aria-label="Mindre">−</button><output>${v>0?"+":""}${v} %</output><button data-j="${k}" data-d="25" aria-label="Mere">+</button><button class="x" data-jx="${k}" aria-label="Fjern">×</button></div></div>`).join(""):`<div class="set"><div class="muted">Ingen justeringer. Opskrifternes mængder bruges.</div></div>`;
+  j.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{const k=b.dataset.j;st.just[k]=Math.max(-75,Math.min(200,(st.just[k]||0)+ +b.dataset.d));changed()});
+  j.querySelectorAll("[data-jx]").forEach(b=>b.onclick=()=>{delete st.just[b.dataset.jx];changed()});
+}
+function fillSelects(){
+  const opts=Object.entries(P).sort((a,b)=>a[1].n.localeCompare(b[1].n,"da")).map(([k,p])=>`<option value="${k}">${p.n}</option>`).join("");
+  document.getElementById("addKey").innerHTML=opts;document.getElementById("justKey").innerHTML=opts;
+  const upd=()=>{const k=document.getElementById("addKey").value;document.getElementById("addUnit").textContent=P[k].e;document.getElementById("addAmt").value=P[k].pk};
+  document.getElementById("addKey").onchange=upd;upd();
+}
+document.getElementById("addBtn").onclick=()=>{
+  const k=document.getElementById("addKey").value, a=parseFloat(document.getElementById("addAmt").value);
+  if(!(a>0)){toast("Skriv en mængde over 0");return}
+  st.skab[k]={amt:(st.skab[k]?.amt||0)+a,dage:ho(k)};changed();toast(P[k].n+" lagt i skabet");
+};
+document.getElementById("justAdd").onclick=()=>{const k=document.getElementById("justKey").value;if(st.just[k]==null)st.just[k]=25;changed()};
+document.getElementById("clearChecks").onclick=()=>{st.checked=[];st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);changed()};
+document.getElementById("endWeek").onclick=()=>{
+  if(!last)return;
+  st.skab={};for(const [k,c] of Object.entries(last.carry))st.skab[k]={amt:c.amt,dage:c.dage};
+  st.valgte=[];st.tvungne=[];st.checked=[];st.basisMangler=[];st.ugeStart=todayIso();st.fast=st.fast.filter(f=>f.dato>=st.ugeStart);changed();
+  show("t-skab");toast("Ny uge. Resterne ligger i skabet.");
+};
+
+/* ---------- Fri tekst: Claude hvis muligt, ellers enkel genkendelse ---------- */
+function localParse(t){
+  t=t.toLowerCase();const out={retter:[],basisMangler:[]};
+  const words={lasagne:"lasagne",pizza:"pizza",kødsovs:"kodsovs",karry:"karry",curry:"karry",wrap:"wraps",laks:"laks",carbonara:"carbonara",chili:"chili"};
+  for(const w in words)if(t.includes(w))out.retter.push(words[w]);
+  if(/protein/.test(t)){const r=H.find(x=>x.tags.includes("proteinrig")&&!out.retter.includes(x.k));if(r)out.retter.push(r.k)}
+  const num={en:1,et:1,to:2,tre:3,fire:4,fem:5,seks:6};
+  const m=t.match(/(\d+|en|to|tre|fire|fem|seks)\s*(personer|person|voksne)/)||t.match(/vi er (\d+|to|tre|fire|fem|seks)/);
+  if(m)out.personer=+m[1]||num[m[1]];
+  for(const [k,n] of Object.entries(BASIS))if(t.includes(n.toLowerCase())&&/(ikke mere|mangler|løbet tør|tom for)/.test(t))out.basisMangler.push(k);
+  return out;
+}
+async function aiParse(t){
+  const catalog=H.map(r=>({k:r.k,navn:r.n,tags:r.tags}));
+  const prompt=`Du hjælper en madplan-app. Brugeren skrev: """${t}"""
+Tilgængelige hovedretter (brug kun disse nøgler): ${JSON.stringify(catalog)}
+Basisvarer (nøgler): ${JSON.stringify(BASIS)}
+Returnér KUN JSON: {"retter":[nøgler], "personer":tal eller null, "aftener":tal eller null, "madlavninger":tal eller null, "basisMangler":[nøgler], "basisHar":[nøgler]}.
+Hvis brugeren beder om en type (fx proteinrig), vælg en passende ret ud fra tags. Hvis en ønsket ret ikke findes, vælg den nærmeste.`;
+  return await sample.json(prompt,{modelTier:"quick"});
+}
+
+/* ---------- Snak: fri samtale med sund fornuft ---------- */
+function esc(x){return String(x??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function skabTekst(){
+  const a=Object.entries(st.skab).map(([k,v])=>`${P[k].n} (ca. ${fmt(k,v.amt)}, holder ca. ${v.dage} dage)`);
+  const b=st.fri.map(f=>`${f.navn} (${f.niveau||"hel"})`);
+  return [...a,...b].join("; ")||"tomt";
+}
+const START_ANBEFALET=[
+ ["Dansk",["Frikadeller med kartofler og brun sovs","Boller i karry med ris","Hakkebøf med bløde løg","Ovnbagt laks med kartofler og broccoli","Biksemad"]],
+ ["Amerikansk",["Burgere","Mac and cheese","Pulled pork med coleslaw","BBQ-kyllingelår med majs og coleslaw","Meatloaf med kartoffelmos"]],
+ ["Mexicansk",["Chili con carne","Tacos med oksekød","Burritos med kylling"]],
+ ["Sydeuropæisk",["Lasagne","Spaghetti med kødsovs","Pasta carbonara","Pizza","Græsk kyllingesouvlaki med tzatziki"]],
+ ["Vietnamesisk",["Pho med oksekød","Risnudelsalat med grillet kylling"]],
+ ["Japansk",["Teriyakikylling med ris","Katsu curry","Ramen"]],
+ ["Thailandsk",["Grøn karry med kylling","Pad thai","Pad kra pao med oksekød og spejlæg"]],
+ ["Kinesisk",["Kung pao-kylling","Stegte ris med æg og grøntsager"]],
+];
+function seedRec(){
+  if(Array.isArray(st.anbefalet))return;
+  st.anbefalet=[];
+  for(const [g,l] of START_ANBEFALET)for(const n of l)if(!isFav(n))st.anbefalet.push({navn:n,gruppe:g});
+}
+function isFav(n){return st.favoritter.some(x=>x.toLowerCase()===String(n).toLowerCase())}
+function renderRec(){
+  seedRec();
+  st.anbefalet=st.anbefalet.filter(r=>!isFav(r.navn));
+  const wrap=document.getElementById("recWrap");
+  document.getElementById("favHead").textContent=`Retter vi kan lide · ${st.favoritter.length}`;
+  document.getElementById("recHead").textContent=`Anbefalede retter · ${st.anbefalet.length}`;
+  document.getElementById("recFold").style.display=st.anbefalet.length?"":"none";
+  if(!st.anbefalet.length){wrap.innerHTML="";return}
+  const groups=[];for(const r of st.anbefalet){let g=groups.find(x=>x[0]===r.gruppe);if(!g)groups.push(g=[r.gruppe,[]]);g[1].push(r)}
+  let h=`<p class="muted" style="margin-top:8px">Tryk OK ved dem, I kan lide. × fjerner en ret.</p>`;
+  for(const [g,l] of groups){
+    h+=`<div class="cat">${esc(g)}</div><div class="list">`+l.map(r=>{const i=st.anbefalet.indexOf(r);return `<div class="rec"><div class="grow">${esc(r.navn)}</div><button class="x" data-rx="${i}" aria-label="Fjern ${esc(r.navn)}">×</button><button class="ok" data-rok="${i}">OK</button></div>`}).join("")+`</div>`;
+  }
+  wrap.innerHTML=h;
+  wrap.querySelectorAll("[data-rok]").forEach(b=>b.onclick=()=>{const r=st.anbefalet[+b.dataset.rok];st.favoritter.push(r.navn);st.anbefalet.splice(+b.dataset.rok,1);changed()});
+  wrap.querySelectorAll("[data-rx]").forEach(b=>b.onclick=()=>{const r=st.anbefalet[+b.dataset.rx];st.afvist.push(r.navn);st.anbefalet.splice(+b.dataset.rx,1);changed()});
+}
+async function hentAnbefalinger(soeg){
+  const note=document.getElementById("recNote");
+  if(!sample){
+    if(soeg){if(!isFav(soeg))st.favoritter.push(soeg);changed();toast(soeg+" er tilføjet")}
+    else note.textContent="Flere anbefalinger virker, når appen er åbnet fra Claude-linket.";
+    return;
+  }
+  note.textContent="Finder retter …";
+  const kendte=[...st.favoritter,...st.anbefalet.map(r=>r.navn),...st.afvist];
+  const prompt=`Du foreslår hverdagsretter til en dansk husstand på ${st.settings.P} personer, der handler i ${st.settings.butikker.join(", ")||"almindelige supermarkeder"}.
+Retter de kan lide: ${st.favoritter.join(", ")||"ingen endnu"}
+Retter de har fravalgt: ${st.afvist.join(", ")||"ingen"}
+Kan ikke lide / tåler ikke (undgå helt, også som ingrediens): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
+Foreslå ikke nogen af disse igen: ${kendte.join(", ")}
+${soeg?`De søger efter: """${soeg}""". Giv 3-6 retter, der passer til søgningen. Hvis søgningen er navnet på én bestemt ret, så medtag den ret.`:"Giv 6 nye retter, der ligner det, de kan lide, med lidt variation. Almindelige råvarer, realistisk på en hverdag."}
+Returnér KUN JSON: {"retter":[{"navn":"kort dansk rettenavn","gruppe":"køkken, fx Dansk, Italiensk, Thailandsk"}]}`;
+  try{
+    const r=await sample.json(prompt,{modelTier:"quick"});
+    const nye=(r.retter||[]).filter(x=>x&&x.navn&&!kendte.some(k=>k.toLowerCase()===String(x.navn).toLowerCase()));
+    const gruppe=soeg?`Søgning: ${soeg}`:null;
+    st.anbefalet=[...nye.map(x=>({navn:String(x.navn),gruppe:gruppe||String(x.gruppe||"Til jer")})),...st.anbefalet];
+    note.textContent=nye.length?"":"Ingen nye retter fundet. Prøv en anden søgning.";
+    changed();document.getElementById("recFold").open=true;document.getElementById("recFold").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(e){note.textContent=e&&e.code==="not_granted"?"Kræver, at appen må bruge Claude.":"Det gik ikke igennem. Prøv igen om lidt."}
+}
+function normForslag(f){
+  if(!f||typeof f!=="object")return {navn:String(f||"Ret"),bruger:[],mangler:[],trin:[]};
+  const arr=x=>Array.isArray(x)?x:(typeof x==="string"&&x.trim()?x.split(/\s*[,;\n]\s*/):[]);
+  f.navn=String(f.navn||f.ret||"Ret");
+  f.dag=typeof f.dag==="string"?f.dag:null;
+  f.hvorfor=f.hvorfor?String(f.hvorfor):"";
+  f.bruger=arr(f.bruger).map(u=>typeof u==="string"?{navn:u}:{navn:String(u&&(u.navn||u.vare)||""),k:u&&u.k,alt:!!(u&&u.alt)}).filter(u=>u.navn);
+  const navn=x=>P[x]?P[x].n.replace(/ \(løs\)/,""):(BASIS[x]||x);
+  f.mangler=arr(f.mangler).map(m=>typeof m==="string"?{navn:navn(m)}:{navn:navn(String(m&&(m.navn||m.vare)||"")),maengde:m&&m.maengde?String(m.maengde):"",kat:m&&AFD[m.kat]?m.kat:"",...(m&&m.tilbud&&m.tilbud.o?{tilbud:m.tilbud}:{})}).filter(m=>m.navn);
+  f.bruger=f.bruger.map(u=>({...u,navn:navn(u.navn)}));
+  f.trin=arr(f.trin).map(String);
+  f.opskrift=typeof f.opskrift==="string"&&ORMAP[f.opskrift]?f.opskrift:null;
+  return f;
+}
+function renderSnak(){
+  for(const t of st.chat)if(t.data&&Array.isArray(t.data.forslag))t.data.forslag=t.data.forslag.map(normForslag);
+  const lg=document.getElementById("log");
+  lg.innerHTML=st.chat.map((t,ti)=>t.role==="user"?`<div class="me">${esc(t.text)}</div>`:botHtml(t,ti)).join("");
+  lg.querySelectorAll("[data-act]").forEach(b=>b.onclick=()=>act(b.dataset.act,+b.dataset.t,+b.dataset.f,b.dataset.dag));
+  const fv=document.getElementById("favs");fv.innerHTML="";
+  const all=[...st.favoritter];
+  if(!all.length)fv.innerHTML=`<span class="muted">Ingen endnu. Tryk OK ved de anbefalede retter herunder.</span>`;
+  renderRec();
+  const np=document.getElementById("nope");np.innerHTML="";
+  document.getElementById("nopeHead").textContent=`Kan ikke lide / tåler ikke · ${st.ikkeLide.length}`;
+  if(!st.ikkeLide.length)np.innerHTML=`<span class="muted">Intet endnu. Du kan også sige det i samtalen, fx "vi kan ikke lide koriander".</span>`;
+  st.ikkeLide.forEach((x,i)=>{const b=document.createElement("button");b.className="chip";b.innerHTML=esc(x.navn)+` <small>${esc(x.grund)} ×</small>`;b.setAttribute("aria-label","Fjern "+x.navn);b.onclick=()=>{st.ikkeLide.splice(i,1);changed()};np.appendChild(b)});
+  all.forEach((f,i)=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed","true");b.innerHTML=esc(f)+` <small>×</small>`;b.setAttribute("aria-label","Fjern "+f);b.onclick=()=>{st.favoritter.splice(i,1);changed()};fv.appendChild(b)});
+}
+function botHtml(t,ti){
+  const r=t.data||{};
+  let h=`<div class="bot">`;
+  if(r.svar)h+=`<p>${esc(r.svar)}</p>`;
+  if(t.note)h+=`<p class="muted">${esc(t.note)}</p>`;
+  (r.forslag||[]).forEach((f,fi)=>{
+    h+=`<div class="dish"><h3>${esc(f.navn)}</h3>`;
+    if(f.opskrift)h+=`<button class="x" data-oopen="${esc(f.opskrift)}" style="padding-left:0;font-size:.9rem;color:var(--leaf)">Fra jeres opskrifter · se opskrift</button>`;
+    if(f.hvorfor)h+=`<div class="why">${esc(f.hvorfor)}</div>`;
+    if((f.bruger||[]).length)h+=`<div class="uses">`+f.bruger.map(u=>`<span>${esc(u.navn||u)}</span>`).join("")+`</div>`;
+    if((f.mangler||[]).length)h+=`<p style="margin:8px 0 0"><b>Mangler:</b> ${f.mangler.map(m=>esc(mTxt(m))+(m.tilbud?` <span class="tbm">${esc(tKort(m.tilbud,/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")?f.dag:null))}</span>`:"")).join(", ")}</p>`;
+    else h+=`<p style="margin:8px 0 0" class="muted">Du har det hele.</p>`;
+    if((f.trin||[]).length)h+=`<details><summary>Sådan gør du</summary><ol>${f.trin.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></details>`;
+    const placed=f._fastId&&st.fast.find(x=>x.id===f._fastId);
+    if(placed&&!f._velg){
+      h+=`<div class="done-note">✓ Sat på ${esc(relLabel(placed.dato))}.${f._antaget?" Du nævnte ikke en dag, så vi antager, det er i aften.":""}${(f.mangler||[]).length?" "+f.mangler.length+" "+(f.mangler.length===1?"vare":"varer")+" er sat på indkøbslisten.":""}</div><div class="row"><button class="btn ghost" data-act="flyt" data-t="${ti}" data-f="${fi}">Flyt dag</button></div>`;
+    }else if(f._velg){
+      h+=`<p class="done-note"><b>${esc(f._velgTekst||"Hvornår regner du med at lave den?")}</b></p><div class="picker">`;
+      for(let i=0;i<7;i++){const di=addDays(todayIso(),i);const opt=fastPaa(di);const own=opt&&opt.id===f._fastId;h+=`<button data-act="dag" data-t="${ti}" data-f="${fi}" data-dag="${di}" ${opt&&!own?"disabled":""}>${i===0?"I dag":i===1?"I morgen":dayLabel(di)}${opt&&!own?" · "+esc(opt.navn):""}</button>`}
+      h+=`</div>`;
+    }else{
+      const okDag=/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")&&f.dag>=todayIso();
+      h+=`<div class="row"><button class="btn" data-act="saet" data-t="${ti}" data-f="${fi}">Sæt på ${okDag?(f.dag===todayIso()?"i aften":esc(dayLabel(f.dag,true))):"planen"}</button></div>`;
+    }
+    h+=`</div>`;
+  });
+  return h+`</div>`;
+}
+function placer(f,dato,antaget){
+  let fx=f._fastId&&st.fast.find(x=>x.id===f._fastId);
+  if(fx){fx.dato=dato}else if(f.opskrift&&ORMAP[f.opskrift]){
+    /* en ret fra opskriftbanken: brug bankens ingredienser i stedet for Claudes gæt */
+    f._fastId=oPlacer(ORMAP[f.opskrift],dato,st.settings.P);
+  }else{
+    const id="f"+Date.now().toString(36);
+    fx={id,dato,navn:String(f.navn),mangler:(f.mangler||[]).map(m=>typeof m==="string"?{navn:m}:{...m})};
+    st.fast.push(fx); f._fastId=id;
+    for(const m of fx.mangler)if(!st.ekstraIndkob.some(x=>x.navn.toLowerCase()===m.navn.toLowerCase()&&!x.done))st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde||"",kat:m.kat||gaetAfd(m.navn),til:fx.navn,fastId:id,...(m.tilbud?{tilbud:m.tilbud,dato}:{})});
+    for(const u of f.bruger||[]){
+      const navn=String(u.navn||u), alt=!!u.alt, k=u.k;
+      if(k&&st.skab[k]){if(alt)delete st.skab[k];else st.skab[k].amt/=2}
+      const i=st.fri.findIndex(x=>x.navn.toLowerCase()===navn.toLowerCase());
+      if(i>=0){if(alt)st.fri.splice(i,1);else st.fri[i].niveau="lidt"}
+    }
+  }
+  ugeStart();
+  f._antaget=!!antaget; f._velg=0;
+}
+function act(a,ti,fi,dag){
+  try{actInner(a,ti,fi,dag)}catch(e){diag("fejl ved "+a+": "+(e&&e.message||e));toast("Noget gik galt: "+(e&&e.message||e))}
+}
+function actInner(a,ti,fi,dag){
+  const f=st.chat[ti]?.data?.forslag?.[fi]; if(!f){toast("Kunne ikke finde forslaget – prøv at spørge igen");return}
+  if(a==="saet"){
+    const t=todayIso();
+    const onsket=/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")&&f.dag>=t?f.dag:null;
+    const dato=onsket||t, opt=fastPaa(dato);
+    if(opt){f._velg=1;f._velgTekst=`${relLabel(dato).replace(/^./,c=>c.toUpperCase())} er allerede sat til ${opt.navn}. Hvornår regner du med at lave den?`}
+    else placer(f,dato,!onsket);
+  }
+  if(a==="flyt"){f._velg=1;f._velgTekst="Hvilken dag skal den flyttes til?"}
+  if(a==="dag"&&dag){placer(f,dag,false)}
+  if(f._fastId&&!f._velg){const fx=st.fast.find(x=>x.id===f._fastId);if(fx)toast("Sat på planen: "+relLabel(fx.dato))}
+  if(a==="list"){for(const m of f.mangler||[])if(!st.ekstraIndkob.some(x=>x.navn.toLowerCase()===String(m).toLowerCase()))st.ekstraIndkob.push({navn:String(m),til:f.navn});f._list=1;toast("Sat på indkøbslisten")}
+  if(a==="fav"){st.favoritter.push(String(f.navn));toast("Gemt som favorit")}
+  if(a==="lav"){
+    for(const u of f.bruger||[]){
+      const navn=String(u.navn||u), alt=!!u.alt, k=u.k;
+      if(k&&st.skab[k]){if(alt)delete st.skab[k];else st.skab[k].amt/=2}
+      const i=st.fri.findIndex(x=>x.navn.toLowerCase()===navn.toLowerCase());
+      if(i>=0){if(alt)st.fri.splice(i,1);else st.fri[i].niveau="lidt"}
+    }
+    f._lavet=1;toast("Skabet er opdateret. God fornøjelse!");
+  }
+  changed();
+}
+function applyUpdates(r){
+  const noter=[];
+  for(const x of r.skabTilfoej||[]){
+    const navn=String(x.navn||"").trim(); if(!navn)continue;
+    if(x.k&&P[x.k]&&x.maengde>0){st.skab[x.k]={amt:(st.skab[x.k]?.amt||0)+x.maengde,dage:P[x.k].h};noter.push("+ "+navn);continue}
+    const f=st.fri.find(y=>y.navn.toLowerCase()===navn.toLowerCase());
+    if(f)f.niveau=x.niveau||f.niveau; else st.fri.push({navn,niveau:x.niveau||"hel"});
+    noter.push("+ "+navn);
+  }
+  for(const x of r.skabFjern||[]){
+    const n=String(x).toLowerCase();
+    for(const k in st.skab)if(k===x||P[k].n.toLowerCase()===n){delete st.skab[k];noter.push("− "+P[k].n)}
+    const i=st.fri.findIndex(y=>y.navn.toLowerCase()===n); if(i>=0){noter.push("− "+st.fri[i].navn);st.fri.splice(i,1)}
+  }
+  for(const b of r.basisMangler||[])if(BASIS[b]&&!st.basisMangler.includes(b)){st.basisMangler.push(b);noter.push(BASIS[b]+" mangler")}
+  for(const b of r.basisHar||[])st.basisMangler=st.basisMangler.filter(x=>x!==b);
+  for(const f of r.favoritter||[])if(f&&!st.favoritter.some(x=>x.toLowerCase()===String(f).toLowerCase())){st.favoritter.push(String(f));noter.push("Favorit: "+f)}
+  for(const f of r.favoritterFjern||[]){const n=String(f).toLowerCase();const i=st.favoritter.findIndex(x=>x.toLowerCase()===n||x.toLowerCase().includes(n)||n.includes(x.toLowerCase()));if(i>=0){noter.push("Fjernet fra favoritter: "+st.favoritter[i]);st.afvist.push(st.favoritter[i]);st.favoritter.splice(i,1)}}
+  for(const x of r.ikkeLide||[]){const navn=String(x.navn||x).trim();if(navn&&!st.ikkeLide.some(y=>y.navn.toLowerCase()===navn.toLowerCase())){st.ikkeLide.push({navn,grund:x.grund==="tåler ikke"?"tåler ikke":"kan ikke lide"});noter.push((x.grund==="tåler ikke"?"Tåler ikke: ":"Kan ikke lide: ")+navn)}}
+  for(const x of r.ikkeLideFjern||[]){const n=String(x).toLowerCase();st.ikkeLide=st.ikkeLide.filter(y=>y.navn.toLowerCase()!==n)}
+  for(const x of r.indkob||[]){const navn=String(x&&x.navn||x||"").trim();if(navn&&!st.ekstraIndkob.some(y=>y.navn.toLowerCase()===navn.toLowerCase()&&!y.done)){st.ekstraIndkob.push({navn,maengde:x&&x.maengde?String(x.maengde):"",kat:x&&AFD[x.kat]?x.kat:gaetAfd(navn)});noter.push("På indkøbslisten: "+navn)}}
+  for(const x of r.instruktioner||[]){const t=String(x).trim();if(t&&!st.instrukser.some(y=>y.toLowerCase()===t.toLowerCase())){st.instrukser.push(t);noter.push("Ny instruktion: "+t)}}
+  if(r.personer>0)st.settings.P=Math.min(10,Math.max(1,r.personer));
+  return noter.length?"Opdateret: "+noter.join(", ")+".":"";
+}
+/* hurtig vej uden AI: "jeg mangler toiletpapir og opvasketabs" */
+function hurtigIndkob(t){
+  const m=t.trim().match(/^(?:jeg\s+|vi\s+)?(?:mangler|skal\s+(?:også\s+)?(?:have|bruge|købe)|husk(?:\s+at\s+købe)?|køb)(?:\s+også)?(?:\s+lige)?\s+(.+?)[.!]*$/i);
+  if(!m||t.length>90||/\?|\bmen\b|\bhvad\b|\bhvordan\b|\btil\s+(?:i\s+aften|i\s+morgen|en|et|at)\b/i.test(t))return null;
+  const varer=m[1].split(/\s*,\s*|\s+og\s+/i).map(x=>x.replace(/^(?:noget|nogle|lidt|en|et|også)\s+/i,"").trim()).filter(x=>x&&x.length<40);
+  if(!varer.length)return null;
+  for(const v of varer){const navn=v.charAt(0).toUpperCase()+v.slice(1);if(!st.ekstraIndkob.some(x=>x.navn.toLowerCase()===navn.toLowerCase()&&!x.done))st.ekstraIndkob.push({navn,maengde:"",kat:gaetAfd(navn)})}
+  return varer;
+}
+let selDays=new Set();
+async function sendChat(override){
+  if(typeof override!=="string")override="";
+  const inp=document.getElementById("chatIn");
+  const typed=inp.value.trim();
+  const t=typed||override||""; if(!t)return;
+  const btn=document.getElementById("chatBtn"), ab=document.getElementById("anbefalBtn");
+  if(typed&&!override){
+    const hv=hurtigIndkob(typed);
+    if(hv){st.chat.push({role:"user",text:typed});st.chat.push({role:"bot",data:{svar:"Sat på indkøbslisten: "+hv.join(", ")+"."}});inp.value="";st.chat=st.chat.slice(-20);changed();return}
+  }
+  if(!sample){const nb=document.getElementById("noClaude");nb.style.display="";nb.scrollIntoView({behavior:"smooth",block:"center"});return}
+  const dage=[...selDays].sort();
+  const vis=typed||override;
+  st.chat.push({role:"user",text:vis}); inp.value=""; renderSnak();
+  const lg=document.getElementById("log"); const wait=document.createElement("p");wait.className="muted";wait.textContent="Tænker …";lg.appendChild(wait);
+  wait.scrollIntoView({behavior:"smooth",block:"end"});
+  btn.disabled=true; ab.disabled=true;
+  const hist=st.chat.slice(-7,-1).map(x=>x.role==="user"?"Bruger: "+x.text:"Assistent: "+(x.data?.svar||"")+((x.data?.forslag||[]).length?" [Foreslog: "+x.data.forslag.map(f=>f.navn).join(", ")+"]":"")).join("\n");
+  const t0=todayIso();
+  const dagsListe=[...Array(10)].map((_,i)=>{const di=addDays(t0,i);const f=fastPaa(di);return dayLabel(di,true)+"="+di+(f?" [optaget: "+f.navn+"]":"")}).join("; ");
+  const prompt=`Du er madassistenten i appen "Opbrugt". Brugeren skriver eller dikterer på dansk. Sund fornuft, ikke gram-præcision. Mål: god hverdagsmad, brug det man har (det der bliver dårligt først), få indkøb, mindre spild.
+
+Husstand: ${st.settings.P} personer. Butikker: ${st.settings.butikker.join(", ")||"ikke angivet"}. Appen kender ikke ugens tilbud eller priser – nævn dem ikke som fakta.
+Skab: ${skabTekst()}
+Mangler af basisvarer: ${st.basisMangler.map(b=>BASIS[b]).join(", ")||"ingen kendte"}
+Kan lide: ${st.favoritter.join(", ")||"ingen gemt"}
+Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
+${TB.tilbud.length?`Ugens tilbud på deres ingredienser (bedste pr. vare; brug dem gerne, når det passer): ${tTekst()||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer til ønsket, og sæt "opskrift" til id'et:
+${oKatalogTekst()}
+Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
+Dage: i dag er ${dayLabel(t0,true)}. ${dagsListe}
+Måltider på planen: ${st.fast.map(f=>dayLabel(f.dato,true)+": "+f.navn).join("; ")||"ingen"}
+${dage.length?`VALGTE DAGE: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}. Giv præcis ét forslag pr. valgt dag med "dag" sat til den dato, medmindre beskeden siger noget andet.`:""}
+
+Samtale:
+${hist||"(ny)"}
+
+Ny besked: """${t}"""
+
+JSON-felter (udelad tomme):
+"svar": 1-2 korte sætninger. Højst ét spørgsmål, kun hvis nødvendigt.
+"forslag": 0-3 retter (eller én pr. valgt dag) [{"navn","opskrift": id fra husstandens opskrifter eller null,"dag": YYYY-MM-DD eller null,"hvorfor": kort,"bruger":[{"navn","alt":true hvis alt bruges}] fra skabet,"mangler":[{"navn": almindeligt varenavn,"maengde": købsmængde i hele pakker fx "500 g","¼ l","1 pose","kat": ${Object.keys(AFD).join("|")}}],"trin": 3-5 korte trin}]. Foretræk retter de kan lide, brug skabet, følg instruktionerne.
+"indkob": ting brugeren siger de mangler eller skal huske, der ikke hører til en ret (også ikke-mad som toiletpapir) [{"navn","maengde","kat"}].
+"skabTilfoej":[{"navn","niveau":"hel"|"noget"|"lidt"}] når de fortæller hvad de har. "skabFjern":[navne] når noget er brugt op.
+"favoritter":[navne] de kan lide. "favoritterFjern":[navne fra kan-lide-listen] de ikke gider mere (fx "det vi fik i går").
+"ikkeLide":[{"navn","grund":"kan ikke lide"|"tåler ikke"}]. "ikkeLideFjern":[navne].
+"instruktioner":[korte varige ønsker, fx "Flere grøntsager"] når de udtrykker en varig vane eller et mål. "basisMangler"/"basisHar":[${Object.keys(BASIS).join("|")}]. "personer": tal hvis husstanden ændres.
+Svar KUN med JSON.`;
+  try{
+    const r=await sample.json(prompt,{modelTier:"quick"});
+    const note=applyUpdates(r||{});
+    const forslag=(r.forslag||[]).slice(0,Math.max(3,dage.length)).map(normForslag);
+    if(forslag.length){wait.textContent="Finder tilbud …";await tAnnoter(forslag)}
+    st.chat.push({role:"bot",data:{svar:r.svar,forslag},note});
+  }catch(e){
+    diag("sidste fejl: "+((e&&e.code)||"ukendt")+((e&&e.message)?" – "+e.message:""));
+    st.chat.push({role:"bot",data:{svar:e&&e.code==="not_granted"?"Appen skal have lov til at bruge Claude. Luk og åbn appen igen, og tryk Tillad.":"Det gik ikke igennem. Prøv igen om lidt."}});
+  }
+  st.chat=st.chat.slice(-20);
+  btn.disabled=false; ab.disabled=false; changed();
+  const last=document.getElementById("log").lastElementChild; if(last)last.scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.getElementById("chatBtn").onclick=sendChat;
+document.getElementById("chatClear").onclick=()=>{st.chat=[];changed()};
+document.getElementById("favAdd").onclick=()=>{const v=document.getElementById("favIn").value.trim();if(!v)return;document.getElementById("favIn").value="";hentAnbefalinger(v)};
+document.getElementById("moreRec").onclick=()=>hentAnbefalinger(null);
+document.getElementById("nopeAdd").onclick=()=>{const v=document.getElementById("nopeIn").value.trim();if(!v)return;st.ikkeLide.push({navn:v,grund:document.getElementById("nopeGrund").value});document.getElementById("nopeIn").value="";changed()};
+
+/* ---------- Dagsbånd ---------- */
+function visStart(){if(!st.visStart)st.visStart=todayIso();return st.visStart}
+function dagRet(di,p){
+  const f=fastPaa(di); if(f)return {navn:f.navn,fast:f};
+  const x=(p||last)?.days?.find(y=>y.day&&slotDate(y.day)===di);
+  if(x)return {navn:x.kind==="rest"?"Rester: "+x.s.r.n.toLowerCase():x.s.r.n,beregnet:1};
+  return null;
+}
+function renderStrip(p){
+  const d=document.getElementById("days");d.innerHTML="";
+  const t0=todayIso();
+  for(let i=0;i<5;i++){
+    const di=addDays(visStart(),i), r=dagRet(di,p);
+    const b=document.createElement("button");
+    b.className="dcell"+(di===t0?" today":"");b.setAttribute("aria-pressed",selDays.has(di));
+    b.innerHTML=`<span class="wd">${di===t0?"I dag":dayLabel(di).split(" ")[0]}</span><span class="dt">${dayLabel(di).split(" ")[1]}</span><span class="dish-s">${r?esc(r.navn):"–"}</span>`;
+    b.setAttribute("aria-label",dayLabel(di,true)+(r?": "+r.navn:": intet planlagt"));
+    b.onclick=()=>{selDays.has(di)?selDays.delete(di):selDays.add(di);renderStrip(last)};
+    d.appendChild(b);
+  }
+  const info=document.getElementById("dayInfo"), sel=[...selDays].sort();
+  const ab=document.getElementById("anbefalBtn");
+  ab.textContent=sel.length?`Anbefal til ${sel.length===1?dayLabel(sel[0],true):sel.length+" dage"}`:"Anbefal";
+  ab.disabled=!sel.length;
+  document.getElementById("ryddage").style.display=sel.length?"":"none";
+  if(!sel.length){info.innerHTML=`<p class="muted" style="margin-top:8px">Tryk på en eller flere dage og så Anbefal. Eller skriv, hvad du har lyst til.</p>`;return}
+  info.innerHTML=`<div class="dinfo">`+sel.map(di=>{const r=dagRet(di,p);return `<div class="item"><div class="grow"><b>${esc(dayLabel(di,true))}</b><div class="amt">${r?esc(r.navn)+(r.beregnet?" (fra pakkeberegningen)":""):"Intet planlagt"}</div></div>${r&&r.fast?`<button class="x" data-fdel2="${esc(r.fast.id)}" aria-label="Fjern ${esc(r.navn)}" style="font-size:.9rem">Fjern</button>`:""}</div>`}).join("")+`</div>`;
+  info.querySelectorAll("[data-fdel2]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel2);changed();toast("Fjernet fra planen")});
+}
+document.getElementById("prevDays").onclick=()=>{st.visStart=addDays(visStart(),-5);renderStrip(last);save()};
+document.getElementById("nextDays").onclick=()=>{st.visStart=addDays(visStart(),5);renderStrip(last);save()};
+document.getElementById("ryddage").onclick=()=>{selDays.clear();renderStrip(last)};
+document.getElementById("anbefalBtn").onclick=()=>{const sel=[...selDays].sort();if(!sel.length)return;sendChat("Anbefal aftensmad til "+sel.map(d=>dayLabel(d,true)).join(", ")+".")};
+function renderPref(){
+  const l=document.getElementById("instrList");
+  l.innerHTML=st.instrukser.length?st.instrukser.map((x,i)=>`<div class="item"><div class="grow">${esc(x)}</div><button class="x" data-ix="${i}" aria-label="Fjern instruktion">×</button></div>`).join(""):`<div class="item"><div class="grow muted">Ingen instruktioner endnu.</div></div>`;
+  l.querySelectorAll("[data-ix]").forEach(b=>b.onclick=()=>{st.instrukser.splice(+b.dataset.ix,1);changed()});
+}
+document.getElementById("instrAdd").onclick=()=>{const v=document.getElementById("instrIn").value.trim();if(!v)return;st.instrukser.push(v);document.getElementById("instrIn").value="";changed()};
+document.getElementById("shopAdd").onclick=()=>{const v=document.getElementById("shopIn").value.trim();if(!v)return;for(const x of v.split(/\s*,\s*|\s+og\s+/)){if(!x)continue;const navn=x.charAt(0).toUpperCase()+x.slice(1);st.ekstraIndkob.push({navn,maengde:"",kat:gaetAfd(navn)})}document.getElementById("shopIn").value="";changed()};
+
+/* ---------- Kvitteringsscanning ---------- */
+let scanItems=[];
+async function setupScan(){
+  const note=document.getElementById("scanNote"), lab=document.getElementById("scanLabel");
+  let caps=null; if(sample){try{caps=await sample.limits()}catch(e){caps=null}}
+  if(!caps||!caps.images){lab.style.display="none";note.textContent="Scanning virker, når appen er åbnet fra Claude-linket.";return}
+  lab.style.display="inline-block";
+  document.getElementById("scanFile").accept=(caps.images.mediaTypes||["image/*"]).join(",");
+}
+document.getElementById("scanFile").onchange=async e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f)return;
+  const out=document.getElementById("scanResult");
+  out.innerHTML=`<p class="muted">Læser kvitteringen … det kan tage op til et minut.</p>`;
+  const catalog=Object.entries(P).map(([k,p])=>({k,navn:p.n,pakke:p.pk,enhed:p.e}));
+  const prompt=`Billedet er en kvittering fra et dansk supermarked (fx Rema 1000 eller Netto). Læs hver varelinje og match den til kataloget.
+Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
+Basisvarer (nøgler): ${JSON.stringify(BASIS)}
+Regler: "maengde" er i katalogets enhed (g, ml, stk, fed) og er den samlede købte mængde, fx 2 pakker oksekød á 500 g = 1000. Løsvægt i kg omregnes til stk ud fra en normal størrelse (1 gulerod ca. 80 g, 1 løg ca. 120 g). Varer der ikke passer til kataloget, men er basisvarer, lægges i "basis". Alt andet spiseligt i "andet" med et almindeligt dansk varenavn (fx "Rødkål", ikke kvitteringens forkortelse). Non-food udelades. Pant, poser og rabatlinjer ignoreres.
+Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst]}`;
+  try{
+    const r=await sample.json(prompt,{images:f,modelTier:"default"});
+    scanItems=(r.varer||[]).filter(v=>P[v.k]&&v.maengde>0).map(v=>({...v,on:true}));
+    const basis=(r.basis||[]).filter(b=>BASIS[b]);
+    let h=`<p class="muted" style="margin-top:10px">${r.butik||"Kvittering"}${r.dato?" · "+r.dato:""}. Tjek varerne, og fjern flueben ved det, der er forkert.</p>`;
+    h+=scanItems.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-i="${i}" checked><div class="grow">${P[v.k].n}<div class="amt muted">${fmt(v.k,v.maengde)} · "${(v.tekst||"").replace(/[<>]/g,"")}"</div></div></label>`).join("");
+    if(basis.length)h+=`<p class="muted" style="margin-top:10px">Basisvarer købt: ${basis.map(b=>BASIS[b]).join(", ")}.</p>`;
+    if((r.andet||[]).length)h+=`<p class="muted">Lægges også i skabet som fri varer: ${r.andet.map(x=>String(x).replace(/[<>]/g,"")).join(", ")}.</p>`;
+    h+=`<button class="btn" id="scanOk" style="margin-top:10px">Læg i skabet</button>`;
+    out.innerHTML=h;
+    out.querySelectorAll("input[data-i]").forEach(cb=>cb.onchange=()=>{scanItems[+cb.dataset.i].on=cb.checked});
+    document.getElementById("scanOk").onclick=()=>{
+      let n=0;
+      for(const v of scanItems){if(!v.on)continue;st.skab[v.k]={amt:(st.skab[v.k]?.amt||0)+v.maengde,dage:P[v.k].h};n++}
+      for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){st.fri.push({navn:nm,niveau:"hel"});n++}}
+      st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
+      scanItems=[];out.innerHTML="";document.getElementById("scanFile").value="";
+      changed();toast(n+" varer lagt i skabet");
+    };
+  }catch(err){
+    out.innerHTML=`<p class="bad">Kvitteringen kunne ikke læses${err&&err.code==="not_granted"?", fordi adgang til Claude blev afvist":""}. Prøv et skarpere billede taget lige ovenfra.</p>`;
+  }
+};
+
+/* ---------- Opskriftbanken ----------
+   Data kommer fra opskrifter.js (eksporteret fra opskriftbanken). Ingredienser i banken har deres egne id'er;
+   OB.pTilBank oversætter appens varenøgler (P) til bankens id'er, så skabet kan matches. */
+const OB=window.OPSKRIFTBANK||{opskrifter:[],ingredienser:{},grupper:{},pTilBank:{}};
+const OI=OB.ingredienser, OG=OB.grupper, ORMAP={};for(const r of OB.opskrifter)ORMAP[r.id]=r;
+const O_VOL={ml:1,dl:100,l:1000,tsk:5,spsk:15}, O_VGT={g:1,kg:1000};
+function oOmregn(m,e,v){if(m==null||!v)return null;const b=v.be;if(e===b)return m;for(const t of [O_VOL,O_VGT])if(t[e]&&t[b])return m*t[e]/t[b];if(v.omr&&v.omr[e]!=null)return m*v.omr[e];return null}
+function oGram(m,e,v){const x=oOmregn(m,e,v);if(x==null)return null;if(v.be==="g"||v.be==="ml")return x;if(v.gps&&(v.be==="stk"||v.be==="fed"))return x*v.gps;return null}
+function oSomMaengde(g,v,smag){if(smag)return [null,"efter smag"];if(g==null||!v)return [null,""];if(v.be==="g"||v.be==="ml")return [Math.max(5,Math.round(g/5)*5),v.be];if(v.gps)return [Math.max(.5,Math.round(g/v.gps*2)/2),v.be];return [null,""]}
+function oTil(l,n,pb){if(l.m==null)return null;if(l.t&&l.t[n]!=null)return l.t[n];return l.m*n/pb}
+function oBroek(m){const w=Math.floor(m+1e-9),f=m-w,fr=f<.125?"":f<.375?"¼":f<.625?"½":f<.875?"¾":"";const hel=f>=.875?w+1:w;return ((hel||!fr)?String(hel):"")+fr}
+function oFmt(m,e){
+  if(m==null)return e==="efter smag"?"efter smag":"";
+  if(e==="g"){if(m>=1000)return (m/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" kg";return (m<10?Math.round(m*2)/2:Math.round(m/5)*5).toLocaleString("da-DK")+" g"}
+  if(e==="ml"){if(m>=1000)return (m/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" l";if(m>=100)return (m/100).toLocaleString("da-DK",{maximumFractionDigits:1})+" dl";return Math.round(m)+" ml"}
+  if(e==="dl")return m.toLocaleString("da-DK",{maximumFractionDigits:1})+" dl";
+  return oBroek(m)+" "+(e==="daase"?"dåse":e);
+}
+/* Fritekst fra skabet ("2 røde peberfrugter") -> bankens id */
+const O_TERMER=[];for(const [id,v] of Object.entries(OI))for(const t of [v.n,...(v.syn||[])])if(t)O_TERMER.push([t.toLowerCase(),id]);
+O_TERMER.sort((a,b)=>b[0].length-a[0].length);
+/* Forarbejdede varer ("syltede agurker", "chilisovs", "æblejuice") må ikke forveksles med den friske råvare */
+const O_FORARB=/sylte|syltet|juice|saft|sovs|syltetøj|marmelade|eddike|chips|pålæg|dip\b|dressing|pickles/;
+function oFind(navn){
+  const n=String(navn||"").toLowerCase().trim();if(!n)return null;
+  for(const [t,id] of O_TERMER)if(n===t)return id;
+  if(O_FORARB.test(n))return null;
+  for(const [t,id] of O_TERMER)if(t.length>=4&&new RegExp("(^|[^a-zæøå])"+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).test(n))return id;
+  for(const [t,id] of O_TERMER)if(t.length>=5&&n.length>=4&&t.includes(n))return id;
+  return null;
+}
+/* Hvad har vi? id -> {kilde, mængde i bankens enhed, dage} */
+function oHar(){
+  const har={};
+  for(const [k,v] of Object.entries(st.skab)){
+    const id=OB.pTilBank[k],vare=OI[id];if(!vare)continue;
+    let mgd=oOmregn(v.amt,P[k].e,vare);
+    if(mgd==null&&P[k].e==="g"&&vare.gps)mgd=v.amt/vare.gps;
+    har[id]={kilde:"skab",k,mgd,dage:v.dage};
+  }
+  st.fri.forEach(f=>{const id=oFind(f.navn);if(id&&!har[id])har[id]={kilde:"fri",fri:f.navn,niveau:f.niveau||"hel",dage:null}});
+  return har;
+}
+function oIkkeLide(r){const nej=st.ikkeLide.map(x=>x.navn.toLowerCase());return r.ing.filter(l=>nej.some(n=>l.n.toLowerCase().includes(n)||(OI[l.i]&&OI[l.i].n.toLowerCase().includes(n)))).map(l=>l.n)}
+/* Match en opskrift mod skabet. valg = brugerens egne byt {linjenr: id}. Uden eget valg byttes en variabel
+   linje automatisk til noget fra skabet, hvis originalen ikke er der. */
+function oMatch(r,n,har,valg){
+  valg=valg||{};const brugt=new Set();const linjer=[];
+  r.ing.forEach((l,i)=>{
+    const orig=OI[l.i]||{n:l.n,be:l.e};const g=OG[l.v];
+    const mk=(id,q,erst)=>{
+      if(id===l.i)return {i,id,orig:l.i,m:oTil(l,n,r.pb),e:l.e,navn:l.n,q:null,erst:null};
+      const [m,e]=oSomMaengde(oGram(oTil(l,n,r.pb),l.e,orig),OI[id],g&&g.smag);
+      return {i,id,orig:l.i,m,e,navn:OI[id].n,q,erst};
+    };
+    const kval=id=>(g&&g.m[id]==="god"&&g.m[l.i]==="god")?"god":"ok";
+    let x;
+    if(valg[i]!=null&&valg[i]!==l.i&&OI[valg[i]])x=mk(valg[i],kval(valg[i]),l.n);
+    else x=mk(l.i);
+    x.basis=!!(l.b||(OI[x.id]&&OI[x.id].bv));x.var=l.v||null;
+    if(x.basis){x.status="basis";linjer.push(x);return}
+    if(har[x.id]&&!brugt.has(x.id)){x.status="har";brugt.add(x.id)}
+    else if(valg[i]==null&&g){
+      let best=null;
+      for(const mid of Object.keys(g.m)){if(mid===l.i||!har[mid]||brugt.has(mid))continue;const q=kval(mid);if(!best||(q==="god"&&best.q!=="god")||((har[mid].dage??99)<(har[best.id].dage??99)&&q===best.q))best={id:mid,q}}
+      if(best){x=Object.assign(mk(best.id,best.q,l.n),{basis:false,var:l.v,status:"har",auto:1});brugt.add(best.id)}
+      else x.status="koeb";
+    }else x.status="koeb";
+    linjer.push(x);
+  });
+  const harL=linjer.filter(x=>x.status==="har"),koeb=linjer.filter(x=>x.status==="koeb");
+  let score=0;for(const x of harL){const h=har[x.id];score+=1+((h.dage!=null&&h.dage<=3)?1.5:0)-(x.erst?.2:0)}
+  score-=koeb.length*.15;
+  return {linjer,harL,koeb,score};
+}
+/* ---------- Tilbud ----------
+   Den daglige opgave, der henter tilbudsaviserne, lægger dem i databasen (samling "tilbud": meta + ét
+   dokument pr. kæde). Et tilbud kan bruges til en ret på dato D, hvis det gælder på en dag mellem i dag og D. */
+let TB={meta:null,tilbud:[]};
+const T_NORM=s=>String(s||"").toLowerCase().replace(/[^a-zæøå0-9]/g,"");
+function tKaedeAktiv(k){const valgt=st.settings.butikker.map(T_NORM),alle=(TB.meta?.kaeder||[]).map(x=>T_NORM(x.navn));if(!valgt.some(v=>alle.includes(v)))return true;return valgt.includes(T_NORM(k))}
+function tGyldige(dato){const t0=todayIso();if(!dato||dato<t0)dato=t0;return TB.tilbud.filter(x=>x.f<=dato&&x.t>=t0&&tKaedeAktiv(x.k))}
+function tUge(){return addDays(todayIso(),6)}
+function tBedst(id,dato){let b=null;for(const x of tGyldige(dato)){if(x.i!==id)continue;if(!b||((x.ep!=null&&b.ep!=null&&x.pr===b.pr)?x.ep<b.ep:x.p<b.p))b=x}return b}
+function tPris(p){return String(p).replace(".",",")+" kr"}
+/* "Netto 35 kr (400 g) · senest tor 9/10". Med dato: siger "senest", hvis tilbuddet slutter før dato. */
+function tKort(x,dato){
+  if(!x)return"";const t0=todayIso();let n="";
+  if(x.t<t0)n=" · udløbet";else if(dato&&x.t<dato)n=" · senest "+dayLabel(x.t,true);else if(x.f>t0)n=" · fra "+dayLabel(x.f,true);else if(!dato)n=" · til "+dayLabel(x.t,true);
+  return `${x.k} ${tPris(x.p)}${x.m?" ("+x.m+")":""}${n}`;
+}
+/* Mulige tilbud for en vare, der ikke findes i opskriftbanken (fx "rispapir" fra snakken). Claude vælger bagefter. */
+const T_IKKE=/chips|pålæg|postej|kroket|sushi|popcorn|flips|snack|slik|kage|chokolade|juice|saft|sodavand|cola|dressing|mayo|bearnaise|k-salat|nuggets|frikadelle|spyd|marinade|smør\b/i;
+function tKandidater(navn,dato){
+  const ord=String(navn).toLowerCase().split(/[^a-zæøå]+/).filter(w=>w.length>=4).map(w=>w.slice(0,Math.max(4,w.length-2)));
+  if(!ord.length)return[];
+  const egenIkke=T_IKKE.test(navn);
+  return tGyldige(dato).filter(x=>{const o=x.o.toLowerCase();return (egenIkke||!T_IKKE.test(o))&&ord.some(w=>new RegExp("(^|[^a-zæøå])"+w).test(o))}).slice(0,6);
+}
+async function tHent(){
+  if(!db)return;
+  try{
+    const m=await db.doc("tilbud/meta").get();if(!m.exists)return;
+    const meta=m.data(),liste=[];
+    for(const k of meta.kaeder||[]){const d=await db.doc("tilbud/"+k.id).get();if(d.exists)for(const x of (d.data().tilbud||[]))liste.push({...x,k:k.navn})}
+    TB={meta,tilbud:liste};render();
+  }catch(e){diag("tilbud kunne ikke læses ("+((e&&e.code)||e)+")")}
+}
+/* Sæt tilbud på de manglende varer i Claudes forslag */
+async function tAnnoter(forslag){
+  if(!TB.tilbud.length)return;
+  const spg=[];
+  for(const f of forslag){
+    const dato=/^\d{4}-\d{2}-\d{2}$/.test(f.dag||"")?f.dag:tUge();
+    for(const m of f.mangler||[]){
+      const id=oFind(m.navn);const b=id&&tBedst(id,dato);
+      if(b){m.tilbud=b;continue}
+      const k=tKandidater(m.navn,dato);if(k.length)spg.push({m,k});
+    }
+  }
+  if(!spg.length||!sample)return;
+  const prompt=`For hver vare: vælg det tilbud, der ER selve varen, som man ville købe den til en ret (ikke et produkt, der bare indeholder varen eller hedder noget lignende). Passer ingen, så null.
+${spg.map((s,i)=>`Vare ${i}: "${s.m.navn}"\n`+s.k.map((x,j)=>`  ${j}: ${x.k} | ${x.o}${x.b?" | "+x.b.slice(0,70):""}`).join("\n")).join("\n")}
+Returnér KUN JSON: {"valg":[tilbudsnummer eller null for hver vare, i samme rækkefølge]}`;
+  try{const r=await sample.json(prompt,{modelTier:"quick"});(r.valg||[]).forEach((v,i)=>{if(spg[i]&&Number.isInteger(v)&&spg[i].k[v])spg[i].m.tilbud=spg[i].k[v]})}catch(e){}
+}
+/* Til Claude: det bedste tilbud pr. ingrediens i banken den kommende uge */
+function tTekst(){
+  const best={};for(const x of tGyldige(tUge()))if(x.i&&(!best[x.i]||x.p<best[x.i].p))best[x.i]=x;
+  return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${tKort(x)}`).join("; ");
+}
+let oFilt={soeg:"",reg:null,pr:null,hurtig:false,tilbud:false}, oAaben=null, oValg={}, oPers=null;
+function oVis(id){if(!ORMAP[id])return;oAaben=id;oPers=null;show("t-opsk");renderOpsk()}
+function oTid(r){return r.tid?(r.tid[0]&&r.tid[1]&&r.tid[0]!==r.tid[1]?r.tid[0]+"-"+r.tid[1]:(r.tid[1]||r.tid[0]))+" min":"tid ukendt"}
+function oBrugerHtml(mt,max){
+  if(!mt.harL.length)return"";
+  const har=oHar();
+  return `<div class="uses">`+mt.harL.slice(0,max||6).map(x=>{const h=har[x.id];return `<span class="${h&&h.dage!=null&&h.dage<=3?"hot":""}">${esc(OI[x.id]?OI[x.id].n:x.navn)}${x.erst?" i st.f. "+esc(x.erst.toLowerCase()):""}</span>`}).join("")+`</div>`;
+}
+function renderOpsk(){
+  const liste=document.getElementById("opskListe"),vis=document.getElementById("opskVis");
+  document.getElementById("opskVersion").textContent=OB.opskrifter.length?`Opskriftbanken: ${OB.opskrifter.length} retter (${OB.version}).`:"";
+  if(oAaben&&ORMAP[oAaben]){liste.hidden=true;vis.hidden=false;renderOpskVis();return}
+  liste.hidden=false;vis.hidden=true;
+  if(!OB.opskrifter.length){document.getElementById("opskRes").innerHTML=`<p class="muted">Opskriftbanken kunne ikke indlæses. Prøv at genindlæse siden.</p>`;return}
+  const har=oHar(),n=st.settings.P,harNoget=Object.keys(har).length>0||TB.tilbud.length>0;
+  document.getElementById("opskSub").textContent=(Object.keys(har).length?"Jeres egne opskrifter. Dem, der bruger mest af det, I har i skabet og ugens tilbud, står øverst.":"Jeres egne opskrifter. Læg det, I har, i Skabet, så kommer de retter, der bruger det, øverst.")+(TB.meta?` Tilbud fra ${[...new Set(TB.tilbud.filter(x=>tKaedeAktiv(x.k)).map(x=>x.k))].join(", ")}, hentet ${dayLabel(iso(new Date(TB.meta.opdateret)),true)}.`:"");
+  // filtre
+  const tael=(f)=>{const c={};for(const r of OB.opskrifter)for(const x of f(r))c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
+  const fl=document.getElementById("opskFilt");
+  const chip=(lbl,on,fn)=>`<button class="chip" aria-pressed="${on}" data-of="${fn}">${esc(lbl)}</button>`;
+  fl.innerHTML=(TB.tilbud.length?chip("På tilbud",oFilt.tilbud,"t"):"")+chip("Højst 30 min",oFilt.hurtig,"h")+tael(r=>r.pr).filter(p=>p!=="Bønner og linser"&&p!=="Æg").map(p=>chip(p,oFilt.pr===p,"p:"+p)).join("")+tael(r=>r.reg).filter(x=>x!=="Andet").map(g=>chip(g,oFilt.reg===g,"r:"+g)).join("");
+  fl.querySelectorAll("[data-of]").forEach(b=>b.onclick=()=>{const f=b.dataset.of;if(f==="t")oFilt.tilbud=!oFilt.tilbud;else if(f==="h")oFilt.hurtig=!oFilt.hurtig;else if(f.startsWith("p:"))oFilt.pr=oFilt.pr===f.slice(2)?null:f.slice(2);else oFilt.reg=oFilt.reg===f.slice(2)?null:f.slice(2);renderOpsk()});
+  const q=oFilt.soeg.toLowerCase().trim();
+  let rs=OB.opskrifter.filter(r=>(!oFilt.hurtig||(r.tid&&r.tid[1]<=30))&&(!oFilt.pr||r.pr.includes(oFilt.pr))&&(!oFilt.reg||r.reg.includes(oFilt.reg))&&(!q||(r.t+" "+r.u+" "+r.k.join(" ")+" "+r.ing.map(l=>l.n).join(" ")).toLowerCase().includes(q)));
+  const mt={},uge=tUge();
+  for(const r of rs){const m=mt[r.id]=oMatch(r,n,har,oValg[r.id]);m.tb=m.koeb.map(x=>[x,tBedst(x.id,uge)]).filter(y=>y[1]);m.score+=m.tb.length*.6}
+  if(oFilt.tilbud)rs=rs.filter(r=>mt[r.id].tb.length);
+  rs.sort((a,b)=>harNoget?(mt[b.id].score-mt[a.id].score)||a.t.localeCompare(b.t,"da"):a.t.localeCompare(b.t,"da"));
+  document.getElementById("opskAntal").textContent=rs.length===OB.opskrifter.length?`${rs.length} retter`:`${rs.length} af ${OB.opskrifter.length}`;
+  const res=document.getElementById("opskRes");
+  if(!rs.length){res.innerHTML=`<p class="muted">Ingen retter passer til søgningen. Fjern et filter, eller søg på noget andet.</p>`;return}
+  res.innerHTML=rs.map(r=>{const m=mt[r.id],nej=oIkkeLide(r);return `<button class="rcard" data-oopen="${r.id}">${r.img?`<img src="${r.img}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))} · ${esc(r.k.join(", "))}${m.koeb.length?" · køb "+m.koeb.length:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`}).join("");
+}
+function renderOpskVis(){
+  const r=ORMAP[oAaben],vis=document.getElementById("opskVis");
+  const n=oPers||st.settings.P,har=oHar(),valg=oValg[r.id]||{},mt=oMatch(r,n,har,valg),nej=oIkkeLide(r);
+  const lin=(x)=>{
+    const l=r.ing[x.i],g=OG[l.v];
+    let st_=x.status==="har"?`<span class="st">${har[x.id]&&har[x.id].kilde==="skab"?"i skabet":"har I"}</span>`:x.status==="koeb"?`<span class="st koeb">købes</span>`:`<span class="st basis">basisvare</span>`;
+    let sub="";
+    if(x.erst)sub+=`<div class="amt">I stedet for ${esc(x.erst.toLowerCase())}${x.q?" ("+x.q+")":""}</div>`;
+    const v=OI[x.id];if(v&&v.hf)sub+=`<div class="amt">HelloFresh-blanding${v.erst&&OI[v.erst]?". Brug "+esc(OI[v.erst].n.toLowerCase()):""}</div>`;
+    if(l.note)sub+=`<div class="amt">${esc(l.note)}</div>`;
+    if(x.status==="koeb"){const t=tBedst(x.id,tUge());if(t)sub+=`<div class="amt tbtxt">Tilbud: ${esc(tKort(t))}</div>`}
+    if(g&&!x.basis){
+      const opts=[[l.i,l.n+" (original)"],...Object.keys(g.m).filter(id=>id!==l.i&&OI[id]).map(id=>[id,OI[id].n+((g.m[id]==="god"&&g.m[l.i]==="god")?"":" (ok)")])].map(([id,t])=>[id,t+(id!==x.id&&tBedst(id,tUge())?" · på tilbud":"")]);
+      sub+=`<select data-ob="${x.i}" aria-label="Byt ${esc(l.n)}">`+opts.map(([id,t])=>`<option value="${id}" ${id===x.id?"selected":""}>${esc(t)}</option>`).join("")+`</select>`;
+    }
+    return `<div class="item"><span class="mg">${esc(oFmt(x.m,x.e))}</span><div class="grow">${esc(x.navn)} ${st_}${sub}</div></div>`;
+  };
+  const t0=todayIso();
+  let dage="";for(let i=0;i<7;i++){const di=addDays(t0,i),opt=fastPaa(di);dage+=`<button data-odag="${di}" ${opt?"disabled":""}>${i===0?"I dag":i===1?"I morgen":dayLabel(di)}${opt?" · "+esc(opt.navn):""}</button>`}
+  vis.innerHTML=`<button class="back" id="oTilbage">‹ Alle opskrifter</button>
+  ${r.img?`<img class="hero" src="${r.img}" alt="${esc(r.t)}">`:""}
+  <h2 class="titel">${esc(r.t)}</h2>${r.u?`<p class="muted" style="margin:4px 0 0">${esc(r.u)}</p>`:""}
+  <p class="rmeta" style="margin-top:6px">${esc(oTid(r))} · ${esc(r.k.join(", "))}${r.kilde?" · "+esc(r.kilde):""}</p>
+  ${nej.length?`<p class="note">Indeholder ${esc(nej.join(", ").toLowerCase())}, som står under "Kan ikke lide / tåler ikke".</p>`:""}
+  <div class="set" style="padding:12px 0"><div>Personer</div><div class="step"><button data-op="-1" aria-label="Færre personer">−</button><output>${n}</output><button data-op="1" aria-label="Flere personer">+</button></div></div>
+  <h2 style="margin-top:8px">Ingredienser</h2>
+  <p class="muted">${mt.harL.length} fra skabet, ${mt.koeb.length} skal købes. Ingredienser med en vælger kan byttes.</p>
+  <div class="list ingl">${mt.linjer.filter(x=>!x.basis).map(lin).join("")}</div>
+  <details class="fold" style="margin-top:8px"><summary style="font-size:1rem">Basisvarer (${mt.linjer.filter(x=>x.basis).length})</summary><div class="list ingl" style="margin-top:8px">${mt.linjer.filter(x=>x.basis).map(lin).join("")}</div></details>
+  <h2>Sæt på planen</h2><div class="picker">${dage}</div>
+  <p class="muted" style="margin-top:8px">Det, der skal købes, kommer på indkøbslisten, og det, I bruger fra skabet, trækkes fra.</p>
+  <h2>Sådan gør du</h2>
+  <ol class="trinl">${r.trin.map(t=>`<li><b>${esc(t.t)}</b>${t.x.map(p=>`<p>${esc(p)}</p>`).join("")}${t.vig?`<p class="note">Vigtigt: ${esc(t.vig)}</p>`:""}${t.tip?`<p class="tip">Tip: ${esc(t.tip)}</p>`:""}</li>`).join("")}</ol>
+  ${r.al&&r.al.indeholder.length?`<p class="muted" style="margin-top:16px">Allergener: ${esc(r.al.indeholder.join(", "))}${r.al.spor_af.length?". Kan indeholde spor af: "+esc(r.al.spor_af.join(", ")):""}.</p>`:""}
+  ${r.noter?`<p class="muted">${esc(r.noter)}</p>`:""}
+  ${r.url?`<p class="muted"><a href="${esc(r.url)}" target="_blank" rel="noopener">Se retten på hellofresh.dk</a></p>`:""}`;
+  document.getElementById("oTilbage").onclick=()=>{oAaben=null;renderOpsk();window.scrollTo(0,0)};
+  vis.querySelectorAll("[data-op]").forEach(b=>b.onclick=()=>{oPers=Math.min(10,Math.max(1,n+ +b.dataset.op));renderOpskVis()});
+  vis.querySelectorAll("[data-ob]").forEach(s=>s.onchange=()=>{(oValg[r.id]=oValg[r.id]||{})[+s.dataset.ob]=s.value;renderOpskVis()});
+  vis.querySelectorAll("[data-odag]").forEach(b=>b.onclick=()=>{oPlacer(r,b.dataset.odag);changed();toast(r.t+" er sat på "+relLabel(b.dataset.odag))});
+}
+/* Sæt en ret fra banken på planen. Returnerer id på den faste ret. */
+function oPlacer(r,dato,personer){
+  const n=personer||oPers||st.settings.P,har=oHar(),mt=oMatch(r,n,har,oValg[r.id]);
+  const id="f"+Date.now().toString(36);
+  const mangler=mt.koeb.map(x=>{const m={navn:x.navn,maengde:oFmt(x.m,x.e),kat:(OI[x.id]&&OI[x.id].afd)||gaetAfd(x.navn)};const t=tBedst(x.id,dato);if(t)m.tilbud=t;return m});
+  const brugt=[];
+  for(const x of mt.harL){
+    const h=har[x.id];
+    if(h.kilde==="skab"&&st.skab[h.k]){
+      const vare=OI[x.id];let behov=oOmregn(x.m,x.e,vare);
+      if(behov!=null&&P[h.k].e!==vare.be){const g=oGram(x.m,x.e,vare);behov=(P[h.k].e==="g"||P[h.k].e==="ml")?g:null}
+      const tag=behov==null?st.skab[h.k].amt:Math.min(st.skab[h.k].amt,behov);
+      brugt.push({k:h.k,amt:tag,dage:st.skab[h.k].dage});
+      st.skab[h.k].amt-=tag;if(st.skab[h.k].amt<=1e-6)delete st.skab[h.k];
+    }else if(h.kilde==="fri"){
+      const f=st.fri.find(y=>y.navn===h.fri);if(!f)continue;
+      brugt.push({fri:f.navn,niveau:f.niveau||"hel"});
+      if((f.niveau||"hel")==="lidt")st.fri=st.fri.filter(y=>y!==f);else f.niveau="lidt";
+    }
+  }
+  st.fast.push({id,dato,navn:r.t,opskrift:r.id,personer:n,mangler,brugt});
+  for(const m of mangler)st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde,kat:m.kat,til:r.t,fastId:id,...(m.tilbud?{tilbud:m.tilbud,dato}:{})});
+  ugeStart();
+  return id;
+}
+/* Fjern en ret fra planen og læg det, den ville bruge fra skabet, tilbage */
+function fjernFast(id){
+  const f=st.fast.find(x=>x.id===id);
+  for(const b of (f&&f.brugt)||[]){
+    if(b.k&&P[b.k])st.skab[b.k]={amt:(st.skab[b.k]?.amt||0)+b.amt,dage:st.skab[b.k]?.dage??b.dage??ho(b.k)};
+    else if(b.fri){const x=st.fri.find(y=>y.navn===b.fri);if(x)x.niveau=b.niveau;else st.fri.push({navn:b.fri,niveau:b.niveau})}
+  }
+  st.fast=st.fast.filter(x=>x.id!==id);st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==id);
+}
+/* Til Claude: kort katalog over banken, med det skabet kan bruges til */
+function oKatalogTekst(){
+  const har=oHar(),n=st.settings.P;
+  return OB.opskrifter.map(r=>{const m=oMatch(r,n,har,oValg[r.id]);return `${r.id} | ${r.t}${r.u?" "+r.u:""} | ${oTid(r)} | ${r.k.join("/")}${m.harL.length?" | bruger fra skabet: "+m.harL.map(x=>(OI[x.id]||{n:x.navn}).n.toLowerCase()).join(", "):""}`}).join("\n");
+}
+document.getElementById("opskSoeg").oninput=e=>{oFilt.soeg=e.target.value;renderOpsk()};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-oopen]");if(b){e.preventDefault();oVis(b.dataset.oopen);window.scrollTo(0,0)}});
+
+/* ---------- Faner, gem, toast ---------- */
+function show(id){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.id===id));
+  document.querySelectorAll("nav.bar button").forEach(b=>{if(b.dataset.tab===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav.bar button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+let tt=null;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2200)}
+function changed(){render();save()}
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    const data=JSON.parse(JSON.stringify(st));
+    if(docRef){try{await docRef.set(data);flag("Gemt")}catch(e){flag("Ikke gemt");local(data)}}
+    else local(data);
+  },600);
+}
+function local(d){try{localStorage.setItem("opbrugt",JSON.stringify(d));flag("Gemt på telefonen")}catch(e){}}
+function flag(m){document.getElementById("saveState").textContent=m}
+function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st={...JSON.parse(JSON.stringify(DEFAULT)),...d,settings:{...DEFAULT.settings,...(d.settings||{})}}}}
+
+try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
+fillSelects();render();setupScan();
+
+function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
+window.addEventListener("error",e=>{try{diag("fejl: "+e.message+" (linje "+e.lineno+")")}catch(_){}});
+window.addEventListener("unhandledrejection",e=>{try{diag("fejl: "+((e.reason&&(e.reason.code||e.reason.message))||e.reason))}catch(_){}});
+function flatAdapter(){
+  /* chat-forhåndsvisningen har en simpel window.claude.complete i stedet for use() */
+  if(!window.claude||typeof window.claude.complete!=="function")return null;
+  return {
+    limits:async()=>null,
+    json:async(prompt)=>{
+      let t;try{t=await window.claude.complete(prompt)}catch(e){throw {code:"upstream_error",message:String(e)}}
+      t=String(t||"").replace(/```json|```/g,"").trim();
+      const a=t.indexOf("{"),b=t.lastIndexOf("}");
+      try{return JSON.parse(a>=0?t.slice(a,b+1):t)}catch(e){throw {code:"invalid_json",message:"ugyldigt svar"}}
+    }
+  };
+}
+(async()=>{
+  if(!window.claude){diag("ingen (siden kører uden for Claude)");document.getElementById("noClaude").style.display="";return}
+  if(!window.claude.use){
+    sample=flatAdapter();
+    diag(sample?"chat-forhåndsvisning (Snak virker, scanning og deling af data gør ikke)":"ingen (window.claude uden use)");
+    document.getElementById("noClaude").style.display=sample?"none":"";
+    setupScan();return;
+  }
+  try{
+    db=await window.claude.use("db");
+    if(db){docRef=db.doc("state/main");const s=await docRef.get();if(s.exists){merge(s.data());render()}flag("");tHent()}
+  }catch(e){docRef=null}
+  try{sample=await window.claude.use("sample")}catch(e){sample=null}
+  if(!sample){const f=flatAdapter();if(f)sample=f}
+  diag(`Claude-runtime · database ${docRef?"✓":"✗"} · Claude-svar ${sample?"✓":"✗ (ikke tilladt eller ikke tilgængelig her)"}`);
+  setupScan();
+  document.getElementById("noClaude").style.display=sample?"none":"";
+})();
+</script>
+</body>
+</html>

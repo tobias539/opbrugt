@@ -1,0 +1,265 @@
+{
+  "_beskrivelse": "Grupper af ingredienser, der kan bytte plads i en opskrift. En gruppe er defineret ud fra ROLLEN i retten (rå i salat, på bagepladen, på panden ...), fordi det, der kan erstatte agurk i en salat, ikke kan erstatte den i tzatziki. En ingredienslinje i en opskrift peger på en gruppe med feltet 'variabel'; originalen bevares. kvalitet: 'god' = næsten lige så godt, 'ok' = virker, men retten ændrer karakter. Der byttes efter vægt (gram), se gram_pr_stk i ingredienser.json. 'tilberedning' (raa/ovn/pande/kogt) bruges kun, når en ingrediens findes i flere grupper: så afgør fremgangsmåden, hvilken gruppe linjen hører til. 'bytte': 'efter smag' betyder, at mængden ikke kan regnes om efter vægt (fx citron til eddike).",
+  "raat-salatgroent": {
+    "navn": "Råt, saftigt grønt",
+    "rolle": "Rå i salat, salsa, slaw eller som topping på en bowl",
+    "medlemmer": {
+      "agurk": "god",
+      "tomat": "god",
+      "cherrytomater": "god",
+      "peberfrugt": "god",
+      "radiser": "god",
+      "glaskaal": "ok",
+      "fennikel": "ok",
+      "majs": "ok",
+      "gulerod": "ok",
+      "avocado": "ok"
+    },
+    "tilberedning": [
+      "raa"
+    ]
+  },
+  "frugt-i-salat": {
+    "navn": "Sød, frisk frugt",
+    "rolle": "Rå frugt i salat eller salsa, der giver sødme og friskhed",
+    "medlemmer": {
+      "mango": "god",
+      "aeble": "god"
+    },
+    "tilberedning": [
+      "raa"
+    ]
+  },
+  "kaal-til-slaw": {
+    "navn": "Kål til slaw og kålsalat",
+    "rolle": "Rå, finsnittet kål i salat eller slaw",
+    "medlemmer": {
+      "kaalsalat-snittet": "god",
+      "spidskaal-skaaret": "god",
+      "roedkaal-skaaret": "god",
+      "groenkaal-skaaret": "ok"
+    },
+    "tilberedning": [
+      "raa"
+    ]
+  },
+  "salatblade": {
+    "navn": "Salatblade",
+    "rolle": "Grønne blade, rå i salat eller vendt i til sidst",
+    "medlemmer": {
+      "blandet-salat": "god",
+      "rucola": "god",
+      "spinat": "god",
+      "romainesalat": "god"
+    },
+    "tilberedning": [
+      "raa"
+    ]
+  },
+  "ovngroent": {
+    "navn": "Grønt på bagepladen",
+    "rolle": "Grøntsager, der bages i ovnen",
+    "medlemmer": {
+      "gulerod": "god",
+      "pastinak": "god",
+      "roedbede": "god",
+      "blomkaal": "god",
+      "broccoli": "god",
+      "peberfrugt": "god",
+      "zucchini": "god",
+      "fennikel": "god",
+      "champignon": "ok",
+      "tomat": "ok",
+      "cherrytomater": "ok"
+    },
+    "tilberedning": [
+      "ovn"
+    ]
+  },
+  "pandegroent": {
+    "navn": "Grønt på panden, i wok eller gryde",
+    "rolle": "Grøntsager, der steges, wokkes eller koges med i en sauce, suppe eller curry",
+    "medlemmer": {
+      "peberfrugt": "god",
+      "zucchini": "god",
+      "broccoli": "god",
+      "champignon": "god",
+      "portobello": "god",
+      "pak-choi": "god",
+      "spidskaal-skaaret": "god",
+      "gulerod": "god",
+      "wokblanding": "god",
+      "porre": "ok",
+      "blomkaal": "ok",
+      "spinat": "ok",
+      "majs": "ok",
+      "glaskaal": "ok"
+    },
+    "tilberedning": [
+      "pande",
+      "kogt"
+    ]
+  },
+  "tomat-i-sauce": {
+    "navn": "Tomat i varm sauce",
+    "rolle": "Tomat, der koges eller steges ind i en sauce",
+    "medlemmer": {
+      "hakkede-tomater": "god",
+      "tomat": "ok",
+      "cherrytomater": "ok"
+    },
+    "tilberedning": [
+      "pande",
+      "kogt"
+    ]
+  },
+  "loeg": {
+    "navn": "Løg",
+    "rolle": "Løg til stegning, sauce eller syltning",
+    "medlemmer": {
+      "loeg": "god",
+      "porre": "ok",
+      "foraarsloeg": "ok"
+    }
+  },
+  "friske-urter": {
+    "navn": "Friske krydderurter",
+    "rolle": "Hakkede urter til topping, dressing eller salat",
+    "medlemmer": {
+      "persille": "god",
+      "koriander": "god",
+      "basilikum": "god",
+      "dild": "god",
+      "mynte-koriander": "god",
+      "purloeg": "god",
+      "thaibasilikum": "ok"
+    }
+  },
+  "korn-og-ris": {
+    "navn": "Ris og korn",
+    "rolle": "Kogt tilbehør eller base i en bowl",
+    "medlemmer": {
+      "ris": "god",
+      "bulgur": "god",
+      "couscous": "god",
+      "perlecouscous": "god",
+      "orzo": "ok"
+    }
+  },
+  "pasta-og-nudler": {
+    "navn": "Pasta og nudler",
+    "rolle": "Kogt pasta eller nudler som base",
+    "medlemmer": {
+      "pasta": "god",
+      "orzo": "ok",
+      "udonnudler": "ok"
+    }
+  },
+  "kartofler": {
+    "navn": "Kartofler",
+    "rolle": "Kogte kartofler, mos eller kartoffelsalat",
+    "medlemmer": {
+      "kartofler": "god",
+      "pastinak": "ok"
+    }
+  },
+  "cremet-dip": {
+    "navn": "Cremet dip og dressing",
+    "rolle": "Kold, cremet base i dressing, dip eller dressing til salat",
+    "medlemmer": {
+      "creme-fraiche": "god",
+      "yoghurt": "god",
+      "mayonnaise": "ok",
+      "aioli": "ok"
+    },
+    "tilberedning": [
+      "raa"
+    ]
+  },
+  "cremet-sauce": {
+    "navn": "Fløde i varm sauce",
+    "rolle": "Det, der gør en varm sauce cremet",
+    "medlemmer": {
+      "madlavningsfloede": "god",
+      "creme-fraiche": "god",
+      "kokosmaelk": "ok"
+    },
+    "tilberedning": [
+      "pande",
+      "kogt"
+    ]
+  },
+  "revet-ost": {
+    "navn": "Revet eller høvlet ost",
+    "rolle": "Ost til topping eller gratinering",
+    "medlemmer": {
+      "parmesan": "god",
+      "finrevet-ost": "god",
+      "revet-gouda": "god",
+      "mozzarella": "ok"
+    }
+  },
+  "smuldreost": {
+    "navn": "Smuldreost",
+    "rolle": "Blød ost, der smuldres over",
+    "medlemmer": {
+      "graesk-ost": "god",
+      "gedeost": "god",
+      "mozzarella": "ok"
+    }
+  },
+  "citrus-og-syre": {
+    "navn": "Syre",
+    "rolle": "Syre i dressing eller til at smage til",
+    "medlemmer": {
+      "citrusfrugt": "god",
+      "hvidvinseddike": "ok",
+      "balsamico": "ok"
+    },
+    "bytte": "efter smag"
+  },
+  "styrke": {
+    "navn": "Chili og styrke",
+    "rolle": "Det, der giver retten styrke",
+    "medlemmer": {
+      "chili-frisk": "god",
+      "chiliflager": "god",
+      "sriracha": "ok"
+    },
+    "bytte": "efter smag"
+  },
+  "hakket-koed": {
+    "navn": "Hakket kød",
+    "rolle": "Hakket kød til bøffer, sauce eller stegning",
+    "medlemmer": {
+      "hakket-oksekoed": "god",
+      "hakket-svinekoed": "god",
+      "hakket-svine-kalvekoed": "god"
+    }
+  },
+  "kylling": {
+    "navn": "Kylling",
+    "rolle": "Kyllingebryst, stegt eller bagt",
+    "medlemmer": {
+      "kyllingebryst": "god",
+      "kyllingebryst-bbq": "god"
+    }
+  },
+  "hvid-fisk": {
+    "navn": "Hvid fisk",
+    "rolle": "Fast, hvid fisk",
+    "medlemmer": {
+      "torsk": "god",
+      "sej": "god"
+    }
+  },
+  "saltet-koed": {
+    "navn": "Bacon, skinke og pølse",
+    "rolle": "Salt, sprødt kød som smagsgiver",
+    "medlemmer": {
+      "bacon": "god",
+      "prosciutto": "god",
+      "chorizo": "ok"
+    }
+  }
+}

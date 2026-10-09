@@ -1,0 +1,302 @@
+{
+  "id": "hawaiiansk-laksebowl-med-jasminris-og-mango-chilisalsa",
+  "titel": "Hawaiiansk laksebowl",
+  "undertitel": "med jasminris og mango-chilisalsa",
+  "billede": "billeder/hawaiiansk-laksebowl-med-jasminris-og-mango-chilisalsa.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/hawaiiansk-laksebowl-65ccc73f5d0250930594a817",
+    "uge": "2026-U08",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 13,
+      "bagside": 14
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 440
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "fisk"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ris",
+      "navn": "Jasminris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "peanuts-saltede",
+      "navn": "Saltede peanuts",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "jordnoedder"
+      ],
+      "spor_af": [
+        "noedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "avocado",
+      "navn": "Avocado",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "srirachamayonnaise-vegansk",
+      "navn": "Vegansk srirachamayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      }
+    },
+    {
+      "ingrediens": "roeget-laks",
+      "navn": "Koldrøget laks",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 200
+      },
+      "allergener": [
+        "fisk"
+      ]
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "mango",
+      "navn": "Mango",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salsa",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til avocado",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'et nip salt'"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til salsa",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "valgfri": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kortet skriver 'eventuelt en smule olivenolie'"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ris",
+      "tekst": [
+        "Bring vand i kog i en mellemstor gryde.",
+        "Tilsæt ris og salt, og kog under låg på middellav varme i 12 min.",
+        "Tag gryden af varmen, og lad hvile under låg i 10 min."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered mango",
+      "tekst": [
+        "Skræl mango, skær over på langs ca. 1 cm fra midten uden om stenen, og skær i 2 cm tern."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Hak agurk groft.",
+        "Halver citrusfrugt."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav mango-chili salsa",
+      "tekst": [
+        "Bland mango, agurk, peanuts, chiliflager, citrusfrugtsaft og salt i en stor skål.",
+        "Tilsæt eventuelt en smule olivenolie."
+      ],
+      "tip": "Spring chiliflagerne over, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 5,
+      "titel": "Forbered avocado",
+      "tekst": [
+        "Halver avocado, og fjern sten. Grav indmad ud med en ske, skær i tynde skiver, og krydr med et nip salt."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris i dybe tallerkener.",
+        "Top med mango-chilisalsa, avocado og røget laks.",
+        "Server med srirachamayonnaise."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 783,
+      "energi_kcal": 187,
+      "fedt_g": 10.8,
+      "maettet_fedt_g": 1.7,
+      "kulhydrat_g": 19,
+      "sukker_g": 3.2,
+      "protein_g": 5.8,
+      "fiber_g": 1.6,
+      "salt_g": 0.86
+    },
+    "pr_portion": {
+      "energi_kj": 3441,
+      "energi_kcal": 822,
+      "fedt_g": 47.5,
+      "maettet_fedt_g": 7.3,
+      "kulhydrat_g": 83.7,
+      "sukker_g": 14.2,
+      "protein_g": 25.4,
+      "fiber_g": 7.1,
+      "salt_g": 3.78
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "jordnoedder",
+      "fisk"
+    ],
+    "spor_af": [
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Titlen er skåret af forsiden i scanningen, så titel og undertitel er hentet fra hellofresh.dk (ingredienserne passer); tiden står på kortet."
+}

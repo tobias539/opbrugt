@@ -1,0 +1,355 @@
+{
+  "id": "hurtig-buffalo-glaseret-svinekoedsbowl-med-cremet-ranchslaw-og-persilleris",
+  "titel": "Hurtig 'buffalo'-glaseret svinekødsbowl",
+  "undertitel": "med cremet ranchslaw og persilleris",
+  "billede": "billeder/hurtig-buffalo-glaseret-svinekoedsbowl-med-cremet-ranchslaw-og-persilleris.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U43",
+    "menunummer": 1,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 39,
+      "bagside": 40
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 500
+  },
+  "tid": {
+    "min": 15,
+    "max": 20,
+    "pr_portioner": {
+      "4": {
+        "min": 20,
+        "max": 25
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 0.5,
+      "enhed": "fed",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod, Julienne",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "note": "HelloFresh' færdigskårne gulerodsstrimler",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket svinekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "honning",
+      "navn": "Honning",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      }
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 50
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "roeget-paprika",
+      "navn": "Røget paprika",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Basmatiris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "spidskaal-skaaret",
+      "navn": "Spidskål, skåret",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "sriracha",
+      "navn": "Sriracha",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "majs",
+      "navn": "Majs",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "note": "En lille dåse; vægten står ikke på kortet",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til ris",
+      "maengde": 3,
+      "enhed": "dl",
+      "tabel": {
+        "3": 4.5,
+        "4": 6
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til ris",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "ketchup",
+      "navn": "Ketchup til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til slaw",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog ris",
+      "tekst": [
+        "Bring vand i kog i en mellemstor gryde.",
+        "Tilsæt ris og salt, og kog under låg på middellav varme i 10 min.",
+        "Tag gryden af varmen, og lad hvile indtil servering."
+      ],
+      "tip": "Fjern ikke låget, mens risen hviler."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kød",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket svinekød med salt i 4-5 min, eller indtil brunet.",
+        "Sænk til middel varme.",
+        "Tilsæt smør og røget paprika, og steg i 30 sek, eller indtil velduftende.",
+        "Tilsæt sriracha, honning og ketchup, rør rundt, og tag panden af varmen."
+      ],
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Lav slaw",
+      "tekst": [
+        "Imens, hæld væde fra majs.",
+        "Pres eller hak hvidløg fint.",
+        "Bland fraiche, mayonnaise, hvidløg, majs, spidskål, gulerod, salt og et nip peber i en stor skål.",
+        "Riv persille groft, og vend i gryden med ris lige inden servering."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret ris, kød og slaw i dybe tallerkener."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 725,
+      "energi_kcal": 173,
+      "fedt_g": 7.5,
+      "maettet_fedt_g": 2.7,
+      "kulhydrat_g": 19.4,
+      "sukker_g": 5.2,
+      "protein_g": 7.4,
+      "fiber_g": 1.1,
+      "salt_g": 1.04
+    },
+    "pr_portion": {
+      "energi_kj": 3599,
+      "energi_kcal": 860,
+      "fedt_g": 37.1,
+      "maettet_fedt_g": 13.4,
+      "kulhydrat_g": 96.1,
+      "sukker_g": 25.9,
+      "protein_g": 36.7,
+      "fiber_g": 5.7,
+      "salt_g": 5.17
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep"
+    ]
+  }
+}

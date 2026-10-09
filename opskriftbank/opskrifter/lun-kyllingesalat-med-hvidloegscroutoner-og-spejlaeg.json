@@ -1,0 +1,341 @@
+{
+  "id": "lun-kyllingesalat-med-hvidloegscroutoner-og-spejlaeg",
+  "titel": "Lun kyllingesalat",
+  "undertitel": "med sprøde hvidløgscroutoner og spejlæg (OBS! Æg medfølger ikke)",
+  "billede": "billeder/lun-kyllingesalat-med-hvidloegscroutoner-og-spejlaeg.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/lun-kyllingesalat-668e76f3da99f37bb7c07466",
+    "uge": "2025-U42",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 31,
+      "bagside": 32
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 530
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad",
+      "frokost"
+    ],
+    "ret_type": [
+      "salat"
+    ],
+    "hovedprotein": [
+      "kylling",
+      "aeg"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "baguette",
+      "navn": "Baguette",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 100
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "sennep",
+      "navn": "Sennep",
+      "maengde": 15,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 30
+      },
+      "allergener": [
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "blandet-salat",
+      "navn": "Blandet salat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 100
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "finrevet-ost",
+      "navn": "Finrevet ost",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 3,
+      "enhed": "stk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til brød",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til stegning",
+      "maengde": 2,
+      "enhed": "stk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered råvarer",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C (varmluft).",
+        "Pres eller hak hvidløg fint.",
+        "Skræl gulerod til lange, tynde bånd, og hak det sidste stykke fint.",
+        "Hak tomat groft.",
+        "Skyl salat.",
+        "Skær brød i små stykker."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Bag hvidløgscroutoner",
+      "tekst": [
+        "Fordel brød på en bageplade med bagepapir.",
+        "Tilsæt olivenolie, hvidløg og et nip salt og peber, og vend sammen.",
+        "Bag i ovnen i 8-10 min, eller indtil gyldne og sprøde."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Imens, opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt.",
+        "Steg kylling med salt i 3-4 min på hver side, eller indtil brunet og gennemstegt.",
+        "Overfør til en tallerken."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Spejl æg",
+      "tekst": [
+        "Opvarm en smule olivenolie i samme stegepande på middelhøj varme.",
+        "Spejl æg i 4-6 min, eller indtil æggehviden er fast og blommen stadig er mest flydende.",
+        "Krydr med et nip salt og peber."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Bland salat",
+      "tekst": [
+        "Imens, bland sennep, mayonnaise, vand, halvdelen af finrevet ost og salt og et nip peber i en stor skål.",
+        "Vend salat, gulerod og tomat i skålen.",
+        "Skær kylling i skiver."
+      ],
+      "tip": "Bland salat lige inden servering."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret salat i dybe tallerkener.",
+        "Top med hvidløgscroutoner, kylling og spejlæg.",
+        "Drys med resterende finrevet ost."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 560,
+      "energi_kcal": 134,
+      "fedt_g": 6.8,
+      "maettet_fedt_g": 1.3,
+      "kulhydrat_g": 8.6,
+      "sukker_g": 2.3,
+      "protein_g": 9.6,
+      "fiber_g": 1.4,
+      "salt_g": 0.63
+    },
+    "pr_portion": {
+      "energi_kj": 2985,
+      "energi_kcal": 713,
+      "fedt_g": 36.1,
+      "maettet_fedt_g": 6.9,
+      "kulhydrat_g": 45.6,
+      "sukker_g": 12.3,
+      "protein_g": 51.1,
+      "fiber_g": 7.4,
+      "salt_g": 3.33
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Titlens start er skåret af på forsiden i scanningen; titlen 'Lun kyllingesalat' er hentet fra HelloFresh' side for samme ret. Undertitel og tid står på kortet. Æg medfølger ikke i kassen."
+}

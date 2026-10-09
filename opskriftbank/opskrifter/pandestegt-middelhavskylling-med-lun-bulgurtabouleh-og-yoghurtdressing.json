@@ -1,0 +1,378 @@
+{
+  "id": "pandestegt-middelhavskylling-med-lun-bulgurtabouleh-og-yoghurtdressing",
+  "titel": "Pandestegt middelhavskylling",
+  "undertitel": "med lun bulgurtabouleh og yoghurtdressing",
+  "billede": "billeder/pandestegt-middelhavskylling-med-lun-bulgurtabouleh-og-yoghurtdressing.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/pandestegt-middelhavskylling-677e317fea4876edd83b1506",
+    "uge": "2025-U50",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 49,
+      "bagside": 50
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 480
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "middelhavs"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "salat"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 125,
+      "enhed": "g",
+      "tabel": {
+        "3": 250,
+        "4": 250
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.5,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 85,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 170
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "byg",
+        "gluten",
+        "kamut",
+        "khorasan",
+        "havre",
+        "rug"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "aioli",
+      "navn": "Aioli",
+      "maengde": 40,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 80
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til bulgur",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til bulgur",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3.5,
+        "4": 4.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bulgur",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Et nip til kyllingen og til at smage taboulehen til"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af kyllingen og evt. til taboulehen"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog bulgur",
+      "tekst": [
+        "Pres eller hak hvidløg fint.",
+        "Opvarm olivenolie i en mellemstor gryde på middel varme.",
+        "Svits hvidløg i 1-2 min, eller indtil velduftende.",
+        "Tilsæt vand, og bring i kog. Tilsæt bulgur, bouillon og salt, og kog under låg på middellav varme i 9-10 min, eller indtil 'al dente'."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Krydr kylling med Middelhavsdrøm og et nip salt og peber.",
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling i 5-6 min på hver side, eller indtil gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, hak agurk og løg fint.",
+        "Halver cherrytomater.",
+        "Hak persille fint.",
+        "Skær citrusfrugt i både."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav tabouleh",
+      "tekst": [
+        "Bland bulgur, cherrytomater, agurk, løg og citrusfrugtsaft i en skål.",
+        "Smag til med salt og peber."
+      ],
+      "tip": "Tilsæt en smule olivenolie."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav yoghurtdressing",
+      "tekst": [
+        "Bland yoghurt, aioli og persille i en lille skål, og krydr med salt og et nip peber."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret tabouleh og kylling på tallerkener.",
+        "Server med yoghurtdressing og resterende citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 527,
+      "energi_kcal": 126,
+      "fedt_g": 5.6,
+      "maettet_fedt_g": 1.1,
+      "kulhydrat_g": 10.2,
+      "sukker_g": 1.8,
+      "protein_g": 8.9,
+      "fiber_g": 1.9,
+      "salt_g": 0.59
+    },
+    "pr_portion": {
+      "energi_kj": 2544,
+      "energi_kcal": 608,
+      "fedt_g": 27,
+      "maettet_fedt_g": 5.3,
+      "kulhydrat_g": 49.3,
+      "sukker_g": 8.5,
+      "protein_g": 43.1,
+      "fiber_g": 9.1,
+      "salt_g": 2.83
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "gluten",
+      "byg",
+      "havre",
+      "rug",
+      "kamut",
+      "khorasan"
+    ]
+  },
+  "noter": "Titlen er skåret af forsiden i scanningen; kun tiden står der. Titel og undertitel er taget fra hellofresh.dk, hvor retten har de samme ingredienser og trin (dér står ½ løg til 2 personer, kortet skriver 1 stk). Tiden er fra forsiden. Det er ikke samme ret som 'Græsk inspireret kyllingesalat' (den er med orzo og BBQ-marineret kylling)."
+}

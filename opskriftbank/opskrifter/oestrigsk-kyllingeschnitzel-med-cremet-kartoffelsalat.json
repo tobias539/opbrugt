@@ -1,0 +1,361 @@
+{
+  "id": "oestrigsk-kyllingeschnitzel-med-cremet-kartoffelsalat",
+  "titel": "Østrigsk kyllingeschnitzel",
+  "undertitel": "med cremet kartoffelsalat og frisk citrus",
+  "billede": "billeder/oestrigsk-kyllingeschnitzel-med-cremet-kartoffelsalat.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U02",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 33,
+      "bagside": 34
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 610
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "oestrigsk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 50
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Crème fraiche",
+      "maengde": 75,
+      "enhed": "ml",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "note": "Trinene kalder det skalotteløg.",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "panko",
+      "navn": "Panko",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 800,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "purloeg",
+      "navn": "Purløg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til løg",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Mel til panering",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til panering",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til panering",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kogevandet og kartoflerne",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog kartofler",
+      "tekst": [
+        "Bring en mellemstor gryde med saltet vand i kog.",
+        "Skær kartofler (uskrællet) i 2 cm tern.",
+        "Kog i 11-13 min, eller indtil de nemt kan deles med en kniv, og hæld vand fra.",
+        "Imens, skyl spinat.",
+        "Krydr kartofler med et nip salt og peber, tilsæt spinat, og vend indtil den er faldet sammen."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered kylling",
+      "tekst": [
+        "Imens, skær skalotteløg i tynde skiver.",
+        "Bland skalotteløg og salt i en lille skål, og stil til side.",
+        "Læg kylling mellem to stykker bagepapir, bank flade (ca. 2 cm) med en kødhammer eller kagerulle, og krydr med salt."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Paner kylling",
+      "tekst": [
+        "Bland hvedemel, salt og et nip peber i en dyb tallerken.",
+        "Pisk æg i en anden dyb tallerken.",
+        "Kom panko i en tredje dyb tallerken.",
+        "Vend kylling i hvedemel, derefter i æg og til sidst i panko, og overfør til en tallerken."
+      ],
+      "tip": "Hvis du ikke har æg, kan det erstattes med 2 spsk mælk."
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Hæld olivenolie i en stegepande, så hele bunden er dækket, og varm op på middelhøj varme.",
+        "Steg kylling i 3-4 min på hver side, eller indtil gylden og gennemstegt.",
+        "Overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Tilsæt ekstra olivenolie, hvis kyllingen sidder fast i panden. Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav kartoffelsalat",
+      "tekst": [
+        "Hak purløg fint.",
+        "Skær citrusfrugt i både.",
+        "Vend mayonnaise, crème fraiche, salt, purløg og skalotteløg i gryden med kartofler og spinat."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kylling og kartoffelsalat på tallerkener.",
+        "Server med citrusfrugtbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 552,
+      "energi_kcal": 132,
+      "fedt_g": 5.6,
+      "maettet_fedt_g": 1.8,
+      "kulhydrat_g": 12.4,
+      "sukker_g": 1,
+      "protein_g": 8.1,
+      "fiber_g": 1.2,
+      "salt_g": 0.53
+    },
+    "pr_portion": {
+      "energi_kj": 3344,
+      "energi_kcal": 799,
+      "fedt_g": 33.7,
+      "maettet_fedt_g": 11,
+      "kulhydrat_g": 75.3,
+      "sukker_g": 6.1,
+      "protein_g": 48.8,
+      "fiber_g": 7.5,
+      "salt_g": 3.22
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "hvede"
+    ]
+  },
+  "noter": "Ingredienslisten skriver 'Løg', men trinene skriver 'skalotteløg'. Retten er også scannet i en ældre udgave med ukendt uge (forside side 17 med menunummer 4, bagside side 18). Den bruger 60/100/100 g blandet salat i stedet for spinat. Salaten skylles og vendes i kartoffelsalaten i trin 5 i stedet for at falde sammen med kartoflerne i trin 1, og trin 2 skriver 'løg' i stedet for 'skalotteløg'. Alle andre mængder er de samme. Næringsindholdet afviger lidt: 3342 kJ/799 kcal, fedt 33,8 g, mættet fedt 10,5 g, kulhydrat 75,6 g, sukker 6,3 g, protein 48,6 g, fiber 7,4 g og salt 3,19 g pr. portion."
+}

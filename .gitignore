@@ -1,0 +1,13 @@
+# Tilbudsdata fra Tjek: kun de kompakte filer i tilbud/til_opbrugt/ udgives
+tilbud/raa/
+tilbud/aktuelle.json
+tilbud/log.txt
+tilbud/til_opbrugt/sendt.txt
+tilbud/til_opbrugt/fingeraftryk.txt
+
+# Originale scanninger
+opskriftbank/kilder/scanninger/
+
+.claude/settings.local.json
+__pycache__/
+desktop.ini

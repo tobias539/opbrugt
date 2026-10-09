@@ -1,0 +1,392 @@
+{
+  "id": "cremet-one-pot-med-chorizo-og-tortelloni-med-spinat-finrevet-ost-og-gremolata",
+  "titel": "Cremet one-pot med chorizo og tortelloni",
+  "undertitel": "med spinat, finrevet ost og gremolata",
+  "billede": "billeder/cremet-one-pot-med-chorizo-og-tortelloni-med-spinat-finrevet-ost-og-gremolata.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/cremet-one-pot-med-chorizo-og-tortelloni-67dd381cf7a0f00255e99cd2",
+    "uge": "2026-U15",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 51,
+      "bagside": 52
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 25,
+    "max": 25
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "boernevenlig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "chorizo",
+      "navn": "Chorizo, ternet",
+      "maengde": 120,
+      "enhed": "g",
+      "tabel": {
+        "3": 180,
+        "4": 240
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "souvlaki-krydderi",
+      "navn": "Souvlaki-krydderi",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 6,
+        "4": 8
+      },
+      "spor_af": [
+        "selleri",
+        "krebsdyr",
+        "aeg",
+        "fisk",
+        "maelk",
+        "sennep",
+        "sesam",
+        "soja"
+      ]
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 292.5,
+        "4": 390
+      },
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "madlavningsfloede",
+      "navn": "Madlavningsfløde",
+      "maengde": 150,
+      "enhed": "ml",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "tortelloni",
+      "navn": "Tortelloni",
+      "maengde": 300,
+      "enhed": "g",
+      "tabel": {
+        "3": 450,
+        "4": 600
+      },
+      "allergener": [
+        "aeg",
+        "gluten",
+        "maelk",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja",
+        "selleri",
+        "krebsdyr",
+        "fisk",
+        "bloeddyr",
+        "noedder"
+      ]
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 30,
+      "enhed": "g",
+      "tabel": {
+        "3": 45,
+        "4": 60
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 1,
+      "enhed": "g",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Grana Padano, flager",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 40
+      },
+      "allergener": [
+        "aeg",
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1.5,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til gremolata",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til gremolata",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 2,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til sauce",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.75,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg chorizo",
+      "tekst": [
+        "Opvarm olivenolie i en stor stegepande på middel varme.",
+        "Steg chorizo i 4-5 min, eller indtil gennemstegt.",
+        "Overfør til en tallerken med køkkenrulle."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered grøntsager",
+      "tekst": [
+        "Imens, hak løg fint.",
+        "Skær gulerod i 1 cm tern.",
+        "Skyl spinat."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Opvarm samme stegepande på middelhøj varme.",
+        "Steg løg og gulerod i 3-4 min, eller indtil bløde.",
+        "Tilsæt souvlaki-krydderi, hakkede tomater, madlavningsfløde, vand, sukker, salt og et nip peber, og rør sammen."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Tilsæt tortelloni",
+      "tekst": [
+        "Tilsæt tortelloni, og dæk med låg.",
+        "Sænk til middel varme, og kog i 5-6 min, eller indtil pasta er 'al dente'."
+      ],
+      "tip": "'Al dente' betyder, at pastaen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav gremolata",
+      "tekst": [
+        "Imens, hak persille fint.",
+        "Pres eller hak hvidløg fint.",
+        "Bland persille, hvidløg, chiliflager, olivenolie, salt og et nip peber i en lille skål.",
+        "Tilsæt spinat og halvdelen af revet ost til stegepanden med pasta, og rør rundt indtil spinaten er faldet sammen."
+      ],
+      "tip": "Undlad chiliflager, eller brug mindre, hvis du ikke er til stærk mad."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret pasta i dybe tallerkener, og drys med resterende revet ost.",
+        "Top voksentallerkenerne med gremolata og chorizo."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 873,
+      "energi_kcal": 209,
+      "fedt_g": 13.5,
+      "maettet_fedt_g": 5.6,
+      "kulhydrat_g": 15.3,
+      "sukker_g": 4.2,
+      "protein_g": 6.9,
+      "fiber_g": 1.5,
+      "salt_g": 1.09
+    },
+    "pr_portion": {
+      "energi_kj": 4704,
+      "energi_kcal": 1124,
+      "fedt_g": 72.9,
+      "maettet_fedt_g": 30.1,
+      "kulhydrat_g": 82.7,
+      "sukker_g": 22.5,
+      "protein_g": 37,
+      "fiber_g": 8.1,
+      "salt_g": 5.88
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "noedder",
+      "sesam",
+      "fisk",
+      "krebsdyr",
+      "bloeddyr",
+      "maelk",
+      "aeg",
+      "sennep",
+      "selleri",
+      "soja"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet; titel, undertitel og tid er fra hellofresh.dk. Versionen på hellofresh.dk bruger 195 g passata og finrevet ost; kortet fra 2026-U15 har 200 g hakkede tomater og Grana Padano-flager. Kortet lægger op til, at børnene får retten uden gremolata og chorizo ('Top voksentallerkenerne')."
+}

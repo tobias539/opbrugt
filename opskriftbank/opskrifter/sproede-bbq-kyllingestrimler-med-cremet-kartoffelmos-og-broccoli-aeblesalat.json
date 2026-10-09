@@ -1,0 +1,370 @@
+{
+  "id": "sproede-bbq-kyllingestrimler-med-cremet-kartoffelmos-og-broccoli-aeblesalat",
+  "titel": "Sprøde BBQ-kyllingestrimler",
+  "undertitel": "med cremet kartoffelmos og broccoli-æblesalat",
+  "billede": "billeder/sproede-bbq-kyllingestrimler-med-cremet-kartoffelmos-og-broccoli-aeblesalat.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/sprode-bbq-kyllingestrimler-64ae8cf2565e2133abaa51b2",
+    "uge": "2026-U16",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 35,
+      "bagside": 36
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 770
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 50
+      },
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 105,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "panko",
+      "navn": "Panko",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 75,
+        "4": 75
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "broccoli",
+      "navn": "Broccoli",
+      "maengde": 125,
+      "enhed": "g",
+      "tabel": {
+        "3": 200,
+        "4": 250
+      },
+      "variabel": null
+    },
+    {
+      "ingrediens": "tranebaer-toerrede",
+      "navn": "Tranebær",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 30,
+        "4": 40
+      },
+      "spor_af": [
+        "noedder",
+        "jordnoedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "blomkaal",
+      "navn": "Blomkålsbuketter",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Kortet: 1 stk til 2 personer, men 400 g til både 3 og 4 personer",
+      "variabel": null
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 750,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til panering",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressing",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til mos",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til panering",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til dressing",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Mælk til mos",
+      "maengde": 3,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 5,
+        "4": 6
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker til dressing",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav kartoffelmos",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Skræl kartoffel, og skær i 2 cm tern.",
+        "Kog kartoffel og blomkålsbuketter i 11-13 min, eller indtil de nemt kan deles med en kniv. Hæld vand fra, og tilsæt mælk, salt og et nip peber. Mos med en kartoffelmoser eller gaffel, og stil til side med låg på."
+      ],
+      "tip": "Tilsæt en klat smør for en mere cremet mos."
+    },
+    {
+      "nr": 2,
+      "titel": "Paner kylling",
+      "tekst": [
+        "Imens, pisk æg i en dyb tallerken.",
+        "Bland panko, salt og et nip peber i en anden dyb tallerken.",
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt, og krydr med salt.",
+        "Vend kylling i æg og derefter i panko."
+      ],
+      "vigtigt": "En let lugt, når du åbner kyllingen, er helt normalt – det skyldes emballagen, som holder den frisk og god i smagen. Lad kyllingen få et par minutters luft, så er den klar til tilberedning!"
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Hæld olivenolie i en stor stegepande, så hele bunden er dækket, og varm op på middelhøj varme.",
+        "Steg kylling i 3-4 min på hver side, eller indtil gylden og gennemstegt, og overfør til en tallerken med køkkenrulle."
+      ],
+      "tip": "Tilsæt ekstra olivenolie ved behov. Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Forbered frugt og grønt",
+      "tekst": [
+        "Imens, skær æble i 1 cm tern.",
+        "Skær broccoli i små buketter og stokken i 1 cm tern."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Lav broccoli-æblesalat",
+      "tekst": [
+        "Bland yoghurt, mayonnaise, vand, sukker, salt og et stort nip peber i en lille skål.",
+        "Bland broccoli, æble, tranebær og halvdelen af yoghurtdressing i en stor skål."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kylling, mos og broccoli-æblesalat på tallerkener.",
+        "Server med resterende yoghurtdressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 443,
+      "energi_kcal": 106,
+      "fedt_g": 3.5,
+      "maettet_fedt_g": 0.7,
+      "kulhydrat_g": 11.5,
+      "sukker_g": 2.8,
+      "protein_g": 7,
+      "fiber_g": 1.3,
+      "salt_g": 0.77
+    },
+    "pr_portion": {
+      "energi_kj": 3414,
+      "energi_kcal": 816,
+      "fedt_g": 26.8,
+      "maettet_fedt_g": 5.7,
+      "kulhydrat_g": 88.7,
+      "sukker_g": 21.4,
+      "protein_g": 54,
+      "fiber_g": 9.7,
+      "salt_g": 5.9
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "aeg",
+      "sennep",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "jordnoedder",
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og ingen tid; titel, undertitel og tid (30 min) er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave uden blomkål. Mængderne her er fra kortet (2026-U16). Kortet angiver blomkålsbuketter som '1 stk' til 2 personer, men '400 g' til 3 og 4 personer; trin 1 staver dem 'blåmkålsbuketter'."
+}

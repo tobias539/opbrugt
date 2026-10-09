@@ -1,0 +1,321 @@
+{
+  "id": "hurtig-asiatisk-svine-og-kalvekoedsbowl-med-stegt-pak-choi-og-nudler",
+  "titel": "Hurtig asiatisk svine- og kalvekødsbowl",
+  "undertitel": "med stegt pak choi og nudler",
+  "billede": "billeder/hurtig-asiatisk-svine-og-kalvekoedsbowl-med-stegt-pak-choi-og-nudler.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/hurtig-asiatisk-svine-og-kalvekodsbowl-6687abc7f5bcc18fabe96969",
+    "uge": "2026-U15",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 04.pdf",
+    "sider": {
+      "forside": 19,
+      "bagside": 20
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 500
+  },
+  "tid": {
+    "min": 15,
+    "max": 15
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "bowl"
+    ],
+    "hovedprotein": [
+      "svinekoed",
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "sataysauce",
+      "navn": "Sataysauce",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      },
+      "allergener": [
+        "gluten",
+        "jordnoedder",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hakket-svine-kalvekoed",
+      "navn": "Hakket svine-/kalvekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "goan-xacuti",
+      "navn": "Goan Xacuti",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerod, Julienne",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "note": "HelloFresh' færdigskårne gulerodsstrimler",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "pak-choi",
+      "navn": "Pak choi",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "udonnudler",
+      "navn": "Udonnudler, tørrede",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "peanuts-saltede",
+      "navn": "Saltede peanuts",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "jordnoedder"
+      ],
+      "spor_af": [
+        "noedder",
+        "sesam"
+      ]
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 40,
+      "enhed": "ml",
+      "tabel": {
+        "3": 80,
+        "4": 80
+      },
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 1,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 2
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "soed-chilisauce",
+      "navn": "Sød chilisauce",
+      "maengde": 80,
+      "enhed": "g",
+      "tabel": {
+        "3": 160,
+        "4": 160
+      }
+    },
+    {
+      "ingrediens": "spidskaal-skaaret",
+      "navn": "Spidskål, skåret",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 120,
+        "4": 150
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Gemt nudelvand",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til nudler",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "En stor gryde vand"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kogevand",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Kogevandet skal være salt som havvand"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg hakket kød",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakket svine-/kalvekød i 4-5 min, eller indtil brunet.",
+        "Imens, hak pak choi groft.",
+        "Skær løg i tynde skiver."
+      ],
+      "tip": "Kogevandet skal være salt som havvand."
+    },
+    {
+      "nr": 2,
+      "titel": "Kog nudler",
+      "tekst": [
+        "Kog nudler i 4-6 min, eller indtil bløde.",
+        "Gem en kop nudelvand, og hæld resten fra.",
+        "Skyl nudler under koldt vand i en si."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav sauce",
+      "tekst": [
+        "Tilsæt Goan Xacuti, chiliflager, løg, pak choi, spidskål og gulerod til stegepanden, og steg i 1-2 min, eller indtil kødet er gennemstegt.",
+        "Tilsæt sød chilisauce, sojasauce, sataysauce og nudelvand, og tag af varmen.",
+        "Tilsæt nudler, og vend sammen."
+      ],
+      "tip": "Spring chiliflagerne over, eller brug mindre, hvis du ikke er til stærk mad.",
+      "vigtigt": "Kødet er færdigt, når det er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret nudler i dybe tallerkener.",
+        "Top med peanuts."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 689,
+      "energi_kcal": 165,
+      "fedt_g": 5.9,
+      "maettet_fedt_g": 1.6,
+      "kulhydrat_g": 19.1,
+      "sukker_g": 7.2,
+      "protein_g": 8.5,
+      "fiber_g": 1.9,
+      "salt_g": 1.33
+    },
+    "pr_portion": {
+      "energi_kj": 3460,
+      "energi_kcal": 827,
+      "fedt_g": 29.8,
+      "maettet_fedt_g": 8,
+      "kulhydrat_g": 96.1,
+      "sukker_g": 35.9,
+      "protein_g": 42.6,
+      "fiber_g": 9.5,
+      "salt_g": 6.66
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "jordnoedder",
+      "soja",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "noedder",
+      "sesam"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet, så titel, undertitel og tid (Total: 15 minutter) er hentet fra hellofresh.dk; webudgaven har forårsløg og koriander i stedet for kortets spidskål og løg. Samme ret er også scannet med bagside fra 2026-U10 (side 9/10): mængder, trin og næringsindhold er de samme, kun spor-listen for peanuts er kortere (kun nødder og sesam, ikke de enkelte nøddesorter 81-88)."
+}

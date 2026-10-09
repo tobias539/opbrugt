@@ -1,0 +1,323 @@
+{
+  "id": "graesk-inspireret-kyllingesalat-med-krydret-orzo-og-cremet-pestodressing",
+  "titel": "Græsk inspireret kyllingesalat",
+  "undertitel": "med krydret orzo og cremet pestodressing",
+  "billede": "billeder/graesk-inspireret-kyllingesalat-med-krydret-orzo-og-cremet-pestodressing.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/graesk-inspireret-kyllingesalat-663398611939c041d7ab5740",
+    "uge": "2026-U13",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 43,
+      "bagside": 44
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 540
+  },
+  "tid": {
+    "min": 20,
+    "max": 20
+  },
+  "kategorier": {
+    "koekken": [
+      "graesk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "salat",
+      "pasta"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "pestodressing",
+      "navn": "Cremet pestodressing",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      }
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 4,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "tabel": {
+        "3": 0.75,
+        "4": 1
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 30,
+      "enhed": "g",
+      "tabel": {
+        "3": 60,
+        "4": 60
+      },
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "orzo",
+      "navn": "Orzo",
+      "maengde": 180,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 360
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "kyllingebryst-bbq",
+      "navn": "Kyllingebrystfilet, BBQ-marineret",
+      "maengde": 325,
+      "enhed": "g",
+      "tabel": {
+        "3": 480,
+        "4": 700
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "kaalsalat-snittet",
+      "navn": "Snittet kålsalat",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 300
+      },
+      "note": "Nævnes ikke i trinene; se noter",
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salat",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til sauce",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true,
+      "note": "Trinene vender olivenolie og salt i den færdige orzo; kortet kalder det 'til sauce'"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til sauce",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "Til kogevandet (salt som havvand) og et nip til kyllingen"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af kyllingen"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog orzo",
+      "tekst": [
+        "Bring en stor gryde med saltet vand i kog.",
+        "Kog orzo i 8-9 min, eller indtil 'al dente', og hæld vand fra."
+      ],
+      "tip": "Vandet skal være salt som havvand. 'Al dente' betyder, at orzoen er kogt, men stadig har en smule bid."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt.",
+        "Opvarm en smule olivenolie i en stegepande på middelhøj varme.",
+        "Steg kylling med et nip salt i 3-4 min på hver side, eller indtil gylden og gennemstegt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 3,
+      "titel": "Lav salat",
+      "tekst": [
+        "Imens, hak agurk og tomat groft.",
+        "Skyl spinat.",
+        "Bland agurk, tomat, chiliflager, olivenolie, salt og et nip peber i en mellemstor skål.",
+        "Bland yoghurt, pestodressing og et nip salt og peber i en lille skål.",
+        "Vend Middelhavsdrøm, olivenolie, salt og et stort nip peber med færdig orzo.",
+        "Lad køle af, og tilsæt blandet salat og spinat."
+      ],
+      "tip": "Undlad chilien, eller brug mindre, hvis alle ikke er til stærk mad."
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Anret orzo i dybe skåle.",
+        "Top med salat og kylling.",
+        "Server med pestodressing."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 650,
+      "energi_kcal": 155,
+      "fedt_g": 6.5,
+      "maettet_fedt_g": 1.2,
+      "kulhydrat_g": 14.3,
+      "sukker_g": 1.9,
+      "protein_g": 9.4,
+      "fiber_g": 1.3,
+      "salt_g": 0.7
+    },
+    "pr_portion": {
+      "energi_kj": 3531,
+      "energi_kcal": 844,
+      "fedt_g": 35.2,
+      "maettet_fedt_g": 6.6,
+      "kulhydrat_g": 77.9,
+      "sukker_g": 10.4,
+      "protein_g": 51.1,
+      "fiber_g": 6.8,
+      "salt_g": 3.83
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet. Titel, undertitel og tid (20 min) er taget fra hellofresh.dk, hvor retten ligger i en ældre udgave med gulerod og tørret oregano i stedet for snittet kålsalat og chiliflager; mængderne her er fra kortet (2026-U13). Kortet har kun 4 trin. Snittet kålsalat står på ingredienslisten, men nævnes ikke i trinene. I udgaven på hellofresh.dk vendes gulerod og spinat i den afkølede orzo, så kålsalaten skal sandsynligvis med dér ('tilsæt blandet salat og spinat'). Kortet angiver ingen allergener ved cremet pestodressing."
+}

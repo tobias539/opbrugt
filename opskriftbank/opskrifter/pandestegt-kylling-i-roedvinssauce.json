@@ -1,0 +1,346 @@
+{
+  "id": "pandestegt-kylling-i-roedvinssauce",
+  "titel": "Pandestegt kylling i rødvinssauce",
+  "undertitel": "med grov kartoffelmos og sprød kålsalat",
+  "billede": "billeder/pandestegt-kylling-i-roedvinssauce.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2026-U11",
+    "menunummer": 1,
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 13,
+      "bagside": 14
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 550
+  },
+  "tid": {
+    "min": 20,
+    "max": 25,
+    "pr_portioner": {
+      "4": {
+        "min": 25,
+        "max": 30
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "tabel": {
+        "3": 750,
+        "4": 1000
+      },
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "honning",
+      "navn": "Honning",
+      "maengde": 12.5,
+      "enhed": "g",
+      "tabel": {
+        "3": 25,
+        "4": 25
+      }
+    },
+    {
+      "ingrediens": "grov-sennep",
+      "navn": "Grov sennep",
+      "maengde": 12,
+      "enhed": "g",
+      "tabel": {
+        "3": 25,
+        "4": 25
+      },
+      "allergener": [
+        "sennep"
+      ]
+    },
+    {
+      "ingrediens": "roedvinssauce",
+      "navn": "Rødvinssauce",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 120,
+        "4": 120
+      },
+      "allergener": [
+        "svovldioxid"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 1,
+      "enhed": "fed",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "roedkaal-skaaret",
+      "navn": "Rødkål, skåret",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "groenkaal-skaaret",
+      "navn": "Grønkål, skåret",
+      "maengde": 50,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      },
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Timian",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      }
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Mælk til mos",
+      "maengde": 3,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 5,
+        "4": 6
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til mos",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til dressing",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til sauce",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til sauce",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav kartoffelmos",
+      "tekst": [
+        "Bring en gryde med saltet vand i kog.",
+        "Skræl kartoffel, og skær i 2 cm tern.",
+        "Kog i 11-13 min, eller indtil de nemt kan deles med en kniv.",
+        "Hæld vand fra, og tilsæt mælk, salt og et nip peber. Mos med en kartoffelmoser eller gaffel, og stil til side med låg på."
+      ],
+      "tip": "Tilsæt en klat smør for en mere cremet mos."
+    },
+    {
+      "nr": 2,
+      "titel": "Bland dressing",
+      "tekst": [
+        "Imens, bland sennep, honning, olivenolie og et nip salt og peber i en stor skål."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Tilsæt kål",
+      "tekst": [
+        "Tilsæt grønkål og rødkål til skålen med dressing, og masser med hænderne i 30 sek, eller indtil blød."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg kylling",
+      "tekst": [
+        "Skær kylling i mindre stykker (3 pr. person) på et andet skærebræt, og krydr med salt.",
+        "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg kylling i 3 min på hver side, eller indtil brunet og gennemstegt, og overfør til en tallerken."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt rødvinssauce",
+      "tekst": [
+        "Imens, pres eller hak hvidløg fint.",
+        "Hak timian fint.",
+        "Opvarm samme stegepande på middel varme.",
+        "Tilsæt smør, hvidløg, timian, rødvinssauce, bouillon, vand og et nip peber, og lad simre i 2-3 min, eller indtil tyknet.",
+        "Tilsæt kylling og kødsaft fra tallerkenen, og vend sammen."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret kartoffelmos og kylling på tallerkener.",
+        "Top kylling med rødvinssauce.",
+        "Server med kålsalat."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 478,
+      "energi_kcal": 114,
+      "fedt_g": 4.6,
+      "maettet_fedt_g": 1.2,
+      "kulhydrat_g": 10.7,
+      "sukker_g": 2.6,
+      "protein_g": 7.6,
+      "fiber_g": 1,
+      "salt_g": 0.65
+    },
+    "pr_portion": {
+      "energi_kj": 2616,
+      "energi_kcal": 625,
+      "fedt_g": 24.9,
+      "maettet_fedt_g": 6.7,
+      "kulhydrat_g": 58.7,
+      "sukker_g": 14.4,
+      "protein_g": 41.8,
+      "fiber_g": 5.2,
+      "salt_g": 3.57
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "sennep",
+      "svovldioxid"
+    ]
+  },
+  "noter": "Også scannet som forside 9/bagside 10 (2026-U05) med samme mængder og trin; kun mættet fedt afviger (1,3 g pr. 100 g og 7,1 g pr. portion mod 1,2 g og 6,7 g i 2026-U11)."
+}

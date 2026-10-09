@@ -1,0 +1,361 @@
+{
+  "id": "ovnstegt-kyllingebryst-og-svamperisotto",
+  "titel": "Ovnstegt kyllingebryst og svamperisotto",
+  "billede": "billeder/ovnstegt-kyllingebryst-og-svamperisotto.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "url": "https://www.hellofresh.dk/recipes/ovnstegt-kyllingebryst-og-svamperisotto-679077d6836539d1a063bc31",
+    "uge": "2026-U13",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 19,
+      "bagside": 20
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 510
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "risret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "risottoris",
+      "navn": "Risottoris",
+      "maengde": 150,
+      "enhed": "g",
+      "tabel": {
+        "3": 225,
+        "4": 300
+      }
+    },
+    {
+      "ingrediens": "hvide-loejer-og-urter",
+      "navn": "Hvide Løjer & Urter",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      }
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingebryst",
+      "maengde": 280,
+      "enhed": "g",
+      "tabel": {
+        "3": 420,
+        "4": 550
+      },
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Champignon",
+      "maengde": 200,
+      "enhed": "g",
+      "tabel": {
+        "3": 300,
+        "4": 400
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløgsfed",
+      "maengde": 2,
+      "enhed": "fed",
+      "tabel": {
+        "3": 3,
+        "4": 3
+      }
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Parmigiano Reggiano BOB",
+      "maengde": 20,
+      "enhed": "g",
+      "tabel": {
+        "3": 40,
+        "4": 40
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacon, tern",
+      "maengde": 70,
+      "enhed": "g",
+      "tabel": {
+        "3": 140,
+        "4": 140
+      },
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 60,
+      "enhed": "g",
+      "tabel": {
+        "3": 100,
+        "4": 100
+      },
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til risotto",
+      "maengde": 6,
+      "enhed": "dl",
+      "tabel": {
+        "3": 9,
+        "4": 12
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til risotto",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til kød",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til risotto",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til stegning af kylling"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt efter smag",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'Et nip' til risottoen"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg bacon",
+      "tekst": [
+        "Forvarm ovnen til 200°C/180°C (varmluft).",
+        "Opvarm en stor stegepande på middelhøj varme.",
+        "Steg bacon i 4-5 min, eller indtil gylden, og overfør til en tallerken med køkkenrulle.",
+        "Imens, skær svampe i tynde skiver."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Steg grøntsager",
+      "tekst": [
+        "Smelt smør i samme stegepande på middelhøj varme.",
+        "Steg svampe i 4-5 min, eller indtil bløde.",
+        "Imens, hak løg og hvidløg fint.",
+        "Tilsæt løg, hvidløg og risottoris, og steg videre i 1-2 min, eller indtil gennemsigtige."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered risotto",
+      "tekst": [
+        "Tilsæt vand, Hvide Løjer & Urter, bouillon og salt, og bring i kog.",
+        "Sænk til middel varme, og lad simre i 18-22 min, eller indtil bouillonen er absorberet og risen er 'al dente'."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag kylling",
+      "tekst": [
+        "Imens, krydr kylling med salt.",
+        "Opvarm en smule olivenolie i en anden stor stegepande på middelhøj varme.",
+        "Steg kylling i 2 min på hver side, eller indtil brunet.",
+        "Overfør til en bageplade med bagepapir, og bag i ovnen i 11-12 min, eller indtil gennemtilberedt."
+      ],
+      "tip": "Kyllingen er færdig, når kødet er hvidt og uden antydning af rødt."
+    },
+    {
+      "nr": 5,
+      "titel": "Lav risotto",
+      "tekst": [
+        "Imens, skyl spinat.",
+        "Halver citrusfrugt.",
+        "Tag panden af varmen, når risen er færdigkogt. Rør bacon, spinat, citrusfrugtsaft, smør og halvdelen af finrevet ost i, og smag til med et nip salt og peber.",
+        "Skær kylling i skiver.",
+        "Hak persille fint."
+      ],
+      "tip": "Tilsæt et skvæt vand, hvis risottoen ser tør ud."
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret risotto i dybe tallerkener.",
+        "Top med kylling.",
+        "Drys med persille og resterende finrevet ost."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 628,
+      "energi_kcal": 150,
+      "fedt_g": 5.4,
+      "maettet_fedt_g": 2.8,
+      "kulhydrat_g": 15.5,
+      "sukker_g": 1.3,
+      "protein_g": 10.4,
+      "fiber_g": 1.3,
+      "salt_g": 0.87
+    },
+    "pr_portion": {
+      "energi_kj": 3172,
+      "energi_kcal": 758,
+      "fedt_g": 27.5,
+      "maettet_fedt_g": 13.9,
+      "kulhydrat_g": 78.4,
+      "sukker_g": 6.4,
+      "protein_g": 52.3,
+      "fiber_g": 6.5,
+      "salt_g": 4.37
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ]
+  },
+  "noter": "Forsiden i scanningen viser kun billedet og ingrediensikonerne, så titel og tid (30 min i alt) er hentet fra hellofresh.dk. Næringsindholdet på siden er det samme som på kortet (3172 kJ/758 kcal). Hellofresh.dk bruger i dag 20 g karse i stedet for bredbladet persille og har undertitlen 'med sprød bacon og karse', som ikke passer til kortet. Derfor er der ingen undertitel. Hvide Løjer & Urter er HelloFresh' egen krydderiblanding."
+}

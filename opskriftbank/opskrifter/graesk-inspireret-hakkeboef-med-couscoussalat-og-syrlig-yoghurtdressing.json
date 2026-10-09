@@ -1,0 +1,401 @@
+{
+  "id": "graesk-inspireret-hakkeboef-med-couscoussalat-og-syrlig-yoghurtdressing",
+  "titel": "Græsk inspireret hakkebøf",
+  "undertitel": "med couscoussalat og syrlig yoghurtdressing",
+  "billede": "billeder/graesk-inspireret-hakkeboef-med-couscoussalat-og-syrlig-yoghurtdressing.jpg",
+  "kilde": {
+    "type": "hellofresh",
+    "navn": "HelloFresh",
+    "uge": "2025-U44",
+    "scanning": "kilder/scanninger/2026-10-06 hellofresh 03.pdf",
+    "sider": {
+      "forside": 47,
+      "bagside": 48
+    },
+    "tilfoejet": "2026-10-06"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2,
+      3,
+      4
+    ],
+    "portion_g": 580
+  },
+  "tid": {
+    "min": 25,
+    "max": 30,
+    "pr_portioner": {
+      "4": {
+        "min": 30,
+        "max": 35
+      }
+    }
+  },
+  "kategorier": {
+    "koekken": [
+      "graesk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "salat"
+    ],
+    "hovedprotein": [
+      "svinekoed",
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "proteinrig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-svine-kalvekoed",
+      "navn": "Hakket svine-/kalvekød",
+      "maengde": 250,
+      "enhed": "g",
+      "tabel": {
+        "3": 375,
+        "4": 500
+      },
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "rasp",
+      "navn": "Rasp",
+      "maengde": 25,
+      "enhed": "g",
+      "tabel": {
+        "3": 50,
+        "4": 50
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Zucchini",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citrusfrugt",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomat",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "middelhavsdroem",
+      "navn": "Middelhavsdrøm",
+      "maengde": 2,
+      "enhed": "g",
+      "tabel": {
+        "3": 3,
+        "4": 4
+      }
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt",
+      "maengde": 75,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 150
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "couscous",
+      "navn": "Couscous",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 200
+      },
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "spor_af": [
+        "sennep",
+        "soja"
+      ],
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Bouillon",
+      "maengde": 4,
+      "enhed": "g",
+      "tabel": {
+        "3": 8,
+        "4": 8
+      },
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "graesk-ost",
+      "navn": "Græsk ost",
+      "maengde": 100,
+      "enhed": "g",
+      "tabel": {
+        "3": 150,
+        "4": 200
+      },
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "smuldreost"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Kruspersille",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 1,
+        "4": 1
+      },
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til grøntsager",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg til bøffer",
+      "maengde": 1,
+      "enhed": "stk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true,
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bøffer",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand til couscous",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "tabel": {
+        "3": 3.5,
+        "4": 5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til couscous",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "tabel": {
+        "3": 0.5,
+        "4": 0.5
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til couscous",
+      "maengde": 1,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 2,
+        "4": 2
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til salat",
+      "maengde": 2,
+      "enhed": "spsk",
+      "tabel": {
+        "3": 4,
+        "4": 4
+      },
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true,
+      "note": "'En smule' til grøntsagerne og til stegning af hakkebøfferne"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag grøntsager",
+      "tekst": [
+        "Forvarm ovnen til 220°C/200°C (varmluft).",
+        "Skær zucchini i 1 cm tynde, halve skiver.",
+        "Skær løg i 2 cm både.",
+        "Fordel på en bageplade med bagepapir. Dryp med en smule olivenolie, krydr med salt og et nip peber, og vend sammen.",
+        "Bag i ovnen i 15 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Bland fars",
+      "tekst": [
+        "Bland hakket svine-/kalvekød, Middelhavsdrøm, rasp, æg og salt i en skål.",
+        "Form fars til hakkebøffer (2 pr. person)."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg hakkebøffer",
+      "tekst": [
+        "Opvarm en smule olivenolie i en stor stegepande på middelhøj varme.",
+        "Steg hakkebøffer i 5-6 min på hver side, eller indtil gennemstegte."
+      ],
+      "vigtigt": "Hakkebøfferne er færdige, når kødet er gennemstegt og uden antydning af rødt."
+    },
+    {
+      "nr": 4,
+      "titel": "Kog couscous",
+      "tekst": [
+        "Imens, bring en gryde med vand og bouillon i kog.",
+        "Tilsæt couscous, salt og olivenolie, og rør rundt.",
+        "Tag gryden af varmen, og lad hvile under låg i 5 min, eller indtil vandet er absorberet."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Bland dressing",
+      "tekst": [
+        "Skær citron i både.",
+        "Hak persille groft, og skær tomat i 2 cm tern.",
+        "Vend bagte grøntsager i gryden med couscous.",
+        "Tilsæt smuldret græsk ost, et skvæt citronsaft, tomat, olivenolie, halvdelen af persille og et nip salt og peber, og rør rundt.",
+        "Bland yoghurt, et skvæt citronsaft og et nip salt og peber i en lille skål."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Anret hakkebøffer, couscoussalat og dressing på tallerkener.",
+        "Drys med resterende persille.",
+        "Server med resterende citronbåde."
+      ]
+    }
+  ],
+  "naering": {
+    "pr_100g": {
+      "energi_kj": 674,
+      "energi_kcal": 161,
+      "fedt_g": 9.4,
+      "maettet_fedt_g": 3.5,
+      "kulhydrat_g": 10.6,
+      "sukker_g": 1.7,
+      "protein_g": 8.3,
+      "fiber_g": 1.4,
+      "salt_g": 1.08
+    },
+    "pr_portion": {
+      "energi_kj": 3891,
+      "energi_kcal": 930,
+      "fedt_g": 54,
+      "maettet_fedt_g": 20,
+      "kulhydrat_g": 61.3,
+      "sukker_g": 9.6,
+      "protein_g": 47.8,
+      "fiber_g": 8.3,
+      "salt_g": 6.21
+    },
+    "note": "Baseret på utilberedte ingredienser og portionsstørrelsen for 2 personer."
+  },
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": [
+      "sennep",
+      "soja"
+    ]
+  },
+  "noter": "Ingredienslisten skriver 'Citrusfrugt', men trinene skriver citron. 'Rasp' er lagt på panko-id'et, fordi kataloget har rasp som synonym for panko. Retten findes også på https://www.hellofresh.dk/recipes/graesk-inspireret-hakkebof-684039ec6329c8e5b722bf3d med samme mængder; dér står tiden som 25 min og trin 1 skriver rødløg. Tiden her er fra forsiden."
+}
