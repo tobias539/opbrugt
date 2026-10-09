@@ -379,7 +379,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 36 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 37 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1818,7 +1818,7 @@ function ugeplanHtml(){
     <div class="fremdrift" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${f.pct}" id="upBar"><i style="width:${f.pct}%"></i></div>
     <p style="margin:6px 0 0;display:flex;gap:8px"><b id="upPct" style="min-width:3.2em">${f.pct} %</b><span id="upTekst">${tanke(f.tekst)}</span></p>
     ${up.statistik?`<p class="muted" style="margin:10px 0 0;font-size:.85rem">${esc(up.statistik)}</p>`:""}
-    <p class="muted" style="margin:6px 0 0;font-size:.8rem">Det tager typisk 15–40 sekunder. Lad appen være åben imens.</p>`}
+    <p class="muted" style="margin:6px 0 0;font-size:.8rem">Det tager typisk 15–40 sekunder. Du må gerne gå til andre faner imens. Lukker du appen, starter den forfra, når du åbner den igen.</p>`}
   if(up.trin==="forslag"){
     const kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
     const valgte=[...up.valgt].filter(i=>!up.forslag[i]._fastId).length,aabne=up.forslag.filter(f=>!f._fastId).length;
@@ -1912,7 +1912,7 @@ async function hentUgeforslag(){
   const iPerioden=TB.tilbud.filter(x=>x.f<=slut&&x.t>=up.start&&tKaedeAktiv(x.k));
   const nButikker=new Set(iPerioden.map(x=>T_NORM(x.k))).size,nOpsk=oAlle().filter(r=>!nyligFor(r)).length,antal=kat?6:dage.length;
   const komb=binom(nOpsk,antal);
-  up.statistik=`Behandler ${nButikker} ${nButikker===1?"butik":"butikker"} med ${iPerioden.length.toLocaleString("da-DK")} tilbud, ${nOpsk} opskrifter og ${skabLinjer(forventetSkab(addDays(up.start,7))).length} ting i skabet – ca. ${komb.toLocaleString("da-DK")} mulige madplaner med ${antal} retter, plus retter Claude selv finder på.`;
+  up.statistik=`Ca. ${komb.toLocaleString("da-DK")} mulige madplaner`;
   renderUgeplan();
   const prio=typerTekst(up.prio);
   const fs=forventetSkab(addDays(up.start,7));
@@ -1946,13 +1946,14 @@ ${oKatalogTekst()}
 Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili con carne", "Laks med kartofler"),"opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": "Fordi …" (én grund, højst 9 ord),${(s.indkobGange||1)>1?`"indkob": "YYYY-MM-DD" (indkøbsdag),`:""}"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-4 korte trin, men kun når "opskrift" er null (ellers [])}]}`;
   /* Fremdrift: læsning (indtil første ord) går fra 8 til 30 %, skrivningen fra 30 til 97 % efter, hvor meget der er skrevet */
   const forventet=antal*650+150;let skrevet=0,t0=Date.now();
-  const laeser=setInterval(()=>{if(!skrevet)upFremdrift(8+22*(1-Math.exp(-(Date.now()-t0)/9000)),`Claude læser ${iPerioden.length.toLocaleString("da-DK")} tilbud og ${nOpsk} opskrifter`)},400);
+  let taenker=false;
+  const laeser=setInterval(()=>{if(!skrevet)upFremdrift(8+(taenker?37:22)*(1-Math.exp(-(Date.now()-t0)/(taenker?20000:9000))),taenker?"Claude tænker over ugen":`Claude læser ${iPerioden.length.toLocaleString("da-DK")} tilbud og ${nOpsk} opskrifter`)},400);
   const onText=t=>{skrevet=t.length;const n=Math.min(antal,(t.match(/"navn"/g)||[]).length);upFremdrift(30+67*Math.min(1,t.length/forventet),`Skriver ret ${Math.max(1,n)} af ${antal}`)};
   try{
     let r,fejl=null;
     for(let forsoeg=1;forsoeg<=3;forsoeg++){
-      const start=Date.now();t0=start;skrevet=0;
-      try{upFremdrift(6,forsoeg>1?`Prøver igen (${forsoeg}/3)`:"Sender til Claude");r=await sample.json(prompt,{modelTier:"quick",onText});fejl=null;break}
+      const start=Date.now();t0=start;skrevet=0;taenker=false;
+      try{upFremdrift(6,forsoeg>1?`Prøver igen (${forsoeg}/3)`:"Sender til Claude");r=await sample.json(prompt,{modelTier:"quick",onText,onTaenk:()=>{taenker=true}});fejl=null;break}
       catch(e){
         fejl=e;if(!["invalid_json","network","timeout","upstream_error","rate_limit"].includes(e&&e.code)||forsoeg===3)break;
         /* Var appen i baggrunden, venter vi, til den er fremme igen */
@@ -1964,6 +1965,7 @@ Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili c
     clearInterval(laeser);
     if(fejl)throw fejl;
     upFremdrift(100,"Færdig");
+    if(!document.getElementById("t-snak").classList.contains("on"))toast("Forslagene til ugen er klar under Plan");
     let forslag=(r.forslag||[]).map(normForslag).map((f,i,a)=>({...f,type:a[i].type,favorit:!!a[i].favorit}));
     /* Mindst én favorit blandt de almindelige forslag */
     if(!kat&&favs.length&&forslag.length&&!forslag.some(f=>isFav(f.navn)||(f.opskrift&&isFav(ORMAP[f.opskrift].t)))){
@@ -2586,16 +2588,26 @@ function apiAdapter(){
       const headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
       /* Sonnet og Opus: lad API'et selv prøve en anden model, hvis en sikkerhedsfilter afviser et svar */
       if(model!=="claude-haiku-5-5"){body.fallbacks="default";headers["anthropic-beta"]="server-side-fallback-2026-07-01"}
+      /* Claude 5-modellerne tænker som standard, før de skriver, og den tænkning sendes ikke med i streamen.
+         Til forslag og snak er hurtighed vigtigst: slå den fra (Haiku) eller begræns den (Sonnet). Kvitteringer beholder den. */
+      if(opt.modelTier!=="default"){if(/haiku/.test(model))body.thinking={type:"disabled"};else if(/sonnet-5/.test(model))body.thinking={type:"between_tools"}}
       /* Svaret streames altid: der kommer data hele tiden (iPhone opgiver ellers en forespørgsel,
          der er stille i ca. 60 sek.), og man kan vise, hvor langt Claude er. Vagt: stop, hvis intet sker i 45 sek. */
       const stream=opt.stream!==false,onText=typeof opt.onText==="function"?opt.onText:()=>{};if(stream)body.stream=true;
       const ctrl=new AbortController();let vagt=null;const vent=()=>{clearTimeout(vagt);vagt=setTimeout(()=>ctrl.abort(),stream?45000:120000)};vent();
-      let r;
-      try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body),signal:ctrl.signal})}
-      catch(e){clearTimeout(vagt);throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
+      let r,d0=null;
+      for(let i=0;i<2;i++){
+        try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body),signal:ctrl.signal})}
+        catch(e){clearTimeout(vagt);throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
+        if(r.ok)break;
+        d0=await r.json().catch(()=>({}));
+        /* Afviser modellen thinking-indstillingen, så prøv uden */
+        if(r.status===400&&body.thinking&&/thinking/i.test(d0?.error?.message||"")){delete body.thinking;continue}
+        break;
+      }
       if(!r.ok){
         clearTimeout(vagt);
-        const d=await r.json().catch(()=>({}));
+        const d=d0||{};
         const msg=d?.error?.message||("HTTP "+r.status);
         throw {code:r.status===401||r.status===403?"bad_key":r.status===429||r.status===529?"rate_limit":/credit balance/i.test(msg)?"no_credit":"upstream_error",message:msg};
       }
@@ -2614,6 +2626,7 @@ function apiAdapter(){
             if(!linje.startsWith("data:"))continue;
             let ev;try{ev=JSON.parse(linje.slice(5))}catch(e){continue}
             if(ev.type==="content_block_delta"&&ev.delta&&ev.delta.type==="text_delta"){tekst+=ev.delta.text;onText(tekst)}
+            else if(ev.type==="content_block_start"&&ev.content_block&&ev.content_block.type==="thinking"&&opt.onTaenk)opt.onTaenk();
             else if(ev.type==="message_delta"&&ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason;
             else if(ev.type==="error")throw {code:/overload/i.test(ev.error&&ev.error.type||"")?"rate_limit":"upstream_error",message:(ev.error&&ev.error.message)||"fejl undervejs"};
           }
@@ -2675,7 +2688,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="36";
+const APP_VERSION="37";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
