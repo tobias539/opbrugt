@@ -1,7 +1,8 @@
 """Foreslå, hvilken REMA-vare hver ingrediens i opskriftbanken svarer til.
 
-Brug:  python priser/foreslaa_match.py            (vis forslag for ingredienser, der ikke er i match-filen)
-       python priser/foreslaa_match.py --skriv    (skriv forslagene ind i match-rema-1000.json)
+Brug:  python priser/foreslaa_match.py [kæde]            (vis forslag for ingredienser, der ikke er i match-filen)
+       python priser/foreslaa_match.py [kæde] --skriv    (skriv forslagene ind i match-<kæde>.json)
+       kæde = rema-1000 (standard), netto eller foetex
 
 Forslagene er kun et udgangspunkt: gennemgå listen og ret forkerte valg i match-rema-1000.json
 (sæt værdien til null, hvis REMA ikke har varen). Eksisterende linjer i match-filen ændres aldrig.
@@ -14,8 +15,9 @@ from pathlib import Path
 
 MAPPE = Path(__file__).resolve().parent
 BANK = MAPPE.parent / "opskriftbank" / "ingredienser.json"
-RAA = MAPPE / "raa" / "rema-1000.json.gz"
-MATCH = MAPPE / "match-rema-1000.json"
+KAEDE = next((a for a in sys.argv[1:] if not a.startswith("--")), "rema-1000")
+RAA = MAPPE / "raa" / f"{KAEDE}.json.gz"
+MATCH = MAPPE / f"match-{KAEDE}.json"
 
 # Ord, der betyder, at varen er forarbejdet og ikke selve råvaren
 FORARB = re.compile(r"SAUCE|DRESSING|CHIPS|SNACK|MARINADE|SALAT\b.*MED|SUPPE|PATE|POSTEJ|PÅLÆG|SPREAD|DIP|JUICE|SAFT|SLIK|KAGE|"
@@ -52,7 +54,7 @@ def score(ingr, v):
 
 def main():
     bank = {k: v for k, v in json.load(open(BANK, encoding="utf-8")).items() if not k.startswith("_")}
-    varer = [v for v in json.load(gzip.open(RAA, "rt", encoding="utf-8"))["varer"] if v.get("p") is not None]
+    varer = [v for v in json.load(gzip.open(RAA, "rt", encoding="utf-8"))["varer"] if v.get("p") is not None or KAEDE != "rema-1000"]
     match = json.loads(MATCH.read_text(encoding="utf-8")) if MATCH.exists() else {}
     nye = {}
     for iid, ingr in sorted(bank.items()):

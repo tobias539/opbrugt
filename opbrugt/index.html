@@ -337,7 +337,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 25 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 26 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -755,10 +755,19 @@ function aktivButik(){const b=shopTur.length?shopTur:st.settings.butikker;if(!b.
    cirkaprisen ikke, regnes der ingen besparelse, men tilbuddet bruges, hvis man alligevel er i butikken. */
 let shopTur=[];
 /* Hyldepriser: REMA 1000's almindelige priser pr. ingrediens (priser/hent_priser.py). Bruges som normalpris. */
-let HP={varer:{}};
+/* Hyldepriser pr. kæde (priser/til_opbrugt/<kæde>.json). Kæder uden egne priser bruger REMA 1000's. */
+const PRISFILER={rema1000:"rema-1000",netto:"netto",føtex:"foetex"};
+let HP={};
 function hyldeMaengde(u){const x=String(u||"").toUpperCase().match(/([\d.,]+)\s*(KG|GR|LTR|L|ML|CL|STK)\./);if(!x)return "";return x[1].replace(",",".")+" "+({KG:"kg",GR:"g",LTR:"l",L:"l",ML:"ml",CL:"cl",STK:"stk"})[x[2]]}
-function hylde(id){const h=id&&HP.varer[id];return h&&h.ep!=null&&h.pr?{p:h.p,ep:h.ep,pr:h.pr,m:hyldeMaengde(h.u),n:h.n,k:HP.kaede}:null}
-async function hentHyldepriser(){try{const r=await fetch("../priser/til_opbrugt/rema-1000.json",{cache:"no-cache"});if(r.ok){HP=await r.json();render()}}catch(e){}}
+function hylde(id,butik){
+  if(!id)return null;
+  const egen=butik&&HP[PRISFILER[T_NORM(butik)]],kilde=(egen&&egen.varer[id])?egen:HP["rema-1000"],h=kilde&&kilde.varer[id];
+  return h&&h.ep!=null&&h.pr?{p:h.p,ep:h.ep,pr:h.pr,m:hyldeMaengde(h.u)||h.u||"",n:h.n,k:kilde.kaede}:null;
+}
+async function hentHyldepriser(){
+  await Promise.all([...new Set(Object.values(PRISFILER))].map(async f=>{try{const r=await fetch(`../priser/til_opbrugt/${f}.json`,{cache:"no-cache"});if(r.ok)HP[f]=await r.json()}catch(e){}}));
+  render();
+}
 /* Priser lært fra brugerens egne kvitteringer: st.laertePriser[butik][ingrediens] = {ep, pr, dato, tekst} */
 function laertEP(id,butik){
   const L=butik&&st.laertePriser&&st.laertePriser[butik]&&st.laertePriser[butik][id];if(!L)return null;
@@ -767,7 +776,7 @@ function laertEP(id,butik){
 function butikFraTekst(t){const n=T_NORM(t);if(!n)return null;return alleButikker().find(b=>n.includes(T_NORM(b))||T_NORM(b).includes(n))||null}
 function normEP(id,butik){
   const l=laertEP(id,butik);if(l)return l;
-  const h=hylde(id);
+  const h=hylde(id,butik);
   if(h){const gps=OI[id]&&OI[id].gps,o={[h.pr]:h.ep};if(h.pr==="stk"&&gps)o.kg=h.ep/(gps/1000);if(h.pr==="kg"&&gps)o.stk=h.ep*gps/1000;return o}
   const k=Object.keys(OB.pTilBank).find(x=>OB.pTilBank[x]===id&&P[x]);if(!k)return null;
   const v=P[k],pr=price(k);
@@ -811,7 +820,7 @@ function varePris(v,o,butik){
   if(o){const q=tilbudMaengde(v,o);return Math.max(o.p,q!=null?q*o.ep:0)}
   const l=laertEP(v.id,butik),lpr=l&&Object.keys(l)[0];
   if(l){const q=tilbudMaengde(v,{ep:l[lpr],pr:lpr});if(q!=null)return q*l[lpr]}
-  const h=hylde(v.id);if(h){const q=tilbudMaengde(v,h);return Math.max(h.p,q!=null?q*h.ep:0)}
+  const h=hylde(v.id,butik);if(h){const q=tilbudMaengde(v,h);return Math.max(h.p,q!=null?q*h.ep:0)}
   return v.pris||0;
 }
 
@@ -970,7 +979,7 @@ function renderShopPlan(F){
   let t=`Køb ind i ${F.tur.join(" og ")}: ${nTb} af ${nAlle} varer er på tilbud${spar>=1?`, og du sparer ${kr0(spar)}`:""}.`;
   if(F.misset){const m=F.misset,maks=s.maksButikker||1;t+=` Tager du også i ${m.b}, får du ${m.n} ${m.n===1?"vare":"varer"} mere på tilbud og sparer ${kr0(m.g)} mere`+(F.tur.length>=maks?` (du har valgt højst ${maks} ${maks===1?"butik":"butikker"}).`:` (under din grænse på ${s.delGraense} kr).`)}
   const valg=["",...s.butikker].map(b=>`<option value="${esc(b)}" ${b===(s.hovedButik||"")?"selected":""}>${b?esc(b):"Automatisk ("+esc(F.hoved)+")"}</option>`).join("");
-  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers REMA 1000's hyldepris (bruges også for Netto, Lidl og 365discount), ellers skøn.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
+  el.innerHTML=`<div class="sugg" style="margin:4px 0 6px;padding:10px 12px"><div class="butikslinje" style="margin-bottom:6px">${F.tur.map(b=>logoHtml(b,32)).join("")}</div><p style="margin:0;font-weight:700;font-size:.95rem">${esc(t)}</p><p class="muted" style="margin:4px 0 0;font-size:.75rem">Normalpris = dine egne kvitteringer fra butikken, ellers butikkens hyldepris (Netto og REMA 1000; de andre bruger REMA's), ellers skøn.</p>${s.butikker.length>1?`<div class="addrow" style="padding:8px 0 0"><label for="hovedButik" style="flex:1;font-size:.9rem">Hovedbutik</label><select id="hovedButik">${valg}</select></div>`:""}</div>`;
   const hb=document.getElementById("hovedButik");if(hb)hb.onchange=e=>{s.hovedButik=e.target.value||null;st.aktivButik=null;changed()};
   const tips=lagerTips(F,samletIndkob(last));
   if(tips.length){
@@ -1760,7 +1769,7 @@ function laerPriser(r){
     /* ligner prisen et tilbud, butikken har haft den sidste uge, er det nok ikke normalprisen */
     if(TB.tilbud.some(t=>t.i===id&&T_NORM(t.k)===T_NORM(butik)&&t.f<=addDays(dato,1)&&t.t>=uge&&t.pr===pr&&t.ep!=null&&Math.abs(ep-t.ep)<=t.ep*0.1))continue;
     /* mere end 30 % under REMA's normalpris er næppe en normalpris */
-    const h=hylde(id);if(h&&h.pr===pr&&ep<h.ep*0.7)continue;
+    const h=hylde(id,butik);if(h&&h.pr===pr&&ep<h.ep*0.7)continue;
     /* samme vare flere gange på kvitteringen: den højeste pris er normalprisen */
     if(set.has(id)&&L[id].ep>=ep)continue;
     L[id]={ep:Math.round(ep*100)/100,pr,dato,tekst:String(x.tekst||"").slice(0,40)};if(!set.has(id))n++;set.add(id);
@@ -2289,7 +2298,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="25";
+const APP_VERSION="26";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
