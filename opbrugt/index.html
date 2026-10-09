@@ -248,6 +248,8 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 #t-snak.fokus>#opsStart:empty{display:none}
 [hidden]{display:none!important}
 .planknapper .btn[disabled]{opacity:.45}
+.fremdrift{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:12px}
+.fremdrift i{display:block;height:100%;background:var(--leaf);border-radius:99px;transition:width .4s ease}
 .foot{font-size:.8rem;color:var(--muted);margin-top:28px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -377,7 +379,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 35 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 36 · 9/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1812,7 +1814,11 @@ function ugeplanHtml(){
     </div><div class="nav"><button class="btn ghost" data-u="tilbage" data-til="skab">Tilbage</button><span class="grow"></span>${luk}</div>`;
   if(up.trin==="kategorier")return `<h2>Vælg en kategori</h2><div class="tiles">${MTYPER.map(([id,ik,lb])=>`<button class="tile" data-u="kategori" data-id="${id}"><span class="ik">${ik}</span><span class="lb">${lb}</span></button>`).join("")}</div><div class="nav"><button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button><span class="grow"></span>${luk}</div>`;
   const titel=up.hvilken==="naeste"?"Forslag til næste uge":"Forslag til denne uge";
-  if(up.trin==="arbejder")return `<h2>${up.kategori?esc(MTYPER.find(m=>m[0]===up.kategori)[2]):titel}</h2><p class="muted" style="margin:0">${tanke("Finder retter ud fra skabet, tilbuddene og jeres præferencer")}</p><p class="muted" style="margin:6px 0 0;font-size:.85rem">Det kan tage op til 30 sekunder.</p>`;
+  if(up.trin==="arbejder"){const f=up.fremdrift||{pct:0,tekst:"Samler skab, tilbud og opskrifter"};return `<h2>${up.kategori?esc(MTYPER.find(m=>m[0]===up.kategori)[2]):titel}</h2>
+    <div class="fremdrift" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${f.pct}" id="upBar"><i style="width:${f.pct}%"></i></div>
+    <p style="margin:6px 0 0;display:flex;gap:8px"><b id="upPct" style="min-width:3.2em">${f.pct} %</b><span id="upTekst">${tanke(f.tekst)}</span></p>
+    ${up.statistik?`<p class="muted" style="margin:10px 0 0;font-size:.85rem">${esc(up.statistik)}</p>`:""}
+    <p class="muted" style="margin:6px 0 0;font-size:.8rem">Det tager typisk 15–40 sekunder. Lad appen være åben imens.</p>`}
   if(up.trin==="forslag"){
     const kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
     const valgte=[...up.valgt].filter(i=>!up.forslag[i]._fastId).length,aabne=up.forslag.filter(f=>!f._fastId).length;
@@ -1887,11 +1893,27 @@ function tTekstPeriode(fra,til){
   const best={};for(const x of TB.tilbud)if(x.i&&aegteTilbud(x)&&x.f<=til&&x.t>=fra&&tKaedeAktiv(x.k)&&(!best[x.i]||x.p<best[x.i].p))best[x.i]=x;
   return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${x.k} ${tPris(x.p)}${x.m?" ("+x.m+")":""}${tGyldig(x)}`).join("; ");
 }
+/* Opdatér fremdriften uden at tegne hele siden igen */
+function upFremdrift(pct,tekst){
+  if(!up)return;pct=Math.max(up.fremdrift?up.fremdrift.pct:0,Math.min(100,Math.round(pct)));up.fremdrift={pct,tekst};
+  const bar=document.getElementById("upBar"),p=document.getElementById("upPct"),t=document.getElementById("upTekst");
+  if(bar){bar.firstElementChild.style.width=pct+"%";bar.setAttribute("aria-valuenow",pct)}
+  if(p)p.textContent=pct+" %";
+  if(t&&t.dataset.t!==tekst){t.dataset.t=tekst;t.innerHTML=tanke(tekst)}
+}
+function binom(n,k){if(k>n)return 0;let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return Math.round(r)}
+let sidstSkjult=0;document.addEventListener("visibilitychange",()=>{if(document.hidden)sidstSkjult=Date.now()});
 async function hentUgeforslag(){
   if(!sample){up.trin="forslag";up.forslag=[];up.fejl=fejlTekst({code:"no_key"});renderUgeplan();return}
-  up.trin="arbejder";up.fejl="";up.fejlDetalje="";up.aaben=-1;renderUgeplan();
+  up.trin="arbejder";up.fejl="";up.fejlDetalje="";up.aaben=-1;up.fremdrift={pct:2,tekst:"Samler skab, tilbud og opskrifter"};renderUgeplan();
   const s=st.settings,slut=up.slut||addDays(up.start,6),kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
   const dage=vaelgDage(up.start,kat?7:s.M,slut);
+  /* Hvad der behandles: butikker, tilbud, opskrifter, skab – og hvor mange madplaner det giver at vælge imellem */
+  const iPerioden=TB.tilbud.filter(x=>x.f<=slut&&x.t>=up.start&&tKaedeAktiv(x.k));
+  const nButikker=new Set(iPerioden.map(x=>T_NORM(x.k))).size,nOpsk=oAlle().filter(r=>!nyligFor(r)).length,antal=kat?6:dage.length;
+  const komb=binom(nOpsk,antal);
+  up.statistik=`Behandler ${nButikker} ${nButikker===1?"butik":"butikker"} med ${iPerioden.length.toLocaleString("da-DK")} tilbud, ${nOpsk} opskrifter og ${skabLinjer(forventetSkab(addDays(up.start,7))).length} ting i skabet – ca. ${komb.toLocaleString("da-DK")} mulige madplaner med ${antal} retter, plus retter Claude selv finder på.`;
+  renderUgeplan();
   const prio=typerTekst(up.prio);
   const fs=forventetSkab(addDays(up.start,7));
   const skabTxt=skabLinjer(fs).map(x=>x.navn+(x.tekst?" ("+x.tekst+")":"")+(x.dage!=null?`, holder ca. ${x.dage} dage`:"")).join("; ")||"tomt";
@@ -1922,10 +1944,26 @@ Andre tilbud på ingredienser fra opskrifterne (bedste pr. vare): ${tTekstPeriod
 Andre friske tilbud i deres butikker: ${friskeTilbud(up.start,slut)||"ingen"}\n`:""}Husstandens egne opskrifter (id | titel | tid | køkken | hvad den kan bruge fra skabet). Foretræk dem, når de passer, og sæt "opskrift" til id'et:
 ${oKatalogTekst()}
 Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili con carne", "Laks med kartofler"),"opskrift": id eller null,"dag": "YYYY-MM-DD","type": måltidstypen,"favorit": true/false,"hvorfor": "Fordi …" (én grund, højst 9 ord),${(s.indkobGange||1)>1?`"indkob": "YYYY-MM-DD" (indkøbsdag),`:""}"bruger":[{"navn","alt": true hvis alt bruges}] fra skabet,"mangler":[{"navn","maengde": købsmængde i hele pakker,"kat": ${Object.keys(AFD).join("|")}}],"trin": 3-4 korte trin, men kun når "opskrift" er null (ellers [])}]}`;
+  /* Fremdrift: læsning (indtil første ord) går fra 8 til 30 %, skrivningen fra 30 til 97 % efter, hvor meget der er skrevet */
+  const forventet=antal*650+150;let skrevet=0,t0=Date.now();
+  const laeser=setInterval(()=>{if(!skrevet)upFremdrift(8+22*(1-Math.exp(-(Date.now()-t0)/9000)),`Claude læser ${iPerioden.length.toLocaleString("da-DK")} tilbud og ${nOpsk} opskrifter`)},400);
+  const onText=t=>{skrevet=t.length;const n=Math.min(antal,(t.match(/"navn"/g)||[]).length);upFremdrift(30+67*Math.min(1,t.length/forventet),`Skriver ret ${Math.max(1,n)} af ${antal}`)};
   try{
-    let r;
-    try{r=await sample.json(prompt,{modelTier:"quick"})}
-    catch(e){if(["invalid_json","network","upstream_error","rate_limit"].includes(e&&e.code)){await new Promise(x=>setTimeout(x,1500));r=await sample.json(prompt,{modelTier:"quick"})}else throw e}
+    let r,fejl=null;
+    for(let forsoeg=1;forsoeg<=3;forsoeg++){
+      const start=Date.now();t0=start;skrevet=0;
+      try{upFremdrift(6,forsoeg>1?`Prøver igen (${forsoeg}/3)`:"Sender til Claude");r=await sample.json(prompt,{modelTier:"quick",onText});fejl=null;break}
+      catch(e){
+        fejl=e;if(!["invalid_json","network","timeout","upstream_error","rate_limit"].includes(e&&e.code)||forsoeg===3)break;
+        /* Var appen i baggrunden, venter vi, til den er fremme igen */
+        if(document.hidden||sidstSkjult>start)await new Promise(ok=>{if(!document.hidden)return ok();const f=()=>{if(!document.hidden){document.removeEventListener("visibilitychange",f);ok()}};document.addEventListener("visibilitychange",f)});
+        if(up)up.fremdrift={pct:4,tekst:"Prøver igen"};upFremdrift(4,`Prøver igen (${forsoeg+1}/3)`);
+        await new Promise(x=>setTimeout(x,e.code==="rate_limit"?5000*forsoeg:1500));
+      }
+    }
+    clearInterval(laeser);
+    if(fejl)throw fejl;
+    upFremdrift(100,"Færdig");
     let forslag=(r.forslag||[]).map(normForslag).map((f,i,a)=>({...f,type:a[i].type,favorit:!!a[i].favorit}));
     /* Mindst én favorit blandt de almindelige forslag */
     if(!kat&&favs.length&&forslag.length&&!forslag.some(f=>isFav(f.navn)||(f.opskrift&&isFav(ORMAP[f.opskrift].t)))){
@@ -1937,7 +1975,8 @@ Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili c
     up.forslag=forslag;up.valgt=new Set(forslag.map((_,i)=>i));up.trin="forslag";
     if(!forslag.length)up.fejl="Der kom ingen forslag. Prøv igen.";
     const mit=up;tAnnoter(forslag).then(()=>{if(up===mit&&up.trin==="forslag")renderUgeplan()});
-  }catch(e){up.trin="forslag";up.forslag=[];up.fejl=fejlTekst(e);up.fejlDetalje=String(e&&(e.message||e.code)||e).slice(0,160);console.error("ugeforslag",e)}
+  }catch(e){clearInterval(laeser);if(!up)return;up.trin="forslag";up.forslag=[];up.fejl=fejlTekst(e);up.fejlDetalje=`${e&&e.code||"fejl"}: ${String(e&&(e.message||e.code)||e).slice(0,160)}`;console.error("ugeforslag",e)}
+  if(!up)return;
   renderUgeplan();document.getElementById("ugeplan").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
@@ -2515,7 +2554,10 @@ function fejlTekst(e){
   if(c==="bad_key")return "API-nøglen virker ikke. Tjek den under Præferencer.";
   if(c==="no_credit")return "Der er ikke flere API-credits på kontoen.";
   if(c==="rate_limit")return "Claude har travlt lige nu. Prøv igen om lidt.";
-  if(c==="network")return "Ingen forbindelse til nettet. Prøv igen om lidt.";
+  if(c==="network")return "Forbindelsen blev afbrudt. Lad appen være åben, mens den arbejder, og prøv igen.";
+  if(c==="timeout")return "Claude svarede ikke i tide. Prøv igen.";
+  if(c==="invalid_json")return "Svaret fra Claude kunne ikke læses. Prøv igen.";
+  if(c==="refusal")return "Claude ville ikke svare på det. Prøv med andre ønsker.";
   return "Det gik ikke igennem. Prøv igen om lidt.";
 }
 /* Telefonbilleder er ofte for store til API'et (5 MB). Skaler ned og send som JPEG. */
@@ -2544,16 +2586,43 @@ function apiAdapter(){
       const headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
       /* Sonnet og Opus: lad API'et selv prøve en anden model, hvis en sikkerhedsfilter afviser et svar */
       if(model!=="claude-haiku-5-5"){body.fallbacks="default";headers["anthropic-beta"]="server-side-fallback-2026-07-01"}
+      /* Svaret streames altid: der kommer data hele tiden (iPhone opgiver ellers en forespørgsel,
+         der er stille i ca. 60 sek.), og man kan vise, hvor langt Claude er. Vagt: stop, hvis intet sker i 45 sek. */
+      const stream=opt.stream!==false,onText=typeof opt.onText==="function"?opt.onText:()=>{};if(stream)body.stream=true;
+      const ctrl=new AbortController();let vagt=null;const vent=()=>{clearTimeout(vagt);vagt=setTimeout(()=>ctrl.abort(),stream?45000:120000)};vent();
       let r;
-      try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body)})}
-      catch(e){throw {code:"network",message:String(e)}}
-      const d=await r.json().catch(()=>({}));
+      try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body),signal:ctrl.signal})}
+      catch(e){clearTimeout(vagt);throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
       if(!r.ok){
+        clearTimeout(vagt);
+        const d=await r.json().catch(()=>({}));
         const msg=d?.error?.message||("HTTP "+r.status);
         throw {code:r.status===401||r.status===403?"bad_key":r.status===429||r.status===529?"rate_limit":/credit balance/i.test(msg)?"no_credit":"upstream_error",message:msg};
       }
-      if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
-      return lesJson((d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
+      if(!stream){
+        const d=await r.json().catch(()=>({}));clearTimeout(vagt);
+        if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
+        return lesJson((d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
+      }
+      const rd=r.body.getReader(),dek=new TextDecoder();let buf="",tekst="",stop=null;
+      try{
+        for(;;){
+          const {done,value}=await rd.read();if(done)break;vent();
+          buf+=dek.decode(value,{stream:true});
+          let i;while((i=buf.indexOf("\n"))>=0){
+            const linje=buf.slice(0,i).trim();buf=buf.slice(i+1);
+            if(!linje.startsWith("data:"))continue;
+            let ev;try{ev=JSON.parse(linje.slice(5))}catch(e){continue}
+            if(ev.type==="content_block_delta"&&ev.delta&&ev.delta.type==="text_delta"){tekst+=ev.delta.text;onText(tekst)}
+            else if(ev.type==="message_delta"&&ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason;
+            else if(ev.type==="error")throw {code:/overload/i.test(ev.error&&ev.error.type||"")?"rate_limit":"upstream_error",message:(ev.error&&ev.error.message)||"fejl undervejs"};
+          }
+        }
+      }catch(e){if(e&&e.code)throw e;throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
+      finally{clearTimeout(vagt)}
+      if(stop==="refusal")throw {code:"refusal",message:"afvist"};
+      if(stop==="max_tokens")throw {code:"invalid_json",message:"svaret blev for langt og blev skåret af"};
+      return lesJson(tekst);
     }
   };
 }
@@ -2606,7 +2675,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="35";
+const APP_VERSION="36";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
