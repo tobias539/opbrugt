@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Mad app">
 <meta name="theme-color" content="#23523F">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="ikon-180.png">
 <link rel="icon" type="image/png" href="ikon-180.png">
 <title>Mad app</title>
@@ -635,7 +636,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 51 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 52 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -3980,7 +3981,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="51";
+const APP_VERSION="52";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
@@ -3993,6 +3994,8 @@ async function tjekOpdatering(){
   }catch(e){}
 }
 tjekOpdatering();feedbackSend();hentDelte();
+/* Service worker: så Android-telefoner (fx Samsung) kan installere appen som en rigtig app, og den virker uden net */
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});
 </script>
 </body>
