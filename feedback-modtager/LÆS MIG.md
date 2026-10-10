@@ -1,9 +1,14 @@
-# Feedback fra Mad app
+# Feedback og fælles opskrifter fra Mad app
 
-Feedback fra appen (feedback-feltet under Snak og kritik skrevet i snakken) sendes anonymt til et
-Google Apps Script. Scriptet gemmer hver besked som en tekstfil i Google Drive › Privat › mad › feedback.
-Mappen synkroniseres til `My Drive\Privat\mad\feedback` på computeren. Den er udeladt fra git,
-så feedbacken ikke kommer med i det offentlige repo.
+Et Google Apps Script (`feedback.gs`) tager imod to ting fra appen:
+
+- **Feedback**: det, der sendes fra Feedback under Snak, og ændringer af holdbarhed i skabet. Det sendes
+  anonymt, og hver besked gemmes som en tekstfil i Google Drive › Privat › mad › feedback.
+- **Fælles opskrifter**: egne opskrifter, man vælger at dele. Hver gemmes som en JSON-fil i
+  Google Drive › Privat › mad › opskrifter-delt, og alle, der bruger appen, kan se dem i kogebogen.
+
+Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/` er udeladt fra git, så
+feedbacken ikke kommer med i det offentlige repo.
 
 ## Opsætning (én gang)
 
@@ -16,8 +21,13 @@ så feedbacken ikke kommer med i det offentlige repo.
    fordi det er dit eget script: vælg **Avanceret › Gå til Mad app feedback**.
 5. Kopiér **webapp-adressen** (slutter på `/exec`). Den skal sættes ind i `FEEDBACK_URL` i `opbrugt/index.html`.
 
-Adressen ligger i det offentlige repo. Alle, der finder den, kan altså sende tekst til mappen, men ikke læse noget.
-Hver besked er højst 4.000 tegn.
+## Når scriptet ændres
+
+Indsæt den nye kode, gem, og vælg **Udrul › Administrer udrulninger** › blyanten › **Version: Ny version** ›
+**Udrul**. Så beholder webappen den samme adresse, og appen behøver ikke opdateres.
+
+Adressen ligger i det offentlige repo. Alle, der finder den, kan altså sende tekst og opskrifter,
+og de delte opskrifter kan læses af alle. Feedbacken kan ikke læses udefra. Hver besked er højst 4.000 tegn.
 
 ## Opsamling
 

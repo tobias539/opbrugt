@@ -33,7 +33,9 @@
   --felt:#25302B; --tilbud:#5C4B12; --tilbud-kant:#B8962E;
 }
 *{box-sizing:border-box}
-html,body{margin:0}
+html,body{margin:0;overflow-x:hidden;overscroll-behavior:none}
+/* Siden ligger fast: den kan kun rulles op og ned, ikke skubbes til siden eller zoomes (undtagen reolen i skabet) */
+body{touch-action:pan-y}
 body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 main{max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px;position:relative}
 /* Præferencer: lille tandhjul øverst til højre; skjult, mens et trin-for-trin-forløb fylder skærmen */
@@ -153,6 +155,36 @@ body.medKurv .toast{bottom:calc(160px + env(safe-area-inset-bottom))}
 .feltinput{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
 /* Skabet som en hylde */
 #skabSe{position:relative}
+.skabtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 6px}
+.prikker{display:flex;gap:6px}.prik{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);padding:0;cursor:pointer}.prik.on{background:var(--leaf)}
+.hylde{touch-action:none}
+.hyldeindre{transform-origin:0 0;height:100%;display:flex;flex-direction:column}
+.hyldeindre.ind-hoejre{animation:skabIndH .25s ease-out}.hyldeindre.ind-venstre{animation:skabIndV .25s ease-out}
+@keyframes skabIndH{from{transform:translateX(30%);opacity:.3}}@keyframes skabIndV{from{transform:translateX(-30%);opacity:.3}}
+.hvare.groen{box-shadow:inset 0 -3px 0 #4caf6e}.hvare.gul{box-shadow:inset 0 -3px 0 #e2c234}.hvare.orange{box-shadow:inset 0 -3px 0 #ec8a2c}.hvare.rod{box-shadow:inset 0 -3px 0 #d8452f;background:rgba(216,69,47,.12);border-radius:8px}
+.hylderum.enkelt{justify-content:flex-start;padding-top:26px}
+.hkort-gitter{display:grid;gap:8px;align-content:start}
+.hvare.hkort{flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#f8f1e3;border:1px solid #d8c6a6;border-radius:10px;padding:6px 4px;width:auto;font-family:var(--body)}
+.hk-ik{line-height:1;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}.hk-n{font-size:.78rem;font-weight:700;color:#4a3a28;text-align:center;line-height:1.15;overflow:hidden;max-height:2.3em}
+.hk-bar,.hi-bar{display:block;width:80%;height:5px;border-radius:99px;background:#e2d6bf;overflow:hidden}.hk-bar i,.hi-bar i{display:block;height:100%;background:var(--leaf)}
+.hk-d{font-size:.68rem;color:#6b5132}
+.hkort.rod{background:#fbe1dc}.hkort.orange{background:#fdebd9}.hkort.gul{background:#fbf3d0}
+.skabbund{display:flex;align-items:center;gap:10px;margin-top:8px}.skabbund p{flex:1;margin:0;text-align:center;font-size:.8rem;line-height:1.3}
+.dropzone{width:52px;height:52px;border-radius:50%;border:2px dashed var(--line);background:var(--card);font-size:1.6rem;line-height:1;flex:none;cursor:pointer;transition:transform .15s,border-color .15s,background .15s;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+body.traekker .dropzone{transform:scale(1.2);border-color:var(--leaf)}
+.dropzone.over{transform:scale(1.4)!important;background:var(--leaf-soft);border-style:solid}
+.traekspoeg{position:fixed;left:0;top:0;font-size:44px;line-height:1;pointer-events:none;z-index:50;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+.hi-top{display:flex;align-items:center;gap:10px}.hi-ik{font-size:2rem;line-height:1}
+.hi-raekke{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.88rem}.hi-lbl{width:5.6em;color:var(--muted);flex:none}.hi-bar{flex:1;width:auto}.hi-tal{white-space:nowrap}
+.hi-hold{flex:1}.hi-hold.rod{color:#c0392b;font-weight:700}.hi-hold.orange{color:#c46a12;font-weight:700}
+.hi-knapper{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.hyldeinfo{flex-direction:column;align-items:stretch;gap:0;bottom:70px}
+.pakke{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--leaf-soft);font-size:.9rem}
+.chip:disabled{opacity:.4}
+@keyframes bogInd{from{transform:translateY(-105%);opacity:.3}to{transform:none;opacity:1}}
+@keyframes bogUd{to{transform:translateY(-105%);opacity:0}}
+#opskBog.ind-oppefra{animation:bogInd .38s ease-out}
+#opskBog.ud-opad{animation:bogUd .28s ease-in forwards}
 .hylde{background:#efe6d6;border:10px solid #8b6a43;border-radius:8px;box-shadow:inset 0 0 18px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;margin-top:6px}
 .hylderum{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8px}
 .hyldeskilt{position:absolute;top:4px;left:8px;font-size:.7rem;font-weight:700;color:#6b5132;background:#f8f1e3;border:1px solid #d8c6a6;border-radius:4px;padding:0 6px;z-index:1}
@@ -378,7 +410,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div id="opsStart"></div>
   <div id="ugeplan"></div>
 
-  <details class="fold" style="margin-top:22px"><summary>Pakkeberegning for ugen</summary>
+  <details class="fold" style="margin-top:22px" hidden><summary>Pakkeberegning for ugen</summary>
     <p class="muted" style="margin-top:8px" id="subline"></p>
     <p class="muted">Vælg faste retter, så regner appen hele pakker, rester og svamperetter ud og lægger dem på de ledige dage.</p>
     <div class="chips" id="chips" aria-label="Vælg retter"></div>
@@ -450,21 +482,15 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 
 <!-- SKAB -->
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
-  <header class="top"><h1 id="h-skab">Skabet</h1></header>
-  <div id="skabStart">
-    <p class="sub">Det, I har derhjemme, bliver brugt først.</p>
-    <div class="tiles en">
-      <button class="tile" data-skab="se"><span class="ik">🗄️</span><span><span class="lb">Se dit skab</span><span class="sm" id="skabSeSm"></span></span></button>
-      <button class="tile" data-skab="tilfoej"><span class="ik">➕</span><span><span class="lb">Tilføj til skabet</span><span class="sm">Med et billede eller ved at skrive</span></span></button>
-    </div>
-  </div>
-  <div id="skabSe" hidden>
-    <button class="back" data-skab="start">‹ Skabet</button>
-    <div class="hylde" id="hylde"></div>
+  <header class="top"><h1 id="h-skab">Skabet</h1><button class="dropzone" data-dz="mund" aria-label="Spist eller brugt op – træk en vare hertil">👄</button></header>
+  <div id="skabSe">
+    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="prikker" id="skabPrikker"></span></div>
+    <div class="hylde" id="hylde"><div class="hyldeindre" id="hyldeIndre"></div></div>
+    <div class="skabbund"><button class="dropzone" data-dz="kurv" aria-label="Køb mere – træk en vare hertil, eller tryk for at se indkøbslisten">🛒</button><p class="muted" id="skabForkl"></p><button class="dropzone" data-dz="skrald" aria-label="Smidt ud – træk en vare hertil">🗑️</button></div>
     <div class="hyldeinfo" id="hyldeInfo" hidden></div>
   </div>
   <div id="skabTilfoej" hidden>
-    <button class="back" data-skab="start">‹ Skabet</button>
+    <button class="back" data-skab="se">‹ Skabet</button>
     <div class="ask" id="scanBox" style="margin:6px 0 12px">
       <h3>Med et billede</h3>
       <p class="muted" id="scanNote" style="margin:2px 0 8px">Tag et billede af kvitteringen, eller vælg et skærmbillede af en digital kvittering.</p>
@@ -532,7 +558,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 43 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 44 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -641,7 +667,13 @@ let saveTimer = null, sample = null;
 
 function price(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko)?p.oko:p.p}
 function pname(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko?"Øko ":"")+p.n}
-function ho(k){return P[k].ho??P[k].h}
+function ho(k){return (st.holdbarhed&&st.holdbarhed[k])??P[k].ho??P[k].h}
+/* Læg en mængde i skabet. Købsdatoen huskes (den ældste tæller, så intet bliver for gammelt), og hvor meget der blev købt. */
+function skabLaeg(k,amt,dage){
+  const x=st.skab[k];
+  st.skab[k]=x?{...x,amt:x.amt+amt,koebt:Math.max(x.koebt||0,x.amt)+amt}:{amt,koebt:amt,dage:dage??ho(k),dato:todayIso()};
+}
+function friLaeg(navn,niveau){if(!st.fri.some(f=>f.navn.toLowerCase()===String(navn).toLowerCase()))st.fri.push({navn,niveau:niveau||"hel",dato:todayIso()})}
 function fmt(k,a){
   const e=P[k].e;
   if(e==="g"){a=Math.round(a/5)*5;return a>=1000?(a/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" kg":a+" g"}
@@ -1354,8 +1386,8 @@ function koebVarer(liste){
   for(const v of liste){
     v.kilder.forEach(i=>fjern.add(i));
     if(v.basis){st.basisMangler=st.basisMangler.filter(b=>b!==v.basis);continue}
-    if(v.pk){const k=v.pk,amt=v.pakker*P[k].pk;st.skab[k]={amt:(st.skab[k]?.amt||0)+amt,dage:st.skab[k]?.dage??ho(k)};lagt[k]=(lagt[k]||0)+amt;continue}
-    if(!st.fri.some(x=>x.navn.toLowerCase()===v.navn.toLowerCase()))st.fri.push({navn:v.navn,niveau:"hel"});
+    if(v.pk){const k=v.pk,amt=v.pakker*P[k].pk;skabLaeg(k,amt);lagt[k]=(lagt[k]||0)+amt;continue}
+    friLaeg(v.navn);
   }
   st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
   return lagt;
@@ -1414,49 +1446,191 @@ function renderShopPlan(F){
   el.querySelectorAll("[data-valg]").forEach(b=>b.onclick=()=>{const tur=JSON.parse(b.dataset.valg);st.indkobValg=navn({tur})===navn(F.anbefalet)?null:{tur,dato:todayIso()};st.aktivButik=null;shopAfd=null;changed()});
 }
 /* ---------- Skabet ----------
-   To valg: se skabet (en hylde med butikkernes afdelinger og varerne som ikoner) eller tilføj til skabet
-   (med et billede af kvitteringen eller ved at skrive – med forslag, mens man skriver). */
-let skabMode="start",hyldeValgt=null,skabValg=null;
-function skabModeSaet(m){skabMode=m;hyldeValgt=null;skabValg=null;renderSkab();window.scrollTo(0,0)}
+   Først et samlet overblik (en reol med butikkernes afdelinger); swipe til hver afdeling for sig.
+   Varerne er ikoner med en farve for holdbarheden (grøn = frisk … rød = brug den nu), og det, der skal
+   bruges først, står forrest. Tryk på en vare for at se, hvor meget der er tilbage af det købte, og for at
+   skrue holdbarheden op eller ned. Træk en vare til munden (spist), skraldespanden (smidt ud) eller kurven
+   (køb mere). Man kan zoome i reolen med to fingre. */
+let skabMode="se",skabSide=0,hyldeValgt=null,skabValg=null,skabKlikVaek=false;
+const zoom={s:1,x:0,y:0};
+function skabModeSaet(m){holdbarSend();skabMode=m;hyldeValgt=null;skabValg=null;renderSkab();window.scrollTo(0,0)}
 document.querySelectorAll("[data-skab]").forEach(b=>b.onclick=()=>skabModeSaet(b.dataset.skab));
+document.getElementById("skabTilfoejKnap").onclick=()=>skabModeSaet("tilfoej");
+/* Dage siden en dato */
+function dageSiden(dato){return dato?Math.round((new Date(todayIso()+"T12:00:00")-new Date(dato+"T12:00:00"))/864e5):0}
+/* Holdbarhed for en vare uden mængde (fx "sojasauce"): din egen indstilling, ellers et skøn ud fra navnet */
+function friHold(navn){const o=(st.holdbarhedFri||{})[String(navn).toLowerCase()];return o??holdbarDage({navn,afd:gaetAfd(navn)})}
+function friskKlasse(rest){return rest==null?"":rest<=1?"rod":rest<=3?"orange":rest<=7?"gul":"groen"}
 function skabVarer(){
   const ud=[];
-  for(const [k,v] of Object.entries(st.skab))if(P[k])ud.push({k,navn:P[k].n.replace(/ \(løs\)/,""),afd:visAfd(afdOf(k)),tekst:fmt(k,v.amt),dage:v.dage});
-  st.fri.forEach((f,i)=>ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),tekst:f.niveau==="lidt"?"lidt tilbage":f.niveau==="noget"?"noget tilbage":"",dage:null}));
+  for(const [k,v] of Object.entries(st.skab))if(P[k])ud.push({k,navn:P[k].n.replace(/ \(løs\)/,""),afd:visAfd(afdOf(k)),amt:v.amt,koebt:Math.max(v.koebt||0,v.amt),dage:v.dage,rest:v.dage!=null?v.dage-dageSiden(v.dato):null});
+  st.fri.forEach((f,i)=>{const dage=f.dage??friHold(f.navn);ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),niveau:f.niveau||"hel",dage,rest:dage-dageSiden(f.dato)})});
   for(const x of ud){if(!AFD[x.afd])x.afd="andet";x.em=vareEmoji({navn:x.navn,afd:x.afd})}
-  return ud;
+  /* det, der skal bruges først, forrest */
+  return ud.sort((a,b)=>(a.rest??999)-(b.rest??999));
 }
 function hyldeNoegle(v){return v.k?"k:"+v.k:"f:"+v.navn}
+function skabSider(varer){return ["alle",...[...new Set(STD_RUTE.map(visAfd))].filter(a=>varer.some(v=>v.afd===a))]}
 function renderSkab(){
-  const n=Object.keys(st.skab).length+st.fri.length;
-  document.getElementById("skabSeSm").textContent=n?`${n} ${n===1?"vare":"varer"} på hylderne`:"Skabet er tomt";
-  for(const [id,m] of [["skabStart","start"],["skabSe","se"],["skabTilfoej","tilfoej"]])document.getElementById(id).hidden=skabMode!==m;
-  if(skabMode==="se"&&document.getElementById("t-skab").classList.contains("on"))renderHylde();
-  if(skabMode==="tilfoej")renderSkabValg();
+  const se=skabMode==="se";
+  document.getElementById("skabSe").hidden=!se;document.getElementById("skabTilfoej").hidden=se;
+  document.querySelectorAll("#t-skab .dropzone").forEach(z=>z.hidden=!se);
+  if(se&&document.getElementById("t-skab").classList.contains("on"))renderHylde();
+  if(!se)renderSkabValg();
 }
-/* Hylden fylder skærmen. Én hylde pr. afdeling; er der mange varer på en hylde, bliver ikonerne mindre (man kan zoome) */
+function tilbageTekst(v){
+  if(v.k)return `${fmt(v.k,v.amt)} af ${fmt(v.k,v.koebt)}`;
+  return v.niveau==="lidt"?"Lidt tilbage":v.niveau==="noget"?"Noget tilbage":"Hel";
+}
+function andel(v){return v.k?Math.max(0,Math.min(1,v.amt/(v.koebt||v.amt||1))):v.niveau==="lidt"?.2:v.niveau==="noget"?.55:1}
+function holdTekst(rest){return rest==null?"":rest<0?`${-rest} ${rest===-1?"dag":"dage"} over tiden`:rest===0?"Bør bruges i dag":rest===1?"Holder 1 dag mere":`Holder ${rest} dage mere`}
 function renderHylde(){
-  const h=document.getElementById("hylde"),info=document.getElementById("hyldeInfo"),varer=skabVarer();
-  if(!varer.length){h.style.height="";h.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tilføj det, I har.</p>`;info.hidden=true;return}
-  const afd=[...new Set(STD_RUTE.map(visAfd))].filter(a=>varer.some(v=>v.afd===a));
-  h.innerHTML="";h.style.height="";
-  const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+24;
-  const H=Math.max(afd.length*64+20,innerHeight-top-bund),hh=(H-20)/afd.length,B=h.clientWidth-16;
-  h.style.height=H+"px";
-  h.innerHTML=afd.map(a=>{
-    const vs=varer.filter(v=>v.afd===a),plads=hh-22-12;let s=50;
-    for(;s>14;s-=2){const pr=Math.max(1,Math.floor((B+6)/(s+6)));if(Math.ceil(vs.length/pr)*(s+2)<=plads)break}
-    return `<div class="hylderum" style="height:${hh}px"><span class="hyldeskilt">${esc(afdNavn(a))}</span><div class="hyldevarer">${vs.map(v=>`<button class="hvare${v.dage!=null&&v.dage<=3?" snart":""}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.78)}px" aria-label="${esc(v.navn)}${v.tekst?", "+esc(v.tekst):""}">${v.em}</button>`).join("")}</div><div class="hyldebraet"></div></div>`;
-  }).join("");
-  h.querySelectorAll("[data-hv]").forEach(b=>b.onclick=()=>{hyldeValgt=hyldeValgt===b.dataset.hv?null:b.dataset.hv;renderHylde()});
-  const v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
-  if(!v)return;
-  const niv=v.fi!=null?(st.fri[v.fi].niveau||"hel"):null;
-  info.innerHTML=`<span style="font-size:2.2rem;line-height:1">${v.em}</span><div style="flex:1;min-width:0"><b>${esc(v.navn)}</b><div class="muted" style="font-size:.85rem">${esc([v.tekst&&v.k?"ca. "+v.tekst:v.tekst,v.dage!=null?holdbarTekst(v.dage):"",v.dage!=null&&v.dage<=3?"bør bruges snart":""].filter(Boolean).join(" · "))}</div>${niv?`<div class="chips" style="margin-top:6px">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${niv===n}">${lb}</button>`).join("")}</div>`:""}</div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="x" id="hvLuk" aria-label="Luk">×</button><button class="btn ghost lille" id="hvBrugt">Brugt op</button></div>`;
-  document.getElementById("hvLuk").onclick=()=>{hyldeValgt=null;renderHylde()};
-  document.getElementById("hvBrugt").onclick=()=>{if(v.k)delete st.skab[v.k];else st.fri.splice(v.fi,1);hyldeValgt=null;changed();toast(v.navn+" er fjernet fra skabet")};
-  info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
+  const h=document.getElementById("hylde"),indre=document.getElementById("hyldeIndre"),info=document.getElementById("hyldeInfo"),varer=skabVarer();
+  const sider=skabSider(varer);skabSide=Math.min(skabSide,sider.length-1);
+  const side=sider[skabSide];
+  document.getElementById("skabPrikker").innerHTML=sider.length>1?sider.map((a,i)=>`<button class="prik${i===skabSide?" on":""}" data-sside="${i}" aria-label="${a==="alle"?"Overblik":esc(afdNavn(a))}"></button>`).join(""):"";
+  document.querySelectorAll("[data-sside]").forEach(b=>b.onclick=()=>{skabSide=+b.dataset.sside;zoom.s=1;zoom.x=zoom.y=0;hyldeValgt=null;renderHylde()});
+  document.getElementById("skabForkl").innerHTML=varer.length?`<b>${side==="alle"?"Overblik":esc(afdNavn(side))}</b><br>Træk en vare til 👄, 🗑️ eller 🛒`:"";
+  if(!varer.length){h.style.height="";indre.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tryk på "+ Tilføj".</p>`;info.hidden=true;return}
+  h.style.height="";
+  const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+24+document.querySelector(".skabbund").offsetHeight+8;
+  const H=Math.max(260,innerHeight-top-bund);h.style.height=H+"px";
+  const B=h.clientWidth-16,frisk=v=>friskKlasse(v.rest);
+  const ikon=(v,s)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.74)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}">${v.em}</button>`;
+  if(side==="alle"){
+    const afd=sider.slice(1),hh=(H-20)/afd.length;
+    indre.innerHTML=afd.map(a=>{
+      const vs=varer.filter(v=>v.afd===a),plads=hh-22-12;let s=50;
+      for(;s>14;s-=2){const pr=Math.max(1,Math.floor((B+6)/(s+6)));if(Math.ceil(vs.length/pr)*(s+4)<=plads)break}
+      return `<div class="hylderum" style="height:${hh}px"><span class="hyldeskilt">${esc(afdNavn(a))}</span><div class="hyldevarer">${vs.map(v=>ikon(v,s)).join("")}</div><div class="hyldebraet"></div></div>`;
+    }).join("");
+  }else{
+    /* Én afdeling: større kort med navn, hvor meget der er tilbage, og holdbarhed */
+    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24;let kol=2,kw,kh;
+    for(kol=2;kol<=6;kol++){kw=(B-(kol-1)*8)/kol;kh=Math.min(150,kw*1.2);if(Math.ceil(vs.length/kol)*(kh+8)<=Hi)break}
+    kol=Math.min(kol,6);
+    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
+  }
+  anvendZoom();
+  indre.querySelectorAll("[data-hv]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    if(skabKlikVaek){skabKlikVaek=false;return}
+    if(hyldeValgt!==b.dataset.hv)holdbarSend();
+    hyldeValgt=hyldeValgt===b.dataset.hv?null:b.dataset.hv;renderHylde();
+  });
+  renderHyldeInfo(varer);
 }
+function renderHyldeInfo(varer){
+  const info=document.getElementById("hyldeInfo"),v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
+  if(!v)return;
+  const trin=v.dage>21?7:1;
+  info.innerHTML=`<div class="hi-top"><span class="hi-ik">${v.em}</span><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
+    <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><span class="hi-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hi-tal">${esc(tilbageTekst(v))}</span>${v.k?`<span class="step"><button data-rest="-1" aria-label="Mindre tilbage">−</button><button data-rest="1" aria-label="Mere tilbage">+</button></span>`:""}</div>
+    ${v.k?"":`<div class="chips" style="margin:2px 0 0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${v.niveau===n}">${lb}</button>`).join("")}</div>`}
+    <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold ${friskKlasse(v.rest)}">${esc(holdTekst(v.rest))}</span><span class="step"><button data-hold="-${trin}" aria-label="Kortere holdbarhed">−</button><button data-hold="${trin}" aria-label="Længere holdbarhed">+</button></span></div>
+    <div class="hi-knapper"><button class="btn ghost lille" data-slip="mund">👄 Brugt op</button><button class="btn ghost lille" data-slip="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-slip="kurv">🛒 Køb mere</button></div>`;
+  document.getElementById("hvLuk").onclick=()=>{holdbarSend();hyldeValgt=null;renderHylde()};
+  info.querySelectorAll("[data-slip]").forEach(b=>b.onclick=()=>skabSlip(v,b.dataset.slip));
+  info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
+  info.querySelectorAll("[data-rest]").forEach(b=>b.onclick=()=>{
+    const x=st.skab[v.k],koebt=Math.max(x.koebt||0,x.amt),trin=P[v.k].e==="stk"?Math.max(1,Math.round(koebt/4)):koebt/4;
+    const ny=Math.max(0,Math.min(koebt,x.amt+(+b.dataset.rest)*trin));
+    if(ny<=1e-6){skabSlip(v,"mund");return}
+    st.skab[v.k]={...x,amt:Math.round(ny*100)/100,koebt};changed();
+  });
+  info.querySelectorAll("[data-hold]").forEach(b=>b.onclick=()=>holdbarSkru(v,+b.dataset.hold));
+}
+/* Skru holdbarheden op eller ned: gælder varen nu og bliver standard for varen fremover. Ændringen sendes
+   anonymt som feedback, når man er færdig, så standarderne i appen kan rettes til. */
+let holdbarAendr={};
+function holdbarSkru(v,d){
+  const nu=v.dage,ny=Math.max(1,nu+d),noegle=v.navn.toLowerCase();
+  if(!holdbarAendr[noegle])holdbarAendr[noegle]={navn:v.navn,fra:nu};
+  holdbarAendr[noegle].til=ny;
+  if(v.k){st.skab[v.k]={...st.skab[v.k],dage:ny};(st.holdbarhed=st.holdbarhed||{})[v.k]=ny}
+  else{st.fri[v.fi].dage=ny;(st.holdbarhedFri=st.holdbarhedFri||{})[noegle]=ny}
+  changed();
+}
+function holdbarSend(){
+  const l=Object.values(holdbarAendr).filter(x=>x.til!==x.fra);holdbarAendr={};
+  if(!l.length)return;
+  feedbackGem(`Holdbarhed ændret på ${l.length} ${l.length===1?"vare":"varer"}: ${l.map(x=>`${x.navn} fra ${x.fra} til ${x.til} dage`).join(", ")}.`,"holdbarhed");
+}
+/* Slip en vare: i munden (spist/brugt op), i skraldespanden (smidt ud) eller i kurven (køb mere) */
+function skabSlip(v,hvor){
+  if(hvor==="kurv"){
+    const navn=v.navn,kat=v.k?afdOf(v.k):gaetAfd(navn);
+    if(!st.ekstraIndkob.some(x=>!x.done&&!x.fastId&&x.navn.toLowerCase()===navn.toLowerCase()))st.ekstraIndkob.push({navn,maengde:"",kat});
+    changed();toast(navn+" er sat på indkøbslisten");return;
+  }
+  if(v.k)delete st.skab[v.k];else st.fri.splice(v.fi,1);
+  (st.spildLog=st.spildLog||[]).push({navn:v.navn,dato:todayIso(),hvordan:hvor==="skrald"?"smidt ud":"spist"});st.spildLog=st.spildLog.slice(-200);
+  hyldeValgt=null;changed();toast(v.navn+(hvor==="skrald"?" er smidt ud":" er brugt op"));
+}
+/* Zoom (to fingre), panorering, swipe mellem afdelinger og træk-og-slip – alt sammen i reolen */
+function anvendZoom(){
+  const h=document.getElementById("hylde"),W=h.clientWidth,H=h.clientHeight;
+  zoom.x=Math.min(0,Math.max(W-W*zoom.s,zoom.x));zoom.y=Math.min(0,Math.max(H-H*zoom.s,zoom.y));
+  document.getElementById("hyldeIndre").style.transform=zoom.s>1.01?`translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})`:"";
+  if(zoom.s<=1.01){zoom.s=1;zoom.x=zoom.y=0}
+}
+function skabBladre(d){
+  const sider=skabSider(skabVarer()),j=skabSide+d;
+  if(j<0||j>=sider.length)return;
+  holdbarSend();skabSide=j;zoom.s=1;zoom.x=zoom.y=0;hyldeValgt=null;
+  const indre=document.getElementById("hyldeIndre");indre.classList.remove("ind-hoejre","ind-venstre");void indre.offsetWidth;
+  renderHylde();indre.classList.add(d>0?"ind-hoejre":"ind-venstre");
+}
+(()=>{
+  const h=document.getElementById("hylde"),pts=new Map();let g=null,spoeg=null,maalZone=null;
+  const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+  const zoneVed=(x,y)=>{const el=document.elementFromPoint(x,y);return el&&el.closest("[data-dz]")};
+  const stopTraek=()=>{if(spoeg){spoeg.remove();spoeg=null}document.body.classList.remove("traekker");document.querySelectorAll("[data-dz]").forEach(z=>z.classList.remove("over"));maalZone=null};
+  h.addEventListener("pointerdown",e=>{
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===2){stopTraek();const [a,b]=[...pts.values()],r=h.getBoundingClientRect();g={type:"pinch",d0:dist(a,b)||1,s0:zoom.s,px:(a.x+b.x)/2-r.left,py:(a.y+b.y)/2-r.top,x0:zoom.x,y0:zoom.y};return}
+    if(pts.size>2)return;
+    g={type:"?",id:e.pointerId,x0:e.clientX,y0:e.clientY,t0:Date.now(),ikon:e.target.closest(".hvare"),zx:zoom.x,zy:zoom.y};
+  });
+  window.addEventListener("pointermove",e=>{
+    if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(!g)return;
+    if(g.type==="pinch"){if(pts.size<2)return;const [a,b]=[...pts.values()],s=Math.max(1,Math.min(3,g.s0*dist(a,b)/g.d0));zoom.x=g.px-(g.px-g.x0)*s/g.s0;zoom.y=g.py-(g.py-g.y0)*s/g.s0;zoom.s=s;anvendZoom();return}
+    const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
+    if(g.type==="?"){
+      if(Math.hypot(dx,dy)<10)return;
+      if(g.ikon&&(Date.now()-g.t0>200||Math.abs(dy)>=Math.abs(dx))){
+        g.type="traek";spoeg=document.createElement("div");spoeg.className="traekspoeg";spoeg.textContent=g.ikon.querySelector(".hk-ik")?.textContent||g.ikon.textContent;document.body.appendChild(spoeg);document.body.classList.add("traekker");
+      }else g.type=zoom.s>1?"pan":"swipe";
+    }
+    if(g.type==="traek"){spoeg.style.transform=`translate(${e.clientX-28}px,${e.clientY-28}px)`;const z=zoneVed(e.clientX,e.clientY);document.querySelectorAll("[data-dz]").forEach(x=>x.classList.toggle("over",x===z));maalZone=z}
+    if(g.type==="pan"){zoom.x=g.zx+dx;zoom.y=g.zy+dy;anvendZoom()}
+  });
+  const slut=e=>{
+    if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);
+    if(!g)return;
+    if(g.type==="traek"){
+      const z=maalZone,key=g.ikon.dataset.hv;stopTraek();skabKlikVaek=true;
+      const v=skabVarer().find(x=>hyldeNoegle(x)===key);if(z&&v)skabSlip(v,z.dataset.dz);
+    }else if(g.type==="swipe"){const dx=e.clientX-g.x0,dy=e.clientY-g.y0;skabKlikVaek=true;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))skabBladre(dx<0?1:-1)}
+    else if(g.type==="pan")skabKlikVaek=true;
+    if(!pts.size){g=null;setTimeout(()=>{skabKlikVaek=false},350)}
+  };
+  window.addEventListener("pointerup",slut);
+  window.addEventListener("pointercancel",e=>{stopTraek();slut(e)});
+})();
+/* Tryk på en dropzone: kurven åbner indkøbslisten; munden og skraldespanden forklarer sig selv */
+document.querySelectorAll("#t-skab [data-dz]").forEach(z=>z.onclick=()=>{
+  if(z.dataset.dz==="kurv"){show("t-indkob");return}
+  toast(z.dataset.dz==="mund"?"Træk en vare hertil, når den er spist eller brugt op":"Træk en vare hertil, når den er smidt ud");
+});
+/* Tryk ved siden af lukker boksen; tryk på en anden vare åbner den i stedet */
+document.addEventListener("click",e=>{
+  /* et element, der er tegnet forfra under klikket, hørte til boksen */
+  if(!hyldeValgt||!e.target.isConnected||e.target.closest("#hyldeInfo,.hvare"))return;
+  holdbarSend();hyldeValgt=null;renderHylde();
+});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)holdbarSend()});
 /* Skriv selv: vælger man en vare med mængde, spørges der om mængden */
 function renderSkabValg(){
   const el=document.getElementById("skabValgt"),v=skabValg;
@@ -1465,7 +1639,7 @@ function renderSkabValg(){
   document.getElementById("skabLaeg").onclick=()=>{
     const a=parseFloat(document.getElementById("skabAmt").value),k=v.k;
     if(!(a>0)){toast("Skriv en mængde over 0");return}
-    st.skab[k]={amt:(st.skab[k]?.amt||0)+a,dage:st.skab[k]?.dage??ho(k)};skabValg=null;changed();toast(P[k].n.replace(/ \(løs\)/,"")+" er lagt i skabet");
+    skabLaeg(k,a);skabValg=null;changed();toast(P[k].n.replace(/ \(løs\)/,"")+" er lagt i skabet");
   };
 }
 /* ---------- Forslag, mens man skriver ----------
@@ -1496,7 +1670,7 @@ function autoFelt(inp,liste,medBasis,valgt){
 autoFelt(document.getElementById("skabIn"),document.getElementById("skabForslag"),false,x=>{
   if(x.k&&P[x.k]){skabValg={k:x.k};renderSkabValg();document.getElementById("skabAmt")?.select();return}
   const navn=stort(x.navn);
-  if(!st.fri.some(f=>f.navn.toLowerCase()===navn.toLowerCase()))st.fri.push({navn,niveau:"hel"});
+  friLaeg(navn);
   changed();toast(navn+" er lagt i skabet");
 });
 autoFelt(document.getElementById("shopIn"),document.getElementById("shopForslag"),true,x=>{
@@ -1509,7 +1683,7 @@ autoFelt(document.getElementById("shopIn"),document.getElementById("shopForslag"
 function kurvOpdater(){
   const k=document.getElementById("kurvKnap");if(!k)return;
   const on=id=>document.getElementById(id).classList.contains("on");
-  k.hidden=on("t-indkob")||(on("t-snak")&&document.getElementById("t-snak").classList.contains("fokus"))||(on("t-pref")&&document.getElementById("t-pref").classList.contains("kunGuide"));
+  k.hidden=on("t-indkob")||on("t-skab")||(on("t-snak")&&document.getElementById("t-snak").classList.contains("fokus"))||(on("t-pref")&&document.getElementById("t-pref").classList.contains("kunGuide"));
   document.body.classList.toggle("medKurv",!k.hidden);
 }
 document.getElementById("kurvKnap").onclick=()=>show("t-indkob");
@@ -1797,9 +1971,9 @@ function applyUpdates(r){
   const noter=[];
   for(const x of r.skabTilfoej||[]){
     const navn=String(x.navn||"").trim(); if(!navn)continue;
-    if(x.k&&P[x.k]&&x.maengde>0){st.skab[x.k]={amt:(st.skab[x.k]?.amt||0)+x.maengde,dage:P[x.k].h};noter.push("+ "+navn);continue}
+    if(x.k&&P[x.k]&&x.maengde>0){skabLaeg(x.k,x.maengde);noter.push("+ "+navn);continue}
     const f=st.fri.find(y=>y.navn.toLowerCase()===navn.toLowerCase());
-    if(f)f.niveau=x.niveau||f.niveau; else st.fri.push({navn,niveau:x.niveau||"hel"});
+    if(f)f.niveau=x.niveau||f.niveau; else friLaeg(navn,x.niveau);
     noter.push("+ "+navn);
   }
   for(const x of r.skabFjern||[]){
@@ -1829,6 +2003,32 @@ function hurtigIndkob(t){
   return varer;
 }
 let selDays=new Set();
+/* ---------- Fælles opskrifter ----------
+   Egne opskrifter deles via det samme Google Apps Script som feedbacken og hentes af alle, der bruger appen.
+   Andres opskrifter er ikke tjekket for jeres allergier: de tæller som "ikke bekræftet", til I selv har tjekket dem.
+   Kan en opskrift ikke sendes (fx før scriptet er opdateret), venter den på telefonen og sendes senere. */
+let delte=[];
+async function hentDelte(){
+  if(!FEEDBACK_URL)return;
+  try{
+    const r=await fetch(FEEDBACK_URL+"?type=opskrifter",{cache:"no-store"}),j=await r.json();
+    if(!j||!Array.isArray(j.opskrifter))return;
+    const egne=new Set(st.egne.map(x=>x.id));
+    delte=j.opskrifter.filter(x=>x&&typeof x.id==="string"&&x.t&&Array.isArray(x.ing)&&Array.isArray(x.trin)&&!egne.has(x.id))
+      .map(x=>({...x,pr:x.pr||[],reg:x.reg||[],k:x.k||[],egen:true,delt:true,fri:(st.deltFri||{})[x.id]||[]}));
+    oOpdaterEgne();if(document.getElementById("t-opsk").classList.contains("on"))renderOpsk();
+    delSend();
+  }catch(e){}
+}
+let delSender=false;
+async function delSend(){
+  if(!FEEDBACK_URL||delSender||!(st.delKoe||[]).length)return;
+  delSender=true;
+  try{while(st.delKoe.length){const r=await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify({type:"opskrift",opskrift:st.delKoe[0]})}),j=await r.json().catch(()=>null);if(!r.ok||!j||!j.ok)break;st.delKoe.shift();save()}}catch(e){}
+  delSender=false;
+}
+/* Del en egen opskrift (uden husstandens egne allergi-bekræftelser) */
+function delOpskrift(r){const {fri,delt,...x}=r;(st.delKoe=st.delKoe||[]).push(x);save();delSend()}
 /* ---------- Feedback ----------
    Kritik og ønsker til appen. Sendes kun, når man trykker "Send feedback" under Feedback – aldrig fra snakken. Sendes anonymt (kun teksten, tidspunkt og
    app-version) til et Google Apps Script, der gemmer hver besked som en fil i Google Drive › Privat › mad › feedback
@@ -1840,7 +2040,7 @@ function feedbackGem(tekst,kilde){
 }
 let fbSender=false;
 async function feedbackSend(){
-  if(st.feedbackKoe)st.feedbackKoe=st.feedbackKoe.filter(x=>x.kilde==="feedback");
+  if(st.feedbackKoe)st.feedbackKoe=st.feedbackKoe.filter(x=>x.kilde!=="snak");
   if(!FEEDBACK_URL||fbSender||!(st.feedbackKoe||[]).length)return false;
   fbSender=true;let ok=true;
   try{
@@ -1867,6 +2067,14 @@ document.getElementById("fbSend").onclick=async()=>{
   el.value="";s.textContent="Sender …";
   s.textContent=await feedbackGem(t,"feedback")?"Tak! Din feedback er sendt.":"Tak! Den er gemt på telefonen og bliver sendt automatisk.";
 };
+/* Swipe til venstre/højre: kalder fn("venstre"|"hoejre"), når fingeren flyttes mindst 50 px vandret */
+function swipe(el,fn){
+  let x0=null,y0=0,t0=0;
+  el.addEventListener("touchstart",e=>{if(e.touches.length!==1){x0=null;return}x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
+  el.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Date.now()-t0<800&&Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))fn(dx<0?"venstre":"hoejre")},{passive:true});
+}
+/* Snak ↔ Feedback */
+swipe(document.getElementById("t-chat"),r=>snakDel(r==="venstre"?"feedback":"snak"));
 /* "Planlæg ugen", "lav en madplan" osv.: tilbyd guiden eller én ret ad gangen. Returnerer "denne", "naeste" eller null. */
 function planOensker(t){
   if(!/planl[æa]g|madplan|ugeplan|plan for/i.test(t)||!/uge|madplan|ugeplan/i.test(t))return null;
@@ -2191,6 +2399,13 @@ function ugeplanStart(hvilken){
   renderUgeplan();window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
+/* Swipe i planlægningen: venstre = videre (hvor der er en "videre"), højre = tilbage */
+swipe(document.getElementById("ugeplan"),r=>{
+  const el=document.getElementById("ugeplan"),b=r==="hoejre"?el.querySelector('.nav [data-u="tilbage"]:not([data-frem]), .nav [data-u="aabn"]'):el.querySelector("[data-frem]");
+  if(b&&!b.disabled)b.click();
+});
+/* Swipe i præference-guiden */
+for(const id of ["opsStart","prefOpsat"])swipe(document.getElementById(id),r=>{const b=document.getElementById(id).querySelector(r==="hoejre"?'[data-w="tilbage"]':'[data-w="naeste"]');if(b)b.click()});
 document.getElementById("planNaeste").onclick=()=>ugeplanStart("naeste");
 function renderUgeplan(){
   const el=document.getElementById("ugeplan"),ny=naesteUge();
@@ -2225,19 +2440,19 @@ function ugeplanHtml(){
       const krop=l.length?`<div class="chips" style="margin-top:0">${vis.map(x=>`<span class="chip lille${snart(x)?" snart":""}">${esc(x.navn)}${maengde(x)}</span>`).join("")}${l.length>vis.length?`<span class="chip lille"><small>+ ${l.length-vis.length} mere</small></span>`:""}</div>${l.some(snart)?`<p class="muted" style="font-size:.85rem;margin:10px 0 0"><span class="prikSnart" aria-hidden="true"></span> = bør bruges snart</p>`:""}`
         :`<p class="muted" style="margin:0">Appen kender ikke noget i skabet endnu.</p>`;
       return skaermHtml("Har I det her derhjemme?",l.length&&fs.res.length?"Det, der skal bruges til retter på planen, er trukket fra.":"",krop,
-        `<button class="btn ghost" data-u="skabRet">${l.length?"Nej, ret det":"Tilføj noget"}</button><span class="grow"></span><button class="btn" data-u="tilbage" data-til="hvordan">${l.length?"Ja, det passer":"Videre"}</button>`);
+        `<button class="btn ghost" data-u="skabRet">${l.length?"Nej, ret det":"Tilføj noget"}</button><span class="grow"></span><button class="btn" data-u="tilbage" data-til="hvordan" data-frem>${l.length?"Ja, det passer":"Videre"}</button>`);
     }
     const krop=`<div class="addrow" style="padding:0"><input id="upTilfoej" value="${esc(up.tilfoejTekst)}" placeholder="Fx 3 æbler eller en pose ris" aria-label="Tilføj til skabet" autocomplete="off" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-u="tilfoej">Tilføj</button></div>
       ${l.length?`<div class="chips">${l.map(x=>`<button class="chip lille${snart(x)?" snart":""}" data-u="fjern" ${x.k?`data-k="${esc(x.k)}"`:`data-fri="${esc(x.fri)}"`} aria-label="${esc(x.navn)} er brugt eller smidt ud">${esc(x.navn)}${maengde(x)} <span aria-hidden="true">×</span></button>`).join("")}</div>`:""}`;
     return skaermHtml("Ret skabet","Skriv det, der mangler. Tryk på det, I ikke har mere.",krop,
-      `<button class="btn ghost" data-u="tilbage" data-til="skab">Tilbage</button><span class="grow"></span><button class="btn" data-u="tilbage" data-til="hvordan">Videre</button>`);
+      `<button class="btn ghost" data-u="tilbage" data-til="skab">Tilbage</button><span class="grow"></span><button class="btn" data-u="tilbage" data-til="hvordan" data-frem>Videre</button>`);
   }
   if(up.trin==="prio")return skaermHtml("Hvad er vigtigt denne gang?","I denne rækkefølge. Tryk for at ændre.",
     `${maalHtml(up.maal,"data-u")}<div class="tiles kompakt">${MTYPER.map(([id,ik,lb])=>{const on=up.prio[id]>0;return `<button class="tile" data-u="prio" data-id="${id}" aria-pressed="${on}"><span class="ik">${ik}</span><span class="lb">${esc(lb)}</span>${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}</div>`,
-    `<button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button><span class="grow"></span><button class="btn" data-u="find">Find retter</button>`);
+    `<button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button><span class="grow"></span><button class="btn" data-u="find" data-frem>Find retter</button>`);
   if(up.trin==="hvordan")return skaermHtml("Hvordan vil du finde retterne?","",
     `<div class="tiles en">
-      <button class="tile" data-u="anbefal"><span class="ik">✨</span><span><span class="lb">Anbefal til mig</span><span class="sm">${(n=>n===1?"1 ret":n+" retter")(Math.max(1,vaelgDage(up.start,st.settings.M,up.slut).length))} ud fra skab, tilbud og det, der er vigtigt</span></span></button>
+      <button class="tile" data-u="anbefal"><span class="ik">✨</span><span><span class="lb">Giv mig en fuld pakke</span><span class="sm">${(n=>n===1?"1 ret":n+" retter")(Math.max(1,vaelgDage(up.start,st.settings.M,up.slut).length))} og hele indkøbet – pakkerne bliver brugt op</span></span></button>
       <button class="tile" data-u="kategorier"><span class="ik">🗂️</span><span><span class="lb">Vælg efter kategori</span><span class="sm">Sundt, hurtigt, billigt …</span></span></button>
       <button class="tile" data-u="snak"><span class="ik">💬</span><span><span class="lb">Sig, hvad du har lyst til</span><span class="sm">Fx "jeg har lyst til lasagne"</span></span></button>
     </div>`,
@@ -2255,13 +2470,25 @@ function ugeplanHtml(){
   if(up.trin==="forslag"){
     if(up.aaben>=0&&up.forslag[up.aaben])return forslagDetalje(up.aaben);
     const valgte=[...up.valgt].filter(i=>!paaPlan(up.forslag[i])).length,aabne=up.forslag.filter(f=>!paaPlan(f)).length;
+    const pk=!kat&&up.forslag.length?pakkeOversigt(up.forslag.filter((f,i)=>up.valgt.has(i)||paaPlan(f))):null;
     return skaermHtml(titel,`${esc(periode)}. Fjern flueben ved det, du ikke vil have.`,
-      `${up.fejl?`<p class="bad" style="margin:0 0 8px">${esc(up.fejl)}</p>${up.fejlDetalje?`<p class="muted" style="margin:0 0 8px;font-size:.75rem">Teknisk: ${esc(up.fejlDetalje)}</p>`:""}`:""}
+      `${pk&&pk.retter?`<p class="pakke">📦 Fuld pakke: ${pk.retter} ${pk.retter===1?"ret":"retter"} · ${pk.varer} ${pk.varer===1?"vare":"varer"} at købe${pk.butik?` · ca. ${Math.round(pk.kr)} kr i ${esc(pk.butik)}`:""}</p>`:""}${up.fejl?`<p class="bad" style="margin:0 0 8px">${esc(up.fejl)}</p>${up.fejlDetalje?`<p class="muted" style="margin:0 0 8px;font-size:.75rem">Teknisk: ${esc(up.fejlDetalje)}</p>`:""}`:""}
       ${up.forslag.length?`<div class="list">${up.forslag.map((f,i)=>forslagKort(f,i)).join("")}</div>`:""}
       ${up.allergiMangel?`<div class="allergiboks" style="margin-top:10px">Der er ikke flere ${esc(allergiNavne())}-fri opskrifter, der passer. Læg jeres egne op under <button class="x" data-u="egenOpsk" style="font-size:inherit;padding:0;color:var(--leaf);text-decoration:underline">Opskrifter › Tilføj din egen</button>.</div>`:""}`,
       `<button class="btn ghost" data-u="tilbage" data-til="${kat?"kategorier":"prio"}" aria-label="Tilbage">‹</button><button class="btn ghost" data-u="igen">Nye forslag</button><span class="grow"></span>${aabne?`<button class="btn" data-u="okValgte" ${valgte?"":"disabled"}>OK${valgte&&valgte<aabne?` (${valgte})`:""}</button>`:`<button class="btn" data-u="luk">Færdig</button>`}`);
   }
   return "";
+}
+/* Den fulde pakke: hvad skal der købes til de valgte retter, og hvad koster det i den billigste af jeres butikker? */
+function pakkeOversigt(fl){
+  const gemt=st.ekstraIndkob;let ud={retter:fl.length,varer:0,kr:0,butik:null};
+  try{
+    st.ekstraIndkob=[];
+    for(const f of fl){const r=f.opskrift&&ORMAP[f.opskrift];for(const m of (r?retKoeb(r,f.dag):(f.mangler||[])))st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde||"",kat:m.kat||gaetAfd(m.navn),til:f.navn})}
+    const G=samletIndkob({res:{packs:{}},basis:[]}),e=G.length?fordel(G).enkelt[0]:null;
+    ud={retter:fl.length,varer:G.length,kr:e?e.kasse:0,butik:e?e.tur[0]:null};
+  }finally{st.ekstraIndkob=gemt}
+  return ud;
 }
 /* Én linje pr. forslag; resten står på rettens egen skærm */
 function forslagKort(f,i){
@@ -2298,7 +2525,7 @@ function ugeplanHandlingInner(b){
   if(!up)return;
   if(u==="luk"){if(up.forslag.some(paaPlan))st.ugeplanFor=up.start;up=null;changed();return}
   if(u==="fjern"){if(b.dataset.k)delete st.skab[b.dataset.k];else st.fri=st.fri.filter(x=>x.navn!==b.dataset.fri);changed();return}
-  if(u==="tilfoej"){const v=up.tilfoejTekst.trim();if(!v)return;st.fri.push({navn:v,niveau:"hel"});up.tilfoejTekst="";changed();document.getElementById("upTilfoej")?.focus();return}
+  if(u==="tilfoej"){const v=up.tilfoejTekst.trim();if(!v)return;friLaeg(v);up.tilfoejTekst="";changed();document.getElementById("upTilfoej")?.focus();return}
   if(u==="skabRet"){up.trin="skabRet";renderUgeplan();if(!skabLinjer(forventetSkab(addDays(up.start,7))).length)document.getElementById("upTilfoej")?.focus();return}
   if(u==="hvordan"||u==="tilbage"){up.trin=b.dataset.til||"hvordan";up.aaben=-1;renderUgeplan();return}
   if(u==="kategorier"){up.trin="kategorier";renderUgeplan();return}
@@ -2379,6 +2606,7 @@ GRUND TIL HVER RET: Skriv i "hvorfor" én god og ægte grund, der starter med "F
 - sundhed: "Fordi I ikke har fået fisk i 2 uger" (fisk 1–2 gange om ugen, gerne grønt og fuldkorn)
 - favorit: "Fordi det er en af jeres favoritter"
 Brug den grund, der passer bedst til rækkefølgen ovenfor.
+${kat?"":`FULD PAKKE: Planlæg perioden som én pakke. Vælg retterne, så de pakker, der skal købes, bliver brugt helt op på tværs af retterne (fx en pose løg, en bakke champignon, en pakke fløde), og så der bliver mindst muligt tilovers.`}
 Sidst de har fået: ${proteinHistorik(up.start)}
 Kan lide (favoritter): ${favs.join(", ")||"ingen gemt"}${favs.length?`. Mindst ét forslag SKAL være en af favoritterne; sæt "favorit": true på det.`:""}
 Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
@@ -2522,8 +2750,8 @@ Returnér KUN JSON: {"butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvi
       /* Lige efter et indkøb ligger varerne allerede i skabet: kvitteringen retter mængden i stedet for at lægge den til igen */
       const k=kvitAktiv(),lagt=k?k.lagt:{};
       let n=0;
-      for(const v of scanItems){if(!v.on)continue;const amt=(st.skab[v.k]?.amt||0)+v.maengde-(lagt[v.k]||0);delete lagt[v.k];if(amt>1e-6)st.skab[v.k]={amt,dage:P[v.k].h};else delete st.skab[v.k];n++}
-      for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){st.fri.push({navn:nm,niveau:"hel"});n++}}
+      for(const v of scanItems){if(!v.on)continue;const amt=(st.skab[v.k]?.amt||0)+v.maengde-(lagt[v.k]||0);delete lagt[v.k];const gl=st.skab[v.k];if(amt>1e-6)st.skab[v.k]={...(gl||{dato:todayIso()}),amt,koebt:Math.max(amt,(gl&&gl.koebt)||0),dage:(gl&&gl.dage)||ho(v.k)};else delete st.skab[v.k];n++}
+      for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){friLaeg(nm);n++}}
       st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
       const np=laerPriser(r);
       if(k){const kb=butikFraTekst(r.butik);k.butikker=k.butikker.filter(b=>b!==kb);if(!kb||!k.butikker.length)delete st.kvit}
@@ -2715,17 +2943,25 @@ let oMode="filter";
    Filtre (type, tid, økonomi, køkken) → en kogebog med én ret pr. side, man bladrer i (swipe eller pilene).
    Trykker man på en side, åbnes retten i bogen, fordelt på sider. Derfra: "Lav denne" (sæt på planen) eller
    "Tilføj til indkøb" (det, I ikke har i skabet, købt hvor det samlet er billigst af jeres butikker). */
-let bog={filt:{type:[],tid:null,oko:[],kok:[]},liste:[],side:0,ret:null,retSide:0,retSider:[],dage:false,travl:false};
+let bog={filt:{type:[],tid:[],oko:[],har:false},liste:[],side:0,ret:null,retSide:0,retSider:[],dage:false,travl:false};
 function opskMode(m){
   if(m==="start"||m==="katalog")m="filter";
   oMode=m;oAaben=null;
   if(m==="egen"&&egen.trin==="luk"){egen.trin="input";egen.fejl=""}
   if(m==="bog"){bog.liste=bogListe().map(r=>r.id);bog.side=0;bog.ret=null;bog.dage=false}
   renderOpsk();window.scrollTo(0,0);
+  if(m==="bog"){const w=document.getElementById("opskBog");w.classList.remove("ind-oppefra","ud-opad");void w.offsetWidth;w.classList.add("ind-oppefra")}
 }
 document.getElementById("opskNyKnap").onclick=()=>opskMode("egen");
 document.getElementById("bogAabn").onclick=()=>opskMode("bog");
-document.getElementById("bogTilbage").onclick=()=>{if(bog.ret){bog.ret=null;bog.dage=false;renderBog(-1)}else opskMode("filter")};
+/* Tilbage: fra en ret til bogen; fra bogen op og væk (samme vej som den kom) */
+function bogTilbage(){
+  if(bog.travl)return;
+  if(bog.ret){bog.ret=null;bog.dage=false;renderBog(-1);return}
+  const w=document.getElementById("opskBog");w.classList.remove("ind-oppefra");w.classList.add("ud-opad");
+  setTimeout(()=>{w.classList.remove("ud-opad");opskMode("filter")},280);
+}
+document.getElementById("bogTilbage").onclick=bogTilbage;
 document.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
 /* Åbn en ret i kogebogen (fra planen, forslag og snak) */
 function oVis(id){
@@ -2774,38 +3010,43 @@ function retPris(r){
   }finally{st.ekstraIndkob=gemt}
   return prisGemt[r.id]=ud;
 }
-/* Økonomi: retterne deles i tre lige store grupper efter pris pr. person (med det, I har) */
-function okoGraenser(){const ps=oAlle().filter(allergiOk).map(r=>retPris(r).pr).sort((a,b)=>a-b);if(!ps.length)return [0,0];return [ps[Math.floor((ps.length-1)/3)],ps[Math.floor((ps.length-1)*2/3)]]}
-function okoTrin(r,g){const p=retPris(r).pr;return p<=g[0]?"billig":p<=g[1]?"mellem":"dyr"}
-const BOG_TID=[["20","Højst 20 min"],["30","Højst 30 min"],["45","Højst 45 min"]];
-function bogPasser(r,g){
-  const f=bog.filt,tid=r.tid?(r.tid[1]||r.tid[0]):null;
-  return allergiOk(r)&&(!f.type.length||(r.pr||[]).some(p=>f.type.includes(p)))&&(!f.tid||(tid!=null&&tid<=+f.tid))
-    &&(!f.kok.length||(r.reg||[]).some(x=>f.kok.includes(x)))&&(!f.oko.length||f.oko.includes(okoTrin(r,g)));
+/* Filtre: type, tid (under 30 / 30 ± 5 / over 30 min), økonomi (under / over 60 kr pr. person for det, der skal
+   købes) og "Brug hvad vi har" (retter, hvor alt er i skabet; basisvarer tæller ikke) */
+const BOG_TID=[["under","Under 30 min"],["30","30 min"],["over","Over 30 min"]],BOG_OKO=[["under","Under 60 kr pr. person"],["over","Over 60 kr pr. person"]];
+function tidTrin(r){const t=r.tid?(r.tid[1]||r.tid[0]):null;return t==null?null:t<25?"under":t<=35?"30":"over"}
+function okoTrin(r){return retPris(r).pr<60?"under":"over"}
+function kunSkab(r){return !retKoeb(r).length}
+/* udenGrp: tæl, som om den gruppe ikke var valgt (til tallene på knapperne) */
+function bogPasser(r,udenGrp){
+  const f=bog.filt;
+  return allergiOk(r)&&(udenGrp==="type"||!f.type.length||(r.pr||[]).some(p=>f.type.includes(p)))
+    &&(udenGrp==="tid"||!f.tid.length||f.tid.includes(tidTrin(r)))
+    &&(udenGrp==="oko"||!f.oko.length||f.oko.includes(okoTrin(r)))
+    &&(udenGrp==="har"||!f.har||kunSkab(r));
 }
 /* Kogebogens rækkefølge: det, der bruger mest fra skabet og ugens tilbud, først; retter fra de sidste 3 uger sidst */
 function bogListe(){
-  const g=okoGraenser(),har=oHar(),uge=tUge(),rs=oAlle().filter(r=>bogPasser(r,g)),sc={};
+  const har=oHar(),uge=tUge(),rs=oAlle().filter(r=>bogPasser(r)),sc={};
   for(const r of rs){const m=oMatch(r,st.settings.P,har,oValg[r.id]);sc[r.id]=m.score+m.koeb.filter(x=>tBedst(x.id,uge)).length*.6-(nyligFor(r)?5:0)}
   return rs.sort((a,b)=>sc[b.id]-sc[a.id]||a.t.localeCompare(b.t,"da"));
 }
 function renderBogFiltre(){
-  const alle=oAlle().filter(allergiOk),g=okoGraenser(),f=bog.filt;
-  const tael=fn=>{const c={};for(const r of alle)for(const x of fn(r)||[])c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
-  const chip=(grp,v,lb,on)=>`<button class="chip lille" data-bf="${grp}" data-v="${esc(v)}" aria-pressed="${on}">${esc(lb)}</button>`;
-  const kr=x=>Math.round(x);
-  const fe=document.getElementById("bogFiltre");
+  const alle=oAlle().filter(allergiOk),f=bog.filt,fe=document.getElementById("bogFiltre");
+  const typer=(()=>{const c={};for(const r of alle)for(const x of r.pr||[])c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])})();
+  const rammer={type:(r,v)=>(r.pr||[]).includes(v),tid:(r,v)=>tidTrin(r)===v,oko:(r,v)=>okoTrin(r)===v};
+  const chip=(grp,v,lb,on)=>{const n=alle.filter(r=>bogPasser(r,grp)&&rammer[grp](r,v)).length;return `<button class="chip lille" data-bf="${grp}" data-v="${esc(v)}" aria-pressed="${on}" ${!n&&!on?"disabled":""}>${esc(lb)} <small>${n}</small></button>`};
+  const nHar=alle.filter(r=>bogPasser(r,"har")&&kunSkab(r)).length;
   fe.innerHTML=`<p class="muted" style="margin:0">Vælg det, I har lyst til – så samler appen en kogebog.</p>
-    <h3 class="bfh">Type</h3><div class="chips">${tael(r=>r.pr).map(v=>chip("type",v,v,f.type.includes(v))).join("")}</div>
-    <h3 class="bfh">Tid</h3><div class="chips">${BOG_TID.map(([v,lb])=>chip("tid",v,lb,f.tid===v)).join("")}</div>
-    <h3 class="bfh">Økonomi <small class="muted" style="font-weight:400">pr. person, med det I har</small></h3><div class="chips">${[["billig",`Billig · under ${kr(g[0])+1} kr`],["mellem",`Mellem`],["dyr",`Dyrere · over ${kr(g[1])} kr`]].map(([v,lb])=>chip("oko",v,lb,f.oko.includes(v))).join("")}</div>
-    <h3 class="bfh">Køkken</h3><div class="chips">${tael(r=>r.reg).filter(x=>x!=="Andet").map(v=>chip("kok",v,v,f.kok.includes(v))).join("")}</div>`;
+    <h3 class="bfh">Type</h3><div class="chips">${typer.map(v=>chip("type",v,v,f.type.includes(v))).join("")}</div>
+    <h3 class="bfh">Tid</h3><div class="chips">${BOG_TID.map(([v,lb])=>chip("tid",v,lb,f.tid.includes(v))).join("")}</div>
+    <h3 class="bfh">Økonomi</h3><div class="chips">${BOG_OKO.map(([v,lb])=>chip("oko",v,lb,f.oko.includes(v))).join("")}</div>
+    <h3 class="bfh">Brug hvad vi har</h3><div class="chips"><button class="chip lille" data-bf="har" aria-pressed="${f.har}" ${!nHar&&!f.har?"disabled":""}>Kun det, vi har i skabet <small>${nHar}</small></button></div>`;
   fe.querySelectorAll("[data-bf]").forEach(b=>b.onclick=()=>{
     const grp=b.dataset.bf,v=b.dataset.v;
-    if(grp==="tid")f.tid=f.tid===v?null:v;else f[grp]=f[grp].includes(v)?f[grp].filter(x=>x!==v):[...f[grp],v];
+    if(grp==="har")f.har=!f.har;else f[grp]=f[grp].includes(v)?f[grp].filter(x=>x!==v):[...f[grp],v];
     renderBogFiltre();
   });
-  const n=alle.filter(r=>bogPasser(r,g)).length,knap=document.getElementById("bogAabn");
+  const n=alle.filter(r=>bogPasser(r)).length,knap=document.getElementById("bogAabn");
   knap.disabled=!n;knap.textContent=n?`Åbn kogebogen · ${n} ${n===1?"ret":"retter"}`:"Ingen retter passer – fjern et filter";
   const ab=document.getElementById("opskAllergi"),skjult=oAlle().length-alle.length;
   ab.hidden=!allergier().length;
@@ -2820,9 +3061,9 @@ function bogHoejde(){
   w.style.height=Math.max(360,innerHeight-top-bund)+"px";
 }
 function bogForside(){
-  const f=bog.filt,okoNavn={billig:"billige",mellem:"mellem pris",dyr:"lidt dyrere"};
-  const dele=[...f.type,f.tid?`højst ${f.tid} min`:"",...f.oko.map(x=>okoNavn[x]),...f.kok].filter(Boolean),n=bog.liste.length;
-  return `<div class="bogside omslag" data-naeste="1"><div class="omslag-ramme"><p class="omslag-lille">Mad app</p><h2>Kogebogen</h2><p class="omslag-under">${dele.length?esc(stort(dele.join(" · "))):"Alle retter"}</p><p class="omslag-lille">${n} ${n===1?"ret":"retter"}</p></div><p class="omslag-hint">Bladr for at se retterne ›</p></div>`;
+  const f=bog.filt,tidNavn={under:"under 30 min","30":"30 min",over:"over 30 min"};
+  const dele=[...f.type,...f.tid.map(x=>tidNavn[x]),...f.oko.map(x=>x==="under"?"under 60 kr":"over 60 kr"),f.har?"kun det, vi har":""].filter(Boolean),n=bog.liste.length;
+  return `<div class="bogside omslag" data-naeste="1"><div class="omslag-ramme"><p class="omslag-lille">Mad app</p><h2>Kogebogen</h2><p class="omslag-under">${dele.length?esc(stort(dele.join(" · "))):"Alle retter"}</p><p class="omslag-lille">${n} ${n===1?"ret":"retter"}</p></div><p class="omslag-hint">Bladr for at se retterne › · swipe op for at lukke</p></div>`;
 }
 function bogRetSide(r,i){
   const m=oMatch(r,st.settings.P,oHar(),oValg[r.id]),p=retPris(r),uge=tUge();
@@ -2939,7 +3180,7 @@ function retTilIndkob(r){
 (()=>{
   const b=document.getElementById("bog");let x0=null,y0=0,swipet=false;
   b.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;swipet=false},{passive:true});
-  b.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy)){swipet=true;bogFlyt(dx<0?1:-1)}},{passive:true});
+  b.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy)){swipet=true;bogFlyt(dx<0?1:-1)}else if(dy<-60&&Math.abs(dy)>1.5*Math.abs(dx)){swipet=true;bogTilbage()}},{passive:true});
   b.addEventListener("click",e=>{
     if(swipet){swipet=false;return}
     if(bog.travl)return;
@@ -2992,14 +3233,14 @@ function renderOpskVis(){
   ${r.al&&r.al.indeholder.length?`<p class="muted" style="margin-top:16px">Allergener: ${esc(r.al.indeholder.join(", "))}${r.al.spor_af.length?". Kan indeholde spor af: "+esc(r.al.spor_af.join(", ")):""}.</p>`:""}
   ${r.noter?`<p class="muted">${esc(r.noter)}</p>`:""}
   ${r.url?`<p class="muted"><a href="${esc(r.url)}" target="_blank" rel="noopener">Se retten på hellofresh.dk</a></p>`:""}
-  ${r.egen?`<button class="btn ghost" id="oSlet" style="margin-top:16px">Slet opskriften</button>`:""}`;
+  ${r.egen&&!r.delt?`<button class="btn ghost" id="oSlet" style="margin-top:16px">Slet opskriften</button>`:""}${r.delt?`<p class="muted" style="margin-top:16px">Delt af en anden, der bruger appen.</p>`:""}`;
   document.getElementById("oTilbage").onclick=()=>{oAaben=null;renderOpsk();window.scrollTo(0,0)};
   document.getElementById("oFav").onclick=()=>{if(isFav(r.t))st.favoritter=st.favoritter.filter(x=>x.toLowerCase()!==r.t.toLowerCase());else st.favoritter.push(r.t);changed()};
   const sl=document.getElementById("oSlet");if(sl)sl.onclick=()=>{if(!confirm(`Slet "${r.t}"? Den forsvinder fra Opskrifter, men bliver på planen, hvis den står der.`))return;st.egne=st.egne.filter(x=>x.id!==r.id);oAaben=null;changed();toast("Opskriften er slettet")};
   vis.querySelectorAll("[data-op]").forEach(b=>b.onclick=()=>{oPers=Math.min(10,Math.max(1,n+ +b.dataset.op));renderOpskVis()});
   vis.querySelectorAll("[data-ob]").forEach(s=>s.onchange=()=>{(oValg[r.id]=oValg[r.id]||{})[+s.dataset.ob]=s.value;renderOpskVis()});
   vis.querySelectorAll("[data-odag]").forEach(b=>b.onclick=()=>{const ap=allergiProblem(r);if(ap.length&&!confirm(`${allergiTekst(ap)}. Sæt den på planen alligevel?`))return;oPlacer(r,b.dataset.odag);changed();toast(r.t+" er sat på "+relLabel(b.dataset.odag))});
-  const bk=document.getElementById("oBekraeft");if(bk)bk.onclick=()=>{const ids=allergiProblem(r).filter(x=>x.hvad==="ukendt").map(x=>x.id);if(!confirm(`Bekræft, at du har tjekket alle ingredienser og emballagen, og at retten er fri for ${allergier().filter(x=>ids.includes(x[0])).map(x=>x[1].toLowerCase()).join(", ")} – også for spor.`))return;r.fri=[...new Set([...(r.fri||[]),...ids])];changed();toast("Gemt som tjekket")};
+  const bk=document.getElementById("oBekraeft");if(bk)bk.onclick=()=>{const ids=allergiProblem(r).filter(x=>x.hvad==="ukendt").map(x=>x.id);if(!confirm(`Bekræft, at du har tjekket alle ingredienser og emballagen, og at retten er fri for ${allergier().filter(x=>ids.includes(x[0])).map(x=>x[1].toLowerCase()).join(", ")} – også for spor.`))return;r.fri=[...new Set([...(r.fri||[]),...ids])];if(r.delt)(st.deltFri=st.deltFri||{})[r.id]=r.fri;changed();toast("Gemt som tjekket")};
   vis.querySelectorAll("[data-ofjern]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.ofjern);changed();toast("Fjernet fra planen")});
 }
 /* Sæt en ret fra banken på planen. Returnerer id på den faste ret. */
@@ -3031,8 +3272,8 @@ function oPlacer(r,dato,personer){
 function fjernFast(id){
   const f=st.fast.find(x=>x.id===id);
   for(const b of (f&&f.brugt)||[]){
-    if(b.k&&P[b.k])st.skab[b.k]={amt:(st.skab[b.k]?.amt||0)+b.amt,dage:st.skab[b.k]?.dage??b.dage??ho(b.k)};
-    else if(b.fri){const x=st.fri.find(y=>y.navn===b.fri);if(x)x.niveau=b.niveau;else st.fri.push({navn:b.fri,niveau:b.niveau})}
+    if(b.k&&P[b.k]){const x=st.skab[b.k];st.skab[b.k]=x?{...x,amt:x.amt+b.amt}:{amt:b.amt,koebt:b.amt,dage:b.dage??ho(b.k),dato:todayIso()}}
+    else if(b.fri){const x=st.fri.find(y=>y.navn===b.fri);if(x)x.niveau=b.niveau;else st.fri.push({navn:b.fri,niveau:b.niveau,dato:todayIso()})}
   }
   st.fast=st.fast.filter(x=>x.id!==id);st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==id);
   /* fjernet før dagen: den blev ikke lavet, så den tæller ikke som valgt */
@@ -3088,10 +3329,10 @@ function friskeTilbud(fra,til){
 /* ---------- Egne opskrifter ----------
    Gemmes i st.egne i samme format som opskriftbanken, så skab, indkøbsliste, plan og tilbud virker ens.
    Ingredienser, der ikke findes i bankens katalog, får et id med "x-" foran. */
-function oAlle(){return [...OB.opskrifter,...st.egne]}
+function oAlle(){return [...OB.opskrifter,...st.egne,...delte]}
 function oOpdaterEgne(){
   for(const k of Object.keys(ORMAP))if(ORMAP[k].egen)delete ORMAP[k];
-  for(const r of st.egne||[])ORMAP[r.id]=r;
+  for(const r of [...(st.egne||[]),...delte])ORMAP[r.id]=r;
 }
 function oSlug(s){return String(s||"").toLowerCase().replace(/æ/g,"ae").replace(/ø/g,"oe").replace(/å/g,"aa").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50)||"ret"}
 
@@ -3139,14 +3380,15 @@ function renderEgen(){
     <h3 style="margin-top:10px">Sådan gør du</h3>
     <ol style="margin:4px 0 0;padding-left:20px">${r.trin.map(t=>`<li>${t.t?`<b>${esc(t.t)}</b> `:""}${esc(t.x.join(" "))}</li>`).join("")}</ol>
     ${allergier().length?`<div class="allergiboks" style="margin-top:12px">${allergier().map(([id,navn,noegler])=>{const har=r.al.indeholder.some(a=>noegler.includes(a));return har?`<p style="margin:0 0 6px">⚠ <b>Claude mener, retten indeholder ${esc(navn.toLowerCase())}.</b> Den bliver ikke foreslået.</p>`:`<label style="display:flex;gap:8px;align-items:flex-start;margin:0 0 6px"><input type="checkbox" data-fri="${id}" style="width:22px;height:22px;flex:none"><span>Jeg har tjekket alle ingredienser: retten er fri for ${esc(navn.toLowerCase())} – også for spor.</span></label>`}).join("")}<p class="muted" style="margin:0;font-size:.8rem">Uden flueben bliver retten ikke foreslået. ${esc(ALLERGI_NOTE)}</p></div>`:""}
+    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" id="egenDel" checked style="width:22px;height:22px;flex:none"><span>Del opskriften med alle, der bruger appen</span></label>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenGem">Gem opskriften</button><button class="btn ghost" id="egenRet">Ret teksten</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
-    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);st.egne.push(r);egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast("Opskriften er gemt")};
+    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);if(document.getElementById("egenDel").checked)delOpskrift(r);st.egne.push(r);egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast("Opskriften er gemt")};
     document.getElementById("egenRet").onclick=()=>{egen.trin="input";renderEgen()};
     document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";opskMode("start")};
     return;
   }
   p.innerHTML=`<h3>Tilføj din egen opskrift</h3>
-  <p class="muted" style="margin:2px 0 8px">Indsæt opskriften (fx kopieret fra en hjemmeside), skriv den med dine egne ord, eller tag et billede af en side i en kogebog. Claude sætter den op som de andre opskrifter.</p>
+  <p class="muted" style="margin:2px 0 8px">Indsæt opskriften (fx kopieret fra en hjemmeside), skriv den med dine egne ord, eller tag et billede af en side i en kogebog. Vi tager os af resten.</p>
   <textarea id="egenTekst" rows="6" placeholder="Fx: Chili sin carne til 4. 2 dåser hakkede tomater, 1 dåse kidneybønner, 2 løg …" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;color:inherit">${esc(egen.tekst)}</textarea>
   <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px"><label class="btn ghost" style="display:inline-block">${egen.billede?"Skift billede":"Tag billede"}<input type="file" id="egenBillede" accept="image/*" hidden></label><span class="muted">${egen.billede?esc(egen.billede.name||"Billede valgt"):""}</span></div>
   ${egen.fejl?`<p class="bad" style="margin-top:8px">${esc(egen.fejl)}</p>`:""}
@@ -3230,6 +3472,8 @@ function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st=
 
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
 historikSync();afvikl();st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);
+for(const [k,v] of Object.entries(st.skab)){if(!v.dato)v.dato=todayIso();if(!v.koebt&&P[k])v.koebt=Math.max(v.amt,P[k].pk)}
+for(const f of st.fri)if(!f.dato)f.dato=todayIso();
 /* Kalenderen starter altid med i dag, også når appen hentes frem igen en senere dag */
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
@@ -3387,7 +3631,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="43";
+const APP_VERSION="44";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
@@ -3399,7 +3643,7 @@ async function tjekOpdatering(){
     location.replace(location.pathname+"?v="+encodeURIComponent(v));
   }catch(e){}
 }
-tjekOpdatering();feedbackSend();
+tjekOpdatering();feedbackSend();hentDelte();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});
 </script>
 </body>
