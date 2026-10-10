@@ -337,7 +337,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
         <li>Find ud af, hvad I kan lave af det, I har</li>
         <li>Sæt ting på indkøbslisten, fx "jeg mangler toiletpapir"</li>
         <li>Fortæl, hvad I kan lide og ikke kan lide</li>
-        <li>Giv kritik og ønsker til appen – al kritik bliver taget imod og samlet op</li>
+        <li>Har du kritik eller ønsker til appen? Skriv dem under <b>Feedback</b> ovenfor – al kritik bliver taget imod og samlet op</li>
       </ul>
     </div>
     <p class="sugg" id="chatIngen" hidden style="margin:0 0 14px">Snak kræver forbindelse til Claude. Indsæt API-nøglen under Plan. Feedback virker også uden.</p>
@@ -451,7 +451,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 39 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 40 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1661,7 +1661,6 @@ function applyUpdates(r){
   for(const x of r.ikkeLideFjern||[]){const n=String(x).toLowerCase();st.ikkeLide=st.ikkeLide.filter(y=>y.navn.toLowerCase()!==n)}
   for(const x of r.indkob||[]){const navn=String(x&&x.navn||x||"").trim();if(navn&&!st.ekstraIndkob.some(y=>y.navn.toLowerCase()===navn.toLowerCase()&&!y.done)){st.ekstraIndkob.push({navn,maengde:x&&x.maengde?String(x.maengde):"",kat:x&&AFD[x.kat]?x.kat:gaetAfd(navn)});noter.push("På indkøbslisten: "+navn)}}
   for(const d of r.planFjern||[]){const f=st.fast.find(x=>x.dato===String(d)&&x.dato>=todayIso());if(f){fjernFast(f.id);noter.push("Fjernet fra planen: "+f.navn)}}
-  for(const x of r.feedback||[]){const t=String(x).trim();if(t){feedbackGem(t,"snak");noter.push("Sendt videre som feedback: “"+t+"”")}}
   for(const x of r.instruktioner||[]){const t=String(x).trim();if(t&&!st.instrukser.some(y=>y.toLowerCase()===t.toLowerCase())){st.instrukser.push(t);noter.push("Ny instruktion: "+t)}}
   if(r.personer>0)st.settings.P=Math.min(10,Math.max(1,r.personer));
   return noter.length?"Opdateret: "+noter.join(", ")+".":"";
@@ -1677,7 +1676,7 @@ function hurtigIndkob(t){
 }
 let selDays=new Set();
 /* ---------- Feedback ----------
-   Kritik og ønsker til appen, fra feedback-feltet eller fra snakken. Sendes anonymt (kun teksten, tidspunkt og
+   Kritik og ønsker til appen. Sendes kun, når man trykker "Send feedback" under Feedback – aldrig fra snakken. Sendes anonymt (kun teksten, tidspunkt og
    app-version) til et Google Apps Script, der gemmer hver besked som en fil i Google Drive › Privat › mad › feedback
    (se feedback-modtager/). Kan den ikke sendes, venter den på telefonen og sendes næste gang. */
 const FEEDBACK_URL="https://script.google.com/macros/s/AKfycbxoV1k87FsMjKh7cgRlddlfjy5OfGn7-NVFp_YqN1MghUTCVoOuJYZHN06jOcyR7wvYkg/exec";
@@ -1687,6 +1686,7 @@ function feedbackGem(tekst,kilde){
 }
 let fbSender=false;
 async function feedbackSend(){
+  if(st.feedbackKoe)st.feedbackKoe=st.feedbackKoe.filter(x=>x.kilde==="feedback");
   if(!FEEDBACK_URL||fbSender||!(st.feedbackKoe||[]).length)return false;
   fbSender=true;let ok=true;
   try{
@@ -1773,7 +1773,7 @@ JSON-felter (udelad tomme):
 "skabTilfoej":[{"navn","niveau":"hel"|"noget"|"lidt"}] når de fortæller hvad de har. "skabFjern":[navne] når noget er brugt op.
 "favoritter":[navne] de kan lide. "favoritterFjern":[navne fra kan-lide-listen] de ikke gider mere (fx "det vi fik i går").
 "ikkeLide":[{"navn","grund":"kan ikke lide"|"tåler ikke"}]. "ikkeLideFjern":[navne].
-"feedback":[kritik, ros eller ønsker til selve appen (ikke til maden), med brugerens egne ord, fx "knappen til indkøb er svær at finde" eller "jeg vil gerne kunne dele listen"]. Tag pænt imod det i "svar".
+Giver brugeren kritik, ros eller ønsker til selve appen (ikke til maden), så tak for det i "svar", og sig, at de kan sende det til udvikleren under Feedback øverst i Snak – det bliver ikke sendt herfra.
 "instruktioner":[korte varige ønsker, fx "Flere grøntsager"] når de udtrykker en varig vane eller et mål. "basisMangler"/"basisHar":[${Object.keys(BASIS).join("|")}]. "personer": tal hvis husstanden ændres.
 Svar KUN med JSON.`;
   try{
@@ -2989,7 +2989,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="39";
+const APP_VERSION="40";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
