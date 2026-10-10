@@ -34,7 +34,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-right:calc(60px + env(safe-area-inset-right));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 main{max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px;position:relative}
 /* Præferencer: lille tandhjul øverst til højre; skjult, mens et trin-for-trin-forløb fylder skærmen */
 .prefknap{position:absolute;top:calc(14px + env(safe-area-inset-top));left:6px;width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:var(--muted);padding:8px;cursor:pointer;z-index:4}
@@ -129,7 +129,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .wiz .nav .grow{flex:1}
 #t-pref.kunGuide > :not(#prefOpsat){display:none}
 /* Skærme: ét trin pr. skærm, der passer på telefonen; knapperne står nederst */
-.wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 56px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 56px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+.wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 116px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 116px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
 .wiz.skaerm>.nav{margin-top:auto;padding-top:16px}
 .wiz.skaerm .nav .btn{padding:10px 14px}
 .skhead{display:flex;align-items:flex-start;gap:8px}.skhead h2{flex:1;min-width:0}.skhead .x{margin:-2px -8px 0 0}
@@ -278,12 +278,11 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .trinl b{font-family:var(--display)}
 .trinl p{margin:2px 0 0}
 .tip{font-size:.88rem;color:var(--muted);font-style:italic}
-/* Fanerne står lodret i højre side, oppefra, og følger den synlige del af skærmen (også med tastaturet oppe) */
-nav.bar{position:fixed;top:0;right:0;width:calc(60px + env(safe-area-inset-right));height:100vh;height:100dvh;background:var(--card);border-left:1px solid var(--line);display:flex;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) 0 0;z-index:5;overflow-y:auto}
-nav.bar button{border:0;background:transparent;padding:12px 2px 10px;font-size:.64rem;white-space:nowrap;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.bar button{border:0;background:transparent;padding:10px 2px 12px;font-size:.8rem;white-space:nowrap;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
 nav.bar button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
-nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700;background:var(--leaf-soft)}
-.toast{position:fixed;left:calc(50% - 30px);bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
+nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
 .toast.on{opacity:1}
 .tanke{display:inline-block;letter-spacing:1px}
 .tanke i{font-style:normal}
@@ -469,7 +468,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700;background
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 41 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 42 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -2887,7 +2886,6 @@ function show(id){
   window.scrollTo(0,0);
 }
 document.querySelectorAll("nav.bar button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
-if(window.visualViewport){const vv=visualViewport,nav=document.querySelector("nav.bar");const tilpas=()=>{nav.style.top=vv.offsetTop+"px";nav.style.height=vv.height+"px"};vv.addEventListener("resize",tilpas);vv.addEventListener("scroll",tilpas);tilpas()}
 document.getElementById("prefKnap").onclick=()=>show(document.getElementById("t-pref").classList.contains("on")?forrigeFane:"t-pref");
 let tt=null;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2200)}
 function changed(){render();save()}
@@ -3061,7 +3059,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="41";
+const APP_VERSION="42";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
