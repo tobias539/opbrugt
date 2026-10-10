@@ -141,16 +141,37 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .chip.lille{padding:5px 11px;font-size:.9rem}
-.planknapper{display:flex;flex-direction:column;gap:10px;margin:4px 0 14px}
-.planknap{width:100%;min-height:60px;border-radius:16px;border:0;background:var(--leaf);color:var(--card);font:inherit;font-family:var(--display);font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-.planknap.naeste{background:var(--card);color:var(--leaf);border:2px solid var(--leaf);justify-content:space-between;padding:0 20px;box-shadow:none}
-.planknap .pil{font-size:1.5rem;line-height:1;animation:pilPuf 2.4s ease-in-out infinite}
-@keyframes pilPuf{0%,70%,100%{transform:none}80%{transform:translateX(6px)}}
-.planknap:disabled{opacity:.45;cursor:default}.planknap:disabled .pil{animation:none}
+/* To høje knapper side om side: denne uge (60 %) og næste uge (40 %) */
+.planknapper{display:grid;grid-template-columns:3fr 2fr;gap:10px;margin:14px 0 0;min-height:150px}
+.planknap{height:100%;border-radius:22px;border:0;background:var(--leaf);color:var(--card);font:inherit;font-family:var(--display);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:12px;text-align:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.14)}
+.planknap .pk-lille{font-size:1rem;opacity:.85}.planknap .pk-stor{font-size:1.75rem;line-height:1.1}
+.planknap .pk-info{font-family:var(--body);font-weight:400;font-size:.85rem;opacity:.85;margin-top:8px}
+.planknap.naeste{background:var(--card);color:var(--leaf);border:2px solid var(--leaf);box-shadow:none}
+.planknap.naeste .pk-stor{font-size:1.45rem}
+.planknap:disabled{opacity:.45;cursor:default}
+#ugeInfo{position:relative}
+.ugedag{border:0;background:transparent;padding:0;font:inherit;cursor:pointer}
+.ugedag.valgt i{outline:2px solid var(--carrot);outline-offset:2px}
+.dagpop{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9}
+/* Hjælp bag "?" */
+.hjaelprad{position:relative;display:flex;justify-content:flex-end;margin:-6px 0 6px;height:28px}
+.hjaelp{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--leaf);background:var(--card);color:var(--leaf);font-weight:800;font-size:.95rem;line-height:1;padding:0;cursor:pointer}
+.hjaelpboks{position:absolute;right:0;top:34px;width:min(330px,100%);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9;font-size:.9rem}
+.hjaelpboks li{margin:3px 0}
+/* Opskrifter: to valg og fire filterskærme */
+.tiles.store .tile{padding:24px 16px}.tiles.store .lb{font-size:1.15rem}
+#opskFilter{display:flex;flex-direction:column}
+.bftop{display:flex;align-items:center;justify-content:space-between;margin:0 0 4px}
+#bogFiltre{flex:1;min-height:0}
+.bftitel{margin:4px 0 2px;font-size:1.5rem}
+#bogFiltre .tiles.en{gap:10px}#bogFiltre .tiles.en .tile{padding:16px 14px;min-height:74px}#bogFiltre .tile .ik{font-size:1.8rem}
+#bogFiltre .tile:disabled{opacity:.4;cursor:default}
+.bfbund{flex:none;padding-top:10px}.bfantal{margin:0 0 8px;text-align:center}
+.bfknapper{display:flex;gap:8px}.bfknapper .btn{flex:1}.bfknapper #bfForrige{flex:none;width:48px;padding:10px 0}
 .ugestribe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0 6px}
 .ugedag{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.78rem;color:var(--muted)}
-.ugedag i{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);font-style:normal;font-weight:800;color:var(--card)}
-.ugedag.plan i{background:var(--leaf);border-color:var(--leaf)}
+.ugedag i{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);font-style:normal;font-size:1.15rem;line-height:1}
+.ugedag.plan i{background:var(--leaf-soft);border-color:var(--leaf)}
 .ugedag.ledig i{border-color:var(--leaf);border-style:dashed}
 .ugedag.forbi{opacity:.45}
 .ugedag.idag span{color:var(--ink);font-weight:800}
@@ -426,9 +447,9 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <header class="top"><h1 id="h-snak">Mad app</h1><span class="muted" id="saveState"></span></header>
   <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indsæt API-nøglen her. Planen, skabet og indkøbslisten virker også uden.</p><div class="addrow" style="padding:10px 0 0"><input id="keyIn2" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" aria-label="API-nøgle" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn" id="keySave2">Gem</button></div></div>
 
-  <div class="planknapper" id="planknapper"><button class="planknap" id="planDenne"><span>Planlæg denne uge</span></button><button class="planknap naeste" id="planNaeste" aria-label="Planlæg næste uge – tryk eller swipe til højre"><span>Planlæg næste uge</span><span class="pil" aria-hidden="true">→</span></button></div>
-  <p class="muted" id="naesteInfo" style="margin:-6px 2px 10px;font-size:.8rem"></p>
   <div id="ugeInfo"></div>
+  <div class="planknapper" id="planknapper"><button class="planknap" id="planDenne"><span class="pk-lille">Planlæg</span><span class="pk-stor">denne uge</span><span class="pk-info" id="planDenneInfo"></span></button><button class="planknap naeste" id="planNaeste"><span class="pk-lille">Planlæg</span><span class="pk-stor">næste uge</span><span class="pk-info" id="planNaesteInfo"></span></button></div>
+  <p class="muted" id="naesteInfo" hidden></p>
   <div id="opsStart"></div>
   <div id="ugeplan"></div>
 
@@ -448,17 +469,8 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <section class="tab" id="t-chat" aria-labelledby="h-chat">
   <header class="top"><h1 id="h-chat">Snak</h1></header>
   <div class="seg" role="tablist" aria-label="Snak eller feedback"><button role="tab" id="segSnak" aria-selected="true" aria-controls="snakDel">Snak</button><button role="tab" id="segFeedback" aria-selected="false" aria-controls="feedbackDel">Feedback</button></div>
+  <div class="hjaelprad"><button class="hjaelp" id="hjaelpKnap" aria-label="Hvad kan jeg her?" aria-expanded="false">?</button><div class="hjaelpboks" id="hjaelpBoks" role="dialog" hidden></div></div>
   <div id="snakDel">
-    <div class="intro">
-      <p><b>Det kan du bruge Snak til</b></p>
-      <ul>
-        <li>Lav din madplan ved samtale – efter jeres egne ønsker, fx "planlæg ugen" eller "vi vil have fisk to gange"</li>
-        <li>Find ud af, hvad I kan lave af det, I har</li>
-        <li>Sæt ting på indkøbslisten, fx "jeg mangler toiletpapir"</li>
-        <li>Fortæl, hvad I kan lide og ikke kan lide</li>
-        <li>Har du kritik eller ønsker til appen? Skriv dem under <b>Feedback</b> ovenfor – al kritik bliver taget imod og samlet op</li>
-      </ul>
-    </div>
     <p class="sugg" id="chatIngen" hidden style="margin:0 0 14px">Snak kræver forbindelse til Claude. Indsæt API-nøglen under Plan. Feedback virker også uden.</p>
     <div class="ask">
       <label for="chatIn" class="muted">Skriv eller tal</label>
@@ -468,7 +480,6 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
     <div class="log" id="log" style="margin-top:14px"></div>
   </div>
   <div id="feedbackDel" hidden>
-    <p style="margin:0 0 10px">Hvad virker, og hvad vil du gerne have lavet om? Al ris og ros bliver samlet op og læst. Det er anonymt – der bliver ikke sendt noget om, hvem du er.</p>
     <div class="ask">
       <label for="fbIn" class="muted">Din feedback</label>
       <textarea id="fbIn" maxlength="4000" placeholder="Fx: Jeg savner … / Det er svært at …"></textarea>
@@ -482,11 +493,17 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <section class="tab" id="t-opsk" aria-labelledby="h-opsk">
   <div id="opskListe">
     <header class="top"><h1 id="h-opsk">Opskrifter</h1><span class="muted" id="opskAntal"></span></header>
-    <div id="opskFilter">
+    <div id="opskStart">
+      <div class="tiles en store">
+        <button class="tile" id="opskFindKnap"><span class="ik">🔎</span><span><span class="lb">Find en opskrift</span><span class="sm">Vælg type, tid, økonomi og hvad I har – så samler appen en kogebog</span></span></button>
+        <button class="tile" id="opskNyKnap"><span class="ik">➕</span><span><span class="lb">Tilføj din egen</span><span class="sm">Indsæt, skriv eller tag et billede – vi tager os af resten</span></span></button>
+      </div>
+    </div>
+    <div id="opskFilter" hidden>
+      <div class="bftop"><button class="back" id="bfTilbage">‹ Opskrifter</button><span class="prikker" id="bfPrikker"></span></div>
       <div class="allergiboks" id="opskAllergi" hidden></div>
       <div id="bogFiltre"></div>
-      <button class="btn" id="bogAabn" style="width:100%;margin-top:14px">Åbn kogebogen</button>
-      <button class="x" id="opskNyKnap" style="display:block;margin:10px auto 0;font-size:.95rem;color:var(--leaf)">+ Tilføj din egen opskrift</button>
+      <div class="bfbund"><p class="bfantal" id="bfAntal"></p><div class="bfknapper"><button class="btn ghost" id="bfForrige" aria-label="Forrige">‹</button><button class="btn ghost" id="bogAabn">Åbn kogebogen</button><button class="btn" id="bfNaeste">Næste ›</button></div></div>
     </div>
     <div id="opskBog" hidden>
       <div class="bogtop"><button class="back" id="bogTilbage">‹ Filtre</button><span class="muted" id="bogTael"></span></div>
@@ -495,7 +512,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
       <div id="bogArk"></div>
     </div>
     <div id="opskEgen" hidden>
-      <button class="back" data-omode="filter">‹ Opskrifter</button>
+      <button class="back" data-omode="start">‹ Opskrifter</button>
       <div id="egenPanel" class="sugg" style="margin:6px 0 14px"></div>
     </div>
   </div>
@@ -581,7 +598,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 45 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 46 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -2080,11 +2097,26 @@ async function feedbackSend(){
   fbSender=false;return ok;
 }
 function snakDel(del){
-  const fb=del==="feedback";
+  const fb=del==="feedback";hjaelpLuk();
   document.getElementById("snakDel").hidden=fb;document.getElementById("feedbackDel").hidden=!fb;
   document.getElementById("segSnak").setAttribute("aria-selected",!fb);document.getElementById("segFeedback").setAttribute("aria-selected",fb);
   window.scrollTo(0,0);
 }
+/* "?": hjælpeteksten for Snak eller Feedback kommer frem oven på siden; tryk et andet sted lukker den */
+const HJAELP={snak:`<p style="margin:0 0 4px"><b>Det kan du bruge Snak til</b></p><ul style="margin:0;padding-left:18px">
+  <li>Lav din madplan ved samtale – efter jeres egne ønsker, fx "planlæg ugen" eller "vi vil have fisk to gange"</li>
+  <li>Find ud af, hvad I kan lave af det, I har</li>
+  <li>Sæt ting på indkøbslisten, fx "jeg mangler toiletpapir"</li>
+  <li>Fortæl, hvad I kan lide og ikke kan lide</li>
+  <li>Har du kritik eller ønsker til appen? Skriv dem under <b>Feedback</b> – al kritik bliver taget imod og samlet op</li></ul>`,
+  feedback:`<p style="margin:0">Hvad virker, og hvad vil du gerne have lavet om? Al ris og ros bliver samlet op og læst.</p><p style="margin:6px 0 0">Det er anonymt – der bliver ikke sendt noget om, hvem du er.</p>`};
+function hjaelpLuk(){const b=document.getElementById("hjaelpBoks");b.hidden=true;document.getElementById("hjaelpKnap").setAttribute("aria-expanded","false")}
+document.getElementById("hjaelpKnap").onclick=e=>{
+  e.stopPropagation();const b=document.getElementById("hjaelpBoks");
+  if(!b.hidden){hjaelpLuk();return}
+  b.innerHTML=HJAELP[document.getElementById("feedbackDel").hidden?"snak":"feedback"];b.hidden=false;document.getElementById("hjaelpKnap").setAttribute("aria-expanded","true");
+};
+document.addEventListener("click",e=>{if(!document.getElementById("hjaelpBoks").hidden&&!e.target.closest("#hjaelpBoks,#hjaelpKnap"))hjaelpLuk()});
 document.getElementById("segSnak").onclick=()=>snakDel("snak");
 document.getElementById("segFeedback").onclick=()=>snakDel("feedback");
 document.getElementById("fbSend").onclick=async()=>{
@@ -2424,8 +2456,10 @@ function ugeplanStart(hvilken){
   renderUgeplan();window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
-/* "Planlæg næste uge": tryk, eller swipe til højre på knappen */
-swipe(document.getElementById("planNaeste"),r=>{const b=document.getElementById("planNaeste");if(r==="hoejre"&&!b.disabled)ugeplanStart("naeste")});
+/* Ugeoversigten: swipe til venstre for næste uge, til højre for at komme tilbage. Tryk ved siden af lukker dagens boks. */
+swipe(document.getElementById("ugeInfo"),r=>{ugeVis=Math.max(0,ugeVis+(r==="venstre"?1:-1));dagValgt=null;renderStrip(last)});
+document.addEventListener("click",e=>{if(!dagValgt||!e.target.isConnected||e.target.closest(".dagpop,.ugedag"))return;dagValgt=null;renderStrip(last)});
+window.addEventListener("resize",planHoejde);
 /* Swipe i planlægningen: venstre = videre (hvor der er en "videre"), højre = tilbage */
 swipe(document.getElementById("ugeplan"),r=>{
   const el=document.getElementById("ugeplan"),b=r==="hoejre"?el.querySelector('.nav [data-u="tilbage"]:not([data-frem]), .nav [data-u="aabn"]'):el.querySelector("[data-frem]");
@@ -2438,8 +2472,9 @@ function renderUgeplan(){
   const el=document.getElementById("ugeplan"),ny=naesteUge();
   planFokus();
   const nb=document.getElementById("planNaeste");nb.disabled=!ny;
-  nb.firstElementChild.textContent=visPaamindelse()?"Planlæg næste uge ✨":"Planlæg næste uge";
-  document.getElementById("naesteInfo").textContent=ny?(visPaamindelse()?`Næste uges tilbudsaviser er klar (fra ${dayLabel(ny,true)}).`:""):"Næste uges tilbudsaviser er ikke kommet endnu.";
+  const per=ugePeriode("denne"),ledigeD=per&&per.slut>=per.start?vaelgDage(per.start,7,per.slut).length:0;
+  document.getElementById("planDenneInfo").textContent=ledigeD?`${ledigeD} ${ledigeD===1?"ledig aften":"ledige aftener"}`:"Resten af ugen er planlagt";
+  document.getElementById("planNaesteInfo").textContent=ny?`Uge ${isoUge(ny)} · fra ${dayLabel(ny,true)}`:"Tilbudsaviserne er ikke kommet endnu";
   el.innerHTML=up?`<div class="wiz skaerm">${ugeplanHtml()}</div>`:"";
   el.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>ugeplanHandling(b));
   const ti=document.getElementById("upTilfoej");if(ti){ti.oninput=e=>{up.tilfoejTekst=e.target.value};ti.onkeydown=e=>{if(e.key==="Enter")el.querySelector('[data-u="tilfoej"]').click()}}
@@ -2700,26 +2735,45 @@ function ugeMandag(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.
 /* Første ledige dag fra i dag og ugen ud */
 function ledigIUgen(){const t0=todayIso(),son=addDays(ugeMandag(t0),6);for(let d=t0;d<=son;d=addDays(d,1))if(!fastPaa(d))return d;return null}
 function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)}
+/* Ugeoversigten øverst på Plan: swipe til venstre for næste uge. Planlagte aftener har en tallerken;
+   tryk på en dag for at se retten (eller fjerne den). Knapperne "Planlæg" fylder resten af skærmen. */
+let ugeVis=0,dagValgt=null;
 function renderStrip(p){
-  const el=document.getElementById("ugeInfo"),t0=todayIso(),man=ugeMandag(t0),son=addDays(man,6);
-  const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son).sort((a,b)=>a.dato.localeCompare(b.dato));
-  const koebt=retter.filter(erIndkoebt).length,ledige=ugeDage(man).filter(d=>d>=t0&&!fastPaa(d)).length;
-  /* Retter efter denne uge vises pr. uge, så alt, der tælles med, også kan ses og fjernes */
-  const senere={};for(const f of st.fast.filter(f=>f.dato>son).sort((a,b)=>a.dato.localeCompare(b.dato)))(senere[ugeMandag(f.dato)]=senere[ugeMandag(f.dato)]||[]).push(f);
-  const advar=f=>{if(!allergier().length)return "";const r=f.opskrift&&ORMAP[f.opskrift];const ap=r?allergiProblem(r):[{navn:allergiNavne(),hvad:"ukendt"}];return ap.length?` <span class="bad" title="${esc(allergiTekst(ap))}">⚠ ${esc(ap.map(x=>x.navn.toLowerCase()).join(", "))}</span>`:""};
-  const linje=f=>`<div class="item"><div class="grow"><span class="muted">${esc(dayLabel(f.dato).split(" ")[0])}</span> ${esc(f.navn)}${advar(f)}${f.dato<t0?` <span class="muted">· spist</span>`:erIndkoebt(f)?"":` <span class="muted">· mangler indkøb</span>`}</div>${f.opskrift&&ORMAP[f.opskrift]?`<button class="x" data-oopen="${esc(f.opskrift)}" style="font-size:.9rem;color:var(--leaf)">Se</button>`:""}<button class="x" data-fdel3="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen">×</button></div>`;
-  el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(t0)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span></div>
-  <div class="ugestribe">${ugeDage(man).map(d=>{const f=fastPaa(d);return `<div class="ugedag ${f?"plan":d<t0?"forbi":"ledig"}${d===t0?" idag":""}" title="${esc(dayLabel(d,true))}${f?": "+esc(f.navn):""}"><span>${DAYS[(new Date(d+"T12:00:00").getDay()+6)%7].slice(0,1)}</span><i>${f?"✓":""}</i></div>`}).join("")}</div>
-  <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges denne uge`:`Resten af ugen er planlagt`}${retter.length?` · ${koebt} af ${retter.length} indkøbt`:""}</p>
-  ${retter.length?`<div class="list" style="margin-top:10px">${retter.map(linje).join("")}</div>`:""}
-  ${Object.entries(senere).map(([m,fs])=>`<div class="ugehead" style="margin-top:14px"><h3 style="margin:0">${m===addDays(man,7)?"Næste uge":"Uge "+isoUge(m)}</h3><span class="muted">${fs.length} ${fs.length===1?"måltid":"måltider"} planlagt</span><span style="flex:1"></span>${fs.length>1?`<button class="x" data-fdeluge="${m}" style="font-size:.9rem">Fjern alle</button>`:""}</div><div class="list" style="margin-top:6px">${fs.map(linje).join("")}</div>`).join("")}`;
-  el.querySelectorAll("[data-fdel3]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel3);changed();toast("Fjernet fra planen")});
-  el.querySelectorAll("[data-fdeluge]").forEach(b=>b.onclick=()=>{
-    const fs=senere[b.dataset.fdeluge]||[];if(!fs.length||!confirm(`Fjern alle ${fs.length} retter i ${b.dataset.fdeluge===addDays(man,7)?"næste uge":"uge "+isoUge(b.dataset.fdeluge)} fra planen? Det, de skulle bruge fra skabet, lægges tilbage, og deres varer fjernes fra indkøbslisten.`))return;
-    for(const f of fs)fjernFast(f.id);changed();toast(fs.length+" retter er fjernet fra planen");
-  });
+  const el=document.getElementById("ugeInfo"),t0=todayIso(),man0=ugeMandag(t0);
+  const sidste=Math.max(1,...st.fast.filter(f=>f.dato>=man0).map(f=>Math.round((new Date(ugeMandag(f.dato)+"T12:00:00")-new Date(man0+"T12:00:00"))/6048e5)));
+  ugeVis=Math.max(0,Math.min(ugeVis,sidste));
+  const man=addDays(man0,7*ugeVis),son=addDays(man,6),dage=ugeDage(man);
+  if(dagValgt&&!dage.includes(dagValgt))dagValgt=null;
+  const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son),koebt=retter.filter(erIndkoebt).length,ledige=dage.filter(d=>d>=t0&&!fastPaa(d)).length;
+  el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(man)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span><span style="flex:1"></span><span class="prikker">${Array.from({length:sidste+1},(_,i)=>`<button class="prik${i===ugeVis?" on":""}" data-uge="${i}" aria-label="${i===0?"Denne uge":i===1?"Næste uge":"Uge "+isoUge(addDays(man0,7*i))}"></button>`).join("")}</span></div>
+  <div class="ugestribe">${dage.map(d=>{const f=fastPaa(d);return `<button class="ugedag ${f?"plan":d<t0?"forbi":"ledig"}${d===t0?" idag":""}${dagValgt===d?" valgt":""}" data-dag="${d}" aria-label="${esc(dayLabel(d,true))}${f?": "+esc(f.navn):d<t0?"":": ledig"}"><span>${DAYS[(new Date(d+"T12:00:00").getDay()+6)%7].slice(0,1)}</span><i>${f?"🍛":""}</i></button>`}).join("")}</div>
+  <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges`:retter.length?"Hele ugen er planlagt":"Ingen aftener tilbage"}${retter.length?` · ${retter.length} planlagt · ${koebt} indkøbt`:""}</p>
+  ${dagPopHtml(t0)}`;
+  el.querySelectorAll("[data-uge]").forEach(b=>b.onclick=()=>{ugeVis=+b.dataset.uge;dagValgt=null;renderStrip(last)});
+  el.querySelectorAll("[data-dag]").forEach(b=>b.onclick=e=>{e.stopPropagation();const d=b.dataset.dag;dagValgt=dagValgt===d||(d<t0&&!fastPaa(d))?null:d;renderStrip(last)});
+  const pl=el.querySelector("[data-dpluk]");if(pl)pl.onclick=()=>{dagValgt=null;renderStrip(last)};
+  const pf=el.querySelector("[data-dpfjern]");if(pf)pf.onclick=()=>{fjernFast(pf.dataset.dpfjern);dagValgt=null;changed();toast("Fjernet fra planen")};
+  const pp=el.querySelector("[data-dpplan]");if(pp)pp.onclick=()=>{dagValgt=null;ugeplanStart(pp.dataset.dpplan)};
+  planHoejde();
 }
-
+function dagPopHtml(t0){
+  if(!dagValgt)return "";
+  const f=fastPaa(dagValgt),r=f&&f.opskrift&&ORMAP[f.opskrift];
+  const advar=f&&allergier().length?(ap=>ap.length?` <span class="bad">⚠ ${esc(ap.map(x=>x.navn.toLowerCase()).join(", "))}</span>`:"")(r?allergiProblem(r):[{navn:allergiNavne()}]):"";
+  const top=`<div class="hi-top"><b style="flex:1">${esc(stort(dayLabel(dagValgt,true)))}</b><button class="x" data-dpluk aria-label="Luk">×</button></div>`;
+  if(f)return `<div class="dagpop">${top}<p style="margin:4px 0 0"><span style="font-size:1.3rem">🍛</span> ${esc(f.navn)}${advar}</p><p class="muted" style="margin:2px 0 0;font-size:.85rem">${dagValgt<t0?"Spist":erIndkoebt(f)?"Indkøbt":"Mangler indkøb"}</p><div class="hi-knapper">${r?`<button class="btn ghost lille" data-oopen="${esc(f.opskrift)}">Se opskriften</button>`:""}${dagValgt>=t0?`<button class="btn ghost lille" data-dpfjern="${esc(f.id)}">Fjern fra planen</button>`:""}</div></div>`;
+  const hvilken=ugeVis===0?"denne":ugeVis===1?"naeste":null;
+  return `<div class="dagpop">${top}<p style="margin:4px 0 0">Ledig aften – der står ikke noget på planen endnu.</p>${hvilken?`<div class="hi-knapper"><button class="btn lille" data-dpplan="${hvilken}">Planlæg ${hvilken==="denne"?"denne":"næste"} uge</button></div>`:""}</div>`;
+}
+/* Knapperne "Planlæg" fylder fra ugeoversigten og ned */
+function planHoejde(){
+  const k=document.getElementById("planknapper");
+  if(!k||k.hidden||!document.getElementById("t-snak").classList.contains("on"))return;
+  k.style.height="";const top=k.getBoundingClientRect().top+scrollY;
+  k.style.height=Math.max(150,innerHeight-top-parseFloat(getComputedStyle(document.body).paddingBottom)-24)+"px";
+  /* ret til, hvis noget under knapperne stadig får siden til at rulle */
+  const over=document.documentElement.scrollHeight-innerHeight;if(over>0)k.style.height=Math.max(150,parseFloat(k.style.height)-over)+"px";
+}
 function renderPref(){
   const aw=document.getElementById("allergiWrap"),a=st.settings.allergier||{};
   aw.innerHTML=`<h2>Allergier</h2><p class="muted" style="margin:0">Tryk på det, nogen i husstanden ikke tåler. Retter med det – også spor af det – bliver aldrig foreslået.</p>${allergiChips(a,"data-allergi")}<p class="muted" style="font-size:.8rem;margin:8px 0 0">${esc(ALLERGI_NOTE)}</p>`;
@@ -2965,15 +3019,16 @@ function tTekst(){
   return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${tKort(x)}`).join("; ");
 }
 let oFilt={soeg:"",reg:null,pr:null,hurtig:false,tilbud:false}, oAaben=null, oValg={}, oPers=null;
-/* Opskrifter-fanen: "filter" (vælg type, tid, økonomi og køkken), "bog" (kogebogen) eller "egen" (tilføj din egen) */
-let oMode="filter";
+/* Opskrifter-fanen: "start" (find eller tilføj), "filter" (fire skærme: type, tid, økonomi, brug hvad vi har),
+   "bog" (kogebogen) eller "egen" (tilføj din egen) */
+let oMode="start",bfTrin=0;
 /* ---------- Kogebogen ----------
    Filtre (type, tid, økonomi, køkken) → en kogebog med én ret pr. side, man bladrer i (swipe eller pilene).
    Trykker man på en side, åbnes retten i bogen, fordelt på sider. Derfra: "Lav denne" (sæt på planen) eller
    "Tilføj til indkøb" (det, I ikke har i skabet, købt hvor det samlet er billigst af jeres butikker). */
-let bog={filt:{type:[],tid:[],oko:[],har:false},liste:[],side:0,ret:null,retSide:0,retSider:[],dage:false,travl:false};
+let bog={filt:{type:[],tid:[],oko:[],skab:[]},liste:[],side:0,ret:null,retSide:0,retSider:[],dage:false,travl:false};
 function opskMode(m){
-  if(m==="start"||m==="katalog")m="filter";
+  if(m==="katalog")m="filter";
   oMode=m;oAaben=null;
   if(m==="egen"&&egen.trin==="luk"){egen.trin="input";egen.fejl=""}
   if(m==="bog"){bog.liste=bogListe().map(r=>r.id);bog.side=0;bog.ret=null;bog.dage=false}
@@ -2981,7 +3036,13 @@ function opskMode(m){
   if(m==="bog"){const w=document.getElementById("opskBog");w.classList.remove("ind-oppefra","ud-opad");void w.offsetWidth;w.classList.add("ind-oppefra")}
 }
 document.getElementById("opskNyKnap").onclick=()=>opskMode("egen");
+document.getElementById("opskFindKnap").onclick=()=>{bfTrin=0;opskMode("filter")};
+document.getElementById("bfTilbage").onclick=()=>opskMode("start");
 document.getElementById("bogAabn").onclick=()=>opskMode("bog");
+document.getElementById("bfForrige").onclick=()=>bfGaa(-1);
+document.getElementById("bfNaeste").onclick=()=>bfGaa(1);
+/* Mellem filterskærmene: pilene eller swipe; swipe til venstre på den sidste åbner kogebogen */
+function bfGaa(d){const j=bfTrin+d;if(j<0){opskMode("start");return}if(j>=BF_TRIN.length){if(bogListe().length)opskMode("bog");return}bfTrin=j;renderBogFiltre()}
 /* Tilbage: fra en ret til bogen; fra bogen op og væk (samme vej som den kom) */
 function bogTilbage(){
   if(bog.travl)return;
@@ -3011,8 +3072,9 @@ function renderOpsk(){
   document.getElementById("opskVersion").textContent=OB.opskrifter.length?`Opskriftbanken: ${OB.opskrifter.length} retter (${OB.version}).`:"";
   if(oAaben&&ORMAP[oAaben]){liste.hidden=true;vis.hidden=false;renderOpskVis();return}
   liste.hidden=false;vis.hidden=true;
-  for(const [id,m] of [["opskFilter","filter"],["opskBog","bog"],["opskEgen","egen"]])document.getElementById(id).hidden=oMode!==m;
+  for(const [id,m] of [["opskStart","start"],["opskFilter","filter"],["opskBog","bog"],["opskEgen","egen"]])document.getElementById(id).hidden=oMode!==m;
   if(oMode==="egen"){renderEgen();return}
+  if(oMode==="start")return;
   /* Priserne er tunge at regne, så det sker kun, når fanen er fremme */
   if(!document.getElementById("t-opsk").classList.contains("on"))return;
   if(!OB.opskrifter.length&&!st.egne.length){document.getElementById("bogFiltre").innerHTML=`<p class="muted">Opskriftbanken kunne ikke indlæses. Prøv at genindlæse siden.</p>`;return}
@@ -3038,19 +3100,36 @@ function retPris(r){
   }finally{st.ekstraIndkob=gemt}
   return prisGemt[r.id]=ud;
 }
-/* Filtre: type, tid (under 30 / 30 ± 5 / over 30 min), økonomi (under / over 60 kr pr. person for det, der skal
-   købes) og "Brug hvad vi har" (retter, hvor alt er i skabet; basisvarer tæller ikke) */
-const BOG_TID=[["under","Under 30 min"],["30","30 min"],["over","Over 30 min"]],BOG_OKO=[["under","Under 60 kr pr. person"],["over","Over 60 kr pr. person"]];
-function tidTrin(r){const t=r.tid?(r.tid[1]||r.tid[0]):null;return t==null?null:t<25?"under":t<=35?"30":"over"}
-function okoTrin(r){return retPris(r).pr<60?"under":"over"}
-function kunSkab(r){return !retKoeb(r).length}
-/* udenGrp: tæl, som om den gruppe ikke var valgt (til tallene på knapperne) */
+/* Fire filterskærme, man swiper imellem. Type ud fra rettens hovedprotein og ingredienser (vegetar = intet kød
+   eller fisk), tid (under 30 / 30 ± 5 / over 30 min), økonomi (under / over 60 kr pr. person for det, der skal
+   købes) og hvor meget der kommer fra skabet. Inden for en skærm tæller hvert valg som "eller". */
+const BF_TRIN=[
+  {grp:"type",titel:"Type",under:"Hvad har I lyst til?",valg:[["vegetar","🥕","Vegetar"],["kod","🥩","Kød"],["fisk","🐟","Fisk"]]},
+  {grp:"tid",titel:"Tid",under:"Hvor lang tid må det tage?",valg:[["under","⚡","Under 30 min"],["30","⏱️","30 min"],["over","🕰️","Over 30 min"]]},
+  {grp:"oko",titel:"Økonomi",under:"Pris pr. person for det, I skal købe.",valg:[["under","💰","Under 60 kr pr. person"],["over","💎","Over 60 kr pr. person"]]},
+  {grp:"skab",titel:"Brug hvad vi har",under:"Hvor meget skal komme fra skabet?",valg:[["ny","🆕","Alt er nyt"],["blandet","🔀","Lidt af hvert"],["skab","🧺","Kun fra skabet"]]}];
+const KOED_ORD=/kylling|svin|okse|kalv|\blam\b|kød|\band\b|kalkun|bacon|pølse|skinke|chorizo|pancetta|prosciutto|fars\b|hakket|mørbrad|bøf|steak|kotelet|ribben|flæsk/i,FISK_ORD=/fisk|laks|torsk|\bsej\b|\btun\b|rejer|skaldyr|makrel|sild|rødspætte|kuller|muslinger|krabbe|ansjos/i;
+function typeAf(r){
+  const pr=(r.pr||[]).join(" ");
+  if(FISK_ORD.test(pr))return "fisk";if(KOED_ORD.test(pr))return "kod";
+  const navne=r.ing.filter(l=>!l.b).map(l=>OI[l.i]?OI[l.i].n:l.n).join(" ");
+  if(KOED_ORD.test(navne))return "kod";if(FISK_ORD.test(navne))return "fisk";
+  return "vegetar";
+}
+/* Hvert filters værdi for en ret (gemmes, til skab, butikker eller husstand ændres) */
+let facetNoegle="",facetGemt={};
+function retFacet(r){
+  const p=retPris(r);
+  if(facetNoegle!==prisNoegle){facetNoegle=prisNoegle;facetGemt={}}
+  if(facetGemt[r.id])return facetGemt[r.id];
+  const m=oMatch(r,st.settings.P,oHar(),oValg[r.id]),t=r.tid?(r.tid[1]||r.tid[0]):null;
+  return facetGemt[r.id]={type:typeAf(r),tid:t==null?null:t<25?"under":t<=35?"30":"over",oko:p.pr<60?"under":"over",skab:!m.koeb.length?"skab":!m.harL.length?"ny":"blandet"};
+}
+/* udenGrp: tæl, som om den gruppe ikke var valgt (til tallene på valgene) */
 function bogPasser(r,udenGrp){
-  const f=bog.filt;
-  return allergiOk(r)&&(udenGrp==="type"||!f.type.length||(r.pr||[]).some(p=>f.type.includes(p)))
-    &&(udenGrp==="tid"||!f.tid.length||f.tid.includes(tidTrin(r)))
-    &&(udenGrp==="oko"||!f.oko.length||f.oko.includes(okoTrin(r)))
-    &&(udenGrp==="har"||!f.har||kunSkab(r));
+  if(!allergiOk(r))return false;
+  const f=bog.filt,x=retFacet(r);
+  return BF_TRIN.every(({grp})=>grp===udenGrp||!f[grp].length||f[grp].includes(x[grp]));
 }
 /* Kogebogens rækkefølge: det, der bruger mest fra skabet og ugens tilbud, først; retter fra de sidste 3 uger sidst */
 function bogListe(){
@@ -3059,29 +3138,27 @@ function bogListe(){
   return rs.sort((a,b)=>sc[b.id]-sc[a.id]||a.t.localeCompare(b.t,"da"));
 }
 function renderBogFiltre(){
-  const alle=oAlle().filter(allergiOk),f=bog.filt,fe=document.getElementById("bogFiltre");
-  const typer=(()=>{const c={};for(const r of alle)for(const x of r.pr||[])c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])})();
-  const rammer={type:(r,v)=>(r.pr||[]).includes(v),tid:(r,v)=>tidTrin(r)===v,oko:(r,v)=>okoTrin(r)===v};
-  const chip=(grp,v,lb,on)=>{const n=alle.filter(r=>bogPasser(r,grp)&&rammer[grp](r,v)).length;return `<button class="chip lille" data-bf="${grp}" data-v="${esc(v)}" aria-pressed="${on}" ${!n&&!on?"disabled":""}>${esc(lb)} <small>${n}</small></button>`};
-  const nHar=alle.filter(r=>bogPasser(r,"har")&&kunSkab(r)).length;
-  fe.innerHTML=`<p class="muted" style="margin:0">Vælg det, I har lyst til – så samler appen en kogebog.</p>
-    <h3 class="bfh">Type</h3><div class="chips">${typer.map(v=>chip("type",v,v,f.type.includes(v))).join("")}</div>
-    <h3 class="bfh">Tid</h3><div class="chips">${BOG_TID.map(([v,lb])=>chip("tid",v,lb,f.tid.includes(v))).join("")}</div>
-    <h3 class="bfh">Økonomi</h3><div class="chips">${BOG_OKO.map(([v,lb])=>chip("oko",v,lb,f.oko.includes(v))).join("")}</div>
-    <h3 class="bfh">Brug hvad vi har</h3><div class="chips"><button class="chip lille" data-bf="har" aria-pressed="${f.har}" ${!nHar&&!f.har?"disabled":""}>Kun det, vi har i skabet <small>${nHar}</small></button></div>`;
-  fe.querySelectorAll("[data-bf]").forEach(b=>b.onclick=()=>{
-    const grp=b.dataset.bf,v=b.dataset.v;
-    if(grp==="har")f.har=!f.har;else f[grp]=f[grp].includes(v)?f[grp].filter(x=>x!==v):[...f[grp],v];
-    renderBogFiltre();
-  });
-  const n=alle.filter(r=>bogPasser(r)).length,knap=document.getElementById("bogAabn");
-  knap.disabled=!n;knap.textContent=n?`Åbn kogebogen · ${n} ${n===1?"ret":"retter"}`:"Ingen retter passer – fjern et filter";
+  const t=BF_TRIN[bfTrin],f=bog.filt,alle=oAlle().filter(allergiOk),fe=document.getElementById("bogFiltre");
+  document.getElementById("bfPrikker").innerHTML=BF_TRIN.map((x,i)=>`<button class="prik${i===bfTrin?" on":""}" data-bft="${i}" aria-label="${x.titel}"></button>`).join("");
+  document.querySelectorAll("[data-bft]").forEach(b=>b.onclick=()=>{bfTrin=+b.dataset.bft;renderBogFiltre()});
+  fe.innerHTML=`<h2 class="bftitel">${t.titel}</h2><p class="muted" style="margin:0 0 12px">${t.under} Vælg en eller flere – eller spring over.</p>
+    <div class="tiles en">${t.valg.map(([v,ik,lb])=>{const n=alle.filter(r=>bogPasser(r,t.grp)&&retFacet(r)[t.grp]===v).length,on=f[t.grp].includes(v);return `<button class="tile" data-bf="${v}" aria-pressed="${on}" ${!n&&!on?"disabled":""}><span class="ik">${ik}</span><span style="flex:1"><span class="lb">${lb}</span><span class="sm">${n} ${n===1?"ret":"retter"}</span></span>${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}</div>`;
+  fe.querySelectorAll("[data-bf]").forEach(b=>b.onclick=()=>{const v=b.dataset.bf,g=t.grp;f[g]=f[g].includes(v)?f[g].filter(x=>x!==v):[...f[g],v];renderBogFiltre()});
+  const n=alle.filter(r=>bogPasser(r)).length,sidst=bfTrin===BF_TRIN.length-1,aabn=document.getElementById("bogAabn");
+  document.getElementById("bfAntal").innerHTML=`<b>${n}</b> ${n===1?"ret":"retter"} til rådighed`;
+  document.getElementById("bfForrige").hidden=bfTrin===0;document.getElementById("bfNaeste").hidden=sidst;
+  aabn.className=sidst?"btn":"btn ghost";aabn.textContent=sidst?`Åbn kogebogen · ${n}`:"Åbn kogebogen";aabn.disabled=!n;
   const ab=document.getElementById("opskAllergi"),skjult=oAlle().length-alle.length;
   ab.hidden=!allergier().length;
-  if(allergier().length)ab.innerHTML=alle.length?`<b>Allergi: ${esc(allergiNavne())}.</b> ${skjult?`${skjult} ${skjult===1?"ret er":"retter er"} taget ud, fordi de indeholder det, kan indeholde spor af det eller ikke er tjekket.`:""}`
+  if(allergier().length)ab.innerHTML=alle.length?`<b>Allergi: ${esc(allergiNavne())}.</b> ${skjult?`${skjult} ${skjult===1?"ret er":"retter er"} taget ud.`:""}`
     :`<b>Der er ingen ${esc(allergiNavne())}-fri retter endnu.</b> Læg jeres egen opskrift op, så kan appen bruge den.<br><button class="btn" data-omode="egen" style="margin-top:8px">Tilføj din egen</button>`;
   ab.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
+  /* skærmen fylder ned til fanerne, så knapperne står nederst */
+  const w=document.getElementById("opskFilter");w.style.height="";const top=w.getBoundingClientRect().top+scrollY;
+  w.style.height=Math.max(380,innerHeight-top-parseFloat(getComputedStyle(document.body).paddingBottom)-24)+"px";
+  const over=document.documentElement.scrollHeight-innerHeight;if(over>0)w.style.height=Math.max(380,parseFloat(w.style.height)-over)+"px";
 }
+swipe(document.getElementById("opskFilter"),r=>bfGaa(r==="venstre"?1:-1));
 /* Bogen fylder skærmen fra toppen ned til knapperne */
 function bogHoejde(){
   const w=document.getElementById("opskBog");w.style.height="";
@@ -3089,8 +3166,7 @@ function bogHoejde(){
   w.style.height=Math.max(360,innerHeight-top-bund)+"px";
 }
 function bogForside(){
-  const f=bog.filt,tidNavn={under:"under 30 min","30":"30 min",over:"over 30 min"};
-  const dele=[...f.type,...f.tid.map(x=>tidNavn[x]),...f.oko.map(x=>x==="under"?"under 60 kr":"over 60 kr"),f.har?"kun det, vi har":""].filter(Boolean),n=bog.liste.length;
+  const f=bog.filt,dele=BF_TRIN.flatMap(t=>t.valg.filter(([v])=>f[t.grp].includes(v)).map(x=>x[2].toLowerCase())),n=bog.liste.length;
   return `<div class="bogside omslag" data-naeste="1"><div class="omslag-ramme"><p class="omslag-lille">Mad app</p><h2>Kogebogen</h2><p class="omslag-under">${dele.length?esc(stort(dele.join(" · "))):"Alle retter"}</p><p class="omslag-lille">${n} ${n===1?"ret":"retter"}</p></div><p class="omslag-hint">Bladr for at se retterne › · swipe op for at lukke</p></div>`;
 }
 function bogRetSide(r,i){
@@ -3478,6 +3554,7 @@ function show(id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.id===id));
   kurvOpdater();
   if(id==="t-indkob"&&last){window.scrollTo(0,0);renderShop(last)}
+  if(id==="t-snak")requestAnimationFrame(planHoejde);
   if(id==="t-opsk"){window.scrollTo(0,0);renderOpsk()}
   if(id==="t-skab"&&skabMode==="se"){window.scrollTo(0,0);renderHylde()}
   document.querySelectorAll("nav.bar button").forEach(b=>{if(b.dataset.tab===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
@@ -3659,7 +3736,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="45";
+const APP_VERSION="46";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
