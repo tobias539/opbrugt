@@ -141,6 +141,10 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .chip.lille{padding:5px 11px;font-size:.9rem}
+.genkendt{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:1.05rem}
+.genkendt .x{font-size:.95rem;color:var(--leaf);text-decoration:underline;padding:2px 0}
+.ukendt{margin-top:6px;padding:10px 14px;border-radius:12px;background:var(--carrot-soft)}
+.ukendt p{margin:0}.ukendt ul{margin:4px 0 6px;padding-left:20px}.ukendt li{margin:2px 0}
 /* Kurven: vælg butik */
 .bvtitel{margin:4px 0 2px;font-size:1.4rem}
 .butikvalg{display:flex;flex-direction:column;gap:10px}
@@ -623,7 +627,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 48 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 49 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -2857,14 +2861,14 @@ async function scanKvittering(f){
   const prompt=`Billedet er ENTEN (a) en kvittering fra et dansk supermarked ELLER (b) et billede af et skab, køleskab, en fryser, et spisekammer eller en hylde med madvarer. Afgør først, hvilket det er, og sæt "type" til "kvittering" eller "skab".
 Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
 Basisvarer (nøgler): ${JSON.stringify(BASIS)}
-HVIS DET ER ET SKAB: Skriv kun det, du med sikkerhed kan genkende – fx æg, frugt og grønt, eller en pakke, hvor mærkaten kan læses. GÆT ALDRIG: kan en pakke, dåse, krukke eller pose ikke kendes uden at læse mærkaten, og kan mærkaten ikke læses, så læg den i "usikre" med hvor den står og hvordan den ser ud. "maengde" er i katalogets enhed: tæl de stykker, du kan se, eller læs vægten/rumfanget på mærkaten; kan det ikke ses, så null. Varer, der ikke findes i kataloget, men som du med sikkerhed kan genkende, lægges i "andet" med et almindeligt dansk navn og "niveau" (hel, noget eller lidt). "raad": er noget lagt i "usikre", eller er billedet for mørkt eller uskarpt, så en kort, venlig besked på dansk om, hvordan billedet skal tages (fx "Tag billedet tættere på, så mærkaterne kan læses"); ellers "".
+HVIS DET ER ET SKAB: Skriv kun det, du med sikkerhed kan genkende – fx æg, frugt og grønt, eller en pakke, hvor mærkaten kan læses. GÆT ALDRIG: kan en pakke, dåse, krukke eller pose ikke kendes uden at læse mærkaten, og kan mærkaten ikke læses, så læg den i "usikre" med "hvad" som en meget kort beskrivelse på højst 5 ord, fx "glasset med rød skrift" eller "plastikbøtten". "maengde" er i katalogets enhed: tæl de stykker, du kan se, eller læs vægten/rumfanget på mærkaten; kan det ikke ses, så null. Varer, der ikke findes i kataloget, men som du med sikkerhed kan genkende, lægges i "andet" med et almindeligt dansk navn og "niveau" (hel, noget eller lidt). "raad": er billedet for mørkt eller uskarpt, så et kort råd på højst 8 ord, fx "Tag billedet i bedre lys"; ellers "".
 HVIS DET ER EN KVITTERING: Læs hver varelinje og match den til kataloget.
 Regler: "maengde" er i katalogets enhed (g, ml, stk, fed) og er den samlede købte mængde, fx 2 pakker oksekød á 500 g = 1000. Løsvægt i kg omregnes til stk ud fra en normal størrelse (1 gulerod ca. 80 g, 1 løg ca. 120 g). Varer der ikke passer til kataloget, men er basisvarer, lægges i "basis". Alt andet spiseligt i "andet" med et almindeligt dansk varenavn (fx "Rødkål", ikke kvitteringens forkortelse). Non-food udelades. Pant, poser og rabatlinjer ignoreres.
 Priser: læg desuden hver madvare-linje i "priser" med "i" = id fra ingredienskataloget nedenfor (eller null), "pris" = det, linjen kostede i kr efter evt. rabat, "maengde" + "enhed" (g, ml eller stk) for den samlede købte mængde, og "rabat": true, hvis linjen havde rabat, tilbud, "x for y" eller lignende.
 Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
 Returnér KUN JSON.
 Kvittering: {"type":"kvittering","butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst],"priser":[{"i","tekst","pris","maengde","enhed","rabat"}]}
-Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde"}],"andet":[{"navn","niveau"}],"usikre":[{"hvor","hvad"}],"raad":tekst}`;
+Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde"}],"andet":[{"navn","niveau"}],"usikre":[{"hvad"}],"raad":tekst}`;
   try{
     const r=await sample.json(prompt,{images:f,modelTier:"default"});
     if(r&&r.type==="skab"){visSkabBillede(r,out);return}
@@ -2903,12 +2907,17 @@ function visSkabBillede(r,out){
   const andet=(r.andet||[]).map(x=>typeof x==="string"?{navn:x,niveau:"hel"}:{navn:String(x&&x.navn||""),niveau:["hel","noget","lidt"].includes(x&&x.niveau)?x.niveau:"hel"}).filter(x=>x.navn.trim()).map(x=>({...x,on:true}));
   const usikre=(r.usikre||[]).filter(x=>x&&(x.hvad||x.hvor));
   const noget=varer.length||andet.length;
-  let h=noget?`<p class="muted" style="margin-top:10px">Billede af skabet. Det her kunne jeg genkende – fjern fluebenet ved det, der er forkert.</p>`:`<p style="margin-top:10px">Jeg kunne ikke genkende noget med sikkerhed.</p>`;
+  const kendt=varer.length+andet.length,ialt=kendt+usikre.length;
+  let h=`<div class="genkendt"><b>Genkendte ${kendt}/${ialt} ting</b>${usikre.length?`<button class="x" id="seMere" aria-expanded="${!noget}" aria-controls="ukendtListe">${noget?"Se mere":"Skjul"}</button>`:""}</div>
+    ${usikre.length?`<div class="ukendt" id="ukendtListe" ${noget?"hidden":""}><p>Kunne ikke kendes:</p><ul>${usikre.map(x=>`<li>${esc(x.hvad||x.hvor)}</li>`).join("")}</ul><p class="muted">Tag et billede tættere på, så mærkaterne kan læses.</p></div>`:""}
+    ${r.raad?`<p class="muted" style="margin:6px 0 0">${esc(r.raad)}</p>`:""}
+    ${noget?`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Fjern fluebenet ved det, der er forkert.</p>`:""}`;
   h+=varer.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-sv="${i}" checked><div class="grow">${esc(P[v.k].n.replace(/ \(løs\)/,""))}<div class="amt muted">${v.maengde?fmt(v.k,v.maengde):st.skab[v.k]?"mængden kunne ikke ses – den gamle bevares":"mængden kunne ikke ses – regnes som 1 pakke"}${v.hvor?" · "+esc(v.hvor):""}</div></div></label>`).join("");
   h+=andet.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-sa="${i}" checked><div class="grow">${esc(renNavn(v.navn))}<div class="amt muted">${v.niveau==="hel"?"hel":v.niveau+" tilbage"}</div></div></label>`).join("");
-  if(usikre.length||r.raad||!noget)h+=`<div class="allergiboks" style="margin-top:10px">${usikre.length?`<b>Kunne ikke kendes:</b> ${esc(usikre.map(x=>[x.hvad,x.hvor].filter(Boolean).join(" – ")).join("; "))}.<br>`:""}${esc(r.raad||"Tag billedet tættere på, så mærkaterne kan læses.")}</div>`;
   if(noget)h+=`<button class="btn" id="scanSkabOk" style="margin-top:10px">Opdatér skabet</button>`;
   out.innerHTML=h;
+  const sm=document.getElementById("seMere");
+  if(sm)sm.onclick=()=>{const l=document.getElementById("ukendtListe");l.hidden=!l.hidden;sm.textContent=l.hidden?"Se mere":"Skjul";sm.setAttribute("aria-expanded",!l.hidden)};
   out.querySelectorAll("[data-sv]").forEach(cb=>cb.onchange=()=>{varer[+cb.dataset.sv].on=cb.checked});
   out.querySelectorAll("[data-sa]").forEach(cb=>cb.onchange=()=>{andet[+cb.dataset.sa].on=cb.checked});
   const ok=document.getElementById("scanSkabOk");
@@ -3847,7 +3856,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="48";
+const APP_VERSION="49";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
