@@ -139,6 +139,68 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .chip.lille{padding:5px 11px;font-size:.9rem}
+/* Indkøbskurven svæver nede i højre hjørne */
+.kurv{position:fixed;right:16px;bottom:calc(90px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.kurv svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.kurv .antal{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--carrot);color:#fff;font-size:.78rem;font-weight:700;line-height:22px;padding:0 6px;text-align:center}
+body.medKurv{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+body.medKurv .toast{bottom:calc(160px + env(safe-area-inset-bottom))}
+/* Forslag, mens man skriver */
+.auto{position:relative}
+.autoliste{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:8;overflow:hidden}
+.autoliste button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 12px;font:inherit;color:inherit;cursor:pointer}
+.autoliste button:last-child{border-bottom:0}.autoliste small{color:var(--muted)}
+.feltinput{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+/* Skabet som en hylde */
+#skabSe{position:relative}
+.hylde{background:#efe6d6;border:10px solid #8b6a43;border-radius:8px;box-shadow:inset 0 0 18px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;margin-top:6px}
+.hylderum{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8px}
+.hyldeskilt{position:absolute;top:4px;left:8px;font-size:.7rem;font-weight:700;color:#6b5132;background:#f8f1e3;border:1px solid #d8c6a6;border-radius:4px;padding:0 6px;z-index:1}
+.hyldevarer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px 6px}
+.hvare{border:0;background:transparent;padding:0;line-height:1;cursor:pointer;position:relative;display:flex;align-items:flex-end;justify-content:center;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+.hvare.snart::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:var(--carrot)}
+.hvare.valgt{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
+.hyldebraet{height:10px;margin:2px -8px 0;background:linear-gradient(#a98057,#7d5a35);box-shadow:0 3px 4px rgba(0,0,0,.25)}
+.hyldeinfo{position:absolute;left:8px;right:8px;bottom:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:7;display:flex;gap:12px;align-items:center}
+/* Kogebogen */
+#opskBog{display:flex;flex-direction:column;position:relative}
+.bogtop{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px}
+.bog{position:relative;flex:1;min-height:0;perspective:1800px;margin-left:4px}
+.bogside{position:absolute;inset:0;display:flex;flex-direction:column;background:#fbf6e9;color:#2b2218;border-radius:4px 12px 12px 4px;padding:16px 16px 8px 26px;box-shadow:inset 18px 0 22px -14px rgba(80,55,25,.45),2px 2px 0 #efe5cf,4px 4px 0 #e6d9bd,6px 6px 12px rgba(0,0,0,.2);font-family:Georgia,"Times New Roman",serif;transform-origin:left center;backface-visibility:hidden;overflow:hidden;cursor:pointer}
+.bogside.vend{transition:transform .5s ease-in-out,box-shadow .5s;z-index:3}
+.bogside.vendt{transform:rotateY(-100deg);box-shadow:-30px 0 40px rgba(0,0,0,.25)}
+.bogside.bogmaal{visibility:hidden;pointer-events:none}
+.bogside.ret{cursor:default}
+.bogindhold{flex:1;min-height:0;overflow:hidden}
+.kapitel{margin:0 0 8px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#8a6d45;text-align:center}
+.bogfoto{width:100%;flex:1 1 auto;min-height:0;max-height:46%;object-fit:cover;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.bogfoto.tom{display:flex;align-items:center;justify-content:center;font-size:3rem;background:#f1e7d2}
+.bogtitel{font-family:Georgia,"Times New Roman",serif;font-size:1.4rem;line-height:1.2;margin:12px 0 2px;text-align:center;color:#2b2218;font-weight:700}
+.bogunder{margin:0;text-align:center;font-style:italic;color:#6b5a44;font-size:.9rem}
+.bogmeta{margin:10px 0 0;text-align:center;font-size:.85rem;color:#5c4c38}
+.bogtilbud{margin:6px 0 0;text-align:center;font-size:.82rem;color:#a2541a}
+.bogtryk{margin:auto 0 0;padding-top:8px;text-align:center;font-size:.8rem;color:#8a6d45;font-style:italic}
+.sidetal{margin:6px 0 0;text-align:center;font-size:.72rem;color:#8a6d45;flex:none}
+.bogh{font-family:Georgia,"Times New Roman",serif;font-size:1.02rem;margin:12px 0 4px;border-bottom:1px solid #e3d5b8;padding-bottom:2px;color:#2b2218}
+.bogi{margin:2px 0;font-size:.88rem}.bogmg{display:inline-block;min-width:4.8em;color:#6b5a44}
+.boghar{font-size:.7rem;background:#e3eedd;color:#2f5a3f;border-radius:99px;padding:1px 6px;font-family:var(--body)}
+.bogbasis{color:#6b5a44;font-style:italic}
+.bogtrin{margin:8px 0 2px;font-size:.92rem}.bogtrintx{margin:0 0 4px;font-size:.88rem;line-height:1.45}
+.bogkoeb{margin:8px 0 0;font-size:.85rem;color:#5c4c38}
+.bogadvar{margin:8px 0 0;font-size:.88rem;color:#a2541a;font-weight:700}
+.omslag{background:linear-gradient(135deg,#2d5a45,#1d3d2f);color:#f3e7c4;align-items:center;justify-content:center;text-align:center}
+.omslag-ramme{border:2px solid #d9c27c;border-radius:6px;padding:28px 18px;margin:0 6px;box-shadow:inset 0 0 0 4px #1d3d2f,inset 0 0 0 5px #d9c27c}
+.omslag h2{font-family:Georgia,"Times New Roman",serif;font-size:2.1rem;color:#f3e7c4;margin:6px 0}
+.omslag-lille{letter-spacing:.2em;text-transform:uppercase;font-size:.72rem;margin:0;color:#d9c27c}
+.omslag-under{font-style:italic;margin:8px 0 14px}
+.omslag-hint{position:absolute;bottom:14px;left:0;right:0;font-size:.8rem;color:#d9c27c;margin:0}
+.bognav{flex:none}
+.bogbladre{display:flex;align-items:center;justify-content:center;gap:18px;margin:10px 0 0}
+.bogbladre .pil{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer}
+.bogbladre .pil:disabled{opacity:.3;cursor:default}
+.bogknapper{display:flex;gap:8px;margin-top:10px}.bogknapper .btn{flex:1}
+.bogark{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+.bfh{font-size:.95rem;margin:10px 0 0}#bogFiltre .chips{margin-top:6px;gap:6px}
 .allergiboks{background:var(--carrot-soft);border-radius:12px;padding:10px 12px;margin:0 0 12px;font-size:.9rem}
 .allergiboks.advarsel{border:2px solid var(--carrot);margin:10px 0 0}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--felt);border-radius:12px;padding:4px;margin:0 0 12px}
@@ -278,7 +340,7 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .trinl b{font-family:var(--display)}
 .trinl p{margin:2px 0 0}
 .tip{font-size:.88rem;color:var(--muted);font-style:italic}
-nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
 nav.bar button{border:0;background:transparent;padding:10px 2px 12px;font-size:.8rem;white-space:nowrap;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
 nav.bar button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
 nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
@@ -366,26 +428,21 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <section class="tab" id="t-opsk" aria-labelledby="h-opsk">
   <div id="opskListe">
     <header class="top"><h1 id="h-opsk">Opskrifter</h1><span class="muted" id="opskAntal"></span></header>
-    <div id="opskStart">
-      <p class="sub">Hvad vil du?</p>
-      <div class="tiles en">
-        <button class="tile" id="opskNyKnap"><span class="ik">➕</span><span><span class="lb">Tilføj din egen</span><span class="sm">Indsæt en opskrift, skriv den, eller tag et billede af en kogebog</span></span></button>
-        <button class="tile" id="opskKatKnap"><span class="ik">📖</span><span><span class="lb">Vælg fra kataloget</span><span class="sm" id="opskKatSm">Søg og filtrér</span></span></button>
-      </div>
+    <div id="opskFilter">
+      <div class="allergiboks" id="opskAllergi" hidden></div>
+      <div id="bogFiltre"></div>
+      <button class="btn" id="bogAabn" style="width:100%;margin-top:14px">Åbn kogebogen</button>
+      <button class="x" id="opskNyKnap" style="display:block;margin:10px auto 0;font-size:.95rem;color:var(--leaf)">+ Tilføj din egen opskrift</button>
+    </div>
+    <div id="opskBog" hidden>
+      <div class="bogtop"><button class="back" id="bogTilbage">‹ Filtre</button><span class="muted" id="bogTael"></span></div>
+      <div class="bog" id="bog"></div>
+      <div class="bognav" id="bogNav"></div>
+      <div id="bogArk"></div>
     </div>
     <div id="opskEgen" hidden>
-      <button class="back" data-omode="start">‹ Opskrifter</button>
+      <button class="back" data-omode="filter">‹ Opskrifter</button>
       <div id="egenPanel" class="sugg" style="margin:6px 0 14px"></div>
-    </div>
-    <div id="opskKat" hidden>
-      <button class="back" data-omode="start">‹ Opskrifter</button>
-      <p class="sub" id="opskSub" style="margin-top:4px">Dem, der bruger mest af det, I har i skabet, står øverst.</p>
-      <div class="allergiboks" id="opskAllergi" hidden></div>
-      <label for="opskSoeg" class="muted">Søg i titler og ingredienser</label>
-      <input id="opskSoeg" class="search" type="search" placeholder="Fx kylling, bowl, peberfrugt" autocomplete="off">
-      <div class="chips filt" id="opskFilt" aria-label="Filtre"></div>
-      <div class="rlist" id="opskRes"></div>
-      <div id="egneWrap"></div>
     </div>
   </div>
   <div id="opskVis" class="vis" hidden></div>
@@ -394,25 +451,32 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- SKAB -->
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
   <header class="top"><h1 id="h-skab">Skabet</h1></header>
-  <p class="sub">Det, du har derhjemme. Varer herfra bruges først, før der købes nyt.</p>
-  <div class="ask" id="scanBox" style="margin-bottom:14px">
-    <h3>Scan kvittering</h3>
-    <p class="muted" id="scanNote">Tag et billede af bonen, eller vælg et skærmbillede af en digital kvittering. Så lægges varerne i skabet.</p>
-    <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Vælg fra album<input type="file" class="scanFil" accept="image/*" hidden></label></div>
-    <div id="scanResult"></div>
-  </div>
-  <div class="list" id="skabList"></div>
-  <div class="list" style="margin-top:10px">
-    <div class="addrow">
-      <select id="addKey" aria-label="Vare"></select>
-      <input type="number" id="addAmt" min="0" step="any" style="width:90px" aria-label="Mængde">
-      <span class="muted" id="addUnit"></span>
-      <button class="btn" id="addBtn">Læg i skabet</button>
+  <div id="skabStart">
+    <p class="sub">Det, I har derhjemme, bliver brugt først.</p>
+    <div class="tiles en">
+      <button class="tile" data-skab="se"><span class="ik">🗄️</span><span><span class="lb">Se dit skab</span><span class="sm" id="skabSeSm"></span></span></button>
+      <button class="tile" data-skab="tilfoej"><span class="ik">➕</span><span><span class="lb">Tilføj til skabet</span><span class="sm">Med et billede eller ved at skrive</span></span></button>
     </div>
   </div>
-  <h2>Basisvarer</h2>
-  <p class="muted">Dem holder appen ikke styr på i gram. Tryk på det, du er løbet tør for, så kommer det på indkøbslisten.</p>
-  <div class="chips" id="basis"></div>
+  <div id="skabSe" hidden>
+    <button class="back" data-skab="start">‹ Skabet</button>
+    <div class="hylde" id="hylde"></div>
+    <div class="hyldeinfo" id="hyldeInfo" hidden></div>
+  </div>
+  <div id="skabTilfoej" hidden>
+    <button class="back" data-skab="start">‹ Skabet</button>
+    <div class="ask" id="scanBox" style="margin:6px 0 12px">
+      <h3>Med et billede</h3>
+      <p class="muted" id="scanNote" style="margin:2px 0 8px">Tag et billede af kvitteringen, eller vælg et skærmbillede af en digital kvittering.</p>
+      <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Vælg fra album<input type="file" class="scanFil" accept="image/*" hidden></label></div>
+      <div id="scanResult"></div>
+    </div>
+    <div class="ask">
+      <h3>Skriv selv</h3>
+      <div class="auto" style="margin-top:8px"><input id="skabIn" class="feltinput" placeholder="Begynd at skrive, fx gulerødder" autocomplete="off" aria-label="Vare"><div class="autoliste" id="skabForslag" hidden></div></div>
+      <div id="skabValgt"></div>
+    </div>
+  </div>
 </section>
 
 <!-- PRÆFERENCER -->
@@ -468,13 +532,13 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 42 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 43 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
 <section class="tab" id="t-indkob" aria-labelledby="h-indkob">
   <header class="top"><h1 id="h-indkob">Indkøb</h1><div style="display:flex;gap:6px"><button class="btn ghost lille" id="shopNyKnap" aria-expanded="false" aria-label="Tilføj vare">+</button><button class="btn ghost lille" id="clearChecks">Nulstil</button></div></header>
-  <div class="list" id="shopNy" hidden style="margin:0 0 10px"><div class="addrow"><input id="shopIn" placeholder="Tilføj vare, fx toiletpapir" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" id="shopAdd">Tilføj</button></div></div>
+  <div class="list" id="shopNy" hidden style="margin:0 0 10px;overflow:visible"><div class="addrow"><div class="auto" style="flex:1;min-width:0"><input id="shopIn" placeholder="Tilføj vare, fx toiletpapir" autocomplete="off" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><div class="autoliste" id="shopForslag" hidden></div></div><button class="btn ghost" id="shopAdd">Tilføj</button></div></div>
   <p class="sub" id="shopSub"></p>
   <div id="kvitForslag"></div>
   <div class="chips" id="shopDage" style="margin:4px 0 6px" aria-label="Indkøbsdage"></div>
@@ -495,10 +559,10 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <nav class="bar" aria-label="Faner">
   <button data-tab="t-snak" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Plan</button>
   <button data-tab="t-chat"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Snak</button>
-  <button data-tab="t-indkob"><svg viewBox="0 0 24 24"><path d="M4 5h2l2 11h10l2-8H7"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>Indkøb</button>
   <button data-tab="t-skab"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M8 5v2M8 13v3"/></svg>Skab</button>
   <button data-tab="t-opsk"><svg viewBox="0 0 24 24"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"/></svg>Opskrifter</button>
 </nav>
+<button class="kurv" id="kurvKnap" aria-label="Indkøbskurven"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2 11h10l2-8H7"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg><span class="antal" id="kurvAntal" hidden></span></button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="opskrifter.js"></script>
@@ -1210,6 +1274,7 @@ function renderShop(p){
   st.shopMark=st.shopMark||{};
   /* Handler man ind flere gange om ugen, deles listen i indkøbsdage */
   const alleG=samletIndkob(p),dage=[...new Set(alleG.map(v=>v.koebDag||""))].sort();
+  const ka=document.getElementById("kurvAntal");ka.textContent=alleG.length;ka.hidden=!alleG.length;
   if(!dage.includes(shopDag))shopDag=dage[0]??"";
   const G=dage.length>1?alleG.filter(v=>(v.koebDag||"")===shopDag):alleG,F=fordel(G);shopTur=F.tur;
   const sd=document.getElementById("shopDage");
@@ -1348,27 +1413,106 @@ function renderShopPlan(F){
   el.innerHTML=`<div class="kobi"><div class="hoved">${F.valgt.tur.map(b=>logoHtml(b,30)).join("")}<span>Køb ind i ${F.valgt.tur.map(esc).join(" og ")}</span></div>${alt?`<button class="alt" data-valg="${esc(JSON.stringify(alt.tur))}">${esc(altTekst)}</button>`:""}${sparTekst?`<p class="spar">${esc(sparTekst)}</p>`:""}</div>`;
   el.querySelectorAll("[data-valg]").forEach(b=>b.onclick=()=>{const tur=JSON.parse(b.dataset.valg);st.indkobValg=navn({tur})===navn(F.anbefalet)?null:{tur,dato:todayIso()};st.aktivButik=null;shopAfd=null;changed()});
 }
-function renderSkab(){
-  const L=document.getElementById("skabList");
-  const e=Object.entries(st.skab);
-  L.innerHTML=e.length?e.map(([k,v])=>`<div class="item"><div class="grow">${P[k].n}<div class="amt">${fmt(k,v.amt)} · holder ca. ${v.dage} dage</div></div><button class="x" data-k="${k}" aria-label="Fjern ${P[k].n}">×</button></div>`).join(""):`<div class="item"><div class="grow muted">Skabet er tomt. Læg det i, du allerede har, så køber appen ikke det samme igen.</div></div>`;
-  L.querySelectorAll(".x").forEach(b=>b.onclick=()=>{delete st.skab[b.dataset.k];changed()});
-  if(st.fri.length){
-    if(!e.length)L.innerHTML="";
-    L.innerHTML+=st.fri.map((f,i)=>`<div class="item"><div class="grow">${esc(f.navn)}</div><button class="lvl" data-fi="${i}" aria-label="Skift mængde">${esc(f.niveau||"hel")}</button><button class="x" data-fx="${i}" aria-label="Fjern ${esc(f.navn)}">×</button></div>`).join("");
-    const LV=["hel","noget","lidt"];
-    L.querySelectorAll("[data-fi]").forEach(b=>b.onclick=()=>{const f=st.fri[+b.dataset.fi];const i=LV.indexOf(f.niveau||"hel");if(i===LV.length-1)st.fri.splice(+b.dataset.fi,1);else f.niveau=LV[i+1];changed()});
-    L.querySelectorAll("[data-fx]").forEach(b=>b.onclick=()=>{st.fri.splice(+b.dataset.fx,1);changed()});
-  }
-  const bs=document.getElementById("basis");bs.innerHTML="";
-  for(const [k,n] of Object.entries(BASIS)){
-    const miss=st.basisMangler.includes(k);
-    const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",miss);
-    b.textContent=miss?n+" – mangler":n;
-    b.onclick=()=>{st.basisMangler=miss?st.basisMangler.filter(x=>x!==k):[...st.basisMangler,k];changed()};
-    bs.appendChild(b);
-  }
+/* ---------- Skabet ----------
+   To valg: se skabet (en hylde med butikkernes afdelinger og varerne som ikoner) eller tilføj til skabet
+   (med et billede af kvitteringen eller ved at skrive – med forslag, mens man skriver). */
+let skabMode="start",hyldeValgt=null,skabValg=null;
+function skabModeSaet(m){skabMode=m;hyldeValgt=null;skabValg=null;renderSkab();window.scrollTo(0,0)}
+document.querySelectorAll("[data-skab]").forEach(b=>b.onclick=()=>skabModeSaet(b.dataset.skab));
+function skabVarer(){
+  const ud=[];
+  for(const [k,v] of Object.entries(st.skab))if(P[k])ud.push({k,navn:P[k].n.replace(/ \(løs\)/,""),afd:visAfd(afdOf(k)),tekst:fmt(k,v.amt),dage:v.dage});
+  st.fri.forEach((f,i)=>ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),tekst:f.niveau==="lidt"?"lidt tilbage":f.niveau==="noget"?"noget tilbage":"",dage:null}));
+  for(const x of ud){if(!AFD[x.afd])x.afd="andet";x.em=vareEmoji({navn:x.navn,afd:x.afd})}
+  return ud;
 }
+function hyldeNoegle(v){return v.k?"k:"+v.k:"f:"+v.navn}
+function renderSkab(){
+  const n=Object.keys(st.skab).length+st.fri.length;
+  document.getElementById("skabSeSm").textContent=n?`${n} ${n===1?"vare":"varer"} på hylderne`:"Skabet er tomt";
+  for(const [id,m] of [["skabStart","start"],["skabSe","se"],["skabTilfoej","tilfoej"]])document.getElementById(id).hidden=skabMode!==m;
+  if(skabMode==="se"&&document.getElementById("t-skab").classList.contains("on"))renderHylde();
+  if(skabMode==="tilfoej")renderSkabValg();
+}
+/* Hylden fylder skærmen. Én hylde pr. afdeling; er der mange varer på en hylde, bliver ikonerne mindre (man kan zoome) */
+function renderHylde(){
+  const h=document.getElementById("hylde"),info=document.getElementById("hyldeInfo"),varer=skabVarer();
+  if(!varer.length){h.style.height="";h.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tilføj det, I har.</p>`;info.hidden=true;return}
+  const afd=[...new Set(STD_RUTE.map(visAfd))].filter(a=>varer.some(v=>v.afd===a));
+  h.innerHTML="";h.style.height="";
+  const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+24;
+  const H=Math.max(afd.length*64+20,innerHeight-top-bund),hh=(H-20)/afd.length,B=h.clientWidth-16;
+  h.style.height=H+"px";
+  h.innerHTML=afd.map(a=>{
+    const vs=varer.filter(v=>v.afd===a),plads=hh-22-12;let s=50;
+    for(;s>14;s-=2){const pr=Math.max(1,Math.floor((B+6)/(s+6)));if(Math.ceil(vs.length/pr)*(s+2)<=plads)break}
+    return `<div class="hylderum" style="height:${hh}px"><span class="hyldeskilt">${esc(afdNavn(a))}</span><div class="hyldevarer">${vs.map(v=>`<button class="hvare${v.dage!=null&&v.dage<=3?" snart":""}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.78)}px" aria-label="${esc(v.navn)}${v.tekst?", "+esc(v.tekst):""}">${v.em}</button>`).join("")}</div><div class="hyldebraet"></div></div>`;
+  }).join("");
+  h.querySelectorAll("[data-hv]").forEach(b=>b.onclick=()=>{hyldeValgt=hyldeValgt===b.dataset.hv?null:b.dataset.hv;renderHylde()});
+  const v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
+  if(!v)return;
+  const niv=v.fi!=null?(st.fri[v.fi].niveau||"hel"):null;
+  info.innerHTML=`<span style="font-size:2.2rem;line-height:1">${v.em}</span><div style="flex:1;min-width:0"><b>${esc(v.navn)}</b><div class="muted" style="font-size:.85rem">${esc([v.tekst&&v.k?"ca. "+v.tekst:v.tekst,v.dage!=null?holdbarTekst(v.dage):"",v.dage!=null&&v.dage<=3?"bør bruges snart":""].filter(Boolean).join(" · "))}</div>${niv?`<div class="chips" style="margin-top:6px">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${niv===n}">${lb}</button>`).join("")}</div>`:""}</div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><button class="x" id="hvLuk" aria-label="Luk">×</button><button class="btn ghost lille" id="hvBrugt">Brugt op</button></div>`;
+  document.getElementById("hvLuk").onclick=()=>{hyldeValgt=null;renderHylde()};
+  document.getElementById("hvBrugt").onclick=()=>{if(v.k)delete st.skab[v.k];else st.fri.splice(v.fi,1);hyldeValgt=null;changed();toast(v.navn+" er fjernet fra skabet")};
+  info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
+}
+/* Skriv selv: vælger man en vare med mængde, spørges der om mængden */
+function renderSkabValg(){
+  const el=document.getElementById("skabValgt"),v=skabValg;
+  if(!v||!P[v.k]){el.innerHTML="";return}
+  el.innerHTML=`<p style="margin:12px 0 0"><b>${esc(P[v.k].n.replace(/ \(løs\)/,""))}</b> – hvor meget har I?</p><div class="addrow" style="padding:6px 0 0"><input type="number" id="skabAmt" value="${P[v.k].pk}" min="0" step="any" style="width:84px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px" aria-label="Mængde"><span class="muted">${P[v.k].e}</span><button class="btn" id="skabLaeg">Læg i skabet</button></div>`;
+  document.getElementById("skabLaeg").onclick=()=>{
+    const a=parseFloat(document.getElementById("skabAmt").value),k=v.k;
+    if(!(a>0)){toast("Skriv en mængde over 0");return}
+    st.skab[k]={amt:(st.skab[k]?.amt||0)+a,dage:st.skab[k]?.dage??ho(k)};skabValg=null;changed();toast(P[k].n.replace(/ \(løs\)/,"")+" er lagt i skabet");
+  };
+}
+/* ---------- Forslag, mens man skriver ----------
+   Varer fra appens katalog (med mængde), ingredienser fra opskrifterne og (til indkøb) basisvarer */
+function autoForslag(q,medBasis){
+  q=q.trim().toLowerCase();if(!q)return [];
+  const ud=[],set=new Set(),add=x=>{const n=x.navn.toLowerCase();if(set.has(n))return;set.add(n);x.score=n.startsWith(q)?0:n.split(/\s+/).some(o=>o.startsWith(q))?1:2;ud.push(x)};
+  for(const [k,p] of Object.entries(P)){const n=p.n.replace(/ \(løs\)/,"");if(n.toLowerCase().includes(q))add({k,navn:n,afd:afdOf(k)})}
+  for(const [id,v] of Object.entries(OI))if(v.n.toLowerCase().includes(q)){const k=pNoegle(id);add(k?{k,navn:P[k].n.replace(/ \(løs\)/,""),afd:afdOf(k)}:{id,navn:v.n,afd:v.afd})}
+  if(medBasis)for(const [b,n] of Object.entries(BASIS))if(n.toLowerCase().includes(q))add({basis:b,navn:n,afd:"toer"});
+  return ud.sort((a,b)=>a.score-b.score||a.navn.length-b.navn.length).slice(0,6);
+}
+function autoFelt(inp,liste,medBasis,valgt){
+  const vis=()=>{
+    const fri=inp.value.trim(),fs=autoForslag(fri,medBasis);
+    liste.innerHTML=fs.map((x,i)=>`<button type="button" data-ai="${i}"><span aria-hidden="true">${vareEmoji({navn:x.navn,afd:x.afd})}</span><span>${esc(x.navn)}${x.basis?` <small>basisvare</small>`:""}</span></button>`).join("")
+      +(fri&&!fs.some(x=>x.navn.toLowerCase()===fri.toLowerCase())?`<button type="button" data-ai="fri"><span aria-hidden="true">➕</span><span>Tilføj "${esc(fri)}"</span></button>`:"");
+    liste.hidden=!fri;
+    liste.querySelectorAll("[data-ai]").forEach(b=>{
+      b.onmousedown=e=>e.preventDefault();
+      b.onclick=()=>{const x=b.dataset.ai==="fri"?{navn:fri}:fs[+b.dataset.ai];liste.hidden=true;inp.value="";valgt(x)};
+    });
+  };
+  inp.oninput=vis;inp.onfocus=vis;
+  inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const f=liste.querySelector("[data-ai]");if(f&&!liste.hidden)f.click()}};
+  inp.onblur=()=>setTimeout(()=>{liste.hidden=true},150);
+}
+autoFelt(document.getElementById("skabIn"),document.getElementById("skabForslag"),false,x=>{
+  if(x.k&&P[x.k]){skabValg={k:x.k};renderSkabValg();document.getElementById("skabAmt")?.select();return}
+  const navn=stort(x.navn);
+  if(!st.fri.some(f=>f.navn.toLowerCase()===navn.toLowerCase()))st.fri.push({navn,niveau:"hel"});
+  changed();toast(navn+" er lagt i skabet");
+});
+autoFelt(document.getElementById("shopIn"),document.getElementById("shopForslag"),true,x=>{
+  if(x.basis){if(!st.basisMangler.includes(x.basis))st.basisMangler.push(x.basis)}
+  else{const navn=stort(x.navn);if(!st.ekstraIndkob.some(y=>!y.done&&y.navn.toLowerCase()===navn.toLowerCase()))st.ekstraIndkob.push({navn,maengde:"",kat:x.afd&&AFD[x.afd]?x.afd:gaetAfd(navn)})}
+  changed();toast(stort(x.navn)+" er sat på listen");
+});
+/* ---------- Indkøbskurven ----------
+   Svæver nede i højre hjørne og åbner indkøbslisten. Skjult på selve listen og under trin-for-trin-forløb. */
+function kurvOpdater(){
+  const k=document.getElementById("kurvKnap");if(!k)return;
+  const on=id=>document.getElementById(id).classList.contains("on");
+  k.hidden=on("t-indkob")||(on("t-snak")&&document.getElementById("t-snak").classList.contains("fokus"))||(on("t-pref")&&document.getElementById("t-pref").classList.contains("kunGuide"));
+  document.body.classList.toggle("medKurv",!k.hidden);
+}
+document.getElementById("kurvKnap").onclick=()=>show("t-indkob");
 function stepper(label,key,min,max,sub){
   return `<div class="set"><div>${label}${sub?`<div class="muted">${sub}</div>`:""}</div><div class="step"><button data-s="${key}" data-d="-1" aria-label="Færre">−</button><output>${st.settings[key]}</output><button data-s="${key}" data-d="1" aria-label="Flere">+</button></div></div>`;
 }
@@ -1394,15 +1538,8 @@ function renderSet(){
 }
 function fillSelects(){
   const opts=Object.entries(P).sort((a,b)=>a[1].n.localeCompare(b[1].n,"da")).map(([k,p])=>`<option value="${k}">${p.n}</option>`).join("");
-  document.getElementById("addKey").innerHTML=opts;document.getElementById("justKey").innerHTML=opts;
-  const upd=()=>{const k=document.getElementById("addKey").value;document.getElementById("addUnit").textContent=P[k].e;document.getElementById("addAmt").value=P[k].pk};
-  document.getElementById("addKey").onchange=upd;upd();
+  document.getElementById("justKey").innerHTML=opts;
 }
-document.getElementById("addBtn").onclick=()=>{
-  const k=document.getElementById("addKey").value, a=parseFloat(document.getElementById("addAmt").value);
-  if(!(a>0)){toast("Skriv en mængde over 0");return}
-  st.skab[k]={amt:(st.skab[k]?.amt||0)+a,dage:ho(k)};changed();toast(P[k].n+" lagt i skabet");
-};
 document.getElementById("justAdd").onclick=()=>{const k=document.getElementById("justKey").value;if(st.just[k]==null)st.just[k]=25;changed()};
 document.getElementById("clearChecks").onclick=()=>{
   if(!confirm("Tøm indkøbslisten? Alle varer fjernes. Retterne bliver stående på planen."))return;
@@ -1622,7 +1759,7 @@ function actInner(a,ti,fi,dag){
     const e=turData&&turData.enAd;if(!e)return;e.videre=true;
     if(a==="enAdIgen"){enAdSpoerg(e.dage,e.i,`Et andet forslag til ${dayLabel(e.dage[e.i],true)}, tak.`);return}
     const j=e.dage.findIndex((d,k)=>k>e.i&&!fastPaa(d));
-    if(j<0){st.chat.push({role:"bot",data:{svar:"Så er ugen planlagt. Indkøbslisten er klar under Indkøb."}});changed();return}
+    if(j<0){st.chat.push({role:"bot",data:{svar:"Så er ugen planlagt. Indkøbslisten ligger i kurven nederst til højre."}});changed();return}
     enAdSpoerg(e.dage,j);return;
   }
   if(a==="saetValgte"){
@@ -1888,12 +2025,13 @@ function wizStart(host){
 function planFokus(){
   document.getElementById("t-snak").classList.toggle("fokus",!!up||!!(wiz&&wiz.host==="opsStart"));
   for(const id of ["planknapper","naesteInfo"]){const el=document.getElementById(id);if(el)el.hidden=!st.opsat}
+  kurvOpdater();
 }
 function renderOps(){
   const ps=document.getElementById("opsStart"),pp=document.getElementById("prefOpsat");
   ps.innerHTML=wiz&&wiz.host==="opsStart"?wizHtml():!st.opsat?`<div class="wiz"><h2>Velkommen til Mad app</h2><p class="muted" style="margin:0">Før du planlægger ugen: et par hurtige valg om jer, så passer forslag, mængder og tilbud. Det tager under et minut.</p><div class="nav"><span class="grow"></span><button class="btn" data-w="start">Opret præferencer</button></div></div>`:"";
   planFokus();
-  document.getElementById("t-pref").classList.toggle("kunGuide",!!(wiz&&wiz.host==="prefOpsat"));
+  document.getElementById("t-pref").classList.toggle("kunGuide",!!(wiz&&wiz.host==="prefOpsat"));kurvOpdater();
   pp.innerHTML=wiz&&wiz.host==="prefOpsat"?wizHtml():st.opsat?`<div class="list"><div class="item"><div class="grow">${esc(opsatResume())}</div></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn ghost" data-w="ret">Ret præferencer</button><button class="btn ghost" data-w="nulstil">Nulstil præferencer</button></div>`:`<p class="muted">Hvor mange I er, hvad I vil spise, og hvor I handler. Det tager under et minut.</p><button class="btn" data-w="ret">Opret præferencer</button>`;
   for(const el of [ps,pp])el.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>wizHandling(b,el.id));
   const ei=document.getElementById("wizEgen");
@@ -2357,7 +2495,7 @@ document.addEventListener("change",e=>{
 });
 async function scanKvittering(f){
   const out=document.getElementById("scanResult");
-  if(!document.getElementById("t-skab").classList.contains("on")){show("t-skab");document.getElementById("scanBox").scrollIntoView({block:"start"})}
+  if(!document.getElementById("t-skab").classList.contains("on")||skabMode!=="tilfoej"){show("t-skab");skabModeSaet("tilfoej")}
   out.innerHTML=`<p class="muted">Læser kvitteringen … det kan tage op til et minut.</p>`;
   const catalog=Object.entries(P).map(([k,p])=>({k,navn:p.n,pakke:p.pk,enhed:p.e}));
   const prompt=`Billedet er en kvittering fra et dansk supermarked (fx Rema 1000 eller Netto). Læs hver varelinje og match den til kataloget.
@@ -2571,13 +2709,33 @@ function tTekst(){
   return Object.entries(best).map(([id,x])=>`${(OI[id]||{n:id}).n.toLowerCase()}: ${tKort(x)}`).join("; ");
 }
 let oFilt={soeg:"",reg:null,pr:null,hurtig:false,tilbud:false}, oAaben=null, oValg={}, oPers=null;
-/* Opskrifter-fanen: "start" (to valg), "egen" (tilføj din egen) eller "katalog" */
-let oMode="start";
-function opskMode(m){oMode=m;oAaben=null;if(m==="egen"&&egen.trin==="luk"){egen.trin="input";egen.fejl=""}renderOpsk();window.scrollTo(0,0)}
+/* Opskrifter-fanen: "filter" (vælg type, tid, økonomi og køkken), "bog" (kogebogen) eller "egen" (tilføj din egen) */
+let oMode="filter";
+/* ---------- Kogebogen ----------
+   Filtre (type, tid, økonomi, køkken) → en kogebog med én ret pr. side, man bladrer i (swipe eller pilene).
+   Trykker man på en side, åbnes retten i bogen, fordelt på sider. Derfra: "Lav denne" (sæt på planen) eller
+   "Tilføj til indkøb" (det, I ikke har i skabet, købt hvor det samlet er billigst af jeres butikker). */
+let bog={filt:{type:[],tid:null,oko:[],kok:[]},liste:[],side:0,ret:null,retSide:0,retSider:[],dage:false,travl:false};
+function opskMode(m){
+  if(m==="start"||m==="katalog")m="filter";
+  oMode=m;oAaben=null;
+  if(m==="egen"&&egen.trin==="luk"){egen.trin="input";egen.fejl=""}
+  if(m==="bog"){bog.liste=bogListe().map(r=>r.id);bog.side=0;bog.ret=null;bog.dage=false}
+  renderOpsk();window.scrollTo(0,0);
+}
 document.getElementById("opskNyKnap").onclick=()=>opskMode("egen");
-document.getElementById("opskKatKnap").onclick=()=>opskMode("katalog");
+document.getElementById("bogAabn").onclick=()=>opskMode("bog");
+document.getElementById("bogTilbage").onclick=()=>{if(bog.ret){bog.ret=null;bog.dage=false;renderBog(-1)}else opskMode("filter")};
 document.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
-function oVis(id){if(!ORMAP[id])return;oAaben=id;oPers=null;oMode="katalog";show("t-opsk");renderOpsk()}
+/* Åbn en ret i kogebogen (fra planen, forslag og snak) */
+function oVis(id){
+  if(!ORMAP[id])return;
+  oAaben=null;oPers=null;oMode="bog";
+  if(!bog.liste.length)bog.liste=bogListe().map(r=>r.id);
+  if(!bog.liste.includes(id))bog.liste=[id,...bog.liste];
+  bog.side=bog.liste.indexOf(id)+1;bog.ret=id;bog.retSide=0;bog.dage=false;
+  show("t-opsk");
+}
 function oTid(r){return r.tid?(r.tid[0]&&r.tid[1]&&r.tid[0]!==r.tid[1]?r.tid[0]+"-"+r.tid[1]:(r.tid[1]||r.tid[0]))+" min":"tid ukendt"}
 function oBrugerHtml(mt,max){
   if(!mt.harL.length)return"";
@@ -2589,39 +2747,207 @@ function renderOpsk(){
   document.getElementById("opskVersion").textContent=OB.opskrifter.length?`Opskriftbanken: ${OB.opskrifter.length} retter (${OB.version}).`:"";
   if(oAaben&&ORMAP[oAaben]){liste.hidden=true;vis.hidden=false;renderOpskVis();return}
   liste.hidden=false;vis.hidden=true;
-  for(const [id,m] of [["opskStart","start"],["opskEgen","egen"],["opskKat","katalog"]])document.getElementById(id).hidden=oMode!==m;
-  if(oMode==="egen"){renderEgen();document.getElementById("opskAntal").textContent="";return}
-  if(!OB.opskrifter.length){document.getElementById("opskRes").innerHTML=`<p class="muted">Opskriftbanken kunne ikke indlæses. Prøv at genindlæse siden.</p>`;return}
-  const har=oHar(),n=st.settings.P,harNoget=Object.keys(har).length>0||TB.tilbud.length>0;
-  document.getElementById("opskSub").textContent=(Object.keys(har).length?"Jeres egne opskrifter. Dem, der bruger mest af det, I har i skabet og ugens tilbud, står øverst.":"Jeres egne opskrifter. Læg det, I har, i Skabet, så kommer de retter, der bruger det, øverst.")+(TB.meta?` Tilbud fra ${[...new Set(TB.tilbud.filter(x=>tKaedeAktiv(x.k)).map(x=>x.k))].join(", ")}, hentet ${dayLabel(iso(new Date(TB.meta.opdateret)),true)}.`:"");
-  // filtre
-  const tael=(f)=>{const c={};for(const r of oAlle())for(const x of f(r))c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
-  const fl=document.getElementById("opskFilt");
-  const chip=(lbl,on,fn)=>`<button class="chip" aria-pressed="${on}" data-of="${fn}">${esc(lbl)}</button>`;
-  fl.innerHTML=(TB.tilbud.length?chip("På tilbud",oFilt.tilbud,"t"):"")+chip("Højst 30 min",oFilt.hurtig,"h")+tael(r=>r.pr).filter(p=>p!=="Bønner og linser"&&p!=="Æg").map(p=>chip(p,oFilt.pr===p,"p:"+p)).join("")+tael(r=>r.reg).filter(x=>x!=="Andet").map(g=>chip(g,oFilt.reg===g,"r:"+g)).join("");
-  fl.querySelectorAll("[data-of]").forEach(b=>b.onclick=()=>{const f=b.dataset.of;if(f==="t")oFilt.tilbud=!oFilt.tilbud;else if(f==="h")oFilt.hurtig=!oFilt.hurtig;else if(f.startsWith("p:"))oFilt.pr=oFilt.pr===f.slice(2)?null:f.slice(2);else oFilt.reg=oFilt.reg===f.slice(2)?null:f.slice(2);renderOpsk()});
-  const q=oFilt.soeg.toLowerCase().trim();
-  const sikre=r=>allergiOk(r),skjult=oAlle().filter(r=>!sikre(r)).length;
-  const ab=document.getElementById("opskAllergi");
-  ab.hidden=!allergier().length;
-  if(allergier().length)ab.innerHTML=`<b>Allergi: ${esc(allergiNavne())}.</b> ${skjult?`${skjult} ${skjult===1?"ret er skjult, fordi den":"retter er skjult, fordi de"} indeholder det, kan indeholde spor af det eller ikke er tjekket.`:""} ${esc(ALLERGI_NOTE)}`;
-  const passer=r=>sikre(r)&&(!oFilt.hurtig||(r.tid&&r.tid[1]<=30))&&(!oFilt.pr||r.pr.includes(oFilt.pr))&&(!oFilt.reg||r.reg.includes(oFilt.reg))&&(!q||(r.t+" "+r.u+" "+r.k.join(" ")+" "+r.ing.map(l=>l.n).join(" ")).toLowerCase().includes(q));
-  let rs=OB.opskrifter.filter(passer),es=st.egne.filter(passer);
-  const mt={},uge=tUge();
-  for(const r of [...rs,...es]){const m=mt[r.id]=oMatch(r,n,har,oValg[r.id]);m.tb=m.koeb.map(x=>[x,tBedst(x.id,uge)]).filter(y=>y[1]);m.score+=m.tb.length*.6;m.ny=nyligFor(r)}
-  if(oFilt.tilbud){rs=rs.filter(r=>mt[r.id].tb.length);es=es.filter(r=>mt[r.id].tb.length)}
-  /* Retter fra de sidste 3 uger (og dem på planen) står nederst, medmindre de er favoritter */
-  const sorter=(a,b)=>(!!mt[a.id].ny-!!mt[b.id].ny)||(harNoget?(mt[b.id].score-mt[a.id].score):0)||a.t.localeCompare(b.t,"da");
-  rs.sort(sorter);
-  es.sort((a,b)=>(!!mt[a.id].ny-!!mt[b.id].ny)||((st.valgtAntal[b.id]||0)-(st.valgtAntal[a.id]||0))||sorter(a,b));
-  const ialt=OB.opskrifter.length+st.egne.length,vist=rs.length+es.length;
-  document.getElementById("opskKatSm").textContent=allergier().length?`${oAlle().filter(sikre).length} retter uden ${allergiNavne()} – søg og filtrér`:`${ialt} retter – søg og filtrér`;
-  document.getElementById("opskAntal").textContent=oMode!=="katalog"?"":vist===ialt?`${vist} retter`:`${vist} af ${ialt}`;
-  const res=document.getElementById("opskRes");
-  res.innerHTML=vist?rs.map(r=>oKort(r,mt[r.id])).join(""):allergier().length&&!oAlle().some(sikre)?`<div class="allergiboks"><b>Der er ingen ${esc(allergiNavne())}-fri retter i kataloget endnu.</b> Læg jeres egen opskrift op, så kan appen bruge den.<br><button class="btn" data-omode="egen" style="margin-top:8px">Tilføj din egen</button></div>`:`<p class="muted">Ingen retter passer til søgningen. Fjern et filter, eller søg på noget andet.</p>`;
-  res.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
-  document.getElementById("egneWrap").innerHTML=es.length?`<div class="cat">Tilføjet af brugere · ${es.length}</div><div class="rlist">${es.map(r=>oKort(r,mt[r.id])).join("")}</div>`:"";
+  for(const [id,m] of [["opskFilter","filter"],["opskBog","bog"],["opskEgen","egen"]])document.getElementById(id).hidden=oMode!==m;
+  if(oMode==="egen"){renderEgen();return}
+  /* Priserne er tunge at regne, så det sker kun, når fanen er fremme */
+  if(!document.getElementById("t-opsk").classList.contains("on"))return;
+  if(!OB.opskrifter.length&&!st.egne.length){document.getElementById("bogFiltre").innerHTML=`<p class="muted">Opskriftbanken kunne ikke indlæses. Prøv at genindlæse siden.</p>`;return}
+  if(oMode==="bog"){renderBog(0);return}
+  renderBogFiltre();
 }
+/* Det, der skal købes til retten (det, I ikke har i skabet) */
+function retKoeb(r,dato){
+  const mt=oMatch(r,st.settings.P,oHar(),oValg[r.id]);
+  return mt.koeb.map(x=>{const m={navn:x.navn,maengde:oFmt(x.m,x.e),kat:(OI[x.id]&&OI[x.id].afd)||gaetAfd(x.navn)};const t=tBedst(x.id,dato||tUge());if(t)m.tilbud=t;return m});
+}
+/* Hvad koster indkøbet til retten, og i hvilken af jeres butikker er det samlet billigst? Gemmes, til skab, butikker eller husstand ændres. */
+let prisNoegle="",prisGemt={};
+function retPris(r){
+  const k=JSON.stringify([st.skab,st.fri,st.settings.P,st.settings.butikker,st.settings.oko]);
+  if(k!==prisNoegle){prisNoegle=k;prisGemt={}}
+  if(prisGemt[r.id])return prisGemt[r.id];
+  const gemt=st.ekstraIndkob;let ud={butik:null,kr:0,pr:0,n:0};
+  try{
+    st.ekstraIndkob=retKoeb(r).map(m=>({...m,til:r.t}));
+    const G=samletIndkob({res:{packs:{}},basis:[]});
+    if(G.length){const e=fordel(G).enkelt[0];ud={butik:e?e.tur[0]:null,kr:e?e.kasse:0,pr:e?e.kasse/st.settings.P:0,n:G.length}}
+  }finally{st.ekstraIndkob=gemt}
+  return prisGemt[r.id]=ud;
+}
+/* Økonomi: retterne deles i tre lige store grupper efter pris pr. person (med det, I har) */
+function okoGraenser(){const ps=oAlle().filter(allergiOk).map(r=>retPris(r).pr).sort((a,b)=>a-b);if(!ps.length)return [0,0];return [ps[Math.floor((ps.length-1)/3)],ps[Math.floor((ps.length-1)*2/3)]]}
+function okoTrin(r,g){const p=retPris(r).pr;return p<=g[0]?"billig":p<=g[1]?"mellem":"dyr"}
+const BOG_TID=[["20","Højst 20 min"],["30","Højst 30 min"],["45","Højst 45 min"]];
+function bogPasser(r,g){
+  const f=bog.filt,tid=r.tid?(r.tid[1]||r.tid[0]):null;
+  return allergiOk(r)&&(!f.type.length||(r.pr||[]).some(p=>f.type.includes(p)))&&(!f.tid||(tid!=null&&tid<=+f.tid))
+    &&(!f.kok.length||(r.reg||[]).some(x=>f.kok.includes(x)))&&(!f.oko.length||f.oko.includes(okoTrin(r,g)));
+}
+/* Kogebogens rækkefølge: det, der bruger mest fra skabet og ugens tilbud, først; retter fra de sidste 3 uger sidst */
+function bogListe(){
+  const g=okoGraenser(),har=oHar(),uge=tUge(),rs=oAlle().filter(r=>bogPasser(r,g)),sc={};
+  for(const r of rs){const m=oMatch(r,st.settings.P,har,oValg[r.id]);sc[r.id]=m.score+m.koeb.filter(x=>tBedst(x.id,uge)).length*.6-(nyligFor(r)?5:0)}
+  return rs.sort((a,b)=>sc[b.id]-sc[a.id]||a.t.localeCompare(b.t,"da"));
+}
+function renderBogFiltre(){
+  const alle=oAlle().filter(allergiOk),g=okoGraenser(),f=bog.filt;
+  const tael=fn=>{const c={};for(const r of alle)for(const x of fn(r)||[])c[x]=(c[x]||0)+1;return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(x=>x[0])};
+  const chip=(grp,v,lb,on)=>`<button class="chip lille" data-bf="${grp}" data-v="${esc(v)}" aria-pressed="${on}">${esc(lb)}</button>`;
+  const kr=x=>Math.round(x);
+  const fe=document.getElementById("bogFiltre");
+  fe.innerHTML=`<p class="muted" style="margin:0">Vælg det, I har lyst til – så samler appen en kogebog.</p>
+    <h3 class="bfh">Type</h3><div class="chips">${tael(r=>r.pr).map(v=>chip("type",v,v,f.type.includes(v))).join("")}</div>
+    <h3 class="bfh">Tid</h3><div class="chips">${BOG_TID.map(([v,lb])=>chip("tid",v,lb,f.tid===v)).join("")}</div>
+    <h3 class="bfh">Økonomi <small class="muted" style="font-weight:400">pr. person, med det I har</small></h3><div class="chips">${[["billig",`Billig · under ${kr(g[0])+1} kr`],["mellem",`Mellem`],["dyr",`Dyrere · over ${kr(g[1])} kr`]].map(([v,lb])=>chip("oko",v,lb,f.oko.includes(v))).join("")}</div>
+    <h3 class="bfh">Køkken</h3><div class="chips">${tael(r=>r.reg).filter(x=>x!=="Andet").map(v=>chip("kok",v,v,f.kok.includes(v))).join("")}</div>`;
+  fe.querySelectorAll("[data-bf]").forEach(b=>b.onclick=()=>{
+    const grp=b.dataset.bf,v=b.dataset.v;
+    if(grp==="tid")f.tid=f.tid===v?null:v;else f[grp]=f[grp].includes(v)?f[grp].filter(x=>x!==v):[...f[grp],v];
+    renderBogFiltre();
+  });
+  const n=alle.filter(r=>bogPasser(r,g)).length,knap=document.getElementById("bogAabn");
+  knap.disabled=!n;knap.textContent=n?`Åbn kogebogen · ${n} ${n===1?"ret":"retter"}`:"Ingen retter passer – fjern et filter";
+  const ab=document.getElementById("opskAllergi"),skjult=oAlle().length-alle.length;
+  ab.hidden=!allergier().length;
+  if(allergier().length)ab.innerHTML=alle.length?`<b>Allergi: ${esc(allergiNavne())}.</b> ${skjult?`${skjult} ${skjult===1?"ret er":"retter er"} taget ud, fordi de indeholder det, kan indeholde spor af det eller ikke er tjekket.`:""}`
+    :`<b>Der er ingen ${esc(allergiNavne())}-fri retter endnu.</b> Læg jeres egen opskrift op, så kan appen bruge den.<br><button class="btn" data-omode="egen" style="margin-top:8px">Tilføj din egen</button>`;
+  ab.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
+}
+/* Bogen fylder skærmen fra toppen ned til knapperne */
+function bogHoejde(){
+  const w=document.getElementById("opskBog");w.style.height="";
+  const top=w.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+24;
+  w.style.height=Math.max(360,innerHeight-top-bund)+"px";
+}
+function bogForside(){
+  const f=bog.filt,okoNavn={billig:"billige",mellem:"mellem pris",dyr:"lidt dyrere"};
+  const dele=[...f.type,f.tid?`højst ${f.tid} min`:"",...f.oko.map(x=>okoNavn[x]),...f.kok].filter(Boolean),n=bog.liste.length;
+  return `<div class="bogside omslag" data-naeste="1"><div class="omslag-ramme"><p class="omslag-lille">Mad app</p><h2>Kogebogen</h2><p class="omslag-under">${dele.length?esc(stort(dele.join(" · "))):"Alle retter"}</p><p class="omslag-lille">${n} ${n===1?"ret":"retter"}</p></div><p class="omslag-hint">Bladr for at se retterne ›</p></div>`;
+}
+function bogRetSide(r,i){
+  const m=oMatch(r,st.settings.P,oHar(),oValg[r.id]),p=retPris(r),uge=tUge();
+  const tb=[...new Set(m.koeb.filter(x=>tBedst(x.id,uge)).map(x=>x.navn.toLowerCase()))];
+  return `<div class="bogside" data-aabn="${esc(r.id)}" role="button" aria-label="Åbn ${esc(r.t)}">
+    <p class="kapitel">${esc((r.k&&r.k[0])||(r.reg&&r.reg[0])||"Opskrift")}</p>
+    ${r.img?`<img class="bogfoto" src="${r.img}" alt="">`:`<div class="bogfoto tom" aria-hidden="true">🍽️</div>`}
+    <h2 class="bogtitel">${esc(r.t)}</h2>${r.u?`<p class="bogunder">${esc(r.u)}</p>`:""}
+    <p class="bogmeta">${esc(oTid(r))} · ${p.n?`ca. ${Math.round(p.pr)} kr pr. person`:"I har det hele"}${m.harL.length?` · ${m.harL.length} fra skabet`:""}</p>
+    ${tb.length?`<p class="bogtilbud">På tilbud: ${esc(tb.slice(0,3).join(", "))}</p>`:""}
+    ${isFav(r.t)?`<p class="bogtilbud">♥ En af jeres favoritter</p>`:""}
+    <p class="bogtryk">Tryk for at åbne opskriften</p>
+    <p class="sidetal">${i}</p></div>`;
+}
+function bogSideHtml(i){return i===0||!ORMAP[bog.liste[i-1]]?bogForside():bogRetSide(ORMAP[bog.liste[i-1]],i)}
+/* Opskriften som blokke, der fordeles på bogens sider */
+function retBlokke(r){
+  const n=st.settings.P,m=oMatch(r,n,oHar(),oValg[r.id]),p=retPris(r),ap=allergiProblem(r),b=[];
+  b.push(`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${r.u?`<p class="bogunder">${esc(r.u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${n} ${n===1?"person":"personer"}</p>`);
+  if(ap.length)b.push(`<p class="bogadvar">⚠ ${esc(allergiTekst(ap))}.</p>`);
+  b.push(`<p class="bogkoeb">${p.n?`Køb ${p.n} ${p.n===1?"vare":"varer"} for ca. ${Math.round(p.kr)} kr${p.butik?` i ${esc(p.butik)} – billigst af jeres butikker`:""}.`:"I har alt, hvad der skal bruges."}${m.harL.length?` ${m.harL.length} ${m.harL.length===1?"ting tages":"ting tages"} fra skabet.`:""}</p>`);
+  b.push(`<h3 class="bogh">Ingredienser</h3>`);
+  for(const x of m.linjer.filter(x=>!x.basis))b.push(`<p class="bogi"><span class="bogmg">${esc(oFmt(x.m,x.e))}</span> ${esc(x.navn)}${x.status==="har"?` <span class="boghar">har</span>`:""}</p>`);
+  const basis=m.linjer.filter(x=>x.basis);
+  if(basis.length)b.push(`<p class="bogi bogbasis">Desuden: ${esc(basis.map(x=>x.navn.toLowerCase()).join(", "))}</p>`);
+  b.push(`<h3 class="bogh">Sådan gør du</h3>`);
+  (r.trin||[]).forEach((t,i)=>{
+    b.push(`<p class="bogtrin"><b>${i+1}. ${esc(t.t||"")}</b></p>`);
+    for(const x of t.x||[])b.push(`<p class="bogtrintx">${esc(x)}</p>`);
+    if(t.vig)b.push(`<p class="bogtrintx"><b>Vigtigt:</b> ${esc(t.vig)}</p>`);
+    if(t.tip)b.push(`<p class="bogtrintx"><i>Tip: ${esc(t.tip)}</i></p>`);
+  });
+  return b;
+}
+/* Fordel blokkene på sider, der passer i bogen: læg en blok på ad gangen, og start en ny side, når den løber over */
+function retSider(r){
+  const bogEl=document.getElementById("bog"),maal=document.createElement("div");
+  maal.className="bogside ret bogmaal";bogEl.appendChild(maal);
+  const indhold=x=>`<div class="bogindhold">${x.join("")}</div><p class="sidetal">0</p>`,sider=[];let cur=[];
+  for(const blk of retBlokke(r)){
+    maal.innerHTML=indhold([...cur,blk]);
+    const ind=maal.firstElementChild;
+    if(cur.length&&ind.scrollHeight>ind.clientHeight+1){sider.push(cur);cur=[blk]}else cur.push(blk);
+  }
+  if(cur.length)sider.push(cur);
+  maal.remove();
+  return sider.map((s,i)=>`<div class="bogside ret"><div class="bogindhold">${s.join("")}</div><p class="sidetal">${i+1} / ${sider.length}</p></div>`);
+}
+/* Vend side: frem drejer den øverste side væk om ryggen; tilbage drejer den forrige side ind over */
+function bladre(html,retning){
+  const b=document.getElementById("bog"),gl=[...b.querySelectorAll(".bogside:not(.bogmaal)")].pop();
+  const t=document.createElement("div");t.innerHTML=html;const ny=t.firstElementChild;
+  if(!gl||!retning||matchMedia("(prefers-reduced-motion: reduce)").matches){b.querySelectorAll(".bogside").forEach(c=>c.remove());b.appendChild(ny);bog.travl=false;return}
+  bog.travl=true;
+  if(retning>0){b.insertBefore(ny,gl);gl.classList.add("vend");requestAnimationFrame(()=>requestAnimationFrame(()=>gl.classList.add("vendt")))}
+  else{ny.classList.add("vend","vendt");b.appendChild(ny);requestAnimationFrame(()=>requestAnimationFrame(()=>ny.classList.remove("vendt")))}
+  setTimeout(()=>{b.querySelectorAll(".bogside").forEach(c=>{if(c!==ny)c.remove()});ny.classList.remove("vend","vendt");bog.travl=false},520);
+}
+function renderBog(retning){
+  const r=bog.ret&&ORMAP[bog.ret];
+  if(bog.ret&&!r)bog.ret=null;
+  document.getElementById("bogTilbage").textContent=r?"‹ Kogebogen":"‹ Filtre";
+  bog.side=Math.min(bog.side,bog.liste.length);
+  bogHoejde();renderBogNav();
+  if(r){bog.retSider=retSider(r);bog.retSide=Math.min(bog.retSide,bog.retSider.length-1);bladre(bog.retSider[bog.retSide],retning)}
+  else bladre(bogSideHtml(bog.side),retning);
+  renderBogNav();
+}
+function bogFlyt(d){
+  if(bog.travl)return;
+  if(bog.ret){const j=bog.retSide+d;if(j<0||j>=bog.retSider.length)return;bog.retSide=j;bladre(bog.retSider[j],d)}
+  else{const j=bog.side+d;if(j<0||j>bog.liste.length)return;bog.side=j;bladre(bogSideHtml(j),d)}
+  renderBogNav();
+}
+function bogDageHtml(){
+  const t0=todayIso();let h="";
+  for(let i=0;i<7;i++){const d=addDays(t0,i),opt=fastPaa(d);h+=`<button data-bdag="${d}" ${opt?"disabled":""}>${i===0?"I dag":i===1?"I morgen":dayLabel(d)}${opt?" · "+esc(opt.navn):""}</button>`}
+  return `<div class="bogark"><p style="margin:0 0 6px"><b>Hvornår vil I lave den?</b></p><p class="muted" style="margin:0 0 8px;font-size:.85rem">Det, I mangler, kommer i kurven, og det, I har, tages fra skabet.</p><div class="picker">${h}</div><button class="btn ghost" data-bluk style="margin-top:10px">Annuller</button></div>`;
+}
+function renderBogNav(){
+  const nav=document.getElementById("bogNav"),r=bog.ret&&ORMAP[bog.ret];
+  const [i,n]=r?[bog.retSide,bog.retSider.length||1]:[bog.side,bog.liste.length+1];
+  const tekst=r?`Side ${i+1} af ${n}`:i===0?"Forside":`${i} af ${bog.liste.length}`;
+  nav.innerHTML=`<div class="bogbladre"><button class="pil" data-bn="-1" aria-label="Forrige side" ${i<=0?"disabled":""}>‹</button><span>${tekst}</span><button class="pil" data-bn="1" aria-label="Næste side" ${i>=n-1?"disabled":""}>›</button></div>${r?`<div class="bogknapper"><button class="btn ghost" id="bogIndkob">Tilføj til indkøb</button><button class="btn" id="bogLav">Lav denne</button></div>`:""}`;
+  nav.querySelectorAll("[data-bn]").forEach(b=>b.onclick=()=>bogFlyt(+b.dataset.bn));
+  const ark=document.getElementById("bogArk");
+  ark.innerHTML=r&&bog.dage?bogDageHtml():"";
+  const bt=document.getElementById("bogTael");
+  bt.innerHTML=r?`<button class="x" id="bogDetaljer" style="font-size:.9rem;color:var(--leaf);padding:4px 0">Detaljer</button>`:`${bog.liste.length} ${bog.liste.length===1?"ret":"retter"}`;
+  if(!r)return;
+  document.getElementById("bogIndkob").onclick=()=>retTilIndkob(r);
+  document.getElementById("bogLav").onclick=()=>{bog.dage=!bog.dage;renderBogNav()};
+  document.getElementById("bogDetaljer").onclick=()=>{oAaben=r.id;oPers=null;renderOpsk();window.scrollTo(0,0)};
+  ark.querySelectorAll("[data-bdag]").forEach(b=>b.onclick=()=>{
+    const d=b.dataset.bdag,ap=allergiProblem(r);
+    if(ap.length&&!confirm(`${allergiTekst(ap)}. Sæt den på planen alligevel?`))return;
+    /* Varer, der allerede er lagt i kurven til retten, erstattes af planens, så intet købes to gange */
+    st.ekstraIndkob=st.ekstraIndkob.filter(x=>!(x.til===r.t&&!x.fastId&&!x.done));
+    oPlacer(r,d);bog.dage=false;changed();toast(r.t+" er sat på "+relLabel(d));
+  });
+  const bl=ark.querySelector("[data-bluk]");if(bl)bl.onclick=()=>{bog.dage=false;renderBogNav()};
+}
+/* Tilføj til indkøb: det, I ikke har, kommer i kurven. Butikken vælges i kurven ud fra den samlede pris. */
+function retTilIndkob(r){
+  const ap=allergiProblem(r);
+  if(ap.length&&!confirm(`${allergiTekst(ap)}. Læg varerne i kurven alligevel?`))return;
+  const mangler=retKoeb(r,todayIso());
+  if(!mangler.length){toast("I har alt, hvad der skal bruges");return}
+  const p=retPris(r);
+  for(const m of mangler)if(!st.ekstraIndkob.some(x=>!x.done&&!x.fastId&&x.til===r.t&&x.navn===m.navn))st.ekstraIndkob.push({navn:m.navn,maengde:m.maengde,kat:m.kat,til:r.t,...(m.tilbud?{tilbud:m.tilbud,dato:todayIso()}:{})});
+  changed();toast(`${mangler.length} ${mangler.length===1?"vare":"varer"} i kurven${p.butik?` – billigst i ${p.butik}, ca. ${Math.round(p.kr)} kr`:""}`);
+}
+/* Swipe for at bladre; tryk på en side for at åbne retten (eller på forsiden for at bladre) */
+(()=>{
+  const b=document.getElementById("bog");let x0=null,y0=0,swipet=false;
+  b.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;swipet=false},{passive:true});
+  b.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy)){swipet=true;bogFlyt(dx<0?1:-1)}},{passive:true});
+  b.addEventListener("click",e=>{
+    if(swipet){swipet=false;return}
+    if(bog.travl)return;
+    const s=e.target.closest("[data-aabn]");
+    if(s&&!bog.ret){bog.ret=s.dataset.aabn;bog.retSide=0;bog.dage=false;renderBog(1);return}
+    if(e.target.closest("[data-naeste]"))bogFlyt(1);
+  });
+})();
 function oKort(r,m){
   const nej=oIkkeLide(r),n=st.valgtAntal[r.id]||0;
   return `<button class="rcard" data-oopen="${r.id}">${r.img?`<img src="${r.img}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${m.koeb.length?" · køb "+m.koeb.length:""}${r.egen&&n?` · valgt ${n} ${n===1?"gang":"gange"}`:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${m.ny?`<span class="muted" style="display:block;font-size:.85rem">${esc(nyligLabel(m.ny))}</span>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`;
@@ -2646,7 +2972,7 @@ function renderOpskVis(){
   const t0=todayIso();
   const paaPlanen=st.fast.filter(f=>f.opskrift===r.id&&f.dato>=t0).sort((a,b)=>a.dato.localeCompare(b.dato));
   let dage="";for(let i=0;i<7;i++){const di=addDays(t0,i),opt=fastPaa(di);dage+=`<button data-odag="${di}" ${opt?"disabled":""}>${i===0?"I dag":i===1?"I morgen":dayLabel(di)}${opt?" · "+esc(opt.navn):""}</button>`}
-  vis.innerHTML=`<button class="back" id="oTilbage">‹ Alle opskrifter</button>
+  vis.innerHTML=`<button class="back" id="oTilbage">‹ Tilbage</button>
   ${r.img?`<img class="hero" src="${r.img}" alt="${esc(r.t)}">`:""}
   <h2 class="titel">${esc(r.t)}</h2>${r.u?`<p class="muted" style="margin:4px 0 0">${esc(r.u)}</p>`:""}
   ${(ap=>ap.length?`<div class="allergiboks advarsel">⚠ <b>${esc(allergiTekst(ap))}.</b>${ap.some(x=>x.hvad==="ukendt")&&r.egen?`<br>Har du selv tjekket alle ingredienser (og emballagen)?<br><button class="btn ghost" id="oBekraeft" style="margin-top:8px">Jeg har tjekket: fri for ${esc(ap.filter(x=>x.hvad==="ukendt").map(x=>x.navn.toLowerCase()).join(", "))}</button>`:""}</div>`:"")(allergiProblem(r))}
@@ -2872,7 +3198,6 @@ function egenNorm(x){
     al:{indeholder:liste(x.al).map(a=>a.toLowerCase()).filter(a=>ALLERGIER.some(y=>y[2].includes(a))),spor_af:[]},fri:[]};
 }
 
-document.getElementById("opskSoeg").oninput=e=>{oFilt.soeg=e.target.value;renderOpsk()};
 document.addEventListener("click",e=>{const b=e.target.closest("[data-oopen]");if(b){e.preventDefault();oVis(b.dataset.oopen);window.scrollTo(0,0)}});
 
 /* ---------- Faner, gem, toast ---------- */
@@ -2881,7 +3206,10 @@ function show(id){
   if(id!=="t-pref")forrigeFane=id;
   const pk=document.getElementById("prefKnap");if(id==="t-pref")pk.setAttribute("aria-current","page");else pk.removeAttribute("aria-current");
   document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.id===id));
+  kurvOpdater();
   if(id==="t-indkob"&&last){window.scrollTo(0,0);renderShop(last)}
+  if(id==="t-opsk"){window.scrollTo(0,0);renderOpsk()}
+  if(id==="t-skab"&&skabMode==="se"){window.scrollTo(0,0);renderHylde()}
   document.querySelectorAll("nav.bar button").forEach(b=>{if(b.dataset.tab===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   window.scrollTo(0,0);
 }
@@ -3059,7 +3387,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="42";
+const APP_VERSION="43";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
