@@ -145,6 +145,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .genkendt .x{font-size:.95rem;color:var(--leaf);text-decoration:underline;padding:2px 0}
 .ukendt{margin-top:6px;padding:10px 14px;border-radius:12px;background:var(--carrot-soft)}
 .ukendt p{margin:0}.ukendt ul{margin:4px 0 6px;padding-left:20px}.ukendt li{margin:2px 0}
+.fravalgt{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:12px;padding:8px 12px;border-radius:12px;background:var(--felt);font-size:.92rem}.fravalgt .x{font-size:.92rem;color:var(--leaf);text-decoration:underline;padding:0}
 /* Kurven: vælg butik */
 .bvtitel{margin:4px 0 2px;font-size:1.4rem}
 .butikvalg{display:flex;flex-direction:column;gap:10px}
@@ -627,7 +628,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 49 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 50 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -2899,42 +2900,43 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
     out.innerHTML=`<p class="bad">Billedet kunne ikke læses. ${err&&err.code==="upstream_error"||err&&err.code==="invalid_json"?"Prøv et skarpere billede – lige ovenfra ved en kvittering, tæt på ved skabet.":esc(fejlTekst(err))}</p>`;
   }
 }
-/* Billede af skabet: kun det, Claude med sikkerhed kunne genkende, kommer med. Det, der ikke kunne kendes uden at
-   læse mærkaten, vises for sig med et råd om, hvordan billedet skal tages. Billedet viser det, der er i skabet nu,
-   så kendte varer får den mængde, der kan ses (kan den ikke ses, bevares mængden – eller der regnes med 1 pakke). */
+/* Billede af skabet: kun det, Claude med sikkerhed kunne genkende, kommer med. Det, der allerede er i skabet, er
+   fravalgt fra start ("4 ting er fravalgt, da de allerede er i dit skab – Ændr"); sætter man flueben ved en af dem,
+   har man den to gange, og den lægges til. Det, der ikke kunne kendes, står under "Se mere" som en kort punktliste. */
 function visSkabBillede(r,out){
-  const varer=(r.varer||[]).filter(v=>v&&P[v.k]).map(v=>({k:v.k,hvor:String(v.hvor||""),maengde:v.maengde>0?+v.maengde:null,on:true}));
-  const andet=(r.andet||[]).map(x=>typeof x==="string"?{navn:x,niveau:"hel"}:{navn:String(x&&x.navn||""),niveau:["hel","noget","lidt"].includes(x&&x.niveau)?x.niveau:"hel"}).filter(x=>x.navn.trim()).map(x=>({...x,on:true}));
+  const lav=x=>String(x||"").toLowerCase().trim(),pNavn=k=>P[k].n.replace(/ \(løs\)/,"");
+  const harNavn=n=>st.fri.some(f=>lav(f.navn)===lav(n))||Object.keys(st.skab).some(k=>P[k]&&lav(pNavn(k))===lav(n));
+  const varer=(r.varer||[]).filter(v=>v&&P[v.k]).map(v=>({k:v.k,navn:pNavn(v.k),hvor:String(v.hvor||""),maengde:v.maengde>0?+v.maengde:null}));
+  const andet=(r.andet||[]).map(x=>typeof x==="string"?{navn:x,niveau:"hel"}:{navn:String(x&&x.navn||""),niveau:["hel","noget","lidt"].includes(x&&x.niveau)?x.niveau:"hel"}).filter(x=>x.navn.trim()).map(x=>({...x,navn:renNavn(x.navn)}));
   const usikre=(r.usikre||[]).filter(x=>x&&(x.hvad||x.hvor));
-  const noget=varer.length||andet.length;
-  const kendt=varer.length+andet.length,ialt=kendt+usikre.length;
-  let h=`<div class="genkendt"><b>Genkendte ${kendt}/${ialt} ting</b>${usikre.length?`<button class="x" id="seMere" aria-expanded="${!noget}" aria-controls="ukendtListe">${noget?"Se mere":"Skjul"}</button>`:""}</div>
-    ${usikre.length?`<div class="ukendt" id="ukendtListe" ${noget?"hidden":""}><p>Kunne ikke kendes:</p><ul>${usikre.map(x=>`<li>${esc(x.hvad||x.hvor)}</li>`).join("")}</ul><p class="muted">Tag et billede tættere på, så mærkaterne kan læses.</p></div>`:""}
-    ${r.raad?`<p class="muted" style="margin:6px 0 0">${esc(r.raad)}</p>`:""}
-    ${noget?`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Fjern fluebenet ved det, der er forkert.</p>`:""}`;
-  h+=varer.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-sv="${i}" checked><div class="grow">${esc(P[v.k].n.replace(/ \(løs\)/,""))}<div class="amt muted">${v.maengde?fmt(v.k,v.maengde):st.skab[v.k]?"mængden kunne ikke ses – den gamle bevares":"mængden kunne ikke ses – regnes som 1 pakke"}${v.hvor?" · "+esc(v.hvor):""}</div></div></label>`).join("");
-  h+=andet.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-sa="${i}" checked><div class="grow">${esc(renNavn(v.navn))}<div class="amt muted">${v.niveau==="hel"?"hel":v.niveau+" tilbage"}</div></div></label>`).join("");
-  if(noget)h+=`<button class="btn" id="scanSkabOk" style="margin-top:10px">Opdatér skabet</button>`;
+  const alle=[...varer.map(v=>({...v,type:"k"})),...andet.map(a=>({...a,type:"fri"}))];
+  for(const x of alle){x.findes=x.type==="k"?(!!st.skab[x.k]||harNavn(x.navn)):harNavn(x.navn);x.on=!x.findes}
+  const nye=alle.filter(x=>!x.findes),gamle=alle.filter(x=>x.findes),kendt=alle.length,ialt=kendt+usikre.length;
+  const raekke=x=>`<label class="scanrow"><input type="checkbox" data-sx="${alle.indexOf(x)}" ${x.on?"checked":""}><div class="grow">${esc(x.navn)}<div class="amt muted">${x.type==="k"?(x.maengde?fmt(x.k,x.maengde):"mængden kunne ikke ses – regnes som 1 pakke"):(x.niveau==="hel"?"hel":x.niveau+" tilbage")}${x.hvor?" · "+esc(x.hvor):""}${x.findes?" · har I allerede":""}</div></div></label>`;
+  let h=`<div class="genkendt"><b>Genkendte ${kendt}/${ialt} ting</b>${usikre.length?`<button class="x" id="seMere" aria-expanded="${!kendt}" aria-controls="ukendtListe">${kendt?"Se mere":"Skjul"}</button>`:""}</div>
+    ${usikre.length?`<div class="ukendt" id="ukendtListe" ${kendt?"hidden":""}><p>Kunne ikke kendes:</p><ul>${usikre.map(x=>`<li>${esc(x.hvad||x.hvor)}</li>`).join("")}</ul><p class="muted">Tag et billede tættere på, så mærkaterne kan læses.</p></div>`:""}
+    ${r.raad?`<p class="muted" style="margin:6px 0 0">${esc(r.raad)}</p>`:""}`;
+  if(nye.length)h+=`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Fjern fluebenet ved det, der er forkert.</p>${nye.map(raekke).join("")}`;
+  if(gamle.length)h+=`<div class="fravalgt"><span>${gamle.length} ting er fravalgt, da ${gamle.length===1?"den":"de"} allerede er i dit skab.</span><button class="x" id="aendrFravalgt" aria-expanded="false" aria-controls="fravalgtListe">Ændr</button></div>
+    <div id="fravalgtListe" hidden><p class="muted" style="margin:4px 0 0;font-size:.85rem">Sæt flueben, hvis I faktisk har den to gange.</p>${gamle.map(raekke).join("")}</div>`;
+  if(kendt)h+=`<button class="btn" id="scanSkabOk" style="margin-top:10px">Læg i skabet</button>`;
   out.innerHTML=h;
   const sm=document.getElementById("seMere");
   if(sm)sm.onclick=()=>{const l=document.getElementById("ukendtListe");l.hidden=!l.hidden;sm.textContent=l.hidden?"Se mere":"Skjul";sm.setAttribute("aria-expanded",!l.hidden)};
-  out.querySelectorAll("[data-sv]").forEach(cb=>cb.onchange=()=>{varer[+cb.dataset.sv].on=cb.checked});
-  out.querySelectorAll("[data-sa]").forEach(cb=>cb.onchange=()=>{andet[+cb.dataset.sa].on=cb.checked});
+  const ae=document.getElementById("aendrFravalgt");
+  if(ae)ae.onclick=()=>{const l=document.getElementById("fravalgtListe");l.hidden=!l.hidden;ae.textContent=l.hidden?"Ændr":"Skjul";ae.setAttribute("aria-expanded",!l.hidden)};
+  out.querySelectorAll("[data-sx]").forEach(cb=>cb.onchange=()=>{alle[+cb.dataset.sx].on=cb.checked});
   const ok=document.getElementById("scanSkabOk");
   if(ok)ok.onclick=()=>{
     let n=0;
-    for(const v of varer){
-      if(!v.on)continue;n++;
-      const x=st.skab[v.k];
-      if(x){if(v.maengde)st.skab[v.k]={...x,amt:v.maengde,koebt:Math.max(x.koebt||0,v.maengde)}}
-      else skabLaeg(v.k,v.maengde||P[v.k].pk);
+    for(const x of alle){
+      if(!x.on)continue;n++;
+      if(x.type==="k")skabLaeg(x.k,x.maengde||P[x.k].pk); /* ny – eller en ekstra af en, I har i forvejen */
+      else{const f=st.fri.find(y=>lav(y.navn)===lav(x.navn));if(f)f.niveau="hel";else friLaeg(x.navn,x.niveau)}
     }
-    for(const a of andet){
-      if(!a.on)continue;n++;
-      const f=st.fri.find(y=>y.navn.toLowerCase()===renNavn(a.navn).toLowerCase());
-      if(f)f.niveau=a.niveau;else friLaeg(a.navn,a.niveau);
-    }
-    out.innerHTML="";changed();toast(`${n} ${n===1?"vare":"varer"} opdateret i skabet`);
+    out.innerHTML="";
+    if(!n){toast("Intet nyt at lægge i skabet");return}
+    changed();toast(`${n} ${n===1?"vare":"varer"} lagt i skabet`);
   };
 }
 /* Forslag om at scanne kvitteringen efter et indkøb: gælder i 2 dage, eller til den er scannet eller afvist.
@@ -3856,7 +3858,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="49";
+const APP_VERSION="50";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
