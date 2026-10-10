@@ -261,11 +261,18 @@ body.traekker .dzlag{display:flex}
 .hylde{background:#efe6d6;border:10px solid #8b6a43;border-radius:8px;box-shadow:inset 0 0 18px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;margin-top:6px}
 .hylderum{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 8px}
 .hyldeskilt{position:absolute;top:4px;left:8px;font-size:.7rem;font-weight:700;color:#6b5132;background:#f8f1e3;border:1px solid #d8c6a6;border-radius:4px;padding:0 6px;z-index:1}
-.hyldevarer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px 6px}
+.hyldevarer{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px}
+.hvare:not(.hkort){flex-direction:column;align-items:center}
+.hv-ord{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--body);font-weight:600;line-height:1.2;color:#5a4128;letter-spacing:-.01em}
+.hv-em{display:flex;align-items:flex-end;justify-content:center;line-height:1;padding:0 2px;box-sizing:border-box}
+.hvare:not(.hkort){box-shadow:none}.hvare.rod:not(.hkort):not(.valgt){background:transparent}
+.hvare.groen .hv-em{border-bottom:3px solid #4caf6e}.hvare.gul .hv-em{border-bottom:3px solid #e2c234}.hvare.orange .hv-em{border-bottom:3px solid #ec8a2c}.hvare.rod .hv-em{border-bottom:3px solid #d8452f;background:rgba(216,69,47,.12);border-radius:6px 6px 0 0}
 .hvare{border:0;background:transparent;padding:0;line-height:1;cursor:pointer;position:relative;display:flex;align-items:flex-end;justify-content:center;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .hvare.snart::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:var(--carrot)}
 .hvare.valgt{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
 .hyldebraet{height:10px;margin:2px -8px 0;background:linear-gradient(#a98057,#7d5a35);box-shadow:0 3px 4px rgba(0,0,0,.25)}
+.hyldebraet.skilt{height:15px;display:flex;align-items:center;padding-left:14px}
+.hyldebraet.skilt span{font-family:var(--body);font-size:.62rem;font-weight:700;line-height:1;color:#fbf3e4;letter-spacing:.02em;text-shadow:0 1px 0 rgba(0,0,0,.3)}
 .hyldeinfo{position:absolute;left:8px;right:8px;bottom:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:7;display:flex;gap:12px;align-items:center}
 /* Kogebogen */
 #opskBog{display:flex;flex-direction:column;position:relative}
@@ -628,7 +635,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 50 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 51 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1016,6 +1023,129 @@ function usesHtml(s){
 }
 /* ---------- Afdelinger i butikken ---------- */
 const AFD={gront:"Frugt og grønt",kod:"Kød og fisk",brod:"Brød",paalaeg:"Pålæg",ost:"Ost",frost:"Frost",mejeri:"Mejeri og køl",toer:"Tørvarer",hus:"Husholdning",andet:"Andet"};
+/* De mest købte dagligvarer, ordnet i kategorier. Hver vare: [navn, emoji, genkendes på, fast ord over ikonet].
+   Det første, der passer, vinder – derfor står det specifikke før det generelle (fx "kokosmælk" før "mælk",
+   "hønsesalat" før "salat"). Navnene bruges som forslag, når man skriver, og kategorien giver afdelingen,
+   når navnet ellers ikke kan placeres. */
+const VAREKAT=[
+ {kat:"Krydderiblandinger",afd:"toer",v:[
+  ["Krydderiblanding","🧂",/panamad|cajun|jorden rundt|hvide løjer|mamas favorit|middelhavsdrøm|xacuti|ginger ninja|curry-on|hello sunrise|ga-laksa|krydderi/,"Krydderi"],
+  ["Oregano","🌿",/oregano|herbes de|(tørret|tørrede) (timian|rosmarin|basilikum|persille|dild|salvie|mynte|estragon)/]]},
+ {kat:"Husholdning",afd:"hus",v:[
+  ["Toiletpapir","🧻",/toiletpapir|wc-papir|toiletrulle/],["Køkkenrulle","🧻",/køkkenrul/],["Servietter","🧻",/servietter/],
+  ["Opvaskemiddel","🧽",/opvask/,"Opvask"],["Vaskemiddel","🧺",/vaskemiddel|vaskepulver|skyllemiddel|tøjvask/],
+  ["Håndsæbe","🧼",/sæbe/],["Shampoo","🧴",/shampoo|balsam\b|bodylotion|deodorant|solcreme/],["Tandpasta","🪥",/tandpasta|tandbørste/],
+  ["Affaldsposer","🗑️",/affaldspos|skraldepos/,"Poser"],["Fryseposer","🛍️",/frysepos|plastpos|madpos/,"Poser"],
+  ["Bagepapir","📜",/bagepapir|stanniol|sølvpapir|husholdningsfilm|alufolie/],
+  ["Rengøringsmiddel","🧽",/rengøring|karklud|klude|skuresvamp|grydesvamp|svampeklud/,"Rengøring"],
+  ["Batterier","🔋",/batteri/],["Lyspærer","💡",/lyspære|elpære/],["Stearinlys","🕯️",/stearinlys|fyrfadslys|bloklys|kronelys/],
+  ["Bleer","🧷",/bleer|vådservietter/],["Plaster","🩹",/plaster/]]},
+ {kat:"Dyr",afd:"andet",v:[["Dyrefoder","🐾",/kattemad|hundemad|kattegrus|dyrefoder|foder\b|godbidder/]]},
+ {kat:"Konserves",afd:"toer",v:[
+  ["Hakkede tomater","🥫",/hakkede tomater|flåede tomater|tomatpur|passata|tomatsauce|tomatkonc|tomater på dåse/],
+  ["Kokosmælk","🥥",/kokosmælk|kokoscreme|kokosfløde/],["Kikærter","🫘",/kikærter/],["Linser","🫘",/linser/],
+  ["Bønner på dåse","🫘",/kidney|sorte bønner|hvide bønner|butterbeans|borlotti|baked beans|bønner på dåse/,"Bønner"],
+  ["Hummus","🫘",/hummus/],["Suppe","🍲",/suppe/],["Oliven","🫒",/oliven(?!olie)/],
+  ["Agurkesalat","🥒",/agurkesalat|asier|syltede agurker|pickles|cornichons/]]},
+ {kat:"Saucer",afd:"toer",v:[
+  ["Bouillon","🍲",/bouillon|fond\b/],["Ketchup","🍅",/ketchup/],["Sennep","🫙",/sennep/],
+  ["Chilisauce","🌶️",/sriracha|chilisauce|sweet chili|tabasco|sambal|harissa/],
+  ["Dressing","🫙",/dressing/],["Karrypasta","🌶️",/karrypast|currypast|tandoori/],
+  ["Mayonnaise","🫙",/mayo|aioli|remoulade|tzatziki|salsa\b|tahin|bearnaise|hollandaise/],
+  ["Sojasauce","🫙",/soja(?!drik|mælk)/],["Pesto","🫙",/pesto/],["Eddike","🫙",/eddike|balsamico/],
+  ["Sauce","🫙",/sauce|teriyaki|marinade/]]},
+ {kat:"Morgenmad og smørepålæg",afd:"toer",v:[
+  ["Jordnøddesmør","🥜",/jordnøddesmør|peanutbutter|peanut butter/,"Nøddesmør"],
+  ["Nutella","🍫",/nutella|nøddepålæg|chokoladepålæg|pålægschokolade/],["Syltetøj","🍓",/syltetøj|marmelade/],
+  ["Honning","🍯",/honning/],["Havregryn","🥣",/havregryn|grovvalsede|müsli|musli|mysli|granola|cornflakes|havrefras|guldkorn/]]},
+ {kat:"Frost",afd:"frost",v:[
+  ["Is","🍦",/flødeis|vaniljeis|chokoladeis|^is\b|\sis$|isvaffel|ispind|sorbet|softice/],
+  ["Pommes frites","🍟",/pommes|fritter|kartoffelbåde/,"Pommes"],["Pizza","🍕",/pizza(?!ost|sauce)/]]},
+ {kat:"Pålæg",afd:"paalaeg",v:[
+  ["Leverpostej","🥪",/leverpostej|postej/],
+  ["Spegepølse","🥓",/salami|pepperoni|spegepølse|prosciutto|serrano|parmaskinke|chorizo|coppa/],
+  ["Pålæg","🥪",/pålæg|rullepølse|hamburgerryg|kalkunbryst|skinke(?!tern|strimler)|hønsesalat|rejesalat|æggesalat|tunmousse/]]},
+ {kat:"Drikkevarer",afd:"toer",v:[
+  ["Kaffe","☕",/kaffe|espresso|nescafe/],["Te","🍵",/^te\b|\ste\b|tebreve|teposer|rooibos|kamillete/],
+  ["Juice","🧃",/juice|saft\b|saftevand|smoothie|(^|[^k])most\b/],
+  ["Sodavand","🥤",/sodavand|(^|[\s-])cola|pepsi|fanta|faxe kondi|sprite|energidrik|red bull|lemonade|limonade/],
+  ["Danskvand","💧",/danskvand|kildevand|mineralvand|^vand$|kokosvand/],
+  ["Øl","🍺",/(^|\s)øl\b|øl$|pilsner|carlsberg|tuborg|(^|\s)ipa\b|cider/],
+  ["Vin","🍷",/(^|\s)vin\b|vin$|rødvin|hvidvin|rosé|bobler|cava|prosecco|champagne|portvin|sherry/]]},
+ {kat:"Frugt og grønt",afd:"gront",v:[
+  ["Krydderurter","🌿",/basilikum|persille(?!rod)|koriander|dild|purløg|mynte|timian|rosmarin|krydderurt|salvie|estragon|laurbær|citrongræs|kørvel/],
+  ["Citroner","🍋",/citron|lime/],["Æbler","🍎",/æble/],["Pærer","🍐",/pære/],["Bananer","🍌",/banan/],
+  ["Appelsiner","🍊",/appelsin|mandarin|clementin|klementin|citrus|grapefrugt/],["Vindruer","🍇",/vindrue|druer/],
+  ["Jordbær","🍓",/jordbær/],["Kirsebær","🍒",/kirsebær/],["Blåbær","🫐",/blåbær|hindbær|brombær|solbær|tranebær|(^|\s)ribs\b|bær\b/],
+  ["Mango","🥭",/mango/],["Ananas","🍍",/ananas/],["Vandmelon","🍉",/vandmelon/],["Melon","🍈",/melon/],
+  ["Ferskner","🍑",/fersken|nektarin|abrikos|(^|\s)blommer?\b/],["Kiwi","🥝",/kiwi/],["Avocado","🥑",/avocado/],["Kokos","🥥",/kokos/],
+  ["Tomater","🍅",/tomat/],["Agurk","🥒",/agurk/],["Squash","🥒",/squash|zucchini|courgette/],
+  ["Peberfrugt","🫑",/peberfrugt|spidspeber|snackpeber/],["Chili","🌶️",/chili|jalap/],
+  ["Hvidløg","🧄",/hvidløg/],["Løg","🧅",/løg|skalot|porre/],
+  ["Søde kartofler","🍠",/søde kartof|sød kartof|batat/],["Kartofler","🥔",/kartof/],["Gulerødder","🥕",/gulerod|gulerød/],
+  ["Pastinak","🥕",/pastinak|persillerod|rodfrugt|jordskok|knoldselleri|^selleri/],["Majs","🌽",/majs(?!stivelse|mel)/],
+  ["Broccoli","🥦",/broccoli|blomkål|romanesco/],["Wokblanding","🥦",/wok|grøntsagsblanding/],["Aubergine","🍆",/aubergine/],
+  ["Rødbeder","🫜",/bede|radise/],["Ærter","🫛",/ærter|edamame|haricots|grønne bønner|bønnespirer/],
+  ["Salat","🥬",/salat|spinat|rucola|kål|pak choi|bladselleri|stilkselleri|mangold|romaine|endivie|brøndkarse/],
+  ["Fennikel","🌿",/fennikel/],["Svampe","🍄",/champignon|svamp|portobello|kantarel|østershat|shiitake|karl johan/],
+  ["Ingefær","🫚",/ingefær|galanga|peberrod/],["Græskar","🎃",/græskar(?!kerne)|hokkaido|butternut/],["Spirer","🌱",/spirer|karse/],
+  ["Frugt","🍏",/^frugt(er)?$/],["Grøntsager","🥗",/^grønt$|grøntsag/]]},
+ {kat:"Kød og fisk",afd:"kod",v:[
+  ["Bacon","🥓",/bacon|flæsketern|skinketern|skinkestrimler/],["Pølser","🌭",/pølse|medister|hotdog/],
+  ["Kylling","🍗",/kylling|høne|høns|kalkun|(^|\s)and\b|andebryst|andelår|andesteg|andefedt/],
+  ["Rejer","🦐",/rejer|skaldyr|jomfruhummer|scampi/],["Muslinger","🦪",/muslinger|østers|kammusling/],
+  ["Krabbe","🦀",/krabbe|hummer/],["Blæksprutte","🦑",/blæksprutte|calamari/],
+  ["Fisk","🐟",/laks|torsk|fisk|sej\b|rødspætte|tun\b|makrel|sild|ørred|kuller|rødfisk|pangasius|helleflynder|kulmule/],
+  ["Frikadeller","🍖",/frikadelle|kødbolle|flæskesteg|ribbensteg|nakkesteg|kebab|gyros|pulled pork|spareribs/],
+  ["Hakket svine- og kalvekød","🥩",/svine- og kalv|grise- og kalv|svin og kalv|gris og kalv/,"Fars"],
+  ["Hakket oksekød","🥩",/hakket|fars|okse|svin|gris|kalv|lam\b|lamme|bøf|steak|mørbrad|kotelet|flæsk|ribben|kød|culotte|entrecote|tykkam|nakkefilet|schnitzel|gullasch|tatar/]]},
+ {kat:"Ost",afd:"ost",v:[
+  ["Ost","🧀",/(^|[^r])ost\b|^oste|parmesan|parmigiano|grana padano|pecorino|mozzarella|feta|cheddar|gouda|halloumi|brie|camembert|mascarpone|ricotta|gorgonzola|danbo|havarti|burrata|emmentaler|manchego|gruy/]]},
+ {kat:"Mejeri og æg",afd:"mejeri",v:[
+  ["Smør","🧈",/smør\b|^smør(?!rebrød|kage)|margarine|bregott|kærgården|lurpak/],["Æg","🥚",/æg\b|^æg/],
+  ["Yoghurt","🥣",/yoghurt|skyr|ymer|ylette|tykmælk|a38|kefir|kvark/],["Creme fraiche","🥣",/creme fra|crème fra|cremefraiche|smetana/],
+  ["Fløde","🥛",/fløde/],["Mælk","🥛",/mælk|havredrik|mandeldrik|sojadrik|risdrik|cocio/],
+  ["Butterdej","🥧",/butterdej|tærtedej|tærtebund|filodej/]]},
+ {kat:"Brød og kager",afd:"brod",v:[
+  ["Croissant","🥐",/croissant|wienerbrød|kanelsnegl|tebirkes|smørkage|spandauer|snegl\b/],
+  ["Pandekager","🥞",/pandekage|vafler|vaffel/],["Riskiks","🍘",/riskiks|knækbrød|majskiks/],
+  ["Småkager","🍪",/småkage|cookie|kiks|digestive|vaniljekrans/],["Kage","🍰",/kage|muffin|brownie|kringle/],
+  ["Tacoskaller","🌮",/taco|nachos|tortillachips/],["Tortilla","🫓",/tortilla|pita|wrap|naan|fladbrød|durum/],
+  ["Baguette","🥖",/baguette|flute|ciabatta|focaccia/],["Boller","🥯",/bolle|rundstykke|bagel/],
+  ["Rugbrød","🍞",/rugbrød|brød|toast|sandwich/]]},
+ {kat:"Snacks og slik",afd:"toer",v:[
+  ["Chips","🍿",/chips|popcorn/],["Saltstænger","🥨",/saltstæng|saltkringle|pretzel/],
+  ["Chokolade","🍫",/chokolade|kakaopulver|marabou|toms\b/],["Slik","🍬",/slik|vingummi|lakrids|bolsjer|haribo|skumfiduser|karamel/]]},
+ {kat:"Kolonial",afd:"toer",v:[
+  ["Ris","🍚",/(^|\s)ris\b|ris$|risotto|basmati|jasmin/],["Nudler","🍜",/nudl|ramen|udon|soba/],
+  ["Pasta","🍝",/pasta|spaghetti|tortellin|tortelloni|lasagne|penne|fusilli|makaroni|tagliatelle|ravioli|gnocchi|orzo|farfalle|rigatoni|linguine|pappardelle/],
+  ["Couscous","🌾",/couscous|bulgur|quinoa|perlespelt|perlebyg|byggryn|boghvede|hirse/],
+  ["Hvedemel","🌾",/mel\b|majsstivelse|maizena|panko|rasp\b|bagepulver|gær\b|natron/],
+  ["Sukker","🍯",/sukker|sirup|melis|agave|stevia/],["Olie","🫒",/olie/],
+  ["Salt","🧂",/salt\b|peber\b|peberkorn|kanel|karry|curry|spidskommen|paprika|muskat|kardemomme|garam|gurkemeje|kurkuma|stjerneanis|nellike|vanilje/],
+  ["Kerner","🌻",/frø\b|kerner|sesam/],["Nødder","🥜",/nød|peanut|mandel|mandler|cashew|pistacie|pinje/],
+  ["Rosiner","🍇",/rosiner|dadler|tørret frugt|tørrede frugter/]]},
+ {kat:"Resten",afd:"frost",forslag:false,v:[["Frost","🧊",/frost|frossen|frosne|frosset/]]}
+];
+const VARE_LISTE=VAREKAT.flatMap(k=>k.v.map(([navn,em,re,ord])=>({navn,em,re,ord,afd:k.afd,forslag:k.forslag!==false})));
+function vareFind(navn){const n=String(navn||"").toLowerCase(),h=n.split(",")[0].trim();return VARE_LISTE.find(x=>x.re.test(h))||VARE_LISTE.find(x=>x.re.test(n))}
+const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"📦"};
+function vareEmoji(v){const x=vareFind(v.navn);return x?x.em:AFD_EMOJI[v.afd]||"📦"}
+/* Ét kort ord over varen på hylden: hovedordet i navnet ("Hakket oksekød 8-12 %" → "Oksekød"), uden mængder og
+   beskrivende ord. Er det for langt, bruges listens korte navn ("Kyllingebrystfilet" → "Kylling"). */
+const ORD_SKIP=new Set("hakket hakkede revet revne finrevet frisk friske øko økologisk økologiske løs løse skåret skårne snittet snittede blandet blandede færdig færdige flåede røget røgede kogt kogte frosne frossen frosset hel hele små stor store lille mini rød røde grøn grønne gul gule hvid hvide sort sorte græsk græske let lette mager magre dansk danske tørret tørrede fersk ferske og med i til af på uden ekstra jomfru fin fine grov grove stk pk ca asiatisk asiatiske italiensk italienske mexicansk vegansk veganske vegetarisk cremet cremede saltet saltede sød søde marineret".split(" "));
+function vareOrd(navn){
+  const x=vareFind(navn);if(x&&x.ord)return x.ord;
+  const raa=String(navn||"").replace(/\(.*?\)/g," ").split(",")[0].trim().split(/\s+/),ord=raa.map(w=>w.replace(/[^a-zæøåéèêüöäëï-]/gi,"")).filter(w=>w.length>1&&!/^-|-$/.test(w)&&!ORD_SKIP.has(w.toLowerCase()));
+  let o=ord[0]||String(navn||"").trim().split(/\s+/)[0]||"";
+  if(o.length<=3&&raa.length===2&&ord.length===2&&o.length+ord[1].length<10)o+=" "+ord[1]; /* "Pak choi" */
+  if(o.length>11){
+    const l=o.toLowerCase(),kort=y=>y.navn.length>=4&&y.navn.length<=11&&!y.navn.includes(" ");
+    const k=x&&kort(x)&&l.includes(x.navn.toLowerCase())?x:VARE_LISTE.find(y=>kort(y)&&l.endsWith(y.navn.toLowerCase()));
+    if(k)o=k.navn;
+  }
+  return stort(o.toLowerCase());
+}
 const STD_RUTE=["gront","kod","brod","paalaeg","ost","frost","mejeri","toer","hus","andet"];
 const BASIS_PAK={mel:"1 kg",sukker:"1 kg",olie:"1 l",salt:"1 pakke",peberk:"1 glas",bouillon:"1 pakke",karry:"1 glas",oregano:"1 glas",soja:"1 flaske",bagepulver:"1 pakke"};
 function afdOf(k){
@@ -1027,17 +1157,17 @@ function afdOf(k){
 }
 function gaetAfd(navn){
   const n=String(navn||"").toLowerCase();
-  if(/toiletpapir|køkkenrulle|opvask|vaskepulver|vaskemiddel|skyllemiddel|sæbe|shampoo|balsam|tandpasta|tandbørste|batteri|affaldsposer|skraldeposer|fryseposer|bleer|servietter|stanniol|sølvpapir|bagepapir|husholdningsfilm|rengøring|klude|pærer|stearinlys|tændstik|deodorant|barberblad|vatrondeller|plaster/.test(n))return "hus";
-  if(/pålæg|skinke|salami|rullepølse|leverpostej|pepperoni|hamburgerryg|kalkunbryst|spegepølse/.test(n))return "paalaeg";
-  if(/\bost\b|ost$|mozzarella|parmesan|feta|cheddar|brie|halloumi|hytteost/.test(n))return "ost";
+  if(/toiletpapir|køkkenrulle|opvask|vaskepulver|vaskemiddel|skyllemiddel|sæbe|shampoo|balsam|tandpasta|tandbørste|batteri|affaldsposer|skraldeposer|fryseposer|bleer|servietter|stanniol|sølvpapir|bagepapir|husholdningsfilm|rengøring|klude|lyspære|elpære|stearinlys|tændstik|deodorant|barberblad|vatrondeller|plaster/.test(n))return "hus";
+  if(/pålæg|skinke|salami|rullepølse|leverpostej|pepperoni|hamburgerryg|kalkunbryst|spegepølse|hønsesalat|rejesalat|æggesalat/.test(n))return "paalaeg";
+  if(/\bost\b|(^|[^mr])ost$|mozzarella|parmesan|feta|cheddar|brie|halloumi|hytteost/.test(n))return "ost";
   if(/frost|frossen|frosne|flødeis|\bis\b/.test(n))return "frost";
   if(/kokosmælk|hakkede tomater|flåede tomater|lasagneplader|tomatpur|passata/.test(n))return "toer";
   if(/mælk|fløde|yoghurt|skyr|smør|creme fra|crème fra|\bæg\b|kærnemælk|pizzadej|butterdej|tærtedej/.test(n))return "mejeri";
   if(/kød|okse|svin|flæsk|kylling|bacon|pølse|fisk|laks|torsk|rejer|mørbrad|kotelet|ribben|hakket|bøf|lam|kalkun/.test(n))return "kod";
   if(/brød|bolle|boller|rugbrød|toast|pita|tortilla|wrap|flute|baguette|naan/.test(n))return "brod";
-  if(/pasta|spaghetti|penne|\bris\b|nudler|mel\b|sukker|olie|eddike|dåse|bønner|linser|kikærter|krydderi|bouillon|havregryn|ketchup|sennep|mayo|remoulade|sauce|soja|honning|syltet|nødder|chips/.test(n))return "toer";
+  if(/pasta|spaghetti|penne|\bris\b|nudler|mel\b|stivelse|sukker|olie|eddike|dåse|bønner|linser|kikærter|krydderi|bouillon|havregryn|ketchup|sennep|mayo|remoulade|sauce|soja|honning|syltet|nødder|chips/.test(n))return "toer";
   if(/salat|løg|gulerød|gulerod|kartof|tomat|agurk|peberfrugt|squash|broccoli|kål|bede|porre|selleri|æble|banan|citron|lime|avocado|champignon|svampe|spinat|persille|basilikum|koriander|ingefær|chili|majs|frugt|bær|pastinak|græskar/.test(n))return "gront";
-  return "andet";
+  return vareFind(n)?.afd||"andet";
 }
 function fmtKoeb(k,packs){
   const p=P[k], tot=packs*p.pk;
@@ -1286,20 +1416,6 @@ function tilTekst(v){
   if(r.length)return "Til "+r.join(" · ");
   return v.basis?"Basisvare, I er løbet tør for":v.kilder&&v.kilder.length?"Sat på listen af dig":"Til ugens madplan";
 }
-/* Et billede (emoji) pr. vare ud fra navnet; ellers afdelingens */
-const VARE_EMOJI=[[/hakkede tomater|flåede tomater|tomatpur|passata|dåse|suppe|kokosmælk|kidney|sorte bønner|kikærter|linser/,"🥫"],[/frost|frossen|frosne/,"🧊"],
- [/soja|ketchup|mayo|sennep|pesto|sauce|dressing|chilisauce|teriyaki/,"🫙"],[/citron|lime/,"🍋"],[/æble/,"🍎"],[/pære/,"🍐"],[/banan/,"🍌"],[/appelsin|mandarin|clementin|citrus/,"🍊"],
- [/vindrue|druer/,"🍇"],[/jordbær/,"🍓"],[/bær/,"🫐"],[/mango/,"🥭"],[/ananas/,"🍍"],[/melon/,"🍈"],[/avocado/,"🥑"],[/kokos/,"🥥"],[/tomat/,"🍅"],[/agurk|squash|zucchini/,"🥒"],
- [/peberfrugt|paprika/,"🫑"],[/chili/,"🌶️"],[/hvidløg/,"🧄"],[/løg|skalot|porre/,"🧅"],[/kartof/,"🥔"],[/gulerod|gulerød/,"🥕"],[/majs/,"🌽"],[/broccoli|blomkål/,"🥦"],
- [/aubergine/,"🍆"],[/bede/,"🫜"],[/salat|spinat|rucola|kål/,"🥬"],[/champignon|svamp/,"🍄"],[/ingefær/,"🫚"],[/ærter|edamame|bønne/,"🫛"],
- [/basilikum|persille|koriander|dild|purløg|mynte|timian|rosmarin|krydderurt/,"🌿"],[/kylling|høne|kalkun|and\b/,"🍗"],[/bacon/,"🥓"],[/pølse|medister|chorizo/,"🌭"],
- [/rejer|skaldyr|muslinger/,"🦐"],[/laks|torsk|fisk|sej\b|rødspætte|tun\b|makrel|sild/,"🐟"],[/hakket|fars|okse|svin|gris|kalv|lam|bøf|steak|mørbrad|kotelet|flæsk|ribben|skinke|kød|prosciutto/,"🥩"],
- [/æg\b|^æg/,"🥚"],[/smør/,"🧈"],[/ost\b|ost |parmesan|mozzarella|feta|cheddar|gouda|halloumi/,"🧀"],[/mælk|fløde|yoghurt|skyr|kefir|creme fraiche|crème/,"🥛"],
- [/tortilla|pita|wrap|naan/,"🫓"],[/croissant/,"🥐"],[/baguette|brød|bolle|pizzadej/,"🍞"],[/ris\b|risotto/,"🍚"],[/pasta|spaghetti|nudl|tortelloni|lasagne|penne|fusilli|makaroni/,"🍝"],
- [/mel\b|panko|rasp|havregryn/,"🌾"],[/sukker|honning|sirup/,"🍯"],[/olie|eddike|balsamico/,"🫒"],[/salt\b|peber|krydderi|bouillon|kanel|karry|spidskommen/,"🧂"],
- [/nød|peanut|mandel|frø|kerner/,"🥜"],[/chips/,"🍿"],[/kaffe/,"☕"],[/toiletpapir|køkkenrulle/,"🧻"],[/opvask|vaskemiddel|sæbe/,"🧼"]];
-const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"📦"};
-function vareEmoji(v){const n=String(v.navn||"").toLowerCase();for(const [r,e] of VARE_EMOJI)if(r.test(n))return e;return AFD_EMOJI[v.afd]||"📦"}
 function stort(t){t=String(t||"");return t.charAt(0).toUpperCase()+t.slice(1)}
 /* Tilbudsnavne uden kædens eller mærkets navn foran, fx "REMA 1000 Mørbrad" → "Mørbrad" */
 function kortNavn(t){return String(t||"").replace(/^(rema 1000|netto|føtex|lidl|365discount|365)\s+/i,"").replace(/^([A-ZÆØÅ0-9][A-ZÆØÅ0-9&.'-]+\s+)+(?=[A-ZÆØÅ]?[a-zæøå])/,"")}
@@ -1558,7 +1674,7 @@ function skabVarer(){
   const ud=[];
   for(const [k,v] of Object.entries(st.skab))if(P[k])ud.push({k,navn:P[k].n.replace(/ \(løs\)/,""),afd:visAfd(afdOf(k)),amt:v.amt,koebt:Math.max(v.koebt||0,v.amt),dage:v.dage,rest:v.dage!=null?v.dage-dageSiden(v.dato):null});
   st.fri.forEach((f,i)=>{const dage=f.dage??friHold(f.navn);ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),niveau:f.niveau||"hel",dage,rest:dage-dageSiden(f.dato)})});
-  for(const x of ud){if(!AFD[x.afd])x.afd="andet";x.em=vareEmoji({navn:x.navn,afd:x.afd})}
+  for(const x of ud){if(!AFD[x.afd])x.afd="andet";x.em=vareEmoji({navn:x.navn,afd:x.afd});x.ord=vareOrd(x.navn)}
   /* det, der skal bruges først, forrest */
   return ud.sort((a,b)=>(a.rest??999)-(b.rest??999));
 }
@@ -1589,14 +1705,19 @@ function renderHylde(){
   const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+6;
   const H=Math.max(260,innerHeight-top-bund);h.style.height=H+"px";
   const B=h.clientWidth-16,frisk=v=>friskKlasse(v.rest);
-  const ikon=(v,s)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.74)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}">${v.em}</button>`;
+  /* ikonet med et lille ord ovenover; ordet skrumper, hvis det er langt, så det kan stå inden for ikonets bredde */
+  const ordMaal=(t,fo)=>{const c=ordMaal.c||(ordMaal.c=document.createElement("canvas").getContext("2d"));c.font=`600 ${fo}px ${getComputedStyle(document.body).fontFamily}`;return c.measureText(t).width};
+  const bredde=(v,s,fo)=>Math.min(Math.max(s+4,Math.ceil(ordMaal(v.ord,fo))+6),Math.max(s+4,74));
+  const ikon=(v,s,fo)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
   if(side==="alle"){
-    const afd=sider.slice(1),hh=(H-20)/afd.length;
-    indre.innerHTML=afd.map(a=>{
-      const vs=varer.filter(v=>v.afd===a),plads=hh-22-12;let s=50;
-      for(;s>14;s-=2){const pr=Math.max(1,Math.floor((B+6)/(s+6)));if(Math.ceil(vs.length/pr)*(s+4)<=plads)break}
-      return `<div class="hylderum" style="height:${hh}px"><span class="hyldeskilt">${esc(afdNavn(a))}</span><div class="hyldevarer">${vs.map(v=>ikon(v,s)).join("")}</div><div class="hyldebraet"></div></div>`;
-    }).join("");
+    /* afdelingens navn står på hyldekanten under varerne, som prisskiltene i butikken */
+    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20,fast=21;
+    /* rækker på en hylde: varerne lægges ved siden af hinanden, som flex-wrap gør */
+    const raekker=(vs,s,fo)=>{let r=1,x=0;for(const v of vs){const w=bredde(v,s,fo);if(x&&x+2+w>B){r++;x=w}else x+=(x?2:0)+w}return r};
+    let s=50,fo,rh,rk;
+    for(;;s-=2){fo=Math.max(8.5,Math.min(11,Math.round(s*.22*2)/2));rh=s+Math.ceil(fo*1.2)+4;rk=grp.map(vs=>raekker(vs,s,fo));if(s<=14||rk.reduce((a,r)=>a+fast+r*rh,0)<=plads)break}
+    const ekstra=Math.max(0,plads-rk.reduce((a,r)=>a+fast+r*rh,0))/afd.length;
+    indre.innerHTML=afd.map((a,i)=>`<div class="hylderum" style="height:${Math.floor(fast+rk[i]*rh+ekstra)}px"><div class="hyldevarer">${grp[i].map(v=>ikon(v,s,fo)).join("")}</div><div class="hyldebraet skilt"><span>${esc(afdNavn(a))}</span></div></div>`).join("");
   }else{
     /* Én afdeling: større kort med navn, hvor meget der er tilbage, og holdbarhed */
     const vs=varer.filter(v=>v.afd===side),Hi=H-20-24;let kol=2,kw,kh;
@@ -1699,7 +1820,7 @@ function skabBladre(d){
     if(g.type==="?"){
       if(Math.hypot(dx,dy)<10)return;
       if(g.ikon&&(Date.now()-g.t0>200||Math.abs(dy)>=Math.abs(dx))){
-        g.type="traek";spoeg=document.createElement("div");spoeg.className="traekspoeg";spoeg.textContent=g.ikon.querySelector(".hk-ik")?.textContent||g.ikon.textContent;document.body.appendChild(spoeg);document.body.classList.add("traekker");
+        g.type="traek";spoeg=document.createElement("div");spoeg.className="traekspoeg";spoeg.textContent=g.ikon.querySelector(".hk-ik,.hv-em")?.textContent||g.ikon.textContent;document.body.appendChild(spoeg);document.body.classList.add("traekker");
       }else g.type=zoom.s>1?"pan":"swipe";
     }
     if(g.type==="traek"){spoeg.style.transform=`translate(${e.clientX-28}px,${e.clientY-28}px)`;const z=zoneVed(e.clientX,e.clientY);document.querySelectorAll("[data-dz]").forEach(x=>x.classList.toggle("over",x===z));maalZone=z}
@@ -1749,6 +1870,7 @@ function autoForslag(q,medBasis){
   for(const [k,p] of Object.entries(P)){const n=p.n.replace(/ \(løs\)/,"");if(n.toLowerCase().includes(q))add({k,navn:n,afd:afdOf(k)})}
   for(const [id,v] of Object.entries(OI))if(v.n.toLowerCase().includes(q)){const k=pNoegle(id);add(k?{k,navn:P[k].n.replace(/ \(løs\)/,""),afd:afdOf(k)}:{id,navn:v.n,afd:v.afd})}
   if(medBasis)for(const [b,n] of Object.entries(BASIS))if(n.toLowerCase().includes(q))add({basis:b,navn:n,afd:"toer"});
+  for(const x of VARE_LISTE)if(x.forslag&&x.navn.toLowerCase().includes(q))add({navn:x.navn,afd:x.afd});
   return ud.sort((a,b)=>a.score-b.score||a.navn.length-b.navn.length).slice(0,6);
 }
 function autoFelt(inp,liste,medBasis,valgt){
@@ -3858,7 +3980,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="50";
+const APP_VERSION="51";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
