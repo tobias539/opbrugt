@@ -36,7 +36,7 @@
 html,body{margin:0;overflow-x:hidden;overscroll-behavior:none}
 /* Siden ligger fast: den kan kun rulles op og ned, ikke skubbes til siden eller zoomes (undtagen reolen i skabet) */
 body{touch-action:pan-y}
-body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(58px + env(safe-area-inset-bottom))}
 main{max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px;position:relative}
 /* Præferencer: lille tandhjul øverst til højre; skjult, mens et trin-for-trin-forløb fylder skærmen */
 .prefknap{position:absolute;top:calc(14px + env(safe-area-inset-top));left:6px;width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:var(--muted);padding:8px;cursor:pointer;z-index:4}
@@ -131,7 +131,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .wiz .nav .grow{flex:1}
 #t-pref.kunGuide > :not(#prefOpsat){display:none}
 /* Skærme: ét trin pr. skærm, der passer på telefonen; knapperne står nederst */
-.wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 116px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 116px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+.wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
 .wiz.skaerm>.nav{margin-top:auto;padding-top:16px}
 .wiz.skaerm .nav .btn{padding:10px 14px}
 .skhead{display:flex;align-items:flex-start;gap:8px}.skhead h2{flex:1;min-width:0}.skhead .x{margin:-2px -8px 0 0}
@@ -141,12 +141,26 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .chip.lille{padding:5px 11px;font-size:.9rem}
+.planknapper{display:flex;flex-direction:column;gap:10px;margin:4px 0 14px}
+.planknap{width:100%;min-height:60px;border-radius:16px;border:0;background:var(--leaf);color:var(--card);font:inherit;font-family:var(--display);font-weight:800;font-size:1.15rem;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.planknap.naeste{background:var(--card);color:var(--leaf);border:2px solid var(--leaf);justify-content:space-between;padding:0 20px;box-shadow:none}
+.planknap .pil{font-size:1.5rem;line-height:1;animation:pilPuf 2.4s ease-in-out infinite}
+@keyframes pilPuf{0%,70%,100%{transform:none}80%{transform:translateX(6px)}}
+.planknap:disabled{opacity:.45;cursor:default}.planknap:disabled .pil{animation:none}
+.ugestribe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0 6px}
+.ugedag{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.78rem;color:var(--muted)}
+.ugedag i{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);font-style:normal;font-weight:800;color:var(--card)}
+.ugedag.plan i{background:var(--leaf);border-color:var(--leaf)}
+.ugedag.ledig i{border-color:var(--leaf);border-style:dashed}
+.ugedag.forbi{opacity:.45}
+.ugedag.idag span{color:var(--ink);font-weight:800}
+.ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
-.kurv{position:fixed;right:16px;bottom:calc(90px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.kurv{position:fixed;right:16px;bottom:calc(70px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .kurv svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .kurv .antal{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--carrot);color:#fff;font-size:.78rem;font-weight:700;line-height:22px;padding:0 6px;text-align:center}
-body.medKurv{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
-body.medKurv .toast{bottom:calc(160px + env(safe-area-inset-bottom))}
+body.medKurv{padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+body.medKurv .toast{bottom:calc(142px + env(safe-area-inset-bottom))}
 /* Forslag, mens man skriver */
 .auto{position:relative}
 .autoliste{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:8;overflow:hidden}
@@ -155,6 +169,7 @@ body.medKurv .toast{bottom:calc(160px + env(safe-area-inset-bottom))}
 .feltinput{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
 /* Skabet som en hylde */
 #skabSe{position:relative}
+#t-skab.on{margin-bottom:-18px}
 .skabtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 6px}
 .prikker{display:flex;gap:6px}.prik{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);padding:0;cursor:pointer}.prik.on{background:var(--leaf)}
 .hylde{touch-action:none}
@@ -171,14 +186,21 @@ body.medKurv .toast{bottom:calc(160px + env(safe-area-inset-bottom))}
 .hkort.rod{background:#fbe1dc}.hkort.orange{background:#fdebd9}.hkort.gul{background:#fbf3d0}
 .skabbund{display:flex;align-items:center;gap:10px;margin-top:8px}.skabbund p{flex:1;margin:0;text-align:center;font-size:.8rem;line-height:1.3}
 .dropzone{width:52px;height:52px;border-radius:50%;border:2px dashed var(--line);background:var(--card);font-size:1.6rem;line-height:1;flex:none;cursor:pointer;transition:transform .15s,border-color .15s,background .15s;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
-body.traekker .dropzone{transform:scale(1.2);border-color:var(--leaf)}
+body.traekker .dropzone{border-color:var(--leaf)}
 .dropzone.over{transform:scale(1.4)!important;background:var(--leaf-soft);border-style:solid}
 .traekspoeg{position:fixed;left:0;top:0;font-size:44px;line-height:1;pointer-events:none;z-index:50;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .hi-top{display:flex;align-items:center;gap:10px}.hi-ik{font-size:2rem;line-height:1}
 .hi-raekke{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.88rem}.hi-lbl{width:5.6em;color:var(--muted);flex:none}.hi-bar{flex:1;width:auto}.hi-tal{white-space:nowrap}
 .hi-hold{flex:1}.hi-hold.rod{color:#c0392b;font-weight:700}.hi-hold.orange{color:#c46a12;font-weight:700}
 .hi-knapper{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.hyldeinfo{flex-direction:column;align-items:stretch;gap:0;bottom:70px}
+.hyldeinfo{flex-direction:column;align-items:stretch;gap:0;bottom:8px}
+.skabnavn{flex:1;font-weight:700;font-family:var(--display)}
+.skabhint{margin:0 2px 6px;font-size:.78rem;color:var(--muted)}
+/* De tre mål vises kun, mens man trækker: et lag nederst oven på reolen */
+.dzlag{position:absolute;left:0;right:0;bottom:0;display:none;justify-content:space-around;align-items:center;padding:14px 8px 18px;background:linear-gradient(transparent,rgba(30,25,15,.55));border-radius:0 0 8px 8px;z-index:8;pointer-events:none}
+body.traekker .dzlag{display:flex}
+.dzlag .dropzone{pointer-events:auto;width:84px;height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:2px solid #fff;background:rgba(255,255,255,.92);transform:none}
+.dzlag .dropzone span{font-size:2rem;line-height:1}.dzlag .dropzone small{font-size:.7rem;font-weight:700;color:var(--ink);font-family:var(--body)}
 .pakke{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--leaf-soft);font-size:.9rem}
 .chip:disabled{opacity:.4}
 @keyframes bogInd{from{transform:translateY(-105%);opacity:.3}to{transform:none;opacity:1}}
@@ -373,10 +395,10 @@ select,input[type=number]{background:var(--bg);border:1.5px solid var(--line);bo
 .trinl p{margin:2px 0 0}
 .tip{font-size:.88rem;color:var(--muted);font-style:italic}
 nav.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:5}
-nav.bar button{border:0;background:transparent;padding:10px 2px 12px;font-size:.8rem;white-space:nowrap;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
-nav.bar button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.bar button{border:0;background:transparent;padding:6px 2px 5px;font-size:.72rem;white-space:nowrap;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+nav.bar button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
 nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
-.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
+.toast{position:fixed;left:50%;bottom:calc(70px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
 .toast.on{opacity:1}
 .tanke{display:inline-block;letter-spacing:1px}
 .tanke i{font-style:normal}
@@ -404,9 +426,9 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <header class="top"><h1 id="h-snak">Mad app</h1><span class="muted" id="saveState"></span></header>
   <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indsæt API-nøglen her. Planen, skabet og indkøbslisten virker også uden.</p><div class="addrow" style="padding:10px 0 0"><input id="keyIn2" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" aria-label="API-nøgle" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn" id="keySave2">Gem</button></div></div>
 
+  <div class="planknapper" id="planknapper"><button class="planknap" id="planDenne"><span>Planlæg denne uge</span></button><button class="planknap naeste" id="planNaeste" aria-label="Planlæg næste uge – tryk eller swipe til højre"><span>Planlæg næste uge</span><span class="pil" aria-hidden="true">→</span></button></div>
+  <p class="muted" id="naesteInfo" style="margin:-6px 2px 10px;font-size:.8rem"></p>
   <div id="ugeInfo"></div>
-  <div class="row planknapper" id="planknapper" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"><button class="btn" id="planDenne">Planlæg denne uge</button><button class="btn" id="planNaeste">Planlæg næste uge</button></div>
-  <p class="muted" id="naesteInfo" style="margin:6px 2px 0;font-size:.8rem"></p>
   <div id="opsStart"></div>
   <div id="ugeplan"></div>
 
@@ -482,11 +504,12 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 
 <!-- SKAB -->
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
-  <header class="top"><h1 id="h-skab">Skabet</h1><button class="dropzone" data-dz="mund" aria-label="Spist eller brugt op – træk en vare hertil">👄</button></header>
+  <header class="top"><h1 id="h-skab">Skabet</h1></header>
   <div id="skabSe">
-    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="prikker" id="skabPrikker"></span></div>
+    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><span class="prikker" id="skabPrikker"></span></div>
+    <p class="skabhint" id="skabForkl"></p>
     <div class="hylde" id="hylde"><div class="hyldeindre" id="hyldeIndre"></div></div>
-    <div class="skabbund"><button class="dropzone" data-dz="kurv" aria-label="Køb mere – træk en vare hertil, eller tryk for at se indkøbslisten">🛒</button><p class="muted" id="skabForkl"></p><button class="dropzone" data-dz="skrald" aria-label="Smidt ud – træk en vare hertil">🗑️</button></div>
+    <div class="dzlag" id="dzLag"><button class="dropzone" data-dz="kurv" tabindex="-1"><span>🛒</span><small>Køb mere</small></button><button class="dropzone" data-dz="mund" tabindex="-1"><span>😋</span><small>Spist</small></button><button class="dropzone" data-dz="skrald" tabindex="-1"><span>🗑️</span><small>Smidt ud</small></button></div>
     <div class="hyldeinfo" id="hyldeInfo" hidden></div>
   </div>
   <div id="skabTilfoej" hidden>
@@ -558,7 +581,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 44 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 45 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -673,7 +696,9 @@ function skabLaeg(k,amt,dage){
   const x=st.skab[k];
   st.skab[k]=x?{...x,amt:x.amt+amt,koebt:Math.max(x.koebt||0,x.amt)+amt}:{amt,koebt:amt,dage:dage??ho(k),dato:todayIso()};
 }
-function friLaeg(navn,niveau){if(!st.fri.some(f=>f.navn.toLowerCase()===String(navn).toLowerCase()))st.fri.push({navn,niveau:niveau||"hel",dato:todayIso()})}
+/* Mængden hører ikke til navnet: "To beder" → "Beder", "3 æbler" → "Æbler" */
+function renNavn(n){const r=String(n||"").trim(),x=r.replace(/^(\d+([.,]\d+)?|en|et|to|tre|fire|fem|seks|syv|otte|ni|ti|et par|par|nogle|lidt|noget|en del|mange|en halv|et halvt|halv|halvt)\s+/i,"").trim();return stort(x||r)}
+function friLaeg(navn,niveau){navn=renNavn(navn);if(!st.fri.some(f=>f.navn.toLowerCase()===String(navn).toLowerCase()))st.fri.push({navn,niveau:niveau||"hel",dato:todayIso()})}
 function fmt(k,a){
   const e=P[k].e;
   if(e==="g"){a=Math.round(a/5)*5;return a>=1000?(a/1000).toLocaleString("da-DK",{maximumFractionDigits:1})+" kg":a+" g"}
@@ -964,7 +989,7 @@ function gaetAfd(navn){
   if(/kød|okse|svin|flæsk|kylling|bacon|pølse|fisk|laks|torsk|rejer|mørbrad|kotelet|ribben|hakket|bøf|lam|kalkun/.test(n))return "kod";
   if(/brød|bolle|boller|rugbrød|toast|pita|tortilla|wrap|flute|baguette|naan/.test(n))return "brod";
   if(/pasta|spaghetti|penne|\bris\b|nudler|mel\b|sukker|olie|eddike|dåse|bønner|linser|kikærter|krydderi|bouillon|havregryn|ketchup|sennep|mayo|remoulade|sauce|soja|honning|syltet|nødder|chips/.test(n))return "toer";
-  if(/salat|løg|gulerød|gulerod|kartof|tomat|agurk|peberfrugt|squash|broccoli|kål|rødbede|porre|selleri|æble|banan|citron|lime|avocado|champignon|svampe|spinat|persille|basilikum|koriander|ingefær|chili|majs|frugt|bær|pastinak|græskar/.test(n))return "gront";
+  if(/salat|løg|gulerød|gulerod|kartof|tomat|agurk|peberfrugt|squash|broccoli|kål|bede|porre|selleri|æble|banan|citron|lime|avocado|champignon|svampe|spinat|persille|basilikum|koriander|ingefær|chili|majs|frugt|bær|pastinak|græskar/.test(n))return "gront";
   return "andet";
 }
 function fmtKoeb(k,packs){
@@ -1219,15 +1244,15 @@ const VARE_EMOJI=[[/hakkede tomater|flåede tomater|tomatpur|passata|dåse|suppe
  [/soja|ketchup|mayo|sennep|pesto|sauce|dressing|chilisauce|teriyaki/,"🫙"],[/citron|lime/,"🍋"],[/æble/,"🍎"],[/pære/,"🍐"],[/banan/,"🍌"],[/appelsin|mandarin|clementin|citrus/,"🍊"],
  [/vindrue|druer/,"🍇"],[/jordbær/,"🍓"],[/bær/,"🫐"],[/mango/,"🥭"],[/ananas/,"🍍"],[/melon/,"🍈"],[/avocado/,"🥑"],[/kokos/,"🥥"],[/tomat/,"🍅"],[/agurk|squash|zucchini/,"🥒"],
  [/peberfrugt|paprika/,"🫑"],[/chili/,"🌶️"],[/hvidløg/,"🧄"],[/løg|skalot|porre/,"🧅"],[/kartof/,"🥔"],[/gulerod|gulerød/,"🥕"],[/majs/,"🌽"],[/broccoli|blomkål/,"🥦"],
- [/aubergine/,"🍆"],[/salat|spinat|rucola|kål/,"🥬"],[/champignon|svamp/,"🍄"],[/ingefær/,"🫚"],[/ærter|edamame|bønne/,"🫛"],
+ [/aubergine/,"🍆"],[/bede/,"🫜"],[/salat|spinat|rucola|kål/,"🥬"],[/champignon|svamp/,"🍄"],[/ingefær/,"🫚"],[/ærter|edamame|bønne/,"🫛"],
  [/basilikum|persille|koriander|dild|purløg|mynte|timian|rosmarin|krydderurt/,"🌿"],[/kylling|høne|kalkun|and\b/,"🍗"],[/bacon/,"🥓"],[/pølse|medister|chorizo/,"🌭"],
  [/rejer|skaldyr|muslinger/,"🦐"],[/laks|torsk|fisk|sej\b|rødspætte|tun\b|makrel|sild/,"🐟"],[/hakket|fars|okse|svin|gris|kalv|lam|bøf|steak|mørbrad|kotelet|flæsk|ribben|skinke|kød|prosciutto/,"🥩"],
  [/æg\b|^æg/,"🥚"],[/smør/,"🧈"],[/ost\b|ost |parmesan|mozzarella|feta|cheddar|gouda|halloumi/,"🧀"],[/mælk|fløde|yoghurt|skyr|kefir|creme fraiche|crème/,"🥛"],
  [/tortilla|pita|wrap|naan/,"🫓"],[/croissant/,"🥐"],[/baguette|brød|bolle|pizzadej/,"🍞"],[/ris\b|risotto/,"🍚"],[/pasta|spaghetti|nudl|tortelloni|lasagne|penne|fusilli|makaroni/,"🍝"],
  [/mel\b|panko|rasp|havregryn/,"🌾"],[/sukker|honning|sirup/,"🍯"],[/olie|eddike|balsamico/,"🫒"],[/salt\b|peber|krydderi|bouillon|kanel|karry|spidskommen/,"🧂"],
  [/nød|peanut|mandel|frø|kerner/,"🥜"],[/chips/,"🍿"],[/kaffe/,"☕"],[/toiletpapir|køkkenrulle/,"🧻"],[/opvask|vaskemiddel|sæbe/,"🧼"]];
-const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"🛒"};
-function vareEmoji(v){const n=String(v.navn||"").toLowerCase();for(const [r,e] of VARE_EMOJI)if(r.test(n))return e;return AFD_EMOJI[v.afd]||"🛒"}
+const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"📦"};
+function vareEmoji(v){const n=String(v.navn||"").toLowerCase();for(const [r,e] of VARE_EMOJI)if(r.test(n))return e;return AFD_EMOJI[v.afd]||"📦"}
 function stort(t){t=String(t||"");return t.charAt(0).toUpperCase()+t.slice(1)}
 /* Tilbudsnavne uden kædens eller mærkets navn foran, fx "REMA 1000 Mørbrad" → "Mørbrad" */
 function kortNavn(t){return String(t||"").replace(/^(rema 1000|netto|føtex|lidl|365discount|365)\s+/i,"").replace(/^([A-ZÆØÅ0-9][A-ZÆØÅ0-9&.'-]+\s+)+(?=[A-ZÆØÅ]?[a-zæøå])/,"")}
@@ -1474,7 +1499,6 @@ function skabSider(varer){return ["alle",...[...new Set(STD_RUTE.map(visAfd))].f
 function renderSkab(){
   const se=skabMode==="se";
   document.getElementById("skabSe").hidden=!se;document.getElementById("skabTilfoej").hidden=se;
-  document.querySelectorAll("#t-skab .dropzone").forEach(z=>z.hidden=!se);
   if(se&&document.getElementById("t-skab").classList.contains("on"))renderHylde();
   if(!se)renderSkabValg();
 }
@@ -1490,10 +1514,11 @@ function renderHylde(){
   const side=sider[skabSide];
   document.getElementById("skabPrikker").innerHTML=sider.length>1?sider.map((a,i)=>`<button class="prik${i===skabSide?" on":""}" data-sside="${i}" aria-label="${a==="alle"?"Overblik":esc(afdNavn(a))}"></button>`).join(""):"";
   document.querySelectorAll("[data-sside]").forEach(b=>b.onclick=()=>{skabSide=+b.dataset.sside;zoom.s=1;zoom.x=zoom.y=0;hyldeValgt=null;renderHylde()});
-  document.getElementById("skabForkl").innerHTML=varer.length?`<b>${side==="alle"?"Overblik":esc(afdNavn(side))}</b><br>Træk en vare til 👄, 🗑️ eller 🛒`:"";
+  document.getElementById("skabNavn").textContent=side==="alle"?"Overblik":afdNavn(side);
+  document.getElementById("skabForkl").textContent=varer.length?"Træk en vare for at spise den, smide den ud eller købe mere":"";
   if(!varer.length){h.style.height="";indre.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tryk på "+ Tilføj".</p>`;info.hidden=true;return}
   h.style.height="";
-  const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+24+document.querySelector(".skabbund").offsetHeight+8;
+  const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+6;
   const H=Math.max(260,innerHeight-top-bund);h.style.height=H+"px";
   const B=h.clientWidth-16,frisk=v=>friskKlasse(v.rest);
   const ikon=(v,s)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.74)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}">${v.em}</button>`;
@@ -1528,7 +1553,7 @@ function renderHyldeInfo(varer){
     <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><span class="hi-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hi-tal">${esc(tilbageTekst(v))}</span>${v.k?`<span class="step"><button data-rest="-1" aria-label="Mindre tilbage">−</button><button data-rest="1" aria-label="Mere tilbage">+</button></span>`:""}</div>
     ${v.k?"":`<div class="chips" style="margin:2px 0 0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${v.niveau===n}">${lb}</button>`).join("")}</div>`}
     <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold ${friskKlasse(v.rest)}">${esc(holdTekst(v.rest))}</span><span class="step"><button data-hold="-${trin}" aria-label="Kortere holdbarhed">−</button><button data-hold="${trin}" aria-label="Længere holdbarhed">+</button></span></div>
-    <div class="hi-knapper"><button class="btn ghost lille" data-slip="mund">👄 Brugt op</button><button class="btn ghost lille" data-slip="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-slip="kurv">🛒 Køb mere</button></div>`;
+    <div class="hi-knapper"><button class="btn ghost lille" data-slip="mund">😋 Spist</button><button class="btn ghost lille" data-slip="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-slip="kurv">🛒 Køb mere</button></div>`;
   document.getElementById("hvLuk").onclick=()=>{holdbarSend();hyldeValgt=null;renderHylde()};
   info.querySelectorAll("[data-slip]").forEach(b=>b.onclick=()=>skabSlip(v,b.dataset.slip));
   info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
@@ -1970,7 +1995,7 @@ function actInner(a,ti,fi,dag){
 function applyUpdates(r){
   const noter=[];
   for(const x of r.skabTilfoej||[]){
-    const navn=String(x.navn||"").trim(); if(!navn)continue;
+    const navn=renNavn(x.navn); if(!navn)continue;
     if(x.k&&P[x.k]&&x.maengde>0){skabLaeg(x.k,x.maengde);noter.push("+ "+navn);continue}
     const f=st.fri.find(y=>y.navn.toLowerCase()===navn.toLowerCase());
     if(f)f.niveau=x.niveau||f.niveau; else friLaeg(navn,x.niveau);
@@ -2399,6 +2424,8 @@ function ugeplanStart(hvilken){
   renderUgeplan();window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
+/* "Planlæg næste uge": tryk, eller swipe til højre på knappen */
+swipe(document.getElementById("planNaeste"),r=>{const b=document.getElementById("planNaeste");if(r==="hoejre"&&!b.disabled)ugeplanStart("naeste")});
 /* Swipe i planlægningen: venstre = videre (hvor der er en "videre"), højre = tilbage */
 swipe(document.getElementById("ugeplan"),r=>{
   const el=document.getElementById("ugeplan"),b=r==="hoejre"?el.querySelector('.nav [data-u="tilbage"]:not([data-frem]), .nav [data-u="aabn"]'):el.querySelector("[data-frem]");
@@ -2411,7 +2438,7 @@ function renderUgeplan(){
   const el=document.getElementById("ugeplan"),ny=naesteUge();
   planFokus();
   const nb=document.getElementById("planNaeste");nb.disabled=!ny;
-  nb.textContent=visPaamindelse()?"Planlæg næste uge ✨":"Planlæg næste uge";
+  nb.firstElementChild.textContent=visPaamindelse()?"Planlæg næste uge ✨":"Planlæg næste uge";
   document.getElementById("naesteInfo").textContent=ny?(visPaamindelse()?`Næste uges tilbudsaviser er klar (fra ${dayLabel(ny,true)}).`:""):"Næste uges tilbudsaviser er ikke kommet endnu.";
   el.innerHTML=up?`<div class="wiz skaerm">${ugeplanHtml()}</div>`:"";
   el.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>ugeplanHandling(b));
@@ -2676,13 +2703,14 @@ function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)
 function renderStrip(p){
   const el=document.getElementById("ugeInfo"),t0=todayIso(),man=ugeMandag(t0),son=addDays(man,6);
   const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son).sort((a,b)=>a.dato.localeCompare(b.dato));
-  const koebt=retter.filter(erIndkoebt).length;
+  const koebt=retter.filter(erIndkoebt).length,ledige=ugeDage(man).filter(d=>d>=t0&&!fastPaa(d)).length;
   /* Retter efter denne uge vises pr. uge, så alt, der tælles med, også kan ses og fjernes */
   const senere={};for(const f of st.fast.filter(f=>f.dato>son).sort((a,b)=>a.dato.localeCompare(b.dato)))(senere[ugeMandag(f.dato)]=senere[ugeMandag(f.dato)]||[]).push(f);
   const advar=f=>{if(!allergier().length)return "";const r=f.opskrift&&ORMAP[f.opskrift];const ap=r?allergiProblem(r):[{navn:allergiNavne(),hvad:"ukendt"}];return ap.length?` <span class="bad" title="${esc(allergiTekst(ap))}">⚠ ${esc(ap.map(x=>x.navn.toLowerCase()).join(", "))}</span>`:""};
   const linje=f=>`<div class="item"><div class="grow"><span class="muted">${esc(dayLabel(f.dato).split(" ")[0])}</span> ${esc(f.navn)}${advar(f)}${f.dato<t0?` <span class="muted">· spist</span>`:erIndkoebt(f)?"":` <span class="muted">· mangler indkøb</span>`}</div>${f.opskrift&&ORMAP[f.opskrift]?`<button class="x" data-oopen="${esc(f.opskrift)}" style="font-size:.9rem;color:var(--leaf)">Se</button>`:""}<button class="x" data-fdel3="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen">×</button></div>`;
   el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(t0)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span></div>
-  <div class="stats"><div class="stat"><b>${retter.length}</b><span>Planlagte måltider</span></div><div class="stat"><b>${koebt}</b><span>Indkøbt</span></div></div>
+  <div class="ugestribe">${ugeDage(man).map(d=>{const f=fastPaa(d);return `<div class="ugedag ${f?"plan":d<t0?"forbi":"ledig"}${d===t0?" idag":""}" title="${esc(dayLabel(d,true))}${f?": "+esc(f.navn):""}"><span>${DAYS[(new Date(d+"T12:00:00").getDay()+6)%7].slice(0,1)}</span><i>${f?"✓":""}</i></div>`}).join("")}</div>
+  <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges denne uge`:`Resten af ugen er planlagt`}${retter.length?` · ${koebt} af ${retter.length} indkøbt`:""}</p>
   ${retter.length?`<div class="list" style="margin-top:10px">${retter.map(linje).join("")}</div>`:""}
   ${Object.entries(senere).map(([m,fs])=>`<div class="ugehead" style="margin-top:14px"><h3 style="margin:0">${m===addDays(man,7)?"Næste uge":"Uge "+isoUge(m)}</h3><span class="muted">${fs.length} ${fs.length===1?"måltid":"måltider"} planlagt</span><span style="flex:1"></span>${fs.length>1?`<button class="x" data-fdeluge="${m}" style="font-size:.9rem">Fjern alle</button>`:""}</div><div class="list" style="margin-top:6px">${fs.map(linje).join("")}</div>`).join("")}`;
   el.querySelectorAll("[data-fdel3]").forEach(b=>b.onclick=()=>{fjernFast(b.dataset.fdel3);changed();toast("Fjernet fra planen")});
@@ -3473,7 +3501,7 @@ function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st=
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
 historikSync();afvikl();st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);
 for(const [k,v] of Object.entries(st.skab)){if(!v.dato)v.dato=todayIso();if(!v.koebt&&P[k])v.koebt=Math.max(v.amt,P[k].pk)}
-for(const f of st.fri)if(!f.dato)f.dato=todayIso();
+for(const f of st.fri){if(!f.dato)f.dato=todayIso();f.navn=renNavn(f.navn)}
 /* Kalenderen starter altid med i dag, også når appen hentes frem igen en senere dag */
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
@@ -3631,7 +3659,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="44";
+const APP_VERSION="45";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
