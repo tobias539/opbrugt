@@ -138,6 +138,12 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .chip.lille{padding:5px 11px;font-size:.9rem}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--felt);border-radius:12px;padding:4px;margin:0 0 12px}
+.seg button{border:0;border-radius:9px;padding:8px;background:transparent;font:inherit;font-weight:700;color:var(--muted);cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.intro{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:0 0 12px;font-size:.9rem}
+.intro p{margin:0 0 4px}.intro ul{margin:0;padding-left:18px}.intro li{margin:2px 0}
+.ask .row .grow{flex:1}
 .maal{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .maal .tile{display:flex;align-items:center;gap:8px;text-align:left;padding:10px 22px 10px 8px}
 .maal .ik{font-size:1.4rem}.maal .lb{margin-top:0;font-size:.92rem}.maal .sm{font-size:.74rem}
@@ -322,13 +328,35 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- SNAK -->
 <section class="tab" id="t-chat" aria-labelledby="h-chat">
   <header class="top"><h1 id="h-chat">Snak</h1></header>
-  <p class="sugg" id="chatIngen" hidden style="margin:0 0 14px">Snak kræver forbindelse til Claude. Indsæt API-nøglen under Plan.</p>
-  <div class="ask">
-    <label for="chatIn" class="muted">Skriv eller tal – fx "planlæg ugen", "vi får gæster", "jeg har rødbeder" eller "jeg mangler toiletpapir"</label>
-    <textarea id="chatIn"></textarea>
-    <div class="row"><button class="btn ghost" id="chatClear">Ryd samtalen</button><button class="btn" id="chatBtn">Send</button></div>
+  <div class="seg" role="tablist" aria-label="Snak eller feedback"><button role="tab" id="segSnak" aria-selected="true" aria-controls="snakDel">Snak</button><button role="tab" id="segFeedback" aria-selected="false" aria-controls="feedbackDel">Feedback</button></div>
+  <div id="snakDel">
+    <div class="intro">
+      <p><b>Det kan du bruge Snak til</b></p>
+      <ul>
+        <li>Lav din madplan ved samtale – efter jeres egne ønsker, fx "planlæg ugen" eller "vi vil have fisk to gange"</li>
+        <li>Find ud af, hvad I kan lave af det, I har</li>
+        <li>Sæt ting på indkøbslisten, fx "jeg mangler toiletpapir"</li>
+        <li>Fortæl, hvad I kan lide og ikke kan lide</li>
+        <li>Giv kritik og ønsker til appen – al kritik bliver taget imod og samlet op</li>
+      </ul>
+    </div>
+    <p class="sugg" id="chatIngen" hidden style="margin:0 0 14px">Snak kræver forbindelse til Claude. Indsæt API-nøglen under Plan. Feedback virker også uden.</p>
+    <div class="ask">
+      <label for="chatIn" class="muted">Skriv eller tal</label>
+      <textarea id="chatIn"></textarea>
+      <div class="row"><button class="btn ghost" id="chatClear">Ryd samtalen</button><button class="btn" id="chatBtn">Send</button></div>
+    </div>
+    <div class="log" id="log" style="margin-top:14px"></div>
   </div>
-  <div class="log" id="log" style="margin-top:14px"></div>
+  <div id="feedbackDel" hidden>
+    <p style="margin:0 0 10px">Hvad virker, og hvad vil du gerne have lavet om? Al ris og ros bliver samlet op og læst. Det er anonymt – der bliver ikke sendt noget om, hvem du er.</p>
+    <div class="ask">
+      <label for="fbIn" class="muted">Din feedback</label>
+      <textarea id="fbIn" maxlength="4000" placeholder="Fx: Jeg savner … / Det er svært at …"></textarea>
+      <div class="row"><span class="grow"></span><button class="btn" id="fbSend">Send feedback</button></div>
+    </div>
+    <p class="muted" id="fbStatus" role="status" style="margin:10px 2px 0"></p>
+  </div>
 </section>
 
 <!-- OPSKRIFTER -->
@@ -423,7 +451,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 38 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version 39 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -1633,6 +1661,7 @@ function applyUpdates(r){
   for(const x of r.ikkeLideFjern||[]){const n=String(x).toLowerCase();st.ikkeLide=st.ikkeLide.filter(y=>y.navn.toLowerCase()!==n)}
   for(const x of r.indkob||[]){const navn=String(x&&x.navn||x||"").trim();if(navn&&!st.ekstraIndkob.some(y=>y.navn.toLowerCase()===navn.toLowerCase()&&!y.done)){st.ekstraIndkob.push({navn,maengde:x&&x.maengde?String(x.maengde):"",kat:x&&AFD[x.kat]?x.kat:gaetAfd(navn)});noter.push("På indkøbslisten: "+navn)}}
   for(const d of r.planFjern||[]){const f=st.fast.find(x=>x.dato===String(d)&&x.dato>=todayIso());if(f){fjernFast(f.id);noter.push("Fjernet fra planen: "+f.navn)}}
+  for(const x of r.feedback||[]){const t=String(x).trim();if(t){feedbackGem(t,"snak");noter.push("Sendt videre som feedback: “"+t+"”")}}
   for(const x of r.instruktioner||[]){const t=String(x).trim();if(t&&!st.instrukser.some(y=>y.toLowerCase()===t.toLowerCase())){st.instrukser.push(t);noter.push("Ny instruktion: "+t)}}
   if(r.personer>0)st.settings.P=Math.min(10,Math.max(1,r.personer));
   return noter.length?"Opdateret: "+noter.join(", ")+".":"";
@@ -1647,6 +1676,42 @@ function hurtigIndkob(t){
   return varer;
 }
 let selDays=new Set();
+/* ---------- Feedback ----------
+   Kritik og ønsker til appen, fra feedback-feltet eller fra snakken. Sendes anonymt (kun teksten, tidspunkt og
+   app-version) til et Google Apps Script, der gemmer hver besked som en fil i Google Drive › Privat › mad › feedback
+   (se feedback-modtager/). Kan den ikke sendes, venter den på telefonen og sendes næste gang. */
+const FEEDBACK_URL="https://script.google.com/macros/s/AKfycbxoV1k87FsMjKh7cgRlddlfjy5OfGn7-NVFp_YqN1MghUTCVoOuJYZHN06jOcyR7wvYkg/exec";
+function feedbackGem(tekst,kilde){
+  (st.feedbackKoe=st.feedbackKoe||[]).push({tekst:String(tekst).slice(0,4000),kilde,tid:new Date().toISOString(),version:APP_VERSION});
+  save();return feedbackSend();
+}
+let fbSender=false;
+async function feedbackSend(){
+  if(!FEEDBACK_URL||fbSender||!(st.feedbackKoe||[]).length)return false;
+  fbSender=true;let ok=true;
+  try{
+    while(st.feedbackKoe.length){
+      /* tekst som brødtekst: ingen preflight, så Apps Script kan svare direkte */
+      const r=await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify(st.feedbackKoe[0])});
+      const j=await r.json().catch(()=>null);
+      if(!r.ok||!j||!j.ok){ok=false;break}
+      st.feedbackKoe.shift();save();
+    }
+  }catch(e){ok=false}
+  fbSender=false;return ok;
+}
+function snakDel(del){
+  const fb=del==="feedback";
+  document.getElementById("snakDel").hidden=fb;document.getElementById("feedbackDel").hidden=!fb;
+  document.getElementById("segSnak").setAttribute("aria-selected",!fb);document.getElementById("segFeedback").setAttribute("aria-selected",fb);
+}
+document.getElementById("segSnak").onclick=()=>snakDel("snak");
+document.getElementById("segFeedback").onclick=()=>{snakDel("feedback");document.getElementById("fbIn").focus()};
+document.getElementById("fbSend").onclick=async()=>{
+  const el=document.getElementById("fbIn"),t=el.value.trim(),s=document.getElementById("fbStatus");if(!t)return;
+  el.value="";s.textContent="Sender …";
+  s.textContent=await feedbackGem(t,"feedback")?"Tak! Din feedback er sendt.":"Tak! Den er gemt på telefonen og bliver sendt automatisk.";
+};
 /* "Planlæg ugen", "lav en madplan" osv.: tilbyd guiden eller én ret ad gangen. Returnerer "denne", "naeste" eller null. */
 function planOensker(t){
   if(!/planl[æa]g|madplan|ugeplan|plan for/i.test(t)||!/uge|madplan|ugeplan/i.test(t))return null;
@@ -1708,6 +1773,7 @@ JSON-felter (udelad tomme):
 "skabTilfoej":[{"navn","niveau":"hel"|"noget"|"lidt"}] når de fortæller hvad de har. "skabFjern":[navne] når noget er brugt op.
 "favoritter":[navne] de kan lide. "favoritterFjern":[navne fra kan-lide-listen] de ikke gider mere (fx "det vi fik i går").
 "ikkeLide":[{"navn","grund":"kan ikke lide"|"tåler ikke"}]. "ikkeLideFjern":[navne].
+"feedback":[kritik, ros eller ønsker til selve appen (ikke til maden), med brugerens egne ord, fx "knappen til indkøb er svær at finde" eller "jeg vil gerne kunne dele listen"]. Tag pænt imod det i "svar".
 "instruktioner":[korte varige ønsker, fx "Flere grøntsager"] når de udtrykker en varig vane eller et mål. "basisMangler"/"basisHar":[${Object.keys(BASIS).join("|")}]. "personer": tal hvis husstanden ændres.
 Svar KUN med JSON.`;
   try{
@@ -2770,6 +2836,7 @@ historikSync();afvikl();st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
 fillSelects();render();setupScan();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)feedbackSend()});
 
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
 window.addEventListener("error",e=>{try{diag("fejl: "+e.message+" (linje "+e.lineno+")")}catch(_){}});
@@ -2922,7 +2989,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="38";
+const APP_VERSION="39";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
@@ -2934,7 +3001,7 @@ async function tjekOpdatering(){
     location.replace(location.pathname+"?v="+encodeURIComponent(v));
   }catch(e){}
 }
-tjekOpdatering();
+tjekOpdatering();feedbackSend();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});
 </script>
 </body>

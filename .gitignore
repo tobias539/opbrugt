@@ -13,3 +13,6 @@ desktop.ini
 # Hyldepriser: kun de matchede priser i priser/til_opbrugt/ udgives
 priser/raa/
 priser/salling-noegle.txt
+
+# Feedback fra appen (privat; kommer via Google Drive)
+feedback/
