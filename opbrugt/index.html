@@ -181,8 +181,6 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .planknap.naeste .pk-stor{font-size:1.45rem}
 .planknap:disabled{opacity:.45;cursor:default}
 #ugeInfo{position:relative}
-.ugedag{border:0;background:transparent;padding:0;font:inherit;cursor:pointer}
-.ugedag.valgt i{outline:2px solid var(--carrot);outline-offset:2px}
 .dagpop{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9}
 /* Hjælp bag "?" */
 .hjaelprad{position:relative;display:flex;justify-content:flex-end;margin:-6px 0 6px;height:28px}
@@ -199,13 +197,11 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 #bogFiltre .tile:disabled{opacity:.4;cursor:default}
 .bfbund{flex:none;padding-top:10px}.bfantal{margin:0 0 8px;text-align:center}
 .bfknapper{display:flex;gap:8px}.bfknapper .btn{flex:1}.bfknapper #bfForrige{flex:none;padding:10px 18px}
-.ugestribe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0 6px}
-.ugedag{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.78rem;color:var(--muted)}
-.ugedag i{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);font-style:normal;font-size:1.15rem;line-height:1}
-.ugedag.plan i{background:var(--leaf-soft);border-color:var(--leaf)}
-.ugedag.ledig i{border-color:var(--leaf);border-style:dashed}
-.ugedag.forbi{opacity:.45}
-.ugedag.idag span{color:var(--ink);font-weight:800}
+.ugestribe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0 6px;cursor:pointer}
+.ugefelt{display:flex;justify-content:center}
+.ugefelt i{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:2px dashed var(--leaf)}
+.ugefelt.plan i{background:var(--leaf-soft);border-style:solid}
+.ugefelt svg{width:24px;height:24px;fill:#fff;stroke:var(--leaf);stroke-width:1.5;stroke-linejoin:round}
 .ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
 .kurv{position:fixed;right:16px;bottom:calc(70px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -316,9 +312,14 @@ body.traekker .dzlag{display:flex}
 .bfh{font-size:.95rem;margin:10px 0 0}#bogFiltre .chips{margin-top:6px;gap:6px}
 .allergiboks{background:var(--carrot-soft);border-radius:12px;padding:10px 12px;margin:0 0 12px;font-size:.9rem}
 .allergiboks.advarsel{border:2px solid var(--carrot);margin:10px 0 0}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--felt);border-radius:12px;padding:4px;margin:0 0 12px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;background:var(--felt);border-radius:12px;padding:4px;margin:0 0 12px}
 .seg button{border:0;border-radius:9px;padding:8px;background:transparent;font:inherit;font-weight:700;color:var(--muted);cursor:pointer}
 .seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+/* Forbrug under Snak */
+.fbtal{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.fbtal b{display:block;font-size:2rem;line-height:1.15;margin:2px 0 4px;font-variant-numeric:tabular-nums}
+#forbrugDel h3{margin:18px 2px 8px}
+#forbrugDel .item .ik{font-size:1.3rem;width:26px;text-align:center}
 .intro{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:0 0 12px;font-size:.9rem}
 .intro p{margin:0 0 4px}.intro ul{margin:0;padding-left:18px}.intro li{margin:2px 0}
 .ask .row .grow{flex:1}
@@ -506,7 +507,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- SNAK -->
 <section class="tab" id="t-chat" aria-labelledby="h-chat">
   <header class="top"><h1 id="h-chat">Snak</h1></header>
-  <div class="seg" role="tablist" aria-label="Snak eller feedback"><button role="tab" id="segSnak" aria-selected="true" aria-controls="snakDel">Snak</button><button role="tab" id="segFeedback" aria-selected="false" aria-controls="feedbackDel">Feedback</button></div>
+  <div class="seg" role="tablist" aria-label="Snak, feedback eller forbrug"><button role="tab" id="segSnak" aria-selected="true" aria-controls="snakDel">Snak</button><button role="tab" id="segFeedback" aria-selected="false" aria-controls="feedbackDel">Feedback</button><button role="tab" id="segForbrug" aria-selected="false" aria-controls="forbrugDel">Forbrug</button></div>
   <div class="hjaelprad"><button class="hjaelp" id="hjaelpKnap" aria-label="Hvad kan jeg her?" aria-expanded="false">?</button><div class="hjaelpboks" id="hjaelpBoks" role="dialog" hidden></div></div>
   <div id="snakDel">
     <p class="sugg" id="chatIngen" hidden style="margin:0 0 14px">Snak kræver forbindelse til Claude. Indsæt API-nøglen under Plan. Feedback virker også uden.</p>
@@ -525,6 +526,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
     </div>
     <p class="muted" id="fbStatus" role="status" style="margin:10px 2px 0"></p>
   </div>
+  <div id="forbrugDel" hidden></div>
 </section>
 
 <!-- OPSKRIFTER -->
@@ -2278,29 +2280,34 @@ async function feedbackSend(){
   }catch(e){ok=false}
   fbSender=false;return ok;
 }
+/* Snak har tre dele side om side: Snak, Feedback og Forbrug */
+const SNAKDELE=[["snak","snakDel","segSnak"],["feedback","feedbackDel","segFeedback"],["forbrug","forbrugDel","segForbrug"]];
+let snakAktiv="snak";
 function snakDel(del){
-  const fb=del==="feedback";hjaelpLuk();
-  document.getElementById("snakDel").hidden=fb;document.getElementById("feedbackDel").hidden=!fb;
-  document.getElementById("segSnak").setAttribute("aria-selected",!fb);document.getElementById("segFeedback").setAttribute("aria-selected",fb);
+  hjaelpLuk();snakAktiv=del;
+  for(const [id,d,s] of SNAKDELE){document.getElementById(d).hidden=id!==del;document.getElementById(s).setAttribute("aria-selected",id===del)}
+  if(del==="forbrug")renderForbrug();
   window.scrollTo(0,0);
 }
-/* "?": hjælpeteksten for Snak eller Feedback kommer frem oven på siden; tryk et andet sted lukker den */
+/* "?": hjælpeteksten for den viste del kommer frem oven på siden; tryk et andet sted lukker den */
 const HJAELP={snak:`<p style="margin:0 0 4px"><b>Det kan du bruge Snak til</b></p><ul style="margin:0;padding-left:18px">
   <li>Lav din madplan ved samtale – efter jeres egne ønsker, fx "planlæg ugen" eller "vi vil have fisk to gange"</li>
   <li>Find ud af, hvad I kan lave af det, I har</li>
   <li>Sæt ting på indkøbslisten, fx "jeg mangler toiletpapir"</li>
   <li>Fortæl, hvad I kan lide og ikke kan lide</li>
   <li>Har du kritik eller ønsker til appen? Skriv dem under <b>Feedback</b> – al kritik bliver taget imod og samlet op</li></ul>`,
-  feedback:`<p style="margin:0">Hvad virker, og hvad vil du gerne have lavet om? Al ris og ros bliver samlet op og læst.</p><p style="margin:6px 0 0">Det er anonymt – der bliver ikke sendt noget om, hvem du er.</p>`};
+  feedback:`<p style="margin:0">Hvad virker, og hvad vil du gerne have lavet om? Al ris og ros bliver samlet op og læst.</p><p style="margin:6px 0 0">Det er anonymt – der bliver ikke sendt noget om, hvem du er.</p>`,
+  forbrug:`<p style="margin:0">Her kan du se, hvad appen har brugt hos Claude fra <b>denne telefon</b> – i dag, i denne måned og i alt, og hvad det gik til.</p><p style="margin:6px 0 0">Hver telefon tæller for sig. Bruger I samme API-nøgle på flere telefoner, står det samlede beløb på console.anthropic.com.</p>`};
 function hjaelpLuk(){const b=document.getElementById("hjaelpBoks");b.hidden=true;document.getElementById("hjaelpKnap").setAttribute("aria-expanded","false")}
 document.getElementById("hjaelpKnap").onclick=e=>{
   e.stopPropagation();const b=document.getElementById("hjaelpBoks");
   if(!b.hidden){hjaelpLuk();return}
-  b.innerHTML=HJAELP[document.getElementById("feedbackDel").hidden?"snak":"feedback"];b.hidden=false;document.getElementById("hjaelpKnap").setAttribute("aria-expanded","true");
+  b.innerHTML=HJAELP[snakAktiv];b.hidden=false;document.getElementById("hjaelpKnap").setAttribute("aria-expanded","true");
 };
 document.addEventListener("click",e=>{if(!document.getElementById("hjaelpBoks").hidden&&!e.target.closest("#hjaelpBoks,#hjaelpKnap"))hjaelpLuk()});
 document.getElementById("segSnak").onclick=()=>snakDel("snak");
 document.getElementById("segFeedback").onclick=()=>snakDel("feedback");
+document.getElementById("segForbrug").onclick=()=>snakDel("forbrug");
 document.getElementById("fbSend").onclick=async()=>{
   const el=document.getElementById("fbIn"),t=el.value.trim(),s=document.getElementById("fbStatus");if(!t)return;
   el.value="";s.textContent="Sender …";
@@ -2316,7 +2323,7 @@ document.getElementById("fbSend").onclick=async()=>{
 function guideSwipe(id,frem){const b=document.getElementById(id).querySelector(frem?'[data-w="naeste"]':'[data-w="tilbage"]');if(b)b.click()}
 function sideSwipe(frem){
   const on=id=>document.getElementById(id).classList.contains("on");
-  if(on("t-chat")){snakDel(frem?"feedback":"snak");return}
+  if(on("t-chat")){const i=SNAKDELE.findIndex(x=>x[0]===snakAktiv),j=Math.max(0,Math.min(SNAKDELE.length-1,i+(frem?1:-1)));if(j!==i)snakDel(SNAKDELE[j][0]);return}
   if(on("t-snak")){
     if(up){const el=document.getElementById("ugeplan"),b=frem?el.querySelector("[data-frem]"):el.querySelector('.nav [data-u="tilbage"]:not([data-frem]), .nav [data-u="aabn"]');if(b&&!b.disabled)b.click();return}
     if(wiz&&wiz.host==="opsStart"){guideSwipe("opsStart",frem);return}
@@ -2392,7 +2399,7 @@ Giver brugeren kritik, ros eller ønsker til selve appen (ikke til maden), så t
 "instruktioner":[korte varige ønsker, fx "Flere grøntsager"] når de udtrykker en varig vane eller et mål. "basisMangler"/"basisHar":[${Object.keys(BASIS).join("|")}]. "personer": tal hvis husstanden ændres.
 Svar KUN med JSON.`;
   try{
-    const r=await sample.json(prompt,{modelTier:"quick"});
+    const r=await sample.json(prompt,{modelTier:"quick",hvad:"snak"});
     const note=applyUpdates(r||{});
     let forslag=(r.forslag||[]).slice(0,Math.max(3,dage.length)).map(normForslag),fjernet=0;
     if(allergier().length){const foer=forslag.length;forslag=forslag.filter(f=>f.opskrift&&ORMAP[f.opskrift]&&allergiOk(ORMAP[f.opskrift]));fjernet=foer-forslag.length}
@@ -2876,7 +2883,7 @@ Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili c
     let r,fejl=null;
     for(let forsoeg=1;forsoeg<=3;forsoeg++){
       const start=Date.now();t0=start;skrevet=0;taenker=false;
-      try{upFremdrift(6,forsoeg>1?`Prøver igen (${forsoeg}/3)`:"Sender til Claude");r=await sample.json(prompt,{modelTier:"quick",onText,onTaenk:()=>{taenker=true}});fejl=null;break}
+      try{upFremdrift(6,forsoeg>1?`Prøver igen (${forsoeg}/3)`:"Sender til Claude");r=await sample.json(prompt,{modelTier:"quick",hvad:"plan",onText,onTaenk:()=>{taenker=true}});fejl=null;break}
       catch(e){
         fejl=e;if(!["invalid_json","network","timeout","upstream_error","rate_limit"].includes(e&&e.code)||forsoeg===3)break;
         /* Var appen i baggrunden, venter vi, til den er fremme igen */
@@ -2921,21 +2928,23 @@ function ugeMandag(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.
 /* Første ledige dag fra i dag og ugen ud */
 function ledigIUgen(){const t0=todayIso(),son=addDays(ugeMandag(t0),6);for(let d=t0;d<=son;d=addDays(d,1))if(!fastPaa(d))return d;return null}
 function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)}
-/* Ugeoversigten øverst på Plan: swipe til venstre for næste uge. Planlagte aftener har en tallerken;
-   et tryk på dagene skifter også uge. Knapperne "Planlæg" fylder resten af skærmen. */
+/* Ugeoversigten øverst på Plan: swipe til venstre for næste uge. Ét felt pr. aften, der er tilbage af ugen –
+   uden ugedage, for retterne er ikke bundet til en bestemt dag. De første felter får en kokkehue, én pr. planlagt ret.
+   Et tryk på felterne skifter også uge. Knapperne "Planlæg" fylder resten af skærmen. */
+const KOKKEHUE=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 17.5V13A3.5 3.5 0 1 1 8.5 6.6A3.6 3.6 0 1 1 15.5 6.6A3.5 3.5 0 1 1 16 13V17.5Z"/><rect x="7.5" y="18.3" width="9" height="3.2" rx="1"/></svg>`;
 let ugeVis=0;
 function renderStrip(p){
   const el=document.getElementById("ugeInfo"),t0=todayIso(),man0=ugeMandag(t0);
   const sidste=Math.max(1,...st.fast.filter(f=>f.dato>=man0).map(f=>Math.round((new Date(ugeMandag(f.dato)+"T12:00:00")-new Date(man0+"T12:00:00"))/6048e5)));
   ugeVis=Math.max(0,Math.min(ugeVis,sidste));
-  const man=addDays(man0,7*ugeVis),son=addDays(man,6),dage=ugeDage(man);
-  const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son),koebt=retter.filter(erIndkoebt).length,ledige=dage.filter(d=>d>=t0&&!fastPaa(d)).length;
+  const man=addDays(man0,7*ugeVis),son=addDays(man,6),resten=ugeDage(man).filter(d=>d>=t0);
+  const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son&&f.dato>=t0),koebt=retter.filter(erIndkoebt).length,ledige=resten.filter(d=>!fastPaa(d)).length,huer=resten.length-ledige;
   el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(man)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span><span style="flex:1"></span><span class="prikker">${Array.from({length:sidste+1},(_,i)=>`<button class="prik${i===ugeVis?" on":""}" data-uge="${i}" aria-label="${i===0?"Denne uge":i===1?"Næste uge":"Uge "+isoUge(addDays(man0,7*i))}"></button>`).join("")}</span></div>
-  <div class="ugestribe">${dage.map(d=>{const f=fastPaa(d);return `<button class="ugedag ${f?"plan":d<t0?"forbi":"ledig"}${d===t0?" idag":""}" data-dag="${d}" aria-label="${esc(dayLabel(d,true))}${f?": "+esc(f.navn):d<t0?"":": ledig"}"><span>${DAYS[(new Date(d+"T12:00:00").getDay()+6)%7].slice(0,1)}</span><i>${f?"🍛":""}</i></button>`}).join("")}</div>
+  <div class="ugestribe" role="img" aria-label="${huer} af ${resten.length} ${resten.length===1?"aften":"aftener"} har en ret">${resten.map((d,i)=>`<span class="ugefelt${i<huer?" plan":""}"><i>${i<huer?KOKKEHUE:""}</i></span>`).join("")}</div>
   <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges`:retter.length?"Hele ugen er planlagt":"Ingen aftener tilbage"}${retter.length?` · ${retter.length} planlagt · ${koebt} indkøbt`:""}</p>
 `;
   el.querySelectorAll("[data-uge]").forEach(b=>b.onclick=()=>{ugeVis=+b.dataset.uge;renderStrip(last)});
-  /* dagene er kun til at se; et tryk går videre til næste uge (og tilbage til denne efter den sidste) */
+  /* felterne er kun til at se; et tryk går videre til næste uge (og tilbage til denne efter den sidste) */
   el.querySelector(".ugestribe").onclick=()=>{ugeVis=ugeVis>=sidste?0:ugeVis+1;renderStrip(last)};
   planHoejde();
 }
@@ -2994,7 +3003,7 @@ Returnér KUN JSON.
 Kvittering: {"type":"kvittering","butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst],"priser":[{"i","tekst","pris","maengde","enhed","rabat"}]}
 Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde"}],"andet":[{"navn","niveau"}],"usikre":[{"hvad"}],"raad":tekst}`;
   try{
-    const r=await sample.json(prompt,{images:f,modelTier:"default"});
+    const r=await sample.json(prompt,{images:f,modelTier:"default",hvad:"billede"});
     if(r&&r.type==="skab"){visSkabBillede(r,out);return}
     scanItems=(r.varer||[]).filter(v=>P[v.k]&&v.maengde>0).map(v=>({...v,on:true}));
     const basis=(r.basis||[]).filter(b=>BASIS[b]);
@@ -3229,7 +3238,7 @@ async function tAnnoter(forslag){
   const prompt=`For hver vare: vælg det tilbud, der ER selve varen, som man ville købe den til en ret (ikke et produkt, der bare indeholder varen eller hedder noget lignende). Passer ingen, så null.
 ${spg.map((s,i)=>`Vare ${i}: "${s.m.navn}"\n`+s.k.map((x,j)=>`  ${j}: ${x.k} | ${x.o}${x.b?" | "+x.b.slice(0,70):""}`).join("\n")).join("\n")}
 Returnér KUN JSON: {"valg":[tilbudsnummer eller null for hver vare, i samme rækkefølge]}`;
-  try{const r=await sample.json(prompt,{modelTier:"quick"});(r.valg||[]).forEach((v,i)=>{if(spg[i]&&Number.isInteger(v)&&spg[i].k[v])spg[i].m.tilbud=spg[i].k[v]})}catch(e){}
+  try{const r=await sample.json(prompt,{modelTier:"quick",hvad:"plan"});(r.valg||[]).forEach((v,i)=>{if(spg[i]&&Number.isInteger(v)&&spg[i].k[v])spg[i].m.tilbud=spg[i].k[v]})}catch(e){}
 }
 /* Til Claude: det bedste tilbud pr. ingrediens i banken den kommende uge */
 function tTekst(){
@@ -3767,7 +3776,7 @@ Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).jo
 ${tekst?`\nOpskriften:\n"""${tekst}"""\n`:""}
 Returnér KUN JSON: {"ok":true,"t":titel,"u":kort undertitel eller "","k":[...],"reg":[...],"pr":[...],"tid":[min,max],"pb":tal,"ing":[{"i","n","m","e","b"}],"trin":[{"t","x":[...]}],"kilde":tekst eller null,"al":[...]}`;
   try{
-    const x=await sample.json(prompt,{images:egen.billede||undefined,modelTier:"default"});
+    const x=await sample.json(prompt,{images:egen.billede||undefined,modelTier:"default",hvad:"opsk"});
     if(!x||x.ok===false){egen.trin="input";egen.fejl=(x&&x.fejl)||"Det ligner ikke en opskrift.";renderEgen();return}
     const r=egenNorm(x);
     if(!r.ing.length||!r.trin.length){egen.trin="input";egen.fejl="Claude kunne ikke finde både ingredienser og fremgangsmåde. Prøv med hele opskriften.";renderEgen();return}
@@ -3905,10 +3914,11 @@ function apiAdapter(){
       }
       if(!stream){
         const d=await r.json().catch(()=>({}));clearTimeout(vagt);
+        forbrugLaeg(opt.hvad,d.model,d.usage,model);
         if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
         return lesJson((d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
       }
-      const rd=r.body.getReader(),dek=new TextDecoder();let buf="",tekst="",stop=null;
+      const rd=r.body.getReader(),dek=new TextDecoder();let buf="",tekst="",stop=null,svarModel=null,brug=null;
       try{
         for(;;){
           const {done,value}=await rd.read();if(done)break;vent();
@@ -3917,6 +3927,9 @@ function apiAdapter(){
             const linje=buf.slice(0,i).trim();buf=buf.slice(i+1);
             if(!linje.startsWith("data:"))continue;
             let ev;try{ev=JSON.parse(linje.slice(5))}catch(e){continue}
+            /* Forbruget: message_start har modellen, der svarer, og tokens ind; message_delta har tokens ud indtil nu */
+            if(ev.type==="message_start"&&ev.message){svarModel=ev.message.model||null;brug={...(ev.message.usage||{})}}
+            if(ev.type==="message_delta"&&ev.usage)brug={...(brug||{}),...ev.usage};
             if(ev.type==="content_block_delta"&&ev.delta&&ev.delta.type==="text_delta"){tekst+=ev.delta.text;onText(tekst)}
             else if(ev.type==="content_block_start"&&ev.content_block&&ev.content_block.type==="thinking"&&opt.onTaenk)opt.onTaenk();
             else if(ev.type==="message_delta"&&ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason;
@@ -3924,7 +3937,7 @@ function apiAdapter(){
           }
         }
       }catch(e){if(e&&e.code)throw e;throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
-      finally{clearTimeout(vagt)}
+      finally{clearTimeout(vagt);forbrugLaeg(opt.hvad,svarModel,brug,model)}
       if(stop==="refusal")throw {code:"refusal",message:"afvist"};
       if(stop==="max_tokens")throw {code:"invalid_json",message:"svaret blev for langt og blev skåret af"};
       return lesJson(tekst);
@@ -3951,6 +3964,50 @@ for(const [knap,felt] of [["keySave","keyIn"],["keySave2","keyIn2"]])document.ge
   inp.value="";forbind();toast("Nøglen er gemt");
 };
 for(const id of ["modelHurtig","modelScan"])document.getElementById(id).onchange=e=>{st.settings[id]=e.target.value;changed();forbind()};
+
+/* ---------- Forbrug ----------
+   Hver telefon tæller selv, hvad den har brugt hos Claude: tokens og pris pr. dag, måned og i alt, delt op efter,
+   hvad det gik til. Gemmes for sig (som nøglen, ikke i st), så det bliver på telefonen, når data kopieres til en anden.
+   Prisen regnes ud med det samme efter listeprisen for den model, der svarede, så senere prisændringer ikke ændrer historikken. */
+const FORBRUG="opbrugt_forbrug";
+/* $ pr. million tokens [ind, ud]. Haiku 5.5 koster 0,50/2,50, når prompten er over 100.000 tokens.
+   Cache: at skrive koster 1,25 × ind-prisen, at læse 0,1 ×. Tænkning tæller med i tokens ud. */
+const PRISER={"claude-haiku-5-5":[0.1,0.5],"claude-sonnet-5-5":[2,10],"claude-opus-5-5":[4,20],"claude-sonnet-5":[2,10],"claude-opus-5":[5,25],"claude-opus-4-8":[5,25]};
+/* Beløbene vises i kr inkl. 25 % moms */
+const KR_PR_DOLLAR=6.5,MOMS=1.25;
+const FORMAAL={snak:["💬","Snak"],plan:["📅","Madplan"],billede:["📷","Kvitteringer og skab"],opsk:["📖","Egne opskrifter"],andet:["✨","Andet"]};
+function forbrugHent(){try{const f=JSON.parse(localStorage.getItem(FORBRUG)||"null");if(f&&f.alt)return f}catch(e){}return {fra:todayIso(),alt:{},md:{},dag:{}}}
+function forbrugLaeg(hvad,model,u,bedt){
+  if(!u)return;
+  const ind=(u.input_tokens||0)+(u.cache_creation_input_tokens||0)+(u.cache_read_input_tokens||0),ud=u.output_tokens||0;
+  if(!ind&&!ud)return;
+  model=PRISER[model]?model:bedt;
+  let [pi,po]=PRISER[model]||[0,0];
+  if(model==="claude-haiku-5-5"&&ind>1e5){pi=0.5;po=2.5}
+  const usd=((u.input_tokens||0)+1.25*(u.cache_creation_input_tokens||0)+0.1*(u.cache_read_input_tokens||0))*pi/1e6+ud*po/1e6;
+  const f=forbrugHent(),d=todayIso(),k=FORMAAL[hvad]?hvad:"andet";
+  const laeg=o=>{const x=o[k]=o[k]||{n:0,ind:0,ud:0,usd:0};x.n++;x.ind+=ind;x.ud+=ud;x.usd+=usd};
+  laeg(f.alt);laeg(f.md[d.slice(0,7)]=f.md[d.slice(0,7)]||{});laeg(f.dag[d]=f.dag[d]||{});
+  for(const x of Object.keys(f.dag))if(x<addDays(d,-40))delete f.dag[x];
+  try{localStorage.setItem(FORBRUG,JSON.stringify(f))}catch(e){}
+  if(snakAktiv==="forbrug")renderForbrug();
+}
+function renderForbrug(){
+  const el=document.getElementById("forbrugDel"),f=forbrugHent(),d=todayIso(),m=d.slice(0,7);
+  const sum=o=>Object.values(o||{}).reduce((a,x)=>({n:a.n+x.n,ind:a.ind+x.ind,ud:a.ud+x.ud,usd:a.usd+x.usd}),{n:0,ind:0,ud:0,usd:0});
+  const kr=usd=>{const k=usd*KR_PR_DOLLAR*MOMS;return (k>=100?Math.round(k).toLocaleString("da-DK"):k.toLocaleString("da-DK",{minimumFractionDigits:2,maximumFractionDigits:2}))+" kr"};
+  const tok=n=>n>=1e6?(n/1e6).toLocaleString("da-DK",{maximumFractionDigits:1})+" mio. tokens":Math.round(n).toLocaleString("da-DK")+" tokens";
+  const mdNavn=x=>new Date(x+"-15T12:00:00").toLocaleDateString("da-DK",x.slice(0,4)===m.slice(0,4)?{month:"long"}:{month:"long",year:"numeric"});
+  const md=sum(f.md[m]),idag=sum(f.dag[d]),alt=sum(f.alt);
+  const note=`<p class="muted" style="font-size:.8rem;margin:14px 2px 0">Ca. pris inkl. moms</p>`;
+  if(!alt.n){el.innerHTML=`<div class="fbtal"><span class="muted">Denne telefon</span><b>0 kr</b><span class="muted">${sample?"Der er ikke brugt noget hos Claude fra denne telefon endnu.":"Forbruget tælles, når der er en API-nøgle."}</span></div>${note}`;return}
+  const rk=o=>Object.keys(FORMAAL).filter(k=>o&&o[k]&&o[k].n).map(k=>{const x=o[k];return `<div class="item"><span class="ik" aria-hidden="true">${FORMAAL[k][0]}</span><div class="grow"><b>${esc(FORMAAL[k][1])}</b><div class="amt">${x.n} ${x.n===1?"gang":"gange"} · ${tok(x.ind+x.ud)}</div></div><span class="price">${kr(x.usd)}</span></div>`}).join("");
+  const tidl=Object.keys(f.md).filter(x=>x<m).sort().reverse().slice(0,12);
+  el.innerHTML=`<div class="fbtal"><span class="muted">Denne telefon · ${esc(mdNavn(m))}</span><b>${kr(md.usd)}</b><span class="muted">I dag ${kr(idag.usd)} · i alt ${kr(alt.usd)} siden ${+f.fra.slice(8)}/${+f.fra.slice(5,7)}</span></div>
+    ${md.n?`<h3>Forbrug i ${esc(mdNavn(m))}</h3><div class="list">${rk(f.md[m])}</div>`:""}
+    ${tidl.length?`<h3>Tidligere måneder</h3><div class="list">${tidl.map(x=>{const s=sum(f.md[x]);return `<div class="item"><div class="grow"><b>${esc(mdNavn(x).replace(/^./,c=>c.toUpperCase()))}</b><div class="amt">${s.n} ${s.n===1?"gang":"gange"} · ${tok(s.ind+s.ud)}</div></div><span class="price">${kr(s.usd)}</span></div>`}).join("")}</div>`:""}
+    ${note}`;
+}
 
 /* ---------- Kopi af data: flyt til en anden telefon eller hent fra den gamle artifact ---------- */
 document.getElementById("eksportBtn").onclick=async()=>{
@@ -3981,7 +4038,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="52";
+const APP_VERSION="53";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
