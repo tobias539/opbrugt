@@ -9,8 +9,10 @@ Et Google Apps Script (`feedback.gs`) tager imod fire ting fra appen:
 - **Emojis**: når nogen vælger en anden emoji til en vare i skabet, sendes varens navn og emojien anonymt.
   Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json, og appen viser dem som
   "Andre har valgt". Kun emojis tages imod.
-- **Kvitteringer**: når en kvittering scannes og lægges i skabet, sendes billedet (formindsket) og varelinjerne
-  uden navn. De gemmes i Google Drive › Privat › mad › kvitteringer som en `.jpg` og en `.json` med samme navn.
+- **Kvitteringer**: når en kvittering scannes og lægges i skabet, sendes varelinjerne uden navn. De gemmes i
+  Google Drive › Privat › mad › kvitteringer › `<måned>` som en `.json`. Billedet (formindsket) kommer kun med, når
+  Claude kan have læst forkert – der blev fjernet flueben, eller en pris ligger langt fra det normale – og ellers i
+  hver 20. kvittering som stikprøve; `billedeGrund` i `.json`-filen siger hvorfor.
   Normalpriserne (ikke tilbud) samles i `kvitteringer/priser.json` – de sidste 5 pr. vare og butik – og appen
   henter midterværdien, så alles priser bliver bedre. Kan slås fra i appen under Præferencer › Del kvitteringer.
 

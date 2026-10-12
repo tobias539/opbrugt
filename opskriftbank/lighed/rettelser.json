@@ -1,0 +1,3 @@
+{
+  "_beskrivelse": "Rettelser til lighedstabellen i hånden. {ingrediens: {\"vaelg\": alternativ}} gør alternativet til appens forslag; {ingrediens: {\"ikke\": [alternativ, ...]}} udelukker dem. Kør vaerktoej/lighed.py bagefter."
+}

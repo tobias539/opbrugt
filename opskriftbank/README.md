@@ -21,6 +21,9 @@ Alle opskrifter samlet ét sted som data, uanset kilde: HelloFresh, kogebøger, 
 | `kilder/web/` | Det, der er hentet fra nettet: kildens egne ingredienslinjer og trin. Udeladt fra git. |
 | `vaerktoej/klip_billede.py` | Klipper madbilledet ud af en scannet HelloFresh-forside. Tjek altid resultatet: den leder kun i venstre 84 % af siden. |
 | `vaerktoej/udsnit.py` | Laver læsbare udsnit af et kort (ingredienser, næring/allergener, trin), og vender bagsider, der ligger på hovedet. |
+| `vaerktoej/lighed.py` | Bygger `lighed.json`: de bedste alternativer til hver ingrediens, når den ikke findes i butikken. Se "Alternativer i butikken". |
+| `lighed/koblinger.json`, `lighed/rettelser.json` | Hvilken vare i Frida og hvilke engelske navne hver ingrediens svarer til, og rettelser til lighedstabellen i hånden. |
+| `kilder/frida/` | Frida 5.5 fra DTU Fødevareinstituttet (xlsx). Udeladt fra git. |
 | `_forslag/` (midlertidig) | Når flere arbejder samtidig, lægges nye ingredienser/kategorier/allergen-numre her i stedet for direkte i katalogerne. `byg.py --forslag` tjekker med forslagene uden at skrive noget; derefter flettes de ind, og mappen slettes. |
 
 ## Sådan er en opskrift bygget op
@@ -48,6 +51,34 @@ Den originale opskrift bevares altid, men mange ingredienser kan byttes. Det er 
   - **For hver variabel linje:** alternativerne med mængde (`beregnet.alternativer`).
   - **For hver ret:** den løse skabelon (`beregnet.skabelon`), med faste ingredienser og pladser, der kan fyldes fra en gruppe.
   - **For hver ingrediens:** listen `kan_bruges_i`, med alle retter den kan bruges i, også som erstatning. Den svarer på "jeg har 2 peberfrugter – hvad kan jeg lave?".
+
+## Alternativer i butikken
+
+Står man i butikken, og en vare ikke findes, viser appen ét alternativ ("Findes den ikke? Tag … i stedet").
+Kandidaterne er de andre medlemmer af varens byttegrupper, altså samme rolle i retten. Er varen ikke i en
+byttegruppe, er kandidaterne varer i samme fødevaregruppe i Frida, eller varer som folk ofte bytter den med.
+Kandidaterne stilles op mod hinanden med point fra fire datakilder. Det er altså ikke et skøn:
+
+| Signal | Vægt | Kilde |
+|---|---|---|
+| Hvor ofte folk har skrevet, at de brugte den ene i stedet for den anden | 40 % | Recipe1MSubs (kun ikke-kommerciel brug) |
+| Samme fødevaregruppe og, for planter, samme art eller slægt | 30 % | Frida 5.5 |
+| Bruges i samme slags retter | 20 % | FlavorGraph (kun ikke-kommerciel brug) |
+| Næringsindhold (protein, fedt, kulhydrat, fibre, vand) | 10 % | Frida 5.5 |
+
+Byttegruppens "god" giver 10 point ekstra. I appen tæller det også med, om man har varen derhjemme, om den står på
+listen, om butikken har den, og om den er på tilbud.
+
+Sådan opdateres tabellen:
+
+1. Har kataloget fået nye ingredienser? Så tilføj dem til `lighed/koblinger.json`, med Frida-id og engelske navne.
+2. `python ../ikke-kommercielt/udtraek.py`. Det trækker de ikke-kommercielle kilder ud for kataloget.
+3. `python vaerktoej/lighed.py --oversigt oversigt.html`. Det bygger `lighed.json`, og `oversigt.html` viser de tre bedste for hver vare side om side.
+4. Er der noget, du er uenig i? Skriv det i `lighed/rettelser.json`, fx `"pak-choi": {"vaelg": "broccoli"}` eller `{"ikke": ["asparges-groenne"]}`, og kør trin 3 igen.
+5. `python vaerktoej/eksporter_opbrugt.py ../opbrugt`
+
+Bliver appen kommerciel, bruges `lighed.py --kommerciel`. Se `../ikke-kommercielt/README.md`.
+Kilde: © Fødevaredata (frida.fooddata.dk), version 5.5, november 2025, DTU Fødevareinstituttet (CC BY 4.0).
 
 ## Kobling til køleskab og tilbud
 

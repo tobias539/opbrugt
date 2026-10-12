@@ -12,6 +12,7 @@ Kæder:
              webshop giver varer og stregkoder; prisen slås op pr. stregkode i én bestemt butik.
              Kun matchede varer slås op (ca. 100 opslag pr. kæde om måneden).
   Lidl, 365discount: har ingen offentlige hyldepriser. Appen bruger REMA 1000's priser for dem.
+  Hverken Salling Groups eller REMA 1000's priser må bruges kommercielt: se ikke-kommercielt/README.md.
 
 Filer pr. kæde (<k> = rema-1000, netto, foetex):
   raa/<k>.json.gz            kædens varer, kompakt (ikke i git)

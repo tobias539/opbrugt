@@ -24,3 +24,12 @@ emojis/
 
 # Kvitteringer fra appen (billeder og priser; kommer via Google Drive)
 kvitteringer/
+
+# Rådata, der kun må bruges ikke-kommercielt (se ikke-kommercielt/README.md); kun udtrækkene er i git
+ikke-kommercielt/*/raa/
+
+# Frida (DTU Fødevareinstituttet), hentes fra https://doi.org/10.11583/DTU.29500682
+opskriftbank/kilder/frida/
+
+# Oversigten over alternativer (lav den med opskriftbank/vaerktoej/lighed.py --oversigt)
+opskriftbank/lighed/oversigt.html

@@ -92,8 +92,12 @@ def main():
             r["img"] = f"billeder/{o['id']}.jpg"
         ops.append(r)
 
+    # Lighedstabellen (vaerktoej/lighed.py): {ingrediens: {alternativ: [point, begrundelse]}} til "Findes den ikke?" i butikken
+    lighed = {}
+    if (BANK / "lighed.json").exists():
+        lighed = {k: v for k, v in json.load(open(BANK / "lighed.json", encoding="utf-8")).items() if not k.startswith("_") and k in ing}
     data = {"version": b["genereret"], "ingredienser": ing, "grupper": grupper, "opskrifter": ops,
-            "pTilBank": P_TIL_BANK}
+            "pTilBank": P_TIL_BANK, "lighed": lighed}
     js = "window.OPSKRIFTBANK=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n"
     (ud / "opskrifter.js").write_text(js, encoding="utf-8")
     billeder = sum(f.stat().st_size for f in (ud / "billeder").glob("*.jpg"))

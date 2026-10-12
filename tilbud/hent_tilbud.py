@@ -18,7 +18,7 @@ Filer (i samme mappe som scriptet):
   log.txt                                   én linje pr. kørsel (ikke i git)
 
 Bemærk: Tjeks API er ikke officielt åbent (https://tjek.com/apis-and-sdks). Brug det privat og
-sparsomt; scriptet henter kun madaviser og ingen billeder.
+sparsomt; scriptet henter kun madaviser og ingen billeder. Se ikke-kommercielt/README.md.
 """
 import gzip
 import json
