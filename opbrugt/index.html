@@ -249,7 +249,7 @@ button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;fon
 .kogindhold{max-width:640px;margin:0 auto;padding:calc(62px + env(safe-area-inset-top)) 20px calc(36px + env(safe-area-inset-bottom))}
 .kogtilbage{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:81;width:44px;height:44px;border-radius:50%;border:1px solid #e3d5b8;background:rgba(251,246,233,.95);color:#2b2218;font-size:1.7rem;line-height:1;padding:0 0 4px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .kogside .bogtitel{font-size:1.7rem}.kogside .bogh{font-size:1.15rem;margin-top:18px}
-.kogside .bogi,.kogside .bogtrintx{font-size:1rem;line-height:1.5}.kogside .bogtrin{font-size:1.02rem;margin-top:12px}
+.kogside .bogi,.kogside .bogtrintx{font-size:1rem;line-height:1.5}.kogvent{color:#8a6d45;font-style:italic}.kogside .bogtrin{font-size:1.02rem;margin-top:12px}
 body.kogaaben{overflow:hidden}
 .ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
@@ -3725,6 +3725,83 @@ function lavRet(f,rk,valg){
   arkVis(`<h3>${esc(f.navn)}</h3>${(f.trin||[]).length?`<ol style="margin:8px 0 0;padding-left:20px">${f.trin.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`:`<p class="muted">Retten er fra Snak og har ingen opskrift. Spørg i Snak, hvis du vil have en.</p>`}<button class="btn ghost" data-ark="luk">Luk</button>`,
     ark=>{ark.querySelector('[data-ark="luk"]').onclick=arkLuk});
 }
+/* ---------- Trinene følger byttet ----------
+   Er en ingrediens byttet eller udeladt, skal "Sådan gør du" også passe. Først med faste regler – med det samme og
+   uden net: alternativet sættes ind i stedet for originalen (også bøjet, fx "pak choien" → "glaskålen"), og en
+   udeladt ingrediens fjernes fra opremsninger ("sesamfrø, thaibasilikum og mayo" → "sesamfrø og mayo") og fra
+   sammensatte ord ("citrongræsris" → "ris"); sætninger, der stadig nævner den, og trin, der bliver tomme, falder væk.
+   Til en ret fra planen finpudser Claude derefter trinene, hvis der er en API-nøgle (fx at asparges skal knækkes, ikke
+   hakkes), og resultatet gemmes på retten (f.trinTil), så det kun sker én gang pr. byt. */
+/* bøjninger, også med dobbeltkonsonant ("græsset", "kålen", "løgene") – alt andet efter ordet er et sammensat ord */
+const BOGST="a-zæøåéü",BOEJ=/^(.?(en|et|ene|ens|ets|erne|ernes)|ne|nes|er|e|s)?$/i;
+function rxEsc(t){return t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
+function ordFormer(id,l){
+  const v=[l&&l.n,OI[id]&&OI[id].n,...((OI[id]&&OI[id].syn)||[])].filter(Boolean)
+    .map(x=>x.toLowerCase().replace(/\(.*?\)/g," ").replace(/[\d%,-]+/g," ").replace(/\s+/g," ").trim()).filter(x=>x.length>=3);
+  return [...new Set(v)].sort((a,b)=>b.length-a.length);
+}
+function tekstErstat(t,former,nyt){
+  for(const v of former)t=t.replace(new RegExp(`(^|[^${BOGST}])(${rxEsc(v)})([${BOGST}]*)`,"gi"),(m,pre,ord,suf)=>{
+    /* bøjningen hænges kun på et navn i ét ord ("glaskålen"), ikke på fx "grønne asparges" */
+    const ny=ord[0]!==ord[0].toLowerCase()?stort(nyt):nyt;return pre+ny+(nyt.includes(" ")&&BOEJ.test(suf)?"":suf)});
+  return t;
+}
+/* null = sætningen handler om det udeladte og skal væk */
+function tekstUdelad(t,former){
+  const stor=t&&t[0]!==t[0].toLowerCase();let s=t;
+  for(const v of former){
+    const e=rxEsc(v),F=`[^${BOGST}]`,W=`[${BOGST}]*`;
+    s=s.replace(new RegExp(`(^|${F})${e}([${BOGST}]{3,})`,"gi"),(m,pre,suf)=>BOEJ.test(suf)?m:pre+suf)
+      .replace(new RegExp(`,\\s*${e}${W}(?=${F}|$)`,"gi"),"")
+      .replace(new RegExp(`\\s+og\\s+${e}${W}(?=${F}|$)`,"gi"),"")
+      .replace(new RegExp(`(^|${F})${e}${W},\\s*`,"gi"),"$1")
+      .replace(new RegExp(`(^|${F})${e}${W}\\s+og\\s+`,"gi"),"$1");
+    if(new RegExp(`(^|${F})${e}`,"i").test(s))return null;
+  }
+  s=s.replace(/\s{2,}/g," ").trim();
+  return stor&&s?stort(s):s;
+}
+function trinTil(r,valg,fra){
+  const skift=[],vaek=[];
+  for(const [i,v] of Object.entries(valg||{})){
+    const l=r.ing[+i];if(!l||v===l.i)continue;
+    if(v==="-")vaek.push(ordFormer(l.i,l));else if(OI[v])skift.push([ordFormer(l.i,l),OI[v].n.toLowerCase()]);
+  }
+  const fix=t=>{if(!t)return t;let x=t;for(const [f,ny] of skift)x=tekstErstat(x,f,ny);for(const f of vaek){x=tekstUdelad(x,f);if(x==null)return null}return x};
+  if(!skift.length&&!vaek.length)return {trin:r.trin||[],fix:t=>t};
+  const noegle=JSON.stringify(valg);
+  if(fra&&fra.trinTil&&fra.trinTil.noegle===noegle)return {trin:fra.trinTil.trin,fix:t=>fix(t)??""};
+  const trin=[];
+  for(const t of r.trin||[]){
+    const x=(t.x||[]).map(fix).filter(y=>y);
+    if((t.x||[]).length&&!x.length)continue;
+    const vig=fix(t.vig),tip=fix(t.tip);
+    trin.push({t:fix(t.t)||"",x,...(vig?{vig}:{}),...(tip?{tip}:{})});
+  }
+  return {trin,fix:t=>fix(t)??""};
+}
+let kogVenter=false;
+async function trinFinpuds(f,r){
+  const valg=f.byt||{},noegle=JSON.stringify(valg);
+  if(!sample||!Object.keys(valg).length||(f.trinTil&&f.trinTil.noegle===noegle))return;
+  const aendr=Object.entries(valg).map(([i,v])=>{const l=r.ing[+i];return !l||v===l.i?null:v==="-"?`${l.n}: udelades`:`${l.n} → ${OI[v]?OI[v].n:v}`}).filter(Boolean);
+  if(!aendr.length)return;
+  const prompt=`Opskrift: ${r.t}${r.u?" "+r.u:""}.
+Ingredienser: ${r.ing.map(l=>l.n).join(", ")}.
+Det er ændret: ${aendr.join("; ")}.
+Omskriv trinene, så de passer til ændringerne: brug alternativet i stedet for originalen, med den tilberedning det kræver (skæring, stegetid osv.), og fjern det udeladte helt – også trin, der kun handler om det. Ret ikke andet, behold rækkefølgen, og skriv på dansk i samme stil som originalen.
+Trin: ${JSON.stringify(r.trin||[])}
+Returnér KUN JSON: {"trin":[{"t":"titel","x":["sætning", ...],"vig":tekst eller null,"tip":tekst eller null}]}`;
+  kogVenter=true;kogTegn(r);
+  try{
+    const j=await sample.json(prompt,{modelTier:"quick",hvad:"opsk"});
+    if(j&&Array.isArray(j.trin)&&j.trin.length&&j.trin.every(t=>t&&typeof t.t==="string"&&Array.isArray(t.x))){
+      f.trinTil={noegle,trin:j.trin.map(t=>({t:String(t.t),x:t.x.map(String).filter(Boolean),...(t.vig?{vig:String(t.vig)}:{}),...(t.tip?{tip:String(t.tip)}:{})}))};save();
+    }
+  }catch(e){}
+  kogVenter=false;kogTegn(r);
+}
+function kogTegn(r){const ind=document.querySelector(".kogside .kogindhold");if(ind&&bogFast&&bogFast.opskrift===r.id)ind.innerHTML=retBlokke(r).join("")}
 /* ---------- Kogevisning ----------
    "Lav retten" åbner opskriften over hele skærmen: kun opskriften (ingredienser og trin, med retten fra planens antal
    personer, alternativer og udeladte ting) og en tilbageknap øverst til venstre. Telefonens egen tilbage-knap eller
@@ -3746,11 +3823,11 @@ function kogVis(r,f){
   document.body.appendChild(el);document.body.classList.add("kogaaben");
   el.querySelector(".kogtilbage").onclick=()=>{if(history.state&&history.state.kog)history.back();else kogLuk()};
   if(!kogAaben){history.pushState({kog:1},"");kogAaben=true}
-  kogHoldTaendt();
+  kogHoldTaendt();if(f)trinFinpuds(f,r);
   el.querySelector(".kogtilbage").focus();
 }
 function kogLuk(){
-  kogAaben=false;bogFast=null;kogSlip();
+  kogAaben=false;bogFast=null;kogVenter=false;kogSlip();
   document.querySelectorAll(".kogside").forEach(x=>x.remove());document.body.classList.remove("kogaaben");
   show("t-snak");window.scrollTo(0,0);
 }
@@ -4481,9 +4558,10 @@ function bogRetSide(r,i){
 function bogSideHtml(i){return i===0||!ORMAP[bog.liste[i-1]]?bogForside():bogRetSide(ORMAP[bog.liste[i-1]],i)}
 /* Opskriften som blokke, der fordeles på bogens sider */
 function retBlokke(r){
-  const fra=bogFast&&bogFast.opskrift===r.id?bogFast:null;
-  const n=(fra&&fra.personer)||st.settings.P,m=oMatch(r,n,oHar(),fra?{...(fra.byt||{})}:oValg[r.id]),p=retPris(r),ap=allergiProblem(r),b=[];
-  b.push(`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${r.u?`<p class="bogunder">${esc(r.u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${n} ${n===1?"person":"personer"}</p>`);
+  const fra=bogFast&&bogFast.opskrift===r.id?bogFast:null,valg=fra?{...(fra.byt||{})}:oValg[r.id];
+  const n=(fra&&fra.personer)||st.settings.P,m=oMatch(r,n,oHar(),valg),p=retPris(r),ap=allergiProblem(r),b=[];
+  const tl=trinTil(r,valg,fra),u=r.u&&tl.fix(r.u);
+  b.push(`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${u?`<p class="bogunder">${esc(u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${n} ${n===1?"person":"personer"}</p>`);
   if(ap.length)b.push(`<p class="bogadvar">⚠ ${esc(allergiTekst(ap))}.</p>`);
   if(fra){const byttet=m.linjer.filter(x=>x.erst).length,ude=m.linjer.filter(x=>x.status==="udeladt").length;
     b.push(`<p class="bogkoeb">Fra planen, ${esc(dayLabel(fra.dato,true))}.${byttet?` ${byttet} ${byttet===1?"ingrediens er byttet":"ingredienser er byttet"}.`:""}${ude?` ${ude} udelades.`:""}</p>`)}
@@ -4494,8 +4572,9 @@ function retBlokke(r){
   const basis=m.linjer.filter(x=>x.basis);
   if(basis.length)b.push(`<p class="bogi bogbasis">Desuden: ${esc(basis.map(x=>x.navn.toLowerCase()).join(", "))}</p>`);
   b.push(`<h3 class="bogh">Sådan gør du</h3>`);
-  (r.trin||[]).forEach((t,i)=>{
-    b.push(`<p class="bogtrin"><b>${i+1}. ${esc(t.t||"")}</b></p>`);
+  if(fra&&kogVenter)b.push(`<p class="bogtrintx kogvent">Trinene tilpasses det, I har byttet …</p>`);
+  tl.trin.forEach((t,i)=>{
+    b.push(`<p class="bogtrin"><b>${i+1}. ${esc(t.t||"Fortsæt")}</b></p>`);
     for(const x of t.x||[])b.push(`<p class="bogtrintx">${esc(x)}</p>`);
     if(t.vig)b.push(`<p class="bogtrintx"><b>Vigtigt:</b> ${esc(t.vig)}</p>`);
     if(t.tip)b.push(`<p class="bogtrintx"><i>Tip: ${esc(t.tip)}</i></p>`);
@@ -5121,7 +5200,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="67";
+const APP_VERSION="68";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
