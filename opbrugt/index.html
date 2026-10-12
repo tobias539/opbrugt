@@ -142,6 +142,16 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .tiles.en{grid-template-columns:1fr;margin-top:0}
 .tiles.en .tile{display:flex;align-items:center;gap:14px;text-align:left;padding:14px}.tiles.en .lb{margin-top:0}
 .tile:disabled{opacity:.45;cursor:default}
+/* Planlægningens valg: store grønne knapper som "Planlæg"-knapperne. Den fyldte er den, man oftest trykker på. */
+.storknapper{display:flex;flex-direction:column;gap:10px}
+.storknap{width:100%;border-radius:22px;border:0;background:var(--leaf);color:var(--card);font:inherit;font-family:var(--display);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:16px 14px;text-align:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.14);min-height:96px}
+.storknap .sk-stor{font-size:1.45rem;line-height:1.15}
+.storknap .sk-info{font-family:var(--body);font-weight:400;font-size:.88rem;opacity:.85;margin-top:4px}
+.storknap.hoej{min-height:150px}.storknap.hoej .sk-stor{font-size:1.75rem}
+.storknap.lys{background:var(--card);color:var(--leaf);border:2px solid var(--leaf);box-shadow:none}
+.storknap:disabled{opacity:.45;cursor:default}
+.feltnavn{font-family:var(--display);font-weight:800;color:var(--leaf);margin:16px 2px 6px}
+.tekstfelt{width:100%;text-align:left;background:var(--bg);border:2px solid var(--leaf);border-radius:14px;padding:14px;font:inherit;color:var(--muted);cursor:text}
 .chip.lille{padding:5px 11px;font-size:.9rem}
 .genkendt{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:1.05rem}
 .genkendt .x{font-size:.95rem;color:var(--leaf);text-decoration:underline;padding:2px 0}
@@ -2645,8 +2655,8 @@ function forventetSkab(til){
 function skabLinjer(fs){return [...Object.entries(fs.skab).map(([k,v])=>({k,navn:P[k].n,tekst:`ca. ${fmt(k,v.amt)}`,dage:v.dage})),...fs.fri.map(f=>({fri:f.navn,navn:f.navn,tekst:f.niveau==="lidt"?"lidt":f.niveau==="noget"?"noget":"",dage:null}))]}
 
 /* ---------- Madplan for næste uge ----------
-   Påmindelse, når næste uges tilbudsaviser er klar. Skabet antages at være rigtigt. Flowet: tilføj eller ændr retter
-   → vælg, hvordan retterne findes (forslag, kategori eller snak) → sæt flueben eller OK. */
+   Påmindelse, når næste uges tilbudsaviser er klar. Skabet antages at være rigtigt. Flowet: tilføj eller ændr (byt) retter
+   → vælg, hvordan retterne findes (automatisk anbefaling, kategori eller brugerspecifikt i Snak) → sæt flueben eller OK. */
 function naesteUge(){
   const t0=todayIso();
   const fra=(TB.meta?.aviser||[]).filter(a=>a.fra>t0&&tKaedeAktiv(a.kaede)).map(a=>a.fra).sort()[0];
@@ -2672,13 +2682,13 @@ function ugePeriode(hvilken){
 /* Retterne på planen i perioden. "Denne uge" tager også dagens ret med, selvom perioden så starter i morgen. */
 function periodeRetter(u){const fra=u.hvilken==="denne"?todayIso():u.start;return st.fast.filter(f=>f.dato>=fra&&f.dato<=u.slut).sort((a,b)=>a.dato<b.dato?-1:a.dato>b.dato?1:0)}
 function periodeLedige(u){return u.slut>=u.start?vaelgDage(u.start,7,u.slut).length:0}
-/* Har perioden allerede retter, vælger man først "Tilføj retter" eller "Ændr retter"; ellers går man direkte til at finde retter */
+/* Første skærm er altid "Tilføj retter" eller "Ændr retter" */
 function ugeplanStart(hvilken){
   const per=ugePeriode(hvilken);
   if(!per){toast("Næste uges tilbudsaviser er ikke klar endnu");return}
   const {start,slut}=per,u={hvilken,start,slut},retter=periodeRetter(u);
   if(slut<start&&!retter.length){toast("Resten af denne uge er planlagt. Planlæg næste uge.");return}
-  up={...u,trin:retter.length?"valg":"hvordan",prio:{...(st.settings.typer||{})},maal:maalAf(st.settings.maal),forslag:[],valgt:new Set(),aaben:-1,kategori:null,fejl:""};
+  up={...u,trin:"valg",prio:{...(st.settings.typer||{})},maal:maalAf(st.settings.maal),forslag:[],valgt:new Set(),aaben:-1,kategori:null,fejl:""};
   renderUgeplan();window.scrollTo({top:0,behavior:"smooth"});
 }
 document.getElementById("planDenne").onclick=()=>ugeplanStart("denne");
@@ -2696,9 +2706,9 @@ function renderUgeplan(){
   el.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>ugeplanHandling(b));
 }
 /* Planlægningen er delt op i skærme, der hver passer på telefonen uden at scrolle:
-   tilføj eller ændr (kun når der er retter på planen) → hvordan → hvad er vigtigt (anbefal) eller kategori → arbejder
+   tilføj eller ændr (→ byt en ret ud) → hvordan → hvad er vigtigt (automatisk) eller kategori → arbejder
    → forslag (→ én ret ad gangen).
-   "Sig, hvad du har lyst til" går til Snak.
+   "Brugerspecifik" går til Snak med tastaturet fremme.
    Knapperne står altid nederst, og × lukker. */
 function skaermHtml(titel,under,krop,knapper){
   const i={valg:0,aendr:0,hvordan:1,prio:2,kategorier:2,arbejder:3,forslag:3,tjek:3}[up.trin]??0;
@@ -2713,31 +2723,35 @@ function ugeplanHtml(){
   const retter=periodeRetter(up),ledige=periodeLedige(up),nRetter=n=>n===1?"1 ret":n+" retter";
   if(up.trin==="valg"){
     const tomme=ledige?`${ledige} ${ledige===1?"aften er":"aftener er"} ikke planlagt endnu`:"Alle aftener er planlagt";
-    return skaermHtml(up.hvilken==="naeste"?"Planlæg næste uge":"Planlæg denne uge",`${esc(periode)} · ${nRetter(retter.length)} på planen`,
-      `<div class="tiles en">
-        <button class="tile" data-u="hvordan" ${ledige?"":"disabled"}><span class="ik">➕</span><span><span class="lb">Tilføj retter</span><span class="sm">${tomme}</span></span></button>
-        <button class="tile" data-u="aendr" ${retter.length?"":"disabled"}><span class="ik">✏️</span><span><span class="lb">Ændr retter</span><span class="sm">${retter.length?`Fjern ${retter.length===1?"retten":"retter"} fra planen, og find nye i stedet`:"Der er ingen retter på planen"}</span></span></button>
+    return skaermHtml(up.hvilken==="naeste"?"Planlæg næste uge":"Planlæg denne uge",`${esc(periode)} · ${retter.length?nRetter(retter.length)+" på planen":"ingen retter på planen endnu"}`,
+      `<div class="storknapper">
+        <button class="storknap hoej" data-u="hvordan" ${ledige?"":"disabled"}><span class="sk-stor">Tilføj retter</span><span class="sk-info">${tomme}</span></button>
+        <button class="storknap lys" data-u="aendr" ${retter.length?"":"disabled"}><span class="sk-stor">Ændr retter</span><span class="sk-info">${retter.length?`Byt ${retter.length===1?"retten":"en ret"} ud, eller fjern den fra planen`:"Der er ingen retter på planen"}</span></button>
       </div>`,"");
   }
-  if(up.trin==="aendr")return skaermHtml("Ændr retter",`${esc(periode)}. Tryk × ved det, I ikke skal have, og tilføj nye retter bagefter.`,
-    retter.length?`<div class="list">${retter.map(f=>{const r=f.opskrift&&ORMAP[f.opskrift];return `<div class="item"><div class="grow">${r?`<button class="fsknap" data-oopen="${esc(r.id)}" style="padding:0"><b>${esc(f.navn)}</b></button>`:`<b>${esc(f.navn)}</b>`}<div class="amt">${erIndkoebt(f)?"Købt ind":"Ikke købt ind endnu"}</div></div><button class="x" data-u="fjernRet" data-id="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen">×</button></div>`}).join("")}</div>`
+  if(up.trin==="aendr")return skaermHtml("Ændr retter",`${esc(periode)}. Tryk "Byt" for at få en anden ret i stedet, eller × for at fjerne den.`,
+    retter.length?`<div class="list">${retter.map(f=>{const r=f.opskrift&&ORMAP[f.opskrift];return `<div class="item"><div class="grow">${r?`<button class="fsknap" data-oopen="${esc(r.id)}" style="padding:0"><b>${esc(f.navn)}</b></button>`:`<b>${esc(f.navn)}</b>`}<div class="amt">${erIndkoebt(f)?"Købt ind":"Ikke købt ind endnu"}</div></div><button class="btn ghost lille" data-u="byt" data-id="${esc(f.id)}" aria-label="Byt ${esc(f.navn)} ud">Byt</button><button class="x" data-u="fjernRet" data-id="${esc(f.id)}" aria-label="Fjern ${esc(f.navn)} fra planen">×</button></div>`}).join("")}</div>`
       :`<p class="muted" style="margin:0">Der er ingen retter på planen i perioden længere.</p>`,
     `<button class="btn ghost" data-u="tilbage" data-til="valg">Tilbage</button><span class="grow"></span><button class="btn" data-u="hvordan" ${ledige?"":"disabled"}>Tilføj retter</button>`);
   if(up.trin==="prio")return skaermHtml("Hvad er vigtigt denne gang?","I denne rækkefølge. Tryk for at ændre.",
     `${maalHtml(up.maal,"data-u")}<div class="tiles kompakt">${MTYPER.map(([id,ik,lb])=>{const on=up.prio[id]>0;return `<button class="tile" data-u="prio" data-id="${id}" aria-pressed="${on}"><span class="ik">${ik}</span><span class="lb">${esc(lb)}</span>${on?`<span class="valgt" aria-hidden="true">✓</span>`:""}</button>`}).join("")}</div>`,
     `<button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button><span class="grow"></span><button class="btn" data-u="find" data-frem>Find retter</button>`);
-  if(up.trin==="hvordan")return skaermHtml("Hvordan vil du finde retterne?","",
-    `<div class="tiles en">
-      <button class="tile" data-u="anbefal"><span class="ik">✨</span><span><span class="lb">Giv mig en fuld pakke</span><span class="sm">${(n=>n===1?"1 ret":n+" retter")(Math.max(1,vaelgDage(up.start,st.settings.M,up.slut).length))} og hele indkøbet – pakkerne bliver brugt op</span></span></button>
-      <button class="tile" data-u="kategorier"><span class="ik">🗂️</span><span><span class="lb">Vælg efter kategori</span><span class="sm">Sundt, hurtigt, billigt …</span></span></button>
-      <button class="tile" data-u="snak"><span class="ik">💬</span><span><span class="lb">Sig, hvad du har lyst til</span><span class="sm">Fx "jeg har lyst til lasagne"</span></span></button>
-    </div>`,
-    retter.length?`<button class="btn ghost" data-u="tilbage" data-til="valg">Tilbage</button>`:"");
+  if(up.trin==="hvordan"){
+    const byt=up.byt;
+    return skaermHtml(byt?`Hvad skal der være i stedet for ${esc(byt.navn)}?`:"Hvordan vil du finde retterne?","",
+    `<div class="storknapper">
+      <button class="storknap hoej" data-u="anbefal"><span class="sk-stor">Automatisk anbefaling</span><span class="sk-info">${byt?"Forslag, der passer til resten af ugen":`${nRetter(Math.max(1,vaelgDage(up.start,st.settings.M,up.slut).length))} og hele indkøbet – pakkerne bliver brugt op`}</span></button>
+      <button class="storknap lys" data-u="kategorier"><span class="sk-stor">Kategori</span><span class="sk-info">Sundt, hurtigt, billigt …</span></button>
+    </div>
+    <div class="feltnavn">Brugerspecifik</div>
+    <button class="tekstfelt" data-u="snak">${byt?`Hvad vil du have i stedet for ${esc(byt.navn.toLowerCase())}?`:"Skriv, hvad du har lyst til …"}</button>`,
+    `<button class="btn ghost" data-u="tilbage" data-til="${byt?"aendr":"valg"}">Tilbage</button>`);
+  }
   if(up.trin==="kategorier")return skaermHtml("Vælg en kategori","",
     `<div class="tiles kompakt">${MTYPER.map(([id,ik,lb])=>`<button class="tile" data-u="kategori" data-id="${id}"><span class="ik">${ik}</span><span class="lb">${esc(lb)}</span></button>`).join("")}</div>`,
     `<button class="btn ghost" data-u="tilbage" data-til="hvordan">Tilbage</button>`);
   const kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
-  const titel=kat?esc(kat[2]):up.hvilken==="naeste"?"Forslag til næste uge":"Forslag til denne uge";
+  const titel=up.byt?`I stedet for ${esc(up.byt.navn)}`:kat?esc(kat[2]):up.hvilken==="naeste"?"Forslag til næste uge":"Forslag til denne uge";
   if(up.trin==="arbejder"){const f=up.fremdrift||{pct:0,tekst:"Samler skab, tilbud og opskrifter"};return skaermHtml(titel,"",
     `<div class="fremdrift" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${f.pct}" id="upBar"><i style="width:${f.pct}%"></i></div>
     <p style="margin:6px 0 0;display:flex;gap:8px"><b id="upPct" style="min-width:3.2em">${f.pct} %</b><span id="upTekst">${tanke(f.tekst)}</span></p>
@@ -2747,12 +2761,12 @@ function ugeplanHtml(){
   if(up.trin==="forslag"){
     if(up.aaben>=0&&up.forslag[up.aaben])return forslagDetalje(up.aaben);
     const valgte=[...up.valgt].filter(i=>!paaPlan(up.forslag[i])).length,aabne=up.forslag.filter(f=>!paaPlan(f)).length;
-    const pk=!kat&&up.forslag.length?pakkeOversigt(up.forslag.filter((f,i)=>up.valgt.has(i)||paaPlan(f))):null;
-    return skaermHtml(titel,`${esc(periode)}. Fjern flueben ved det, du ikke vil have.`,
+    const pk=!kat&&!up.byt&&up.forslag.length?pakkeOversigt(up.forslag.filter((f,i)=>up.valgt.has(i)||paaPlan(f))):null;
+    return skaermHtml(titel,up.byt?"Sæt flueben ved den ret, der skal i stedet.":`${esc(periode)}. Fjern flueben ved det, du ikke vil have.`,
       `${pk&&pk.retter?`<p class="pakke">📦 Fuld pakke: ${pk.retter} ${pk.retter===1?"ret":"retter"} · ${pk.varer} ${pk.varer===1?"vare":"varer"} at købe${pk.butik?` · ca. ${Math.round(pk.kr)} kr i ${esc(pk.butik)}`:""}</p>`:""}${up.fejl?`<p class="bad" style="margin:0 0 8px">${esc(up.fejl)}</p>${up.fejlDetalje?`<p class="muted" style="margin:0 0 8px;font-size:.75rem">Teknisk: ${esc(up.fejlDetalje)}</p>`:""}`:""}
       ${up.forslag.length?`<div class="list">${up.forslag.map((f,i)=>forslagKort(f,i)).join("")}</div>`:""}
       ${up.allergiMangel?`<div class="allergiboks" style="margin-top:10px">Der er ikke flere ${esc(allergiNavne())}-fri opskrifter, der passer. Læg jeres egne op under <button class="x" data-u="egenOpsk" style="font-size:inherit;padding:0;color:var(--leaf);text-decoration:underline">Opskrifter › Tilføj din egen</button>.</div>`:""}`,
-      `<button class="btn ghost" data-u="tilbage" data-til="${kat?"kategorier":"prio"}" aria-label="Tilbage">‹</button><button class="btn ghost" data-u="igen">Nye forslag</button><span class="grow"></span>${aabne?`<button class="btn" data-u="okValgte" ${valgte?"":"disabled"}>OK${valgte&&valgte<aabne?` (${valgte})`:""}</button>`:`<button class="btn" data-u="luk">Færdig</button>`}`);
+      `<button class="btn ghost" data-u="tilbage" data-til="${kat?"kategorier":"prio"}" aria-label="Tilbage">‹</button><button class="btn ghost" data-u="igen">Nye forslag</button><span class="grow"></span>${aabne?`<button class="btn" data-u="okValgte" ${valgte?"":"disabled"}>${up.byt?"Byt ud":`OK${valgte&&valgte<aabne?` (${valgte})`:""}`}</button>`:`<button class="btn" data-u="luk">Færdig</button>`}`);
   }
   return "";
 }
@@ -2801,14 +2815,22 @@ function ugeplanHandlingInner(b){
   if(u==="senere"){st.ugeplanUdsat=naesteUge();changed();return}
   if(!up)return;
   if(u==="luk"){if(up.forslag.some(paaPlan))st.ugeplanFor=up.start;up=null;changed();return}
-  if(u==="aendr"){up.trin="aendr";renderUgeplan();return}
+  if(u==="aendr"){up.trin="aendr";up.byt=null;renderUgeplan();return}
+  if(u==="byt"){const f=st.fast.find(x=>x.id===b.dataset.id);if(!f)return;up.byt={id:f.id,dato:f.dato,navn:f.navn};up.forslag=[];up.valgt=new Set();up.trin="hvordan";renderUgeplan();return}
   if(u==="fjernRet"){const f=st.fast.find(x=>x.id===b.dataset.id);fjernFast(b.dataset.id);changed();if(f)toast(f.navn+" er fjernet fra planen");return}
-  if(u==="hvordan"||u==="tilbage"){up.trin=b.dataset.til||"hvordan";up.aaben=-1;renderUgeplan();return}
+  if(u==="hvordan"||u==="tilbage"){up.trin=b.dataset.til||"hvordan";up.aaben=-1;if(up.trin==="valg"||up.trin==="aendr")up.byt=null;renderUgeplan();return}
   if(u==="kategorier"){up.trin="kategorier";renderUgeplan();return}
   if(u==="egenOpsk"){show("t-opsk");opskMode("egen");return}
   if(u==="maal"){const id=b.dataset.id;up.maal[id]=!up.maal[id];renderUgeplan();return}
   if(u==="prio"){const id=b.dataset.id;if(up.prio[id]>0)delete up.prio[id];else up.prio[id]=1;renderUgeplan();return}
-  if(u==="snak"){up=null;renderUgeplan();show("t-chat");const c=document.getElementById("chatIn");c.placeholder="Fx: jeg har lyst til lasagne på søndag";c.focus();return}
+  if(u==="snak"){
+    /* Byttes en ret ud via Snak, fjernes den gamle med det samme (og dens varer fra indkøbslisten) */
+    const byt=up.byt&&st.fast.find(x=>x.id===up.byt.id);
+    if(byt){fjernFast(byt.id);toast(byt.navn+" er fjernet fra planen. Skriv, hvad du vil have i stedet.")}
+    up=null;changed();show("t-chat");snakDel("snak");
+    const c=document.getElementById("chatIn");c.placeholder=byt?`Fx: i stedet for ${byt.navn.toLowerCase()} vil jeg have lasagne`:"Fx: jeg har lyst til lasagne på søndag";
+    c.focus();return;
+  }
   if(u==="anbefal"){up.kategori=null;up.trin="prio";renderUgeplan();return}
   if(u==="find"){up.kategori=null;hentUgeforslag();return}
   if(u==="kategori"){up.kategori=b.dataset.id;hentUgeforslag();return}
@@ -2816,8 +2838,9 @@ function ugeplanHandlingInner(b){
   if(u==="tjekMangler"){const n=b.dataset.n,m=up.tjek.mangler;m.has(n)?m.delete(n):m.add(n);renderUgeplan();return}
   const i=+b.dataset.i;
   if(u==="aabn"){up.aaben=up.aaben===i?-1:i;renderUgeplan();return}
-  if(u==="vaelg"){b.checked?up.valgt.add(i):up.valgt.delete(i);renderUgeplan();return}
-  if(u==="vaelgDetalje"){up.valgt.has(i)?up.valgt.delete(i):up.valgt.add(i);up.aaben=-1;renderUgeplan();return}
+  /* Byttes en ret ud, kan der kun vælges én */
+  if(u==="vaelg"){if(b.checked){if(up.byt)up.valgt.clear();up.valgt.add(i)}else up.valgt.delete(i);renderUgeplan();return}
+  if(u==="vaelgDetalje"){if(up.valgt.has(i))up.valgt.delete(i);else{if(up.byt)up.valgt.clear();up.valgt.add(i)}up.aaben=-1;renderUgeplan();return}
   if(u==="fortryd"){const f=up.forslag[i];if(f&&f._fastId)fjernFast(f._fastId);if(f)delete f._fastId;up.valgt.delete(i);changed();toast("Fjernet fra planen");return}
   if(u==="ok"){tilfoejMedTjek([i]);return}
   if(u==="okAlle"){tilfoejMedTjek(up.forslag.map((_,j)=>j));return}
@@ -2891,6 +2914,9 @@ function tjekHtml(){
     `<button class="btn ghost" data-u="tilbage" data-til="forslag">‹ Tilbage</button><span class="grow"></span><button class="btn" data-u="tjekOk" ${klar?"":"disabled"}>Sæt på planen</button>`);
 }
 function ugeTilfoej(idx,ekstra){
+  /* Byt: den gamle ret fjernes (og dens varer fra indkøbslisten), og den nye kommer på samme dag */
+  const byt=up.byt&&st.fast.find(x=>x.id===up.byt.id);
+  if(byt)fjernFast(byt.id);
   let n=0;const ledige=ugeDage(up.start).filter(d=>d<=(up.slut||d));
   for(const i of idx){
     const f=up.forslag[i];if(!f||paaPlan(f))continue;
@@ -2899,6 +2925,13 @@ function ugeTilfoej(idx,ekstra){
     f.dag=dato;placer(f,dato);up.valgt.delete(i);n++;
   }
   st.ugeplanFor=up.start;
+  if(byt){
+    /* tilbage til listen over retter, så man kan ændre flere */
+    const ny=idx.map(i=>up.forslag[i]).find(paaPlan);
+    up.byt=null;up.forslag=[];up.valgt=new Set();up.trin="aendr";
+    changed();toast((ny?`${byt.navn} er byttet ud med ${ny.navn}`:`${byt.navn} er fjernet fra planen`)+(ekstra?". "+ekstra:""));
+    return;
+  }
   if(n&&up.forslag.every((f,j)=>paaPlan(f)||!up.valgt.has(j)))up=null; /* alle valgte er sat på: færdig */
   changed();if(n)toast((n===1?"1 ret er sat på planen":n+" retter er sat på planen")+(ekstra?". "+ekstra:""));
 }
@@ -2921,11 +2954,12 @@ let sidstSkjult=0;document.addEventListener("visibilitychange",()=>{if(document.
 async function hentUgeforslag(){
   if(!sample){up.trin="forslag";up.forslag=[];up.fejl=fejlTekst({code:"no_key"});renderUgeplan();return}
   up.trin="arbejder";up.fejl="";up.fejlDetalje="";up.aaben=-1;up.fremdrift={pct:2,tekst:"Samler skab, tilbud og opskrifter"};renderUgeplan();
-  const s=st.settings,slut=up.slut||addDays(up.start,6),kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori);
-  const dage=vaelgDage(up.start,kat?7:s.M,slut);
+  const s=st.settings,slut=up.slut||addDays(up.start,6),kat=up.kategori&&MTYPER.find(m=>m[0]===up.kategori),byt=up.byt;
+  /* Byt: forslag til den ene dag, hvor den gamle ret står */
+  const dage=byt?[byt.dato]:vaelgDage(up.start,kat?7:s.M,slut);
   /* Hvad der behandles: butikker, tilbud, opskrifter, skab – og hvor mange madplaner det giver at vælge imellem */
   const iPerioden=TB.tilbud.filter(x=>x.f<=slut&&x.t>=up.start&&tKaedeAktiv(x.k));
-  const nButikker=new Set(iPerioden.map(x=>T_NORM(x.k))).size,nOpsk=oAlle().filter(r=>!nyligFor(r)&&allergiOk(r)).length,antal=kat?6:dage.length;
+  const nButikker=new Set(iPerioden.map(x=>T_NORM(x.k))).size,nOpsk=oAlle().filter(r=>!nyligFor(r)&&allergiOk(r)).length,antal=byt?4:kat?6:dage.length;
   const komb=binom(nOpsk,antal);
   up.statistik=`Ca. ${komb.toLocaleString("da-DK")} mulige madplaner`;
   renderUgeplan();
@@ -2938,8 +2972,8 @@ async function hentUgeforslag(){
   const tidl=up.forslag.filter(f=>!paaPlan(f)).map(f=>f.navn);
   const prompt=`Du er madassistenten i appen "Mad app". Lav forslag til aftensmad i ugen ${dayLabel(up.start,true)} – ${dayLabel(slut,true)}. Skriv på dansk.
 ${allergier().length?`ALLERGI – VIGTIGST AF ALT: Husstanden tåler ikke ${allergiNavne()} (heller ikke spor). Foreslå KUN retter fra husstandens opskrifter herunder, og sæt "opskrift" til id'et – de er tjekket for allergener. Find aldrig selv på retter, og giv hellere færre forslag end en ret, der ikke står på listen.\n`:""}Husstand: ${s.P} personer. Butikker: ${s.butikker.join(", ")||"ikke angivet"}. ${handelTekst()} Læg det, der holder kortest (fisk, hakket kød, salat), lige efter en indkøbsdag.
-${kat?`Alle forslag skal være: ${kat[3]}. Giv 6 forskellige forslag. Sæt "dag" til en af disse datoer, helst forskellige: ${dage.join(", ")}.`:`Én ret pr. dag på præcis disse datoer: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}.`}
-${maalTekst(m,kat?"":prio)}${!kat&&prio?`
+${byt?`Retten "${byt.navn}" den ${dayLabel(byt.dato,true)} skal byttes ud med noget andet. Giv 4 forskellige forslag, der kan erstatte den${kat?`, og som alle er: ${kat[3]}`:""}. Sæt "dag" til ${byt.dato} på dem alle. Foreslå ikke ${byt.navn}.`:kat?`Alle forslag skal være: ${kat[3]}. Giv 6 forskellige forslag. Sæt "dag" til en af disse datoer, helst forskellige: ${dage.join(", ")}.`:`Én ret pr. dag på præcis disse datoer: ${dage.map(d=>dayLabel(d,true)+"="+d).join(", ")}.`}
+${maalTekst(m,kat?"":prio)}${!kat&&!byt&&prio?`
 Vælg retter, så ugen samlet rammer prioriteterne (en ret kan ramme flere, og der kan være flere prioriteter end retter). Skriv i "type" den prioritet, retten især rammer.`:""}
 ${(s.indkobGange||1)>1?`INDKØBSDAGE: De handler ind op til ${Math.min(3,s.indkobGange)} gange i perioden. Vælg selv indkøbsdagene (højst ${Math.min(3,s.indkobGange)} forskellige datoer, den første senest på dagen for den første ret), og sæt "indkob" på hver ret til datoen, hvor dens varer købes. Brug indkøbsdagene til to ting: 1) friskhed – kød, fisk og friske grøntsager købes højst 2 dage før retten; 2) besparelse – læg indkøbet på en dag, hvor tilbuddet på rettens hovedingrediens gælder (se [gælder …] ved tilbuddene), fx en lørdag, hvis weekendtilbuddet er godt.`:""}
 Det har de i skabet, som ikke allerede er sat af til planen${m.skab?" (det, der holder kortest, først)":" (kan bruges, men det er ikke et krav)"}: ${skabTxt}
@@ -2950,9 +2984,9 @@ GRUND TIL HVER RET: Skriv i "hvorfor" én god og ægte grund, der starter med "F
 - sundhed: "Fordi I ikke har fået fisk i 2 uger" (fisk 1–2 gange om ugen, gerne grønt og fuldkorn)
 - favorit: "Fordi det er en af jeres favoritter"
 Brug den grund, der passer bedst til rækkefølgen ovenfor.
-${kat?"":`FULD PAKKE: Planlæg perioden som én pakke. Vælg retterne, så de pakker, der skal købes, bliver brugt helt op på tværs af retterne (fx en pose løg, en bakke champignon, en pakke fløde), og så der bliver mindst muligt tilovers.`}
+${kat||byt?"":`FULD PAKKE: Planlæg perioden som én pakke. Vælg retterne, så de pakker, der skal købes, bliver brugt helt op på tværs af retterne (fx en pose løg, en bakke champignon, en pakke fløde), og så der bliver mindst muligt tilovers.`}
 Sidst de har fået: ${proteinHistorik(up.start)}
-Kan lide (favoritter): ${favs.join(", ")||"ingen gemt"}${favs.length?`. Mindst ét forslag SKAL være en af favoritterne; sæt "favorit": true på det.`:""}
+Kan lide (favoritter): ${favs.join(", ")||"ingen gemt"}${favs.length&&!byt?`. Mindst ét forslag SKAL være en af favoritterne; sæt "favorit": true på det.`:""}
 Kan ikke lide / tåler ikke (brug aldrig): ${st.ikkeLide.map(x=>x.navn+" ("+x.grund+")").join(", ")||"intet"}
 Har haft eller har på planen inden for 3 uger (undgå, medmindre det er en favorit): ${nyligTekst()||"intet"}
 ${tidl.length?`Foreslå ikke disse igen: ${tidl.join(", ")}\n`:""}Brugerens instruktioner (følg dem): ${st.instrukser.join(" | ")||"ingen"}
@@ -2987,7 +3021,7 @@ Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili c
     if(!document.getElementById("t-snak").classList.contains("on"))toast("Forslagene til ugen er klar under Plan");
     let forslag=(r.forslag||[]).map(normForslag).map((f,i,a)=>({...f,type:a[i].type,favorit:!!a[i].favorit}));
     /* Mindst én favorit blandt de almindelige forslag */
-    if(!kat&&favs.length&&forslag.length&&!forslag.some(f=>isFav(f.navn)||(f.opskrift&&isFav(ORMAP[f.opskrift].t)))){
+    if(!kat&&!byt&&favs.length&&forslag.length&&!forslag.some(f=>isFav(f.navn)||(f.opskrift&&isFav(ORMAP[f.opskrift].t)))){
       const navn=favs.find(n=>!nyligNavne().includes(n))||favs[0];
       const bank=oAlle().find(x=>x.t.toLowerCase()===navn.toLowerCase());
       const sidste=forslag[forslag.length-1];
@@ -2995,7 +3029,7 @@ Returnér KUN JSON: {"forslag":[{"navn": kort navn på højst 4 ord (fx "Chili c
     }
     up.allergiMangel=false;
     if(allergier().length){forslag=forslag.filter(f=>f.opskrift&&ORMAP[f.opskrift]&&allergiOk(ORMAP[f.opskrift]));up.allergiMangel=forslag.length<antal}
-    up.forslag=forslag;up.valgt=new Set(forslag.map((_,i)=>i));up.trin="forslag";
+    up.forslag=forslag;up.valgt=new Set(byt?[]:forslag.map((_,i)=>i));up.trin="forslag";
     if(!forslag.length)up.fejl=allergier().length?`Der er ingen ${allergiNavne()}-fri opskrifter, der passer.`:"Der kom ingen forslag. Prøv igen.";
     const mit=up;tAnnoter(forslag).then(()=>{if(up===mit&&up.trin==="forslag")renderUgeplan()});
   }catch(e){clearInterval(laeser);if(!up)return;up.trin="forslag";up.forslag=[];up.fejl=fejlTekst(e);up.fejlDetalje=`${e&&e.code||"fejl"}: ${String(e&&(e.message||e.code)||e).slice(0,160)}`;console.error("ugeforslag",e)}
@@ -4129,7 +4163,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="54";
+const APP_VERSION="55";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
