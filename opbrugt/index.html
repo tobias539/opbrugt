@@ -273,12 +273,13 @@ button.hi-ik[aria-expanded="true"]{border-style:solid;border-color:var(--leaf);b
 .hi-hold{flex:1}.hi-hold.rod{color:#c0392b;font-weight:700}.hi-hold.orange{color:#c46a12;font-weight:700}
 .hi-knapper{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .hyldeinfo{flex-direction:column;align-items:stretch;gap:0;bottom:8px}
-.skabnavn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.95rem;font-weight:700;font-family:var(--display)}
+.skabnavn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.95em;font-weight:700;font-family:var(--display)}
 /* Bladr mellem skabene: pil, prikker, pil. Pilen er grå, når man er på første eller sidste side. */
-.skabtop{gap:6px}.skabtop .btn.lille{padding-left:10px;padding-right:10px}
-.skabblad{display:flex;align-items:center;gap:4px;flex:none}.skabblad .prikker{gap:5px}.skabblad .prik{width:8px;height:8px}
-.pil{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--leaf);background:var(--card);color:var(--leaf);font:700 1.1rem/1 var(--body);padding:0 0 2px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.pil:disabled{border-color:var(--line);color:var(--line);cursor:default}
+/* Toppen skaleres som helhed, hvis den ikke kan være der (se tilpasRaekke), så alle mål her er i em */
+.skabtop{gap:.36em}.skabtop .btn.lille{font-size:.88em;padding:.4em .65em}
+.skabblad{display:flex;align-items:center;gap:.25em;flex:none}.skabblad .prikker{gap:.3em}.skabblad .prik{width:.48em;height:.48em}
+.skabblad .pil{width:1.55em;height:1.55em;border-radius:50%;border:1.5px solid var(--leaf);background:var(--card);color:var(--leaf);font:700 1.05em/1 var(--body);padding:0 0 .12em;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.skabblad .pil:disabled{border-color:var(--line);color:var(--line);cursor:default}
 .skabhint{margin:0 2px 6px;font-size:.78rem;color:var(--muted)}
 /* De tre mål vises kun, mens man trækker: et lag nederst oven på reolen */
 .dzlag{position:absolute;left:0;right:0;bottom:0;display:none;justify-content:space-around;align-items:center;padding:14px 8px 18px;background:linear-gradient(transparent,rgba(30,25,15,.55));border-radius:0 0 8px 8px;z-index:8;pointer-events:none}
@@ -1755,6 +1756,24 @@ function tilbageTekst(v){
 }
 function andel(v){return v.k?Math.max(0,Math.min(1,v.amt/(v.koebt||v.amt||1))):v.niveau==="lidt"?.2:v.niveau==="noget"?.55:1}
 function holdTekst(rest){return rest==null?"":rest<0?`${-rest} ${rest===-1?"dag":"dage"} over tiden`:rest===0?"Bør bruges i dag":rest===1?"Holder 1 dag mere":`Holder ${rest} dage mere`}
+/* Skalering: en række, der skal stå på én linje, skrumper som helhed – tekst, knapper, pile og prikker – hvis den
+   ikke kan være der, i stedet for at forkorte teksten. Rækkens mål skal være i em. Under min forkortes som sidste udvej. */
+function tilpasRaekke(el,min=.7){
+  if(!el||!el.offsetParent)return;
+  el.style.fontSize="";
+  const behov=()=>{const b=[...el.children].filter(c=>c.offsetParent);const gap=parseFloat(getComputedStyle(el).columnGap)||0;return b.reduce((a,c)=>a+Math.max(c.offsetWidth,c.scrollWidth),0)+gap*Math.max(0,b.length-1)};
+  /* bredderne er rundet op til hele pixels, så et par pixels for meget betyder, at rækken kan være der */
+  const b0=behov();if(b0<=el.clientWidth+4)return;
+  let s=(el.clientWidth-1)/b0;
+  /* kanter og afrunding skalerer ikke helt med, så der rettes til, til den passer */
+  for(let i=0;i<6&&s<1;i++){
+    s=Math.max(min,s);el.style.fontSize=(s*100).toFixed(1)+"%";
+    if(behov()<=el.clientWidth||s<=min)break;
+    s*=.97;
+  }
+}
+window.addEventListener("resize",()=>{if(document.getElementById("t-skab").classList.contains("on"))tilpasRaekke(document.querySelector(".skabtop"))});
+if(document.fonts)document.fonts.ready.then(()=>tilpasRaekke(document.querySelector(".skabtop")));
 function renderHylde(){
   const h=document.getElementById("hylde"),indre=document.getElementById("hyldeIndre"),info=document.getElementById("hyldeInfo"),varer=skabVarer();
   const sider=skabSider(varer);skabSide=Math.min(skabSide,sider.length-1);
@@ -1768,6 +1787,7 @@ function renderHylde(){
   if(skabVaelg)for(const k of [...skabVaelg])if(!varer.some(v=>hyldeNoegle(v)===k))skabVaelg.delete(k);
   if(!varer.length)skabVaelg=null;
   const vk=document.getElementById("skabVaelgKnap");vk.hidden=!varer.length;vk.textContent=skabVaelg?"Annullér":"Vælg";vk.setAttribute("aria-pressed",!!skabVaelg);
+  tilpasRaekke(document.querySelector(".skabtop"));
   h.classList.toggle("vaelger",!!skabVaelg);
   const mrk=v=>skabVaelg&&skabVaelg.has(hyldeNoegle(v))?" markeret":"";
   document.getElementById("skabForkl").textContent=!varer.length?"":skabVaelg?"Sæt flueben, og træk de valgte til køb mere, spist eller smidt ud. Hold på en for at ændre dem alle":"Træk en vare for at spise den, smide den ud eller købe mere. Hold på den for at se mere";
@@ -4357,7 +4377,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="58";
+const APP_VERSION="59";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
