@@ -250,20 +250,23 @@ button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;fon
 .kogbund{position:sticky;bottom:0;width:100%;max-width:640px;box-sizing:border-box;padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(rgba(251,246,233,0),#fbf6e9 28%)}
 .kogbund>.btn{display:block;width:100%}.kogknapper{display:flex;gap:10px}.kogknapper .btn{flex:1}
 .kogstatus{margin:0 0 8px;font-size:.9rem;color:#8a6d45;text-align:center;font-style:italic}
-.kogbillede{display:block;width:100%;aspect-ratio:8/5;border-radius:14px;background:#efe5cf;object-fit:cover;margin:0 0 14px}
+.kogbillede{display:block;width:min(100%,calc(38vh * 1.6));aspect-ratio:8/5;border-radius:14px;background:#efe5cf;object-fit:cover;margin:0 auto 14px}
 .kogbillede.tom{display:flex;align-items:center;justify-content:center;color:#8a6d45;font-style:italic;animation:kogpuls 1.6s ease-in-out infinite}
 @keyframes kogpuls{50%{opacity:.55}}@media (prefers-reduced-motion:reduce){.kogbillede.tom{animation:none}}
-.kogtrinnr{margin:0;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#8a6d45}
-.kogtrintitel{font-family:Georgia,"Times New Roman",serif;font-size:1.5rem;line-height:1.2;margin:2px 0 10px;color:#2b2218}
+.kogtrinnr{margin:0;font-size:.78em;letter-spacing:.12em;text-transform:uppercase;color:#8a6d45}
+.kogtrintitel{font-family:Georgia,"Times New Roman",serif;font-size:1.5em;line-height:1.2;margin:.1em 0 .45em;color:#2b2218}
 .findfrem{display:flex;flex-direction:column}
-.ff{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #eadfc8;padding:9px 2px;font:inherit;font-size:1rem;color:#2b2218;cursor:pointer}
+.ff{display:flex;align-items:center;gap:.6em;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #eadfc8;padding:.5em .1em;font:inherit;font-size:1em;line-height:1.3;color:#2b2218;cursor:pointer}
 .ff .bogmg{flex:none}
-.ffboks{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #b9a27f;box-sizing:border-box}
+.ffboks{flex:none;width:1.2em;height:1.2em;border-radius:.3em;border:2px solid #b9a27f;box-sizing:border-box}
 .ff[aria-pressed="true"]{color:#8a7a62}.ff[aria-pressed="true"] .ffboks{background:#2f5a3f;border-color:#2f5a3f;box-shadow:inset 0 0 0 3px #fbf6e9}
 .ff[aria-pressed="true"] .ffnavn{text-decoration:line-through}
 .kogtilbage{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:81;width:44px;height:44px;border-radius:50%;border:1px solid #e3d5b8;background:rgba(251,246,233,.95);color:#2b2218;font-size:1.7rem;line-height:1;padding:0 0 4px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.kogside .bogtitel{font-size:1.7rem}.kogside .bogh{font-size:1.15rem;margin-top:18px}
-.kogside .bogi,.kogside .bogtrintx{font-size:1rem;line-height:1.5}.kogvent{color:#8a6d45;font-style:italic}.kogside .bogtrin{font-size:1.02rem;margin-top:12px}
+.kogindhold{font-size:16px}
+.kogside .kapitel{font-size:.7em;margin-bottom:.4em}.kogside .bogtitel{font-size:1.7em;margin-top:.3em}.kogside .bogunder{font-size:.9em}
+.kogside .bogmeta,.kogside .bogkoeb{font-size:.85em;margin-top:.5em}.kogside .bogh{font-size:1.15em;margin-top:.8em}
+.kogside .bogi,.kogside .bogtrintx{font-size:1em;line-height:1.45;margin:0 0 .3em}.kogside .boghar{font-size:.7em}
+.kogvent{color:#8a6d45;font-style:italic}
 body.kogaaben{overflow:hidden}
 .ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
@@ -3946,10 +3949,24 @@ function kogRender(){
     b=`${videre?"":`<p class="kogstatus">Trin ${side+1} er ved at blive oprettet … billedet tegnes.</p>`}<div class="kogknapper"><button class="btn ghost" data-kog="${side-1}">‹ ${side===1?"Find frem":"Forrige"}</button><button class="btn" data-kog="${sidst?"slut":side+1}" ${videre?"":"disabled"}>${sidst?"Færdig":"Næste ›"}</button></div>`;
   }
   const rul=kog.vist===side?el.scrollTop:0;kog.vist=side;
-  ind.innerHTML=h;bund.innerHTML=b;el.scrollTop=rul;
+  ind.innerHTML=h;bund.innerHTML=b;kogTilpas();el.scrollTop=rul;
   ind.querySelectorAll("[data-ff]").forEach(x=>x.onclick=()=>{const i=+x.dataset.ff;if(kog.fundet.has(i))kog.fundet.delete(i);else kog.fundet.add(i);x.setAttribute("aria-pressed",kog.fundet.has(i))});
   bund.querySelectorAll("[data-kog]").forEach(x=>x.onclick=()=>kogGaa(x.dataset.kog));
 }
+/* Skriften så stor som muligt uden at rulle: find den største skala (0,8-2,4 × 16 px), hvor siden kan være over
+   knapperne. Kan den ikke være der selv ved den mindste, ruller siden. */
+function kogTilpas(){
+  const el=document.querySelector(".kogside"),ind=el&&el.querySelector(".kogindhold"),bund=el&&el.querySelector(".kogbund");
+  if(!ind||!bund)return;
+  const plads=el.clientHeight-bund.offsetHeight;
+  ind.style.flex="none";
+  const passer=k=>{ind.style.fontSize=(16*k).toFixed(2)+"px";return ind.offsetHeight<=plads};
+  let lo=.8,hi=2.4;
+  if(passer(hi))lo=hi;
+  else for(let n=0;n<9;n++){const m=(lo+hi)/2;if(passer(m))lo=m;else hi=m}
+  ind.style.fontSize=(16*lo).toFixed(2)+"px";ind.style.flex="";
+}
+window.addEventListener("resize",()=>{if(kogAaben)kogTilpas()});
 function kogGaa(til){
   if(!kog)return;
   if(til==="slut"){if(history.state&&history.state.kog)history.back();else kogLuk();return}
@@ -5350,7 +5367,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="69";
+const APP_VERSION="70";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
