@@ -1,0 +1,260 @@
+{
+  "id": "groentsagsdhal",
+  "titel": "Grøntsagsdhal",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/groentsagsdhal/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "indisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "gryderet"
+    ],
+    "hovedprotein": [
+      "boenner-linser"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 2,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "karrypulver",
+      "navn": "Mediumstærk karry",
+      "maengde": 3,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "spidskommen",
+      "navn": "Stødt spidskommen",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "koriander-stoedt",
+      "navn": "Stødt koriander",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "roede-linser",
+      "navn": "Røde linser",
+      "maengde": 200,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerødder",
+      "maengde": 3,
+      "enhed": "stk",
+      "note": "250 g, groftrevet",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Squash",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "150 g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 4,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Ingefær",
+      "maengde": 2,
+      "enhed": "spsk",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Grøntsagsbouillon",
+      "maengde": 4,
+      "enhed": "dl",
+      "basisvare": true,
+      "note": "Grøntsagsbouillon indeholder ofte selleri.",
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "kokosmaelk",
+      "navn": "Kokosmælk",
+      "maengde": 400,
+      "enhed": "ml",
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater på dåse",
+      "maengde": 400,
+      "enhed": "g",
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "blomkaal",
+      "navn": "Blomkål",
+      "maengde": 200,
+      "enhed": "g",
+      "note": "finthakket",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Babyspinat",
+      "maengde": 75,
+      "enhed": "g",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Basmatiris",
+      "maengde": 170,
+      "enhed": "g",
+      "note": "2 dl, kogt efter anvisning",
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "mandler",
+      "navn": "Saltede mandler",
+      "maengde": 50,
+      "enhed": "g",
+      "allergener": [
+        "noedder"
+      ]
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Græsk yoghurt 10 %",
+      "maengde": 100,
+      "enhed": "g",
+      "note": "1 dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Frisk koriander",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket",
+      "variabel": "friske-urter"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered grøntsagerne",
+      "tekst": [
+        "Hak løgene fint, og riv gulerødderne groft.",
+        "Riv hvidløg og ingefær fint, og hak blomkålen fint."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Svits krydderierne",
+      "tekst": [
+        "Svits løgene i olie i en stor gryde ved middel varme, til de er bløde.",
+        "Tilsæt karry, chiliflager, spidskommen og stødt koriander, og rør i ca. 1 min, så krydderierne bliver varmet godt igennem."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Simr linserne",
+      "tekst": [
+        "Skyl linserne i en sigte.",
+        "Kom linser, gulerødder, squash, hvidløg, ingefær, bouillon, kokosmælk og hakkede tomater i gryden.",
+        "Læg låg på, og lad det simre i 20 min. Kog imens risene efter anvisningen på pakken."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Tilsæt blomkål",
+      "tekst": [
+        "Rør blomkålen i dhalen, læg låg på, og lad den simre 10-15 min mere.",
+        "Kom evt. lidt mere bouillon i, hvis dhalen bliver for tyk."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Smag til og server",
+      "tekst": [
+        "Smag til med salt og peber, og rør spinaten i.",
+        "Server i dybe skåle med ris, saltede mandler, græsk yoghurt og et drys koriander."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "noedder",
+      "maelk",
+      "selleri"
+    ],
+    "spor_af": []
+  }
+}

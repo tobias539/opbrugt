@@ -1,0 +1,146 @@
+{
+  "id": "klassiske-frikadeller",
+  "titel": "Klassiske frikadeller",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/klassiske-frikadeller",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket grisekød",
+      "maengde": 500,
+      "enhed": "g",
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": 1.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 4,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg",
+      "maengde": 1,
+      "enhed": "stk",
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Sødmælk",
+      "maengde": 1.5,
+      "enhed": "dl",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Rør farsen",
+      "tekst": [
+        "Rør det hakkede kød med saltet, til farsen hænger godt sammen."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Tilsæt løg og resten",
+      "tekst": [
+        "Hak løget fint, eller riv det på et rivejern, alt efter hvor store stykker du vil have.",
+        "Kom løg, peber, mel, æg og mælk i farsen, og rør det hele grundigt sammen."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lad farsen hvile",
+      "tekst": [
+        "Stil farsen på køl i en halv time, før du bruger den."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg frikadellerne",
+      "tekst": [
+        "Form farsen til frikadeller.",
+        "Steg dem i smør på en pande ved jævn varme i ca. 5 min, og vend dem, så de bliver gyldne på begge sider."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "aeg",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

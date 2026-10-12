@@ -1,0 +1,186 @@
+{
+  "id": "soja-ingefaer-laks-med-broccoli-og-rosenkaal",
+  "titel": "Soja-ingefær laks med broccoli og rosenkål",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/soja-ingefar-laks-med-broccoli-og-rosenkal",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "fisk"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Frisk ingefær",
+      "maengde": 25,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 4,
+      "enhed": "spsk",
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "honning",
+      "navn": "Flydende honning",
+      "maengde": 60,
+      "enhed": "g",
+      "note": "3 spsk"
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sesamfroe",
+      "navn": "Sesamfrø",
+      "maengde": 9,
+      "enhed": "g",
+      "allergener": [
+        "sesam"
+      ],
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "broccoli",
+      "navn": "Broccoli eller bimi broccoli",
+      "maengde": 400,
+      "enhed": "g",
+      "note": "1 broccoli eller 400 g bimi broccoli",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "rosenkaal",
+      "navn": "Rosenkål",
+      "maengde": 300,
+      "enhed": "g",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "laks",
+      "navn": "Laksefileter",
+      "maengde": 500,
+      "enhed": "g",
+      "allergener": [
+        "fisk"
+      ],
+      "note": "4 laksefileter"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citron",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 3,
+      "enhed": "stk",
+      "note": "½ bundt",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Rød chilipeber",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "styrke"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav marinaden",
+      "tekst": [
+        "Tænd ovnen på 200°C.",
+        "Riv ingefær og hvidløg.",
+        "Rør det sammen med sojasauce, olivenolie, honning, chiliflager og sesamfrø."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Gør fadet klar",
+      "tekst": [
+        "Skil broccolien ad i buketter, og halver rosenkålen.",
+        "Kom grøntsagerne i et ovnfast fad, og læg laksen ovenpå."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bag laksen",
+      "tekst": [
+        "Hæld marinaden over.",
+        "Bag retten i ovnen i 15 min ved 200°C."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Skær citronen i både, og snit forårsløg og chili fint.",
+        "Server laksen med citronbåde, forårsløg og chili.",
+        "Dampede ris eller nudler passer også godt til."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "soja",
+      "hvede",
+      "sesam",
+      "fisk"
+    ],
+    "spor_af": []
+  }
+}

@@ -13,7 +13,9 @@
       "fennikel": "ok",
       "majs": "ok",
       "gulerod": "ok",
-      "avocado": "ok"
+      "avocado": "ok",
+      "sukkeraerter": "ok",
+      "bladselleri": "ok"
     },
     "tilberedning": [
       "raa"
@@ -24,7 +26,11 @@
     "rolle": "Rå frugt i salat eller salsa, der giver sødme og friskhed",
     "medlemmer": {
       "mango": "god",
-      "aeble": "god"
+      "aeble": "god",
+      "vindruer": "god",
+      "appelsin": "god",
+      "granataeble": "ok",
+      "brombaer": "ok"
     },
     "tilberedning": [
       "raa"
@@ -70,7 +76,12 @@
       "fennikel": "god",
       "champignon": "ok",
       "tomat": "ok",
-      "cherrytomater": "ok"
+      "cherrytomater": "ok",
+      "graeskar": "god",
+      "rosenkaal": "god",
+      "knoldselleri": "god",
+      "persillerod": "god",
+      "asparges-groenne": "ok"
     },
     "tilberedning": [
       "ovn"
@@ -93,7 +104,12 @@
       "blomkaal": "ok",
       "spinat": "ok",
       "majs": "ok",
-      "glaskaal": "ok"
+      "glaskaal": "ok",
+      "sukkeraerter": "god",
+      "asparges-groenne": "god",
+      "rosenkaal": "ok",
+      "edamame": "ok",
+      "aerter": "ok"
     },
     "tilberedning": [
       "pande",
@@ -119,7 +135,9 @@
     "medlemmer": {
       "loeg": "god",
       "porre": "ok",
-      "foraarsloeg": "ok"
+      "foraarsloeg": "ok",
+      "skalotteloeg": "god",
+      "perleloeg": "ok"
     }
   },
   "friske-urter": {
@@ -132,7 +150,11 @@
       "dild": "god",
       "mynte-koriander": "god",
       "purloeg": "god",
-      "thaibasilikum": "ok"
+      "thaibasilikum": "ok",
+      "mynte": "god",
+      "estragon": "ok",
+      "loevstikke": "ok",
+      "oregano-frisk": "ok"
     }
   },
   "korn-og-ris": {
@@ -152,7 +174,8 @@
     "medlemmer": {
       "pasta": "god",
       "orzo": "ok",
-      "udonnudler": "ok"
+      "udonnudler": "ok",
+      "nudler": "ok"
     }
   },
   "kartofler": {
@@ -182,7 +205,9 @@
     "medlemmer": {
       "madlavningsfloede": "god",
       "creme-fraiche": "god",
-      "kokosmaelk": "ok"
+      "kokosmaelk": "ok",
+      "piskefloede": "god",
+      "flodeost": "ok"
     },
     "tilberedning": [
       "pande",
@@ -196,7 +221,11 @@
       "parmesan": "god",
       "finrevet-ost": "god",
       "revet-gouda": "god",
-      "mozzarella": "ok"
+      "mozzarella": "ok",
+      "cheddar": "god",
+      "revet-mozzarella": "god",
+      "lagret-ost": "god",
+      "vegansk-ost": "ok"
     }
   },
   "smuldreost": {
@@ -214,7 +243,8 @@
     "medlemmer": {
       "citrusfrugt": "god",
       "hvidvinseddike": "ok",
-      "balsamico": "ok"
+      "balsamico": "ok",
+      "riseddike": "ok"
     },
     "bytte": "efter smag"
   },
@@ -224,7 +254,9 @@
     "medlemmer": {
       "chili-frisk": "god",
       "chiliflager": "god",
-      "sriracha": "ok"
+      "sriracha": "ok",
+      "cayennepeber": "ok",
+      "jalapenos": "ok"
     },
     "bytte": "efter smag"
   },
@@ -234,7 +266,8 @@
     "medlemmer": {
       "hakket-oksekoed": "god",
       "hakket-svinekoed": "god",
-      "hakket-svine-kalvekoed": "god"
+      "hakket-svine-kalvekoed": "god",
+      "hakket-kylling": "god"
     }
   },
   "kylling": {
@@ -242,7 +275,8 @@
     "rolle": "Kyllingebryst, stegt eller bagt",
     "medlemmer": {
       "kyllingebryst": "god",
-      "kyllingebryst-bbq": "god"
+      "kyllingebryst-bbq": "god",
+      "kyllingeoverlaar": "god"
     }
   },
   "hvid-fisk": {
@@ -259,7 +293,8 @@
     "medlemmer": {
       "bacon": "god",
       "prosciutto": "god",
-      "chorizo": "ok"
+      "chorizo": "ok",
+      "nduja": "ok"
     }
   }
 }

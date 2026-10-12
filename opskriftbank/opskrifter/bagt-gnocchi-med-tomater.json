@@ -1,0 +1,209 @@
+{
+  "id": "bagt-gnocchi-med-tomater",
+  "titel": "Bagt gnocchi med tomater",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/bagt-gnocchi-med-tomater/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret",
+      "pasta"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "gnocchi",
+      "navn": "Gnocchi",
+      "maengde": 800,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "note": "friske fra køledisken"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Rødløg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "i både",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Blommetomater",
+      "maengde": 500,
+      "enhed": "g",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "soltoerrede-tomater",
+      "navn": "Soltørrede tomater i olie",
+      "maengde": 30,
+      "enhed": "g",
+      "note": "finthakket"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "rosmarin-toerret",
+      "navn": "Tørret rosmarin",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "timian-toerret",
+      "navn": "Tørret timian",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "pinjekerner",
+      "navn": "Pinjekerner",
+      "maengde": 40,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "lagret-ost",
+      "navn": "Lagret ost",
+      "maengde": 50,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Gammel Knas, smuldret",
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "burrata",
+      "navn": "Burrata",
+      "maengde": 150,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "til servering"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Frisk basilikum",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, til servering",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "rucola",
+      "navn": "Rucola",
+      "maengde": 75,
+      "enhed": "g",
+      "note": "til servering",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til fadet",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Fyld fadet",
+      "tekst": [
+        "Forvarm ovnen til 175 grader varmluft.",
+        "Smør et ovnfast fad med lidt olie.",
+        "Kom gnocchi, rødløg og blommetomater i fadet."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Krydderolie",
+      "tekst": [
+        "Rør soltørrede tomater, hvidløg, rosmarin og timian sammen med olivenolie, salt og peber i en skål.",
+        "Hæld krydderolien over fadet, og vend det hele grundigt.",
+        "Drys pinjekerner og den smuldrede ost over."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bag",
+      "tekst": [
+        "Bag fadet i ovnen i ca. 30 min."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Top og server",
+      "tekst": [
+        "Fordel rucola, basilikum og burrata over det varme fad.",
+        "Server med det samme."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

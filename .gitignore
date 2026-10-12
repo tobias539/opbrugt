@@ -5,6 +5,8 @@ tilbud/log.txt
 
 # Originale scanninger
 opskriftbank/kilder/scanninger/
+# Opskrifter hentet fra nettet: kildens egen tekst
+opskriftbank/kilder/web/
 
 .claude/settings.local.json
 __pycache__/

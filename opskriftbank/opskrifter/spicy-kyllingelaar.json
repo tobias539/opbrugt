@@ -1,0 +1,107 @@
+{
+  "id": "spicy-kyllingelaar",
+  "titel": "Spicy kyllingelår",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/spicy-kyllingelaar",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 6,
+    "valg": [
+      6
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "indisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Yoghurt naturel",
+      "maengde": 200,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "garam-masala",
+      "navn": "Garam masala",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citron (usprøjtet)",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "saften af ½ citron",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kyllingeunderlaar",
+      "navn": "Kyllingeunderlår",
+      "maengde": 700,
+      "enhed": "g"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Rør marinaden",
+      "tekst": [
+        "Rør yoghurt, garam masala, citronsaft og salt sammen."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Mariner kyllingen",
+      "tekst": [
+        "Læg kyllingen i en stor skål, hæld marinaden over, og vend det godt sammen.",
+        "Kom det hele i en frostpose, og lad kyllingen marinere i køleskabet et par timer eller natten over."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Grill lårene",
+      "tekst": [
+        "Tag kyllingen ud af køleskabet en halv time før tilberedning.",
+        "Lad overskydende marinade dryppe af.",
+        "Grill lårene over medium varme i ca. 30 min, til de er helt gennemstegte. Vend dem flere gange undervejs."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

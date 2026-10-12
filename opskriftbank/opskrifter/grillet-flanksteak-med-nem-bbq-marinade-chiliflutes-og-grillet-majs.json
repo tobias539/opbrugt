@@ -1,0 +1,240 @@
+{
+  "id": "grillet-flanksteak-med-nem-bbq-marinade-chiliflutes-og-grillet-majs",
+  "titel": "Grillet flanksteak med nem BBQ-marinade, chiliflutes og grillet majs",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/grillet-flanksteak-nem-bbq-marinade-chiliflutes-og-grillet-majs",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "ketchup",
+      "navn": "Tomatketchup",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "til marinaden"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Sojasauce",
+      "maengde": 2,
+      "enhed": "spsk",
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Paprika",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true,
+      "note": "til marinaden"
+    },
+    {
+      "ingrediens": "brun-farin",
+      "navn": "Brun farin",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "flanksteak",
+      "navn": "Flanksteak",
+      "maengde": 700,
+      "enhed": "g",
+      "note": "1 flanksteak. Kilden angiver ingen vægt (skøn: ca. 700 g)."
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Blødt smør",
+      "maengde": 125,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "til chilismørret"
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Rød chilipeber",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Paprika",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true,
+      "note": "til chilismørret"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian",
+      "maengde": 0.1,
+      "enhed": "stk",
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "til chilismørret"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Revet citronskal",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 tsk revet skal af en usprøjtet citron",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Havsalt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "majskolber",
+      "navn": "Majskolber",
+      "maengde": 4,
+      "enhed": "stk"
+    },
+    {
+      "ingrediens": "baguette",
+      "navn": "Flute",
+      "maengde": 1,
+      "enhed": "stk",
+      "fra_fremgangsmaade": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "note": "Kilden nævner kun flutet i fremgangsmåden."
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Mariner kødet",
+      "tekst": [
+        "Knus 1 fed hvidløg.",
+        "Rør ketchup, hvidløg, sojasauce, olivenolie, 1 tsk paprika, brun farin og groft salt sammen til en marinade. Krydr med sort peber.",
+        "Smør marinaden ud over hele flanksteaken."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Grill flanksteaken",
+      "tekst": [
+        "Grill kødet ved høj varme i 2-3 min pr. side.",
+        "Lad det hvile lidt, og skær det derefter i skiver på tværs."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Rør chilismør",
+      "tekst": [
+        "Hak chilien fint, og knus det andet fed hvidløg.",
+        "Rør det bløde smør med chili, 1 tsk paprika, timian, hvidløg og citronskal.",
+        "Smag til med havsalt og peber."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Grill chiliflutes",
+      "tekst": [
+        "Skær dybe snit på tværs af flutet.",
+        "Fyld halvdelen af chilismørret ned i snittene.",
+        "Grill brødet, til det er sprødt, og smørret er smeltet."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Grill majs og server",
+      "tekst": [
+        "Pil bladene af majskolberne.",
+        "Grill majsen, til den har fået farve og er mørkegul.",
+        "Server kød, brød og majs med resten af chilismørret."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "soja",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

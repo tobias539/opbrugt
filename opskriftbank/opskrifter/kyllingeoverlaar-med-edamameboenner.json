@@ -1,0 +1,147 @@
+{
+  "id": "kyllingeoverlaar-med-edamameboenner",
+  "titel": "Kyllingeoverlår med edamamebønner",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/kyllingeoverlaar-edamameboenner",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 90,
+    "max": 90
+  },
+  "kategorier": {
+    "koekken": [
+      "nordafrikansk",
+      "fusion"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "kyllingeoverlaar",
+      "navn": "Kyllingeoverlår",
+      "maengde": 800,
+      "enhed": "g",
+      "note": "4 stk (skøn: ca. 200 g pr. stk)",
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Friske korianderblade",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 tsk til krydderiblandingen og resten til pynt (skøn: ½ bundt)",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "spidskommen",
+      "navn": "Hel spidskommen",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "cayennepeber",
+      "navn": "Cayennepeber",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kanel",
+      "navn": "Stødt kanel",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "appelsin",
+      "navn": "Appelsiner",
+      "maengde": 3,
+      "enhed": "stk",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "edamame",
+      "navn": "Edamamebønner uden bælg",
+      "maengde": 100,
+      "enhed": "g",
+      "allergener": [
+        "soja"
+      ],
+      "note": "optøede",
+      "variabel": "pandegroent"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Krydr lårene",
+      "tekst": [
+        "Tænd ovnen på 200 grader.",
+        "Bland 1 tsk hakket koriander med spidskommen, cayennepeber, kanel, salt og peber.",
+        "Gnid kyllingelårene grundigt ind i krydderierne."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Fyld fadet",
+      "tekst": [
+        "Skær appelsinerne i skiver på 1 cm.",
+        "Fordel skiverne i et ildfast fad, og læg kyllingelårene ovenpå."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bag i ovnen",
+      "tekst": [
+        "Bag fadet i ovnen ved 200 grader i 50 min i alt.",
+        "Kom de optøede edamamebønner i fadet, når der er 10 min tilbage, og lad dem bage færdig sammen med resten."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Pynt med frisk koriander, og server."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "soja"
+    ],
+    "spor_af": []
+  }
+}

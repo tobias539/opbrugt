@@ -1,0 +1,191 @@
+{
+  "id": "laks-med-spidskaal-og-tomatsalsa",
+  "titel": "Laks med spidskål og tomatsalsa",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/laks-spidskaal-og-tomatsalsa",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "fisk"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "laks",
+      "navn": "Laksefileter",
+      "maengde": 500,
+      "enhed": "g",
+      "note": "4 laksefileter (skøn: ca. 125 g pr. stk)",
+      "allergener": [
+        "fisk"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "basisvare": true,
+      "note": "Til fisken. Kilden skriver ½ spsk i ingredienslisten, men ½ tsk i fremgangsmåden."
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "spidskaal-skaaret",
+      "navn": "Spidskål",
+      "maengde": 150,
+      "enhed": "g",
+      "note": "½ spidskål, ca. 150 g renset vægt",
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomater",
+      "maengde": 4,
+      "enhed": "stk",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 4,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "jalapenos",
+      "navn": "Hakket syltet jalapeño",
+      "maengde": 5,
+      "enhed": "g",
+      "note": "1 tsk",
+      "variabel": "styrke"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true,
+      "note": "Til salsaen. Kilden skriver ½ tsk i ingredienslisten, men ¼ tsk i fremgangsmåden."
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Lime",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "saften",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie, fx olivenolie eller koldpresset rapsolie",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "boller",
+      "navn": "Fuldkornsboller",
+      "maengde": 4,
+      "enhed": "stk",
+      "note": "svarende til 500 g",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "flodeost",
+      "navn": "Friskost",
+      "maengde": 30,
+      "enhed": "g",
+      "note": "2 spsk",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag laksen",
+      "tekst": [
+        "Tænd ovnen på 225°C.",
+        "Læg laksefileterne på en bageplade med bagepapir, og krydr dem med ½ spsk groft salt og peber.",
+        "Bag fisken på den næstøverste rille i 10-15 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Gør kålen sprød",
+      "tekst": [
+        "Snit spidskålen fint.",
+        "Læg den i koldt vand, så den bliver sprød."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav tomatsalsa",
+      "tekst": [
+        "Skær tomaterne i tern, og snit forårsløgene.",
+        "Bland tomat, forårsløg, jalapeño, ½ tsk groft salt, limesaft og olie i en skål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Vend kålen i",
+      "tekst": [
+        "Lad kålen dryppe af, og vend den i salsaen.",
+        "Lad gerne grøntsagerne trække i 5-10 min."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Server laksen med spidskål i tomatsalsa, fuldkornsboller og friskost."
+      ],
+      "tip": "Rester af spidskål kan holde 1-2 uger i en plastpose i køleskabets grøntsagsskuffe. Brug dem fx i lynstegte retter."
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "fisk",
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

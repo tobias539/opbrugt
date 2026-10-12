@@ -1,0 +1,133 @@
+{
+  "id": "lammeculotte-og-saltbagte-kartofler",
+  "titel": "Lammeculotte og saltbagte kartofler",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/lammeculotte-og-saltbagte-kartofler",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "middelhavs"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "steg"
+    ],
+    "hovedprotein": [
+      "lam"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citron (usprøjtet)",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "lammeculotte",
+      "navn": "Lammeculotter",
+      "maengde": 600,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 6,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "rosmarin",
+      "navn": "Frisk rosmarin",
+      "maengde": 2,
+      "enhed": "stk",
+      "note": "2 dl"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Havsalt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 500,
+      "enhed": "g",
+      "variabel": "kartofler"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav marinaden",
+      "tekst": [
+        "Hak hvidløg og rosmarin.",
+        "Riv citronskallen fint.",
+        "Rør hvidløg, citronskal og rosmarin sammen med olien. Gem lidt rosmarin og olie til kartoflerne.",
+        "Krydr marinaden med havsalt og friskkværnet peber."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Mariner kødet",
+      "tekst": [
+        "Fordel marinaden over culotterne.",
+        "Lad dem trække i ca. ½ time.",
+        "Tænd ovnen på 200°C."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Bag kartoflerne",
+      "tekst": [
+        "Kom kartoflerne i et bradefad, og drys med hakket rosmarin og havsalt.",
+        "Dryp med olie.",
+        "Bag kartoflerne i 30 min ved 200°C."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg culotterne",
+      "tekst": [
+        "Steg culotterne i 20-25 min i ovnen ved 200°C.",
+        "Server kødet med de saltbagte kartofler."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [],
+    "spor_af": []
+  }
+}

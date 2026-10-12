@@ -1,0 +1,191 @@
+{
+  "id": "kyllingespyd-med-teriyaki-glace",
+  "titel": "Kyllingespyd med teriyaki glace",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/kyllingespyd-med-teriyaki-glace/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 120,
+    "max": 120
+  },
+  "kategorier": {
+    "koekken": [
+      "asiatisk",
+      "japansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "boernevenlig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingefilet",
+      "maengde": 600,
+      "enhed": "g",
+      "note": "skåret i lange, tynde strimler",
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "teriyakisauce",
+      "navn": "Teriyakisauce",
+      "maengde": 115,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ],
+      "note": "1 dl"
+    },
+    {
+      "ingrediens": "sojasauce",
+      "navn": "Soja",
+      "maengde": 3,
+      "enhed": "spsk",
+      "allergener": [
+        "gluten",
+        "soja",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "brun-farin",
+      "navn": "Brun farin",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "majsstivelse",
+      "navn": "Majsstivelse",
+      "maengde": 3,
+      "enhed": "g",
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Ingefær",
+      "maengde": 2,
+      "enhed": "tsk",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "riseddike",
+      "navn": "Riseddike",
+      "maengde": 3,
+      "enhed": "tsk",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand",
+      "maengde": 0.5,
+      "enhed": "dl",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Stegeolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Frisk koriander",
+      "maengde": 0.25,
+      "enhed": "stk",
+      "note": "1 spsk, til servering",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "sesamfroe",
+      "navn": "Sesamfrø",
+      "maengde": 3,
+      "enhed": "g",
+      "allergener": [
+        "sesam"
+      ],
+      "note": "1 tsk, ristede, til servering"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kog marinaden",
+      "tekst": [
+        "Kom teriyakisauce, soja, hvidløg, brun farin, ingefær, riseddike og vand i en gryde.",
+        "Sigt majsstivelsen i, og pisk, mens marinaden koger op.",
+        "Sluk for varmen, og stil marinaden i køleskabet, til den har stuetemperatur."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Mariner kyllingen",
+      "tekst": [
+        "Vend kyllingestrimlerne med et par spsk af den afkølede marinade, så de er dækket godt.",
+        "Kom dem i en tæt beholder med låg, og stil dem på køl i mindst 30 min, gerne til dagen efter.",
+        "Gem resten af marinaden til glasering."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Sæt på spyd",
+      "tekst": [
+        "Træk strimlerne på grillspyd i tætte harmonikafolder.",
+        "Pres kødet godt sammen på spyddene."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg spyddene",
+      "tekst": [
+        "Varm en pande eller grill godt op.",
+        "Pensl spyddene med olie, og steg dem 3-4 min på hver side, til de er gennemstegte."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Glaser og server",
+      "tekst": [
+        "Pensl de varme spyd med resten af marinaden.",
+        "Drys med ristede sesamfrø og lidt finthakket koriander, og server."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "soja",
+      "sesam"
+    ],
+    "spor_af": []
+  }
+}

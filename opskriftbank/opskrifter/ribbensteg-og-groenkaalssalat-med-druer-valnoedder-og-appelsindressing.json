@@ -1,0 +1,175 @@
+{
+  "id": "ribbensteg-og-groenkaalssalat-med-druer-valnoedder-og-appelsindressing",
+  "titel": "Ribbensteg og grønkålssalat med druer, valnødder og appelsindressing",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/ribbensteg-og-gronkalssalat-druer-valnodder-og-appelsindressing",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 90,
+    "max": 90
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "steg",
+      "salat"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "ribbensteg",
+      "navn": "Hel ribbensteg",
+      "maengde": 2000,
+      "enhed": "g",
+      "note": "Kilden angiver ingen vægt (skøn: ca. 2 kg til 4)."
+    },
+    {
+      "ingrediens": "groenkaal-skaaret",
+      "navn": "Hakket grønkål",
+      "maengde": 200,
+      "enhed": "g",
+      "variabel": "kaal-til-slaw"
+    },
+    {
+      "ingrediens": "aeble",
+      "navn": "Æble",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "vindruer",
+      "navn": "Vindruer",
+      "maengde": 150,
+      "enhed": "g",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "appelsin",
+      "navn": "Ubehandlet appelsin",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "granataeble",
+      "navn": "Granatæblekerner",
+      "maengde": 50,
+      "enhed": "g",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "sennep",
+      "navn": "Dijonsennep",
+      "maengde": 15,
+      "enhed": "g",
+      "allergener": [
+        "sennep"
+      ],
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "honning",
+      "navn": "Honning",
+      "maengde": 20,
+      "enhed": "g",
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 6,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "valnoedder",
+      "navn": "Valnødder",
+      "maengde": 50,
+      "enhed": "g",
+      "fra_fremgangsmaade": true,
+      "allergener": [
+        "noedder"
+      ],
+      "note": "Grofthakkede. Kilden nævner kun valnødderne i fremgangsmåden (skøn: 50 g)."
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Steg ribbenstegen",
+      "tekst": [
+        "Tænd ovnen på 200 °C.",
+        "Gnid stegen grundigt med salt, og krydr med sort peber.",
+        "Læg den i et ovnfast fad, så oversiden ligger nogenlunde plant. Læg evt. lidt krøllet alufolie under for at rette den op.",
+        "Steg den i ovnen i 1 time og 20 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Forbered frugten",
+      "tekst": [
+        "Kom grønkålen i en skål.",
+        "Skær æblet i små tern og vindruerne i skiver.",
+        "Riv skallen af appelsinen, og gem den til dressingen.",
+        "Skær den hvide hinde af appelsinen. Skær den i skiver og derefter i kvarte."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Saml salaten",
+      "tekst": [
+        "Hak valnødderne groft.",
+        "Kom appelsin, æble, vindruer, granatæblekerner og valnødder i skålen med grønkål."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Dressing og servering",
+      "tekst": [
+        "Rør dijonsennep med appelsinskal, honning og olivenolie.",
+        "Smag dressingen til med salt og peber, og vend den i salaten.",
+        "Server salaten til ribbenstegen."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "noedder",
+      "sennep"
+    ],
+    "spor_af": []
+  }
+}

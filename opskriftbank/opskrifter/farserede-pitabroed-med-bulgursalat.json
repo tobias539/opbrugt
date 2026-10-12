@@ -1,0 +1,332 @@
+{
+  "id": "farserede-pitabroed-med-bulgursalat",
+  "titel": "Farserede pitabrød med bulgursalat",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/farserede-pitabroed-med-bulgursalat/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "mellemoestlig"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "burger-sandwich"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "kan-fryses"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 400,
+      "enhed": "g",
+      "note": "eller hakket lammekød",
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "spidskommen",
+      "navn": "Stødt spidskommen",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Sød paprika",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "roeget-paprika",
+      "navn": "Røget paprika",
+      "maengde": 2,
+      "enhed": "g",
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "koriander-stoedt",
+      "navn": "Stødt koriander",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til farsen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til farsen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "pitabroed",
+      "navn": "Pitabrød",
+      "maengde": 4,
+      "enhed": "stk",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til pensling",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "bulgur",
+      "navn": "Bulgur",
+      "maengde": 170,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "note": "2 dl",
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Tomater",
+      "maengde": 400,
+      "enhed": "g",
+      "note": "i tern",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "i små tern",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Rødløg",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 2,
+      "enhed": "stk",
+      "note": "fintsnittet",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "mynte",
+      "navn": "Frisk mynte",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Økologisk citron",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "fintrevet skal og saft",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til salaten",
+      "maengde": 4,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg til salaten",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til salaten",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til salaten",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Græsk yoghurt 10 %",
+      "maengde": 200,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "2 dl",
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg til yoghurtdressingen",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Økologisk lime",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "fintrevet skal og saft",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Frisk koriander",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til yoghurtdressingen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til yoghurtdressingen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav bulgursalaten",
+      "tekst": [
+        "Kog bulguren som anvist på pakken, og lad den køle lidt af.",
+        "Rør citronskal, citronsaft, olivenolie, sukker og hvidløg sammen til en dressing, og smag godt til med salt og peber.",
+        "Vend bulgur, tomat, agurk, rødløg, forårsløg, persille og mynte sammen med dressingen.",
+        "Lad gerne salaten trække i en halv times tid før servering."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Rør yoghurtdressingen",
+      "tekst": [
+        "Bland yoghurt, hvidløg, limeskal, limesaft og koriander.",
+        "Smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Fyld pitabrødene",
+      "tekst": [
+        "Rør kødet sammen med løg, hvidløg, persille, spidskommen, begge slags paprika, koriander, salt og peber.",
+        "Skær pitabrødene over på midten, og fordel farsen i de halve brød.",
+        "Tryk dem flade, så kødet ligger i et tyndt og jævnt lag. Pensl brødene med olie."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg pitabrødene",
+      "tekst": [
+        "Varm en pande op ved middelvarme.",
+        "Steg pitabrødene i 4-5 min på hver side."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Server de varme pitabrød med bulgursalat og yoghurtdressing."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

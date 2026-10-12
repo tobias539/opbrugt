@@ -1,0 +1,291 @@
+{
+  "id": "butter-paneer",
+  "titel": "Butter paneer",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/butter-paneer/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "indisk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "karry"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 50,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 4,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "ingefaer",
+      "navn": "Ingefær",
+      "maengde": 1,
+      "enhed": "spsk",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "garam-masala",
+      "navn": "Garam masala",
+      "maengde": 2,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "nellike",
+      "navn": "Stødt nellike",
+      "maengde": 1,
+      "enhed": "nip",
+      "basisvare": true,
+      "note": "1 knivspids"
+    },
+    {
+      "ingrediens": "kardemomme",
+      "navn": "Stødt kardemomme",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 2,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "gurkemeje",
+      "navn": "Stødt gurkemeje",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "cashewnoedder",
+      "navn": "Cashewnødder",
+      "maengde": 50,
+      "enhed": "g",
+      "allergener": [
+        "noedder"
+      ]
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater på dåse",
+      "maengde": 800,
+      "enhed": "g",
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Grøntsagsbouillon",
+      "maengde": 1,
+      "enhed": "dl",
+      "basisvare": true,
+      "note": "Grøntsagsbouillon indeholder ofte selleri.",
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "piskefloede",
+      "navn": "Piskefløde",
+      "maengde": 2,
+      "enhed": "dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "paneer",
+      "navn": "Paneer",
+      "maengde": 450,
+      "enhed": "g",
+      "note": "i tern",
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Frisk koriander",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true,
+      "note": "til stegning"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "ris",
+      "navn": "Basmatiris",
+      "maengde": 255,
+      "enhed": "g",
+      "note": "3 dl, til servering",
+      "variabel": "korn-og-ris"
+    },
+    {
+      "ingrediens": "piskefloede",
+      "navn": "Piskefløde",
+      "maengde": 1,
+      "enhed": "dl",
+      "note": "til servering",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 25,
+      "enhed": "g",
+      "basisvare": true,
+      "note": "til servering",
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "cashewnoedder",
+      "navn": "Cashewnødder, ristede",
+      "maengde": 50,
+      "enhed": "g",
+      "note": "til servering",
+      "allergener": [
+        "noedder"
+      ]
+    },
+    {
+      "ingrediens": "naan",
+      "navn": "Naan",
+      "maengde": 4,
+      "enhed": "stk",
+      "note": "til servering",
+      "allergener": [
+        "gluten",
+        "hvede",
+        "maelk"
+      ]
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Svits krydderierne",
+      "tekst": [
+        "Varm olien i en stor pande, og lad smørret bruse af i den. Skru ned på middel varme.",
+        "Svits løg, hvidløg, ingefær, garam masala, nellike, kardemomme og chiliflager i nogle minutter, til løgene er bløde og det dufter godt."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog saucen",
+      "tekst": [
+        "Tilsæt gurkemeje, cashewnødder, hakkede tomater og bouillon, og bring det i kog under omrøring.",
+        "Skru ned, læg låg på, og lad saucen simre ved lav varme i 15 min."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Blend saucen",
+      "tekst": [
+        "Blend ¾ af saucen helt glat og cremet.",
+        "Hæld den tilbage på panden til resten af saucen, og rør godt rundt.",
+        "Rør piskefløden i, og smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Tilsæt paneer",
+      "tekst": [
+        "Skru ned på lav varme, og hak koriandren fint.",
+        "Kom paneer og halvdelen af koriandren i saucen. Gem resten af koriandren til servering.",
+        "Læg låg på, og kog imens risene efter anvisningen på pakken."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Fordel ris og butter paneer i dybe tallerkener.",
+        "Top med en skefuld fløde og en lille klat smør, og drys med koriander og ristede cashewnødder.",
+        "Server med naan."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "noedder",
+      "gluten",
+      "hvede",
+      "selleri"
+    ],
+    "spor_af": []
+  }
+}

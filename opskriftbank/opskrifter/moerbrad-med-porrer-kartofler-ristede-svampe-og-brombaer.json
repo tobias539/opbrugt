@@ -1,0 +1,207 @@
+{
+  "id": "moerbrad-med-porrer-kartofler-ristede-svampe-og-brombaer",
+  "titel": "Mørbrad med porrer, kartofler, ristede svampe og brombær",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/moerbrad-porrer-kartofler-ristede-svampe-og-brombaer",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 25,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "til mørbraden"
+    },
+    {
+      "ingrediens": "svinemoerbrad",
+      "navn": "Svinemørbrad",
+      "maengde": 500,
+      "enhed": "g",
+      "note": "1 mørbrad. Kilden angiver ingen vægt (skøn: ca. 500 g)."
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Kilden angiver ingen mængde (skøn: 1 bundt). Bruges til mørbrad, kartofler og pynt."
+    },
+    {
+      "ingrediens": "porre",
+      "navn": "Porrer",
+      "maengde": 4,
+      "enhed": "stk",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 25,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "til svampene"
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Blandede svampe",
+      "maengde": 200,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "brombaer",
+      "navn": "Brombær",
+      "maengde": 150,
+      "enhed": "g",
+      "variabel": "frugt-i-salat"
+    },
+    {
+      "ingrediens": "valnoedder",
+      "navn": "Ristede valnøddekerner",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "noedder"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 1000,
+      "enhed": "g",
+      "fra_fremgangsmaade": true,
+      "note": "Kilden nævner kun kartoflerne i fremgangsmåden (skøn: 1 kg til 4).",
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "prosciutto",
+      "navn": "Serranoskinke",
+      "maengde": 80,
+      "enhed": "g",
+      "fra_fremgangsmaade": true,
+      "note": "Skiver. Kilden nævner kun skinken i fremgangsmåden (skøn: ca. 80 g).",
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Kartofler i ovnen",
+      "tekst": [
+        "Tænd ovnen på 200°C (almindelig ovn).",
+        "Skær kartoflerne i grove stykker, og kom dem i et ovnfast fad.",
+        "Vend dem med olivenolie, salt, peber og frisk timian.",
+        "Bag kartoflerne i ca. 30 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Brun mørbraden",
+      "tekst": [
+        "Afpuds mørbraden, og skær sølvsenen af.",
+        "Brun den i 25 g smør på en varm pande, til den er gylden hele vejen rundt.",
+        "Læg den på et skærebræt, og krydr med salt, peber og friske timiankviste.",
+        "Rul skiver af serranoskinke rundt om mørbraden. Brug evt. kødnåle, så skinken bliver siddende."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg mørbrad og porrer",
+      "tekst": [
+        "Skær porrerne i skrå skiver.",
+        "Skru ovnen op på 225°C.",
+        "Læg mørbraden i fadet med kartoflerne, og stik porrerne ned mellem kartoflerne.",
+        "Steg det hele i 15 min.",
+        "Tag mørbraden ud, og hold den varm under et viskestykke. Lad kartoflerne blive lidt længere i ovnen, hvis de ikke er møre endnu."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Rist svampene",
+      "tekst": [
+        "Skyl svampene, og riv dem i stykker.",
+        "Varm 25 g smør på en pande, til det bruser.",
+        "Steg svampene, til de er let gyldne, og krydr dem med salt og peber."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Anret",
+      "tekst": [
+        "Skær mørbraden i skiver, og læg dem på et fad med kartofler og porrer.",
+        "Pynt med svampe, brombær, ristede valnødder og friske timiankviste."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "noedder"
+    ],
+    "spor_af": []
+  }
+}

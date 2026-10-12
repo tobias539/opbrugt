@@ -1,0 +1,208 @@
+{
+  "id": "arayes-stegte-farserede-pitabroed",
+  "titel": "Arayes – stegte farserede pitabrød",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/arayes-stegte-farserede-pitabroed/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "mellemoestlig"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "burger-sandwich"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "kan-fryses"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-oksekoed",
+      "navn": "Hakket oksekød",
+      "maengde": 400,
+      "enhed": "g",
+      "note": "Eller hakket lammekød",
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "Fintrevet"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "spidskommen",
+      "navn": "Stødt spidskommen",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Sød paprika",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "roeget-paprika",
+      "navn": "Røget paprika",
+      "maengde": 2,
+      "enhed": "g",
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "koriander-stoedt",
+      "navn": "Stødt koriander",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "pitabroed",
+      "navn": "Pitabrød",
+      "maengde": 4,
+      "enhed": "stk",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "yoghurt",
+      "navn": "Græsk yoghurt 10 %",
+      "maengde": 200,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "2 dl, til dressingen",
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "Fintrevet, til dressingen"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Øko lime",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Fintrevet skal og saft, til dressingen",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "koriander",
+      "navn": "Frisk koriander",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Finthakket, til dressingen",
+      "variabel": "friske-urter"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Rør farsen",
+      "tekst": [
+        "Rør kødet sammen med løg, hvidløg, persille, spidskommen, begge slags paprika og koriander.",
+        "Smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Fyld pitabrødene",
+      "tekst": [
+        "Skær pitabrødene over på midten, så du får 8 halve.",
+        "Fordel farsen i brødene, og tryk dem flade, så kødet ligger i et tyndt og jævnt lag.",
+        "Pensl brødene med olie."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg",
+      "tekst": [
+        "Varm en pande op til middel varme.",
+        "Steg pitabrødene i 4-5 min på hver side."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav dressing og server",
+      "tekst": [
+        "Rør yoghurt, hvidløg, limeskal, limesaft og koriander sammen.",
+        "Smag dressingen til med salt og friskkværnet peber.",
+        "Server de varme pitabrød med dressingen."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

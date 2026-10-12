@@ -1,0 +1,238 @@
+{
+  "id": "boeuf-bourguignon",
+  "titel": "Boeuf bourguignon",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/boeuf-bourguignon",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 120,
+    "max": 120
+  },
+  "kategorier": {
+    "koekken": [
+      "fransk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "gryderet"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "oksekoed-til-gryderet",
+      "navn": "Oksetykkam eller spidsbryst",
+      "maengde": 1,
+      "enhed": "kg"
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerødder",
+      "maengde": 2.5,
+      "enhed": "stk",
+      "note": "200 g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "persillerod",
+      "navn": "Persillerødder",
+      "maengde": 2.5,
+      "enhed": "stk",
+      "note": "200 g",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacontern",
+      "maengde": 150,
+      "enhed": "g",
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Timian",
+      "maengde": 0.3,
+      "enhed": "stk",
+      "note": "3 timianblade (kviste) til urtebuketten"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Kruspersille",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "1 dl + ekstra til pynt",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "laurbaerblade",
+      "navn": "Laurbærblade",
+      "maengde": 2,
+      "enhed": "stk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "roedvin",
+      "navn": "Rødvin",
+      "maengde": 750,
+      "enhed": "ml",
+      "allergener": [
+        "svovldioxid"
+      ],
+      "note": "1 flaske"
+    },
+    {
+      "ingrediens": "perleloeg",
+      "navn": "Perleløg",
+      "maengde": 150,
+      "enhed": "g",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Champignoner",
+      "maengde": 250,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartoffelmos, til servering",
+      "maengde": null,
+      "enhed": "efter smag",
+      "valgfri": true,
+      "note": "Kilden foreslår fx kartoffelmos som tilbehør",
+      "variabel": "kartofler"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered kød og grønt",
+      "tekst": [
+        "Skær kødet i tern på ca. 4 cm.",
+        "Krydr med salt og peber, og vend kødet i melet.",
+        "Skær løg, gulerødder og persillerødder i små tern.",
+        "Skær hvidløget i tynde skiver."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Brun kød og bacon",
+      "tekst": [
+        "Varm olien op i en gryde, og brun kødet i to omgange.",
+        "Tag kødet op, og kom bacon i gryden.",
+        "Steg et par minutter, og tilsæt løg, gulerødder og persillerødder.",
+        "Steg i 5 min, til grøntsagerne får farve, og tilsæt hvidløg."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Simr i rødvin",
+      "tekst": [
+        "Bind timian, persille og laurbærblade sammen til en lille urtebuket.",
+        "Kom kødet tilbage i gryden sammen med buketten.",
+        "Hæld rødvinen over, og skru ned for varmen.",
+        "Lad retten simre i 1½ time, til kødet er mørt."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg svampe og perleløg",
+      "tekst": [
+        "Pil perleløgene, mens kødet simrer.",
+        "Skær champignonerne i tykke skiver.",
+        "Smelt smørret på en pande, og svits svampene ved høj varme i 5 min.",
+        "Tilsæt perleløgene, steg dem med i 2 min, og sluk for varmen."
+      ],
+      "tip": "Blancher perleløgene i 1 min, så glider skallen let af. Du kan også bruge frosne perleløg."
+    },
+    {
+      "nr": 5,
+      "titel": "Smag til og server",
+      "tekst": [
+        "Smag saucen til med salt.",
+        "Er der for meget væde, så lad retten koge lidt ind uden låg.",
+        "Vend svampe og perleløg i gryden lige før servering.",
+        "Drys med lidt persille, og server fx med kartoffelmos."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "svovldioxid",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

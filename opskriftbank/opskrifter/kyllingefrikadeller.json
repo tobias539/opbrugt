@@ -1,0 +1,151 @@
+{
+  "id": "kyllingefrikadeller",
+  "titel": "Kyllingefrikadeller",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/kyllingefrikadeller/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [
+    "kan-fryses"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-kylling",
+      "navn": "Hakket kylling",
+      "maengde": 400,
+      "enhed": "g",
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "fintrevet",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg",
+      "maengde": 1,
+      "enhed": "stk",
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Mælk",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til stegning",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til stegning",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Rør farsen",
+      "tekst": [
+        "Kom kyllingefars, løg, æg, mel og mælk i en skål med salt og peber.",
+        "Rør det godt sammen, til farsen er helt ensartet.",
+        "Læg låg på, og lad farsen hvile i køleskabet i 30 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Varm panden",
+      "tekst": [
+        "Varm olien på en pande.",
+        "Kom smørret på den varme pande, og lad det bruse af."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg frikadellerne",
+      "tekst": [
+        "Form frikadellerne med en ske, og læg dem på panden.",
+        "Steg dem i 5-6 min på hver side, til de er gyldne og gennemstegte."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "id": "pizza-med-roedbede-kaal-og-bacon",
+  "titel": "Pizza med rødbede, kål og bacon",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/pizza-roedbede-kaal-og-bacon",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pizza"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "vand",
+      "navn": "Lunkent vand",
+      "maengde": 3,
+      "enhed": "dl",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "gaer",
+      "navn": "Gær",
+      "maengde": 25,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 400,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "tomatpure",
+      "navn": "Koncentreret tomatpuré",
+      "maengde": 250,
+      "enhed": "g",
+      "note": "Trinene kalder den tomatpassata"
+    },
+    {
+      "ingrediens": "revet-mozzarella",
+      "navn": "Revet mozzarellaost",
+      "maengde": 200,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "roedbede",
+      "navn": "Rødbeder",
+      "maengde": 1.7,
+      "enhed": "stk",
+      "note": "250 g",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Rødløg",
+      "maengde": 2,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "rosenkaal",
+      "navn": "Rosenkål",
+      "maengde": 250,
+      "enhed": "g",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "bacon",
+      "navn": "Bacon",
+      "maengde": 125,
+      "enhed": "g",
+      "note": "I skiver ifølge fremgangsmåden",
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "oregano-frisk",
+      "navn": "Frisk oregano",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "2 spsk",
+      "variabel": "friske-urter"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav dejen",
+      "tekst": [
+        "Opløs gæren i det lunkne vand, og tilsæt salt og 1 spsk olivenolie.",
+        "Tilsæt melet, og ælt dejen godt, til den er smidig og elastisk.",
+        "Lad dejen hæve et lunt sted i 1½ time."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Varm ovn og plader op",
+      "tekst": [
+        "Tænd ovnen på det højeste, den kan, 250-300°C.",
+        "Sæt bagepladerne ind, så de bliver varme."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered grøntsagerne",
+      "tekst": [
+        "Skræl rødbederne, og skær dem i meget tynde skiver.",
+        "Skær rødløgene i strimler og rosenkålen i skiver."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Top pizzaerne",
+      "tekst": [
+        "Del dejen i 2-4 stykker, og form dem til bunde.",
+        "Læg hver bund på et stykke bagepapir.",
+        "Smør tomatpuré på, og drys med mozzarella.",
+        "Fordel rødbeder, rosenkål og rødløg, og læg baconskiverne ovenpå.",
+        "Dryp med lidt olie, og krydr med salt og peber."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Bag og server",
+      "tekst": [
+        "Tag de varme plader ud, og træk pizzaerne over på dem.",
+        "Bag pizzaerne i 10-12 min.",
+        "Drys med oregano."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

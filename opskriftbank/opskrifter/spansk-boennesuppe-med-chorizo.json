@@ -1,0 +1,231 @@
+{
+  "id": "spansk-boennesuppe-med-chorizo",
+  "titel": "Spansk bønnesuppe med chorizo",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/spansk-boennesuppe-med-chorizo/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "spansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "suppe"
+    ],
+    "hovedprotein": [
+      "boenner-linser"
+    ]
+  },
+  "tags": [
+    "kan-fryses"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "chorizo",
+      "navn": "Chorizo",
+      "maengde": 50,
+      "enhed": "g",
+      "note": "i tern",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "saltet-koed"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "finthakket",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 3,
+      "enhed": "fed",
+      "note": "finthakket"
+    },
+    {
+      "ingrediens": "soltoerrede-tomater",
+      "navn": "Soltørrede tomater i olie",
+      "maengde": 50,
+      "enhed": "g",
+      "note": "finthakkede"
+    },
+    {
+      "ingrediens": "hakkede-tomater",
+      "navn": "Hakkede tomater på dåse",
+      "maengde": 400,
+      "enhed": "g",
+      "variabel": "tomat-i-sauce"
+    },
+    {
+      "ingrediens": "bladselleri",
+      "navn": "Stængler bladselleri",
+      "maengde": 2,
+      "enhed": "stk",
+      "note": "i tynde skiver",
+      "allergener": [
+        "selleri"
+      ],
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "gulerod",
+      "navn": "Gulerødder",
+      "maengde": 3,
+      "enhed": "stk",
+      "note": "i små tern",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Grøntsagsbouillon",
+      "maengde": 7,
+      "enhed": "dl",
+      "basisvare": true,
+      "note": "Grøntsagsbouillon indeholder ofte selleri.",
+      "allergener": [
+        "selleri"
+      ]
+    },
+    {
+      "ingrediens": "roeget-paprika",
+      "navn": "Røget paprika",
+      "maengde": 3,
+      "enhed": "g",
+      "note": "1½ tsk"
+    },
+    {
+      "ingrediens": "safran",
+      "navn": "Safran",
+      "maengde": 0.1,
+      "enhed": "g",
+      "note": "1 knivspids, stødt (skøn: ca. 0,1 g)"
+    },
+    {
+      "ingrediens": "fennikelfroe",
+      "navn": "Fennikelfrø",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true,
+      "note": "finthakkede"
+    },
+    {
+      "ingrediens": "timian-toerret",
+      "navn": "Tørret timian",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sorte-boenner",
+      "navn": "Sorte bønner",
+      "maengde": 240,
+      "enhed": "g",
+      "note": "1 dåse (ca. 240 g drænet)"
+    },
+    {
+      "ingrediens": "butterbeans",
+      "navn": "Butterbeans",
+      "maengde": 1,
+      "enhed": "daase"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true,
+      "note": "til stegning"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket, til servering",
+      "variabel": "friske-urter"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered",
+      "tekst": [
+        "Skær chorizoen i tern, og hak løg, hvidløg og soltørrede tomater fint.",
+        "Skær bladselleri i tynde skiver og gulerødder i små tern. Hak fennikelfrøene fint."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Svits",
+      "tekst": [
+        "Varm olien i en stor gryde.",
+        "Svits chorizo, løg, hvidløg og soltørrede tomater, til løgene er bløde."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Simr suppen",
+      "tekst": [
+        "Tilsæt hakkede tomater, bladselleri, gulerødder, bouillon, røget paprika, safran, fennikelfrø og timian.",
+        "Bring suppen i kog under omrøring. Læg låg på, og lad den simre i 15-20 min."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Tilsæt bønnerne",
+      "tekst": [
+        "Hæld bønnerne i en sigte, skyl dem, og lad dem dryppe af.",
+        "Kom dem i suppen, og varm dem godt igennem. Smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Hak persillen fint.",
+        "Server suppen i dybe tallerkener eller skåle med et drys persille."
+      ],
+      "tip": "Lav gerne suppen til to dage. Den bliver kun bedre af at trække natten over i køleskabet."
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "selleri"
+    ],
+    "spor_af": []
+  }
+}

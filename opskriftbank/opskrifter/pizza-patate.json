@@ -1,0 +1,153 @@
+{
+  "id": "pizza-patate",
+  "titel": "Pizza patate",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/pizza-patate",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 2,
+    "valg": [
+      2
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pizza"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "pizzadej",
+      "navn": "Pizzadej, færdig",
+      "maengde": 1,
+      "enhed": "stk",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Bagekartoffel",
+      "maengde": 250,
+      "enhed": "g",
+      "note": "1 bagekartoffel (skøn: ca. 250 g)",
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "rosmarin",
+      "navn": "Rosmarinkviste",
+      "maengde": 0.6,
+      "enhed": "stk",
+      "note": "3 kviste (1 stk = 1 bundt med ca. 5 kviste)"
+    },
+    {
+      "ingrediens": "gedeost",
+      "navn": "Blød frisk gedeost",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "smuldreost"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Jomfruolivenolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Havsalt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "oregano-toerret",
+      "navn": "Oregano",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Varm ovn og plade",
+      "tekst": [
+        "Tænd ovnen på 225°C, og sæt en bageplade ind, så den bliver godt varm."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Klargør toppingen",
+      "tekst": [
+        "Skær kartoflen i tynde skiver og løget i tynde både.",
+        "Hak rosmarinen, og smuldr gedeosten."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Top pizzaen",
+      "tekst": [
+        "Læg pizzabunden på et stykke bagepapir.",
+        "Fordel kartoffel, løg, rosmarin og gedeost over bunden.",
+        "Dryp med olivenolie, og krydr med oregano, salt og peber."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag pizzaen",
+      "tekst": [
+        "Træk forsigtigt pizzaen på bagepapiret over på den varme bageplade.",
+        "Bag den i ovnen i ca. 10 min."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

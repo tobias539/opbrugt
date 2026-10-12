@@ -1,0 +1,242 @@
+{
+  "id": "steak-salat-med-bagte-tomater-og-estragondressing",
+  "titel": "Steak salat med bagte tomater og estragondressing",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/steak-salat-med-bagte-tomater-og-estragondressing/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "salat"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 200,
+      "enhed": "g",
+      "note": "I halve",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "tomat",
+      "navn": "Blommetomater",
+      "maengde": 200,
+      "enhed": "g",
+      "note": "I halve",
+      "variabel": "ovngroent"
+    },
+    {
+      "ingrediens": "estragon",
+      "navn": "Frisk estragon",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "1 håndfuld, finthakket, til dressingen",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "loegpulver",
+      "navn": "Løgpulver",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "grov-sennep",
+      "navn": "Grov sennep",
+      "maengde": 15,
+      "enhed": "g",
+      "allergener": [
+        "sennep"
+      ],
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Øko citron",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "Fintrevet skal og lidt saft",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Cremefraiche 18 %",
+      "maengde": 2,
+      "enhed": "dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "mayonnaise",
+      "navn": "Mayonnaise",
+      "maengde": 30,
+      "enhed": "g",
+      "allergener": [
+        "aeg",
+        "sennep"
+      ],
+      "note": "2 spsk",
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "flanksteak",
+      "navn": "Flanksteak",
+      "maengde": 600,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "blandet-salat",
+      "navn": "Krølsalat",
+      "maengde": 200,
+      "enhed": "g",
+      "note": "1 krølsalat",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "rucola",
+      "navn": "Rucola",
+      "maengde": 70,
+      "enhed": "g",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "agurk",
+      "navn": "Agurk",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "Halveret og i skiver",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Rødløg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "I tynde både",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "avocado",
+      "navn": "Avocado",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "I tynde skiver",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "estragon",
+      "navn": "Frisk estragon",
+      "maengde": 0.25,
+      "enhed": "stk",
+      "note": "1 spsk, finthakket, til drys",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 20,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Til stegning"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til tomaterne",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag tomaterne",
+      "tekst": [
+        "Tænd ovnen på 200°C varmluft.",
+        "Læg tomaterne på en bageplade med snitfladen opad.",
+        "Dryp med olivenolie, og drys med salt og peber.",
+        "Bag dem i 25 min, og lad dem køle af på pladen, til de er lune."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Rør estragondressing",
+      "tekst": [
+        "Rør estragon, løgpulver, sennep, citronskal, cremefraiche og mayonnaise sammen.",
+        "Smag til med salt, peber og lidt citronsaft.",
+        "Lad dressingen trække, mens du laver resten."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kødet",
+      "tekst": [
+        "Varm en pande op, og lad smørret bruse af.",
+        "Krydr kødet med salt og peber, og steg det i 2-3 min på hver side.",
+        "Lad kødet hvile i 5 min på et skærebræt, og skær det i skiver."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Anret salaten",
+      "tekst": [
+        "Fordel krølsalat og rucola på tallerkener, og kom lidt dressing over.",
+        "Top med de bagte tomater, agurk, rødløg og avocado.",
+        "Læg kødet ovenpå, og drys med salt, peber og lidt estragon.",
+        "Kom lidt ekstra dressing over, og server med det samme."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "sennep",
+      "maelk",
+      "aeg"
+    ],
+    "spor_af": []
+  }
+}

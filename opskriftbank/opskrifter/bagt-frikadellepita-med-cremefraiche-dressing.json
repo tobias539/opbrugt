@@ -1,0 +1,244 @@
+{
+  "id": "bagt-frikadellepita-med-cremefraiche-dressing",
+  "titel": "Bagt frikadellepita med cremefraiche dressing",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/bagt-frikadellepita/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 8,
+    "valg": [
+      8
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk",
+      "mellemoestlig"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "burger-sandwich",
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "svinekoed"
+    ]
+  },
+  "tags": [
+    "kan-fryses"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hakket-svinekoed",
+      "navn": "Hakket svinekød",
+      "maengde": 400,
+      "enhed": "g",
+      "variabel": "hakket-koed"
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "havregryn",
+      "navn": "Finvalsede havregryn",
+      "maengde": 2,
+      "enhed": "spsk",
+      "allergener": [
+        "gluten",
+        "havre"
+      ]
+    },
+    {
+      "ingrediens": "maelk",
+      "navn": "Mælk",
+      "maengde": 1,
+      "enhed": "dl",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg",
+      "maengde": 1,
+      "enhed": "stk",
+      "allergener": [
+        "aeg"
+      ]
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Løg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "fintrevet",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "timian-toerret",
+      "navn": "Tørret timian",
+      "maengde": 1.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til farsen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til farsen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til pensling",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "pitabroed",
+      "navn": "Pitabrød",
+      "maengde": 4,
+      "enhed": "stk",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "note": "skåret over på midten til 8 halve"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Cremefraiche 18 %",
+      "maengde": 2.5,
+      "enhed": "dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "purloeg",
+      "navn": "Purløg",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "1½ dl hakket",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "sukker",
+      "navn": "Sukker",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "sennep",
+      "navn": "Dijonsennep",
+      "maengde": 5,
+      "enhed": "g",
+      "allergener": [
+        "sennep"
+      ],
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til dressingen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til dressingen",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav dressingen",
+      "tekst": [
+        "Rør cremefraiche med purløg, sukker, sennep, salt og peber.",
+        "Smag godt til, og lad dressingen trække, mens du laver resten."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Rør farsen",
+      "tekst": [
+        "Rør svinekød, mel, havregryn, mælk, æg, løg, hvidløg, timian, salt og peber sammen til en fars.",
+        "Lad farsen trække i mindst 15 min, gerne længere."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Fyld pitabrødene",
+      "tekst": [
+        "Tænd ovnen på 200°C varmluft.",
+        "Fordel farsen i de halve pitabrød.",
+        "Tryk dem flade, så farsen ligger i et tyndt og jævnt lag."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag pitabrødene",
+      "tekst": [
+        "Pensl brødene med olie.",
+        "Bag dem i ca. 12-15 min, til de er sprøde, og farsen er gennemstegt."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Server de lune pitabrød med cremefraichedressingen og andet tilbehør efter smag."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "gluten",
+      "havre",
+      "hvede",
+      "maelk",
+      "sennep"
+    ],
+    "spor_af": []
+  }
+}

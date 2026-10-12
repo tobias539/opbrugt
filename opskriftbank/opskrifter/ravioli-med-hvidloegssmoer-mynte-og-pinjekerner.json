@@ -1,0 +1,125 @@
+{
+  "id": "ravioli-med-hvidloegssmoer-mynte-og-pinjekerner",
+  "titel": "Ravioli med hvidløgssmør, mynte og pinjekerner",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/ravioli-hvidlogssmor-mynte-og-pinjekerner",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 10,
+    "max": 10
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "hvidloegssmoer",
+      "navn": "Hvidløgssmør",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "pinjekerner",
+      "navn": "Pinjekerner",
+      "maengde": 40,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "mynte",
+      "navn": "Frisk mynte",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "ravioli",
+      "navn": "Ravioli",
+      "maengde": 500,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "hvede",
+        "aeg",
+        "maelk"
+      ],
+      "note": "med ost eller andet fyld, fx spinat"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Smelt hvidløgssmørret",
+      "tekst": [
+        "Smelt hvidløgssmør og pinjekerner sammen i en lille gryde.",
+        "Hak mynten groft."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog raviolien",
+      "tekst": [
+        "Kog raviolien i letsaltet vand som anvist på pakken."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Server",
+      "tekst": [
+        "Løft raviolien op med en hulske, og fordel den i dybe tallerkener.",
+        "Hæld hvidløgssmør og pinjekerner over, og drys med mynte.",
+        "Krydr med lidt friskkværnet sort peber."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "id": "wraps-med-stegte-krydrede-ingrid-aerter-og-groent",
+  "titel": "Wraps med stegte krydrede Ingrid ærter og grønt",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/wraps-stegte-krydrede-ingrid-arter-gront",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 50
+  },
+  "kategorier": {
+    "koekken": [
+      "tex-mex"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "wraps-tacos"
+    ],
+    "hovedprotein": [
+      "boenner-linser"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "toerrede-aerter",
+      "navn": "Tørrede Ingrid ærter",
+      "maengde": 1,
+      "enhed": "dl"
+    },
+    {
+      "ingrediens": "tortillabroed",
+      "navn": "Tortillas",
+      "maengde": 4,
+      "enhed": "stk",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "cherrytomater",
+      "navn": "Cherrytomater",
+      "maengde": 90,
+      "enhed": "g",
+      "note": "6 stk (skøn: ca. 15 g pr. stk)",
+      "variabel": "raat-salatgroent"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 4,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "blandet-salat",
+      "navn": "Salat",
+      "maengde": 100,
+      "enhed": "g",
+      "note": "eller spinat eller grønkål",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "oregano-toerret",
+      "navn": "Tørret oregano",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "spidskommen",
+      "navn": "Stødt spidskommen",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "roeget-paprika",
+      "navn": "Røget paprika",
+      "maengde": 2,
+      "enhed": "g",
+      "note": "1 tsk"
+    },
+    {
+      "ingrediens": "hvidloegspulver",
+      "navn": "Hvidløgspulver",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "cayennepeber",
+      "navn": "Cayennepeber",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "note": "til ærterne"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "note": "til ærterne"
+    },
+    {
+      "ingrediens": "syltede-roedloeg",
+      "navn": "Syltede rødløg",
+      "maengde": null,
+      "enhed": "efter smag"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Creme fraiche 38 % (eller anden fedtprocent)",
+      "maengde": 100,
+      "enhed": "ml",
+      "note": "100 g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Friske krydderurter (fx persille, koriander, timian)",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citron, usprøjtet",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "saft og skal",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "note": "til dressingen"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "note": "til dressingen"
+    },
+    {
+      "ingrediens": "chili-frisk",
+      "navn": "Chili",
+      "maengde": null,
+      "enhed": "efter smag",
+      "fra_fremgangsmaade": true,
+      "note": "Nævnes i fremgangsmåden, men ikke i ingredienslisten",
+      "variabel": "styrke"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Udblød ærterne",
+      "tekst": [
+        "Skyl de tørrede ærter, og læg dem i blød i rigeligt vand i køleskabet i mindst 12 timer."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog ærterne",
+      "tekst": [
+        "Hæld udblødningsvandet fra.",
+        "Kog ærterne i rigeligt vand med lidt salt i 25-30 min.",
+        "Hæld vandet fra."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Lav dressing",
+      "tekst": [
+        "Skyl krydderurterne, og hak dem.",
+        "Rør dem sammen med creme fraiche, citronsaft og fintrevet citronskal. Smag til med salt og peber.",
+        "Stil dressingen på køl."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg ærterne",
+      "tekst": [
+        "Skyl forårsløg, tomater og chili, og skær dem i mundrette stykker.",
+        "Steg de kogte ærter i lidt olie med krydderierne og forårsløgene ved middel varme i 8-10 min."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Saml wraps",
+      "tekst": [
+        "Skyl salaten, og lun tortillaerne.",
+        "Smør dressing på de lune wraps, og fyld dem med ærter og forårsløg, tomater, salat og chili.",
+        "Top med syltede rødløg."
+      ]
+    }
+  ],
+  "noter": "Ærterne skal i blød i mindst 12 timer, så start dagen før. Tiden er uden udblødning (kilden skriver 750 min i alt).",
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

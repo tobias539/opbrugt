@@ -1,0 +1,171 @@
+{
+  "id": "svampepizza-med-vegansk-mozzarella",
+  "titel": "Svampepizza med vegansk mozzarella",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/svampepizza-med-violife-mozzarellasmag",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pizza"
+    ],
+    "hovedprotein": [
+      "ingen"
+    ]
+  },
+  "tags": [
+    "vegetar",
+    "vegansk"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "gaer",
+      "navn": "Gær",
+      "maengde": 25,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Vand",
+      "maengde": 3,
+      "enhed": "dl",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 400,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "note": "gerne pizzamel"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Groft salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true,
+      "note": "+ lidt ekstra til svampene"
+    },
+    {
+      "ingrediens": "champignon",
+      "navn": "Blandede svampe",
+      "maengde": 500,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "loeg",
+      "navn": "Rødløg",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Hakket bredbladet persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "2 spsk (skøn: ½ bundt)",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian",
+      "maengde": 0.25,
+      "enhed": "stk",
+      "note": "1 spsk (skøn: ¼ bundt)"
+    },
+    {
+      "ingrediens": "vegansk-ost",
+      "navn": "Vegansk ost med mozzarellasmag",
+      "maengde": 200,
+      "enhed": "g",
+      "fra_fremgangsmaade": true,
+      "note": "Kilden bruger Violife med mozzarellasmag og nævner den kun i fremgangsmåden uden mængde (skøn: 200 g).",
+      "variabel": "revet-ost"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav dejen",
+      "tekst": [
+        "Rør gæren ud i vandet.",
+        "Kom hvedemel og 1 tsk groft salt i, og ælt dejen grundigt.",
+        "Dæk den til, og lad den hæve i 1½ time, til den er dobbelt så stor."
+      ],
+      "vigtigt": "Kildens tid på 30 min er uden de 1½ time, dejen skal hæve."
+    },
+    {
+      "nr": 2,
+      "titel": "Steg svampene",
+      "tekst": [
+        "Skær svampene i skiver og rødløget i strimler.",
+        "Varm 1 spsk olivenolie på en pande, og svits svampe og løg.",
+        "Krydr med salt og peber, når svampene begynder at tage farve. Sluk derefter for varmen."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Form bundene",
+      "tekst": [
+        "Tænd ovnen på 250°C.",
+        "Del dejen i 2 kugler, og form hver kugle til en pizzabund.",
+        "Læg bundene på bageplader, og pensl dem med resten af olivenolien."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Top og bag",
+      "tekst": [
+        "Fordel den veganske ost på bundene, og læg svampene ovenpå.",
+        "Drys med persille og timian.",
+        "Bag pizzaerne ved 250°C i 12-15 min."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": []
+  }
+}

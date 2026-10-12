@@ -71,6 +71,7 @@ def main():
         if o.get("noter"): r["noter"] = o["noter"]
         if o["kilde"].get("url"): r["url"] = o["kilde"]["url"]
         if o["kilde"].get("type") == "hellofresh": r["kilde"] = "HelloFresh" + (" " + o["kilde"]["uge"] if o["kilde"].get("uge") else "")
+        elif o["kilde"].get("navn"): r["kilde"] = o["kilde"]["navn"]
         for l in o["ingredienser"]:
             x = {"i": l["ingrediens"], "n": l["navn"], "m": l.get("maengde"), "e": l["enhed"]}
             if l.get("tabel"): x["t"] = l["tabel"]

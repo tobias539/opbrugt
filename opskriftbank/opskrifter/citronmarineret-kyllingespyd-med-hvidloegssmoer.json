@@ -1,0 +1,202 @@
+{
+  "id": "citronmarineret-kyllingespyd-med-hvidloegssmoer",
+  "titel": "Citronmarineret kyllingespyd med hvidløgssmør",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/citronmarineret-kyllingespyd-med-hvidloegssmoer/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 120,
+    "max": 120
+  },
+  "kategorier": {
+    "koekken": [
+      "middelhavs"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Øko citron",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "Fintrevet skal og saft, til marinaden",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "timian-toerret",
+      "navn": "Tørret timian",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "Fintrevet, til marinaden"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingefilet",
+      "maengde": 600,
+      "enhed": "g",
+      "note": "Skåret i lange, tynde strimler",
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 75,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Til hvidløgssmørsaucen"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "Fintrevet, til saucen"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "3 spsk, finthakket, til saucen",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Øko citron",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "Fintrevet skal, til saucen",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Parmesan",
+      "maengde": 50,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Friskrevet, til servering",
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 0.4,
+      "enhed": "stk",
+      "note": "2 spsk, finthakket, til servering",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til pensling",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Mariner kyllingen",
+      "tekst": [
+        "Pisk olie, citronsaft, citronskal, timian og hvidløg sammen til en jævn marinade.",
+        "Pisk salt og peber i.",
+        "Skær kyllingen i lange, tynde strimler, og vend dem godt i marinaden.",
+        "Dæk skålen til, og stil den på køl i mindst 1 time, gerne længere."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Lav hvidløgssmørsauce",
+      "tekst": [
+        "Smelt smørret i en gryde ved lav til middel varme.",
+        "Tilsæt hvidløg, persille, salt og peber.",
+        "Smag til med fintrevet citronskal."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Sæt kyllingen på spyd",
+      "tekst": [
+        "Træk kyllingestrimlerne på grillspyd i tætte harmonikafolder.",
+        "Pres kødet godt sammen på spyddene."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg spyddene",
+      "tekst": [
+        "Varm en pande eller grill op til middelhøj varme.",
+        "Pensl spyddene med olie.",
+        "Steg dem i 4-5 min på hver side, til de er gennemstegte."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Pensl de varme spyd med hvidløgssmørsauce.",
+        "Drys med parmesan og resten af persillen.",
+        "Hæld resten af saucen over, og server med det samme."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "id": "spaghetti-alla-nerano",
+  "titel": "Spaghetti alla Nerano",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/spaghetti-alla-nerano/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "olie",
+      "navn": "Fritureolie",
+      "maengde": 0.5,
+      "enhed": "l",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Squash",
+      "maengde": 2.5,
+      "enhed": "stk",
+      "note": "750 g, i skiver på ca. 2-3 mm",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "pasta",
+      "navn": "Spaghetti",
+      "maengde": 400,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ],
+      "variabel": "pasta-og-nudler"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Parmesan",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "friskrevet",
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Frisk basilikum",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Friter squashen",
+      "tekst": [
+        "Varm fritureolien op til 180 grader i en gryde.",
+        "Friter squashskiverne lidt ad gangen.",
+        "Tag dem op med en hulske, og lad dem dryppe af på køkkenrulle. Fortsæt, til alle skiver er friteret."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog pastaen halvt",
+      "tekst": [
+        "Kog spaghettien i letsaltet vand, til den er halvt færdig.",
+        "Gem kogevandet i en skål til saucen, og hæld pastaen i en sigte."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Kog færdig i panden",
+      "tekst": [
+        "Varm lidt olie i en stor sauterpande ved middelhøj varme.",
+        "Kom den friterede squash, den halvkogte spaghetti og knust hvidløg på panden.",
+        "Hæld 1-2 dl af pastavandet ved, og lad det simre.",
+        "Lad pastaen koge færdig i panden, og hæld mere pastavand ved lidt ad gangen efter behov."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Rør osten i",
+      "tekst": [
+        "Rør det meste af parmesanen i, når pastaen næsten er al dente.",
+        "Juster med pastavand, til retten er cremet.",
+        "Smag til med salt og peber."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Anret",
+      "tekst": [
+        "Fordel pastaen på tallerkener.",
+        "Drys med basilikumblade, resten af parmesanen og lidt ekstra peber."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

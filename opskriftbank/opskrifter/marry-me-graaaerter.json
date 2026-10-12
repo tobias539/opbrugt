@@ -1,0 +1,211 @@
+{
+  "id": "marry-me-graaaerter",
+  "titel": "”Marry Me” gråærter",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/marry-me-graarter",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 120,
+    "max": 120
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk",
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "gryderet"
+    ],
+    "hovedprotein": [
+      "boenner-linser"
+    ]
+  },
+  "tags": [
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "toerrede-aerter",
+      "navn": "Danske tørrede gråærter",
+      "maengde": 300,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "skalotteloeg",
+      "navn": "Skalotteløg",
+      "maengde": 2,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "soltoerrede-tomater",
+      "navn": "Soltørrede tomater",
+      "maengde": 8,
+      "enhed": "stk"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "kilden skriver '2 tsk fed hvidløg'; læst som 2 fed"
+    },
+    {
+      "ingrediens": "persille",
+      "navn": "Bredbladet persille",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 håndfuld",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 1,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "oregano-toerret",
+      "navn": "Tørret oregano",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "chiliflager",
+      "navn": "Chiliflager",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "tomatpure",
+      "navn": "Koncentreret tomatpuré",
+      "maengde": 15,
+      "enhed": "g",
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Frisk spinat",
+      "maengde": 200,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "vand",
+      "navn": "Kogevand fra ærterne",
+      "maengde": 3,
+      "enhed": "dl",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "piskefloede",
+      "navn": "Piskefløde",
+      "maengde": 1.5,
+      "enhed": "dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "parmesan",
+      "navn": "Parmigiano reggiano",
+      "maengde": 40,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "kilden skriver '1 parmigiano reggiano' til at drysse over; mængden er et skøn",
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "basilikum",
+      "navn": "Frisk basilikum",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "friske-urter"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "fra_fremgangsmaade": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Læg ærterne i blød",
+      "tekst": [
+        "Kom gråærterne i en skål med koldt vand.",
+        "Stil dem i køleskabet natten over, dog mindst 12 timer."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Kog ærterne",
+      "tekst": [
+        "Hæld udblødningsvandet fra.",
+        "Kog ærterne i 20 min i nyt vand med lidt salt.",
+        "Lad dem trække i vandet i 10 min.",
+        "Hæld vandet fra gennem en si, men gem kogevandet."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Forbered grøntsagerne",
+      "tekst": [
+        "Skær skalotteløg og soltørrede tomater i strimler.",
+        "Hak hvidløg og persille fint."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Svits og simr",
+      "tekst": [
+        "Varm olien i en pande eller gryde, og svits skalotteløg og soltørrede tomater i et par minutter.",
+        "Kom hvidløg i, og steg 1 min mere.",
+        "Tilsæt de kogte ærter, oregano, chiliflager, tomatpuré og 3 dl af kogevandet.",
+        "Lad retten simre i 10 min."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Tilsæt fløde og spinat",
+      "tekst": [
+        "Rør fløde og spinat i, og lad retten koge færdig i 10 min.",
+        "Smag til med salt."
+      ]
+    },
+    {
+      "nr": 6,
+      "titel": "Server",
+      "tekst": [
+        "Drys retten med parmesan, den hakkede persille og lidt frisk basilikum."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

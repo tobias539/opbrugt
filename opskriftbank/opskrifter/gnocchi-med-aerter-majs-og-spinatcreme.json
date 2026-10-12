@@ -1,0 +1,200 @@
+{
+  "id": "gnocchi-med-aerter-majs-og-spinatcreme",
+  "titel": "Gnocchi med ærter, majs og spinatcreme",
+  "kilde": {
+    "type": "web",
+    "navn": "Valdemarsro",
+    "url": "https://www.valdemarsro.dk/gnocchi-med-aerter-majs-og-spinatcreme/",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "italiensk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "pasta"
+    ],
+    "hovedprotein": [
+      "ost"
+    ]
+  },
+  "tags": [
+    "hurtig",
+    "vegetar"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "gnocchi",
+      "navn": "Gnocchi",
+      "maengde": 500,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "majs",
+      "navn": "Majs",
+      "maengde": 100,
+      "enhed": "g",
+      "note": "fra frost eller dåse",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "aerter",
+      "navn": "Frosne ærter",
+      "maengde": 250,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "bouillon",
+      "navn": "Grøntsagsbouillon",
+      "maengde": 1,
+      "enhed": "dl",
+      "basisvare": true,
+      "allergener": [
+        "selleri"
+      ],
+      "note": "Grøntsagsbouillon indeholder ofte selleri."
+    },
+    {
+      "ingrediens": "spinat",
+      "navn": "Spinat",
+      "maengde": 200,
+      "enhed": "g",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "flodeost",
+      "navn": "Naturel flødeost",
+      "maengde": 150,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-sauce"
+    },
+    {
+      "ingrediens": "lagret-ost",
+      "navn": "Lagret ost",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Kilden skriver vesterhavsost eller parmesan, friskrevet.",
+      "variabel": "revet-ost"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 2,
+      "enhed": "fed",
+      "note": "fintrevet"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Økologisk citron",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "fintrevet skal og en smule saft",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør",
+      "maengde": 50,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ],
+      "note": "til stegning"
+    },
+    {
+      "ingrediens": "lagret-ost",
+      "navn": "Lagret ost til servering",
+      "maengde": 50,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "note": "Kilden skriver vesterhavsost, friskrevet.",
+      "variabel": "revet-ost"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Rist gnocchi og majs",
+      "tekst": [
+        "Varm smørret på en stor pande, og lad det bruse kort af.",
+        "Rist gnocchi og majs, til de er gyldne og sprøde. Rør ofte undervejs.",
+        "Tag gnocchi af panden, og læg dem på en tallerken."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Lav spinatcremen",
+      "tekst": [
+        "Blend bouillon og spinat, til spinaten er helt fin.",
+        "Hæld blandingen på panden med flødeost, 75 g revet ost og hvidløg.",
+        "Varm op under god omrøring, til osten er smeltet, og cremen simrer."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Ærter og smagning",
+      "tekst": [
+        "Kom ærterne i, og varm dem godt igennem.",
+        "Smag cremen til med salt, peber, revet citronskal og lidt citronsaft."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Server",
+      "tekst": [
+        "Vend gnocchi i den grønne creme.",
+        "Server med det samme med et drys af de sidste 50 g friskrevet ost."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "gluten",
+      "hvede",
+      "maelk",
+      "selleri"
+    ],
+    "spor_af": []
+  }
+}

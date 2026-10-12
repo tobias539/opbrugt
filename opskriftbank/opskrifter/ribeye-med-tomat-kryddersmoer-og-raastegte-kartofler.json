@@ -1,0 +1,194 @@
+{
+  "id": "ribeye-med-tomat-kryddersmoer-og-raastegte-kartofler",
+  "titel": "Ribeye med tomat-kryddersmør og råstegte kartofler",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/ribeye-tomat-kryddersmoer-og-raastegte-kartofler",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 30,
+    "max": 30
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [
+    "hurtig"
+  ],
+  "ingredienser": [
+    {
+      "ingrediens": "smoer",
+      "navn": "Blødt smør",
+      "maengde": 100,
+      "enhed": "g",
+      "basisvare": true,
+      "note": "til kryddersmør",
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "soltoerrede-tomater",
+      "navn": "Soltørrede tomater i olie",
+      "maengde": 25,
+      "enhed": "g"
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Paprika",
+      "maengde": 0.25,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "til kryddersmør"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian",
+      "maengde": 0.1,
+      "enhed": "stk",
+      "note": "1 tsk hakket, til kryddersmør (1 stk = 1 bundt)"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "ribeye",
+      "navn": "Ribeye-steaks",
+      "maengde": 800,
+      "enhed": "g",
+      "note": "4 ribeye-steaks (skøn: ca. 200 g pr. stk)"
+    },
+    {
+      "ingrediens": "smoer",
+      "navn": "Smør til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true,
+      "allergener": [
+        "maelk"
+      ]
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til stegning",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Kartofler",
+      "maengde": 750,
+      "enhed": "g",
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie",
+      "maengde": 3,
+      "enhed": "spsk",
+      "basisvare": true,
+      "note": "til kartoflerne"
+    },
+    {
+      "ingrediens": "hvidloeg",
+      "navn": "Hvidløg",
+      "maengde": 1,
+      "enhed": "fed",
+      "note": "til kartoflerne"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian",
+      "maengde": 0.3,
+      "enhed": "stk",
+      "note": "1 spsk hakket, til kartoflerne (1 stk = 1 bundt)"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Lav kryddersmør",
+      "tekst": [
+        "Hak de soltørrede tomater fint, knus hvidløget, og hak timianen.",
+        "Rør tomat, paprika, hvidløg og timian sammen med det bløde smør, og smag til med salt og peber.",
+        "Læg smørret på et stykke plastfolie, og rul det til en lille pølse. Læg det i køleskabet, til det skal bruges."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Tag kødet ud",
+      "tekst": [
+        "Tag bøfferne ud af køleskabet en halv time, før de skal steges."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Steg kartoflerne",
+      "tekst": [
+        "Skrub kartoflerne, dup dem tørre, og skær dem i tern.",
+        "Varm olivenolien i en stor pande, og steg kartoflerne ved middel varme i ca. 20 min. Vend dem tit undervejs.",
+        "Hak hvidløg og timian fint. Kom det på panden efter 15 min, og krydr med salt og peber.",
+        "Steg kartoflerne færdige, til de er gyldne."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Steg bøfferne",
+      "tekst": [
+        "Krydr bøfferne med salt og peber.",
+        "Steg dem ved høj varme i smør og olie i ca. 2-3 min på hver side, alt efter hvor store de er."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Læg en skive kryddersmør på hver bøf, og server med kartoflerne."
+      ],
+      "tip": "Bagte halve tomater smager godt til."
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk"
+    ],
+    "spor_af": []
+  }
+}

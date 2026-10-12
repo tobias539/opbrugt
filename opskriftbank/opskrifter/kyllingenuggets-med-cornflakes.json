@@ -1,0 +1,165 @@
+{
+  "id": "kyllingenuggets-med-cornflakes",
+  "titel": "Kyllingenuggets med cornflakes",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/kyllingenuggets-cornflakes",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 60,
+    "max": 60
+  },
+  "kategorier": {
+    "koekken": [
+      "amerikansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "paneret",
+      "ovnret"
+    ],
+    "hovedprotein": [
+      "kylling"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "hvedemel",
+      "navn": "Hvedemel",
+      "maengde": 100,
+      "enhed": "g",
+      "basisvare": true,
+      "allergener": [
+        "gluten",
+        "hvede"
+      ]
+    },
+    {
+      "ingrediens": "kyllingebryst",
+      "navn": "Kyllingeinderfileter",
+      "maengde": 640,
+      "enhed": "g",
+      "note": "16 stk. (ca. 40 g pr. stk.)",
+      "variabel": "kylling"
+    },
+    {
+      "ingrediens": "paprika",
+      "navn": "Paprika",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Sort peber",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "aeg",
+      "navn": "Æg",
+      "maengde": 2,
+      "enhed": "stk",
+      "allergener": [
+        "aeg"
+      ],
+      "note": "pisket let sammen"
+    },
+    {
+      "ingrediens": "cornflakes",
+      "navn": "Cornflakes",
+      "maengde": 75,
+      "enhed": "g",
+      "allergener": [
+        "gluten",
+        "byg"
+      ],
+      "note": "let knuste"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citron (usprøjtet)",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "i både",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "ketchup",
+      "navn": "Tomatketchup",
+      "maengde": 110,
+      "enhed": "g",
+      "basisvare": true,
+      "note": "1 dl"
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Forbered kyllingen",
+      "tekst": [
+        "Tænd ovnen på 200°C.",
+        "Skær eventuelle hinder og sener af inderfileterne."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Gør paneringen klar",
+      "tekst": [
+        "Bland mel, paprika, salt og peber i en skål.",
+        "Pisk æggene let sammen med en gaffel i en anden skål.",
+        "Kom cornflakes i en frostpose, knus dem let med hånden, og hæld dem ud på en tallerken."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Paner kyllingen",
+      "tekst": [
+        "Vend hver inderfilet først i melblandingen, så i æggene og til sidst i cornflakes.",
+        "Læg stykkerne på en bageplade med bagepapir."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Bag nuggets",
+      "tekst": [
+        "Bag dem i ovnen ved 200°C i ca. 22 min, til de er sprøde og gyldne, og kyllingen er gennemstegt."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Server nuggets med ketchup og citronbåde."
+      ]
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "aeg",
+      "byg",
+      "gluten",
+      "hvede"
+    ],
+    "spor_af": []
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "id": "entrecote-med-fyldt-bagt-kartoffel-og-groen-salat",
+  "titel": "Entrecote med fyldt bagt kartoffel og grøn salat",
+  "kilde": {
+    "type": "web",
+    "navn": "MENY",
+    "url": "https://meny.dk/opskrift/entrecote-fyldt-bagt-kartoffel-og-gron-salat",
+    "tilfoejet": "2026-10-12"
+  },
+  "portioner": {
+    "basis": 4,
+    "valg": [
+      4
+    ]
+  },
+  "tid": {
+    "min": 45,
+    "max": 45
+  },
+  "kategorier": {
+    "koekken": [
+      "dansk"
+    ],
+    "maaltid": [
+      "aftensmad"
+    ],
+    "ret_type": [
+      "koed-paa-panden"
+    ],
+    "hovedprotein": [
+      "oksekoed"
+    ]
+  },
+  "tags": [],
+  "ingredienser": [
+    {
+      "ingrediens": "entrecote",
+      "navn": "Entrecote",
+      "maengde": 800,
+      "enhed": "g",
+      "note": "4 stk. (ca. 200 g pr. stk.)"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til bøfferne",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til bøfferne",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olie til bøfferne",
+      "maengde": 1,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "kartofler",
+      "navn": "Bagekartofler",
+      "maengde": 1000,
+      "enhed": "g",
+      "note": "4 stk. (ca. 250 g pr. stk.)",
+      "variabel": "kartofler"
+    },
+    {
+      "ingrediens": "gedeost",
+      "navn": "Gedeost",
+      "maengde": 150,
+      "enhed": "g",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "smuldreost"
+    },
+    {
+      "ingrediens": "creme-fraiche",
+      "navn": "Creme fraiche 18 %",
+      "maengde": 1.5,
+      "enhed": "dl",
+      "allergener": [
+        "maelk"
+      ],
+      "variabel": "cremet-dip"
+    },
+    {
+      "ingrediens": "citrusfrugt",
+      "navn": "Citronskal (usprøjtet)",
+      "maengde": 0.5,
+      "enhed": "stk",
+      "note": "1 tsk fintrevet skal",
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian til fyldet",
+      "maengde": 0.25,
+      "enhed": "stk",
+      "note": "1 spsk hakket"
+    },
+    {
+      "ingrediens": "salt",
+      "navn": "Salt til fyldet",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til fyldet",
+      "maengde": 0.5,
+      "enhed": "tsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "romainesalat",
+      "navn": "Hjertesalat",
+      "maengde": 60,
+      "enhed": "g",
+      "variabel": "salatblade"
+    },
+    {
+      "ingrediens": "edamame",
+      "navn": "Edamamebønner",
+      "maengde": 200,
+      "enhed": "g",
+      "allergener": [
+        "soja"
+      ],
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "zucchini",
+      "navn": "Squash",
+      "maengde": 1,
+      "enhed": "stk",
+      "variabel": "pandegroent"
+    },
+    {
+      "ingrediens": "foraarsloeg",
+      "navn": "Forårsløg",
+      "maengde": 4,
+      "enhed": "stk",
+      "variabel": "loeg"
+    },
+    {
+      "ingrediens": "balsamico",
+      "navn": "Mørk balsamicoeddike",
+      "maengde": 1,
+      "enhed": "spsk",
+      "allergener": [
+        "svovldioxid"
+      ],
+      "variabel": "citrus-og-syre"
+    },
+    {
+      "ingrediens": "olie",
+      "navn": "Olivenolie til dressingen",
+      "maengde": 2,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "honning",
+      "navn": "Honning",
+      "maengde": 20,
+      "enhed": "g",
+      "note": "1 spsk"
+    },
+    {
+      "ingrediens": "peber",
+      "navn": "Friskkværnet peber til dressingen",
+      "maengde": 0.5,
+      "enhed": "spsk",
+      "basisvare": true
+    },
+    {
+      "ingrediens": "timian",
+      "navn": "Frisk timian til salat og pynt",
+      "maengde": 1,
+      "enhed": "stk",
+      "note": "1 bæger"
+    },
+    {
+      "ingrediens": "kryddersalt",
+      "navn": "Kryddersalt",
+      "maengde": null,
+      "enhed": "efter smag",
+      "basisvare": true
+    }
+  ],
+  "trin": [
+    {
+      "nr": 1,
+      "titel": "Bag kartoflerne",
+      "tekst": [
+        "Tænd ovnen på 175°C.",
+        "Tag entrecoterne ud af køleskabet, så de har ligget ca. 30 min ved stuetemperatur, når de skal steges.",
+        "Halver bagekartoflerne, og skær et rudemønster i snitfladerne.",
+        "Læg dem i et ildfast fad, og bag dem i ca. 25 min."
+      ]
+    },
+    {
+      "nr": 2,
+      "titel": "Fyld kartoflerne",
+      "tekst": [
+        "Tag kartoflerne ud, og skrab lidt af indmaden over i en skål med en ske.",
+        "Rør indmaden sammen med gedeost, creme fraiche, citronskal, hakket timian, salt og peber.",
+        "Fyld blandingen tilbage i kartoflerne, og læg evt. et par ekstra skiver gedeost ovenpå.",
+        "Bag kartoflerne videre i 10-15 min, til de er gyldne."
+      ]
+    },
+    {
+      "nr": 3,
+      "titel": "Grill bøfferne",
+      "tekst": [
+        "Krydr entrecoterne med salt og peber, og pensl dem let med olie.",
+        "Varm en grillpande eller en grill godt op, og læg bøfferne på.",
+        "Steg dem til en kernetemperatur på 56°C, så de bliver medium.",
+        "Lad dem hvile på en rist i ca. 5 min."
+      ]
+    },
+    {
+      "nr": 4,
+      "titel": "Lav salaten",
+      "tekst": [
+        "Skyl salaten. Blancher edamamebønnerne i kogende vand.",
+        "Skær squashen i 0,5 cm tykke skiver og forårsløgene i mundrette stykker. Grill dem på grillen eller grillpanden.",
+        "Pisk balsamico, olivenolie, honning og peber sammen til en dressing.",
+        "Vend salat og grøntsager med dressingen, og smag til med timian og kryddersalt."
+      ]
+    },
+    {
+      "nr": 5,
+      "titel": "Server",
+      "tekst": [
+        "Anret bøfferne med de fyldte kartofler og salaten.",
+        "Pynt med timian."
+      ],
+      "tip": "Grillede asparges og kogte rødbeder passer også godt i salaten, især sammen med gedeost og honningdressing."
+    }
+  ],
+  "allergener": {
+    "indeholder": [
+      "maelk",
+      "soja",
+      "svovldioxid"
+    ],
+    "spor_af": []
+  },
+  "noter": "Kilden angiver 20 min i alt, men kartoflerne skal bage 25 min og derefter 10-15 min til, så tiden er sat til 45 min."
+}
