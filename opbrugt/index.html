@@ -231,7 +231,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .ugefelt.plan i{background:var(--leaf-soft);border-style:solid}
 .ugefelt svg{width:24px;height:24px;fill:#fff;stroke:var(--leaf);stroke-width:1.5;stroke-linejoin:round}
 button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer}
-.ugefelt.mangler i{border-color:var(--carrot)}
+.ugefelt.mangler i{border-color:var(--carrot)}.ugefelt.lavet i{opacity:.6}.hueminus.lavet{background:var(--leaf);font-size:.7rem}
 .hueminus{position:absolute;top:-4px;left:calc(50% + 9px);width:17px;height:17px;border-radius:50%;background:var(--carrot);color:#fff;font-size:.9rem;font-weight:800;line-height:16px;text-align:center;font-style:normal}
 /* Ark nedefra (kokkehuerne på planen) */
 .arklag{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
@@ -3622,7 +3622,8 @@ function isoUge(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.get
 function ugeMandag(d){const t=new Date(d+"T12:00:00");t.setDate(t.getDate()-((t.getDay()+6)%7));return iso(t)}
 /* Første ledige dag fra i dag og ugen ud */
 function ledigIUgen(){const t0=todayIso(),son=addDays(ugeMandag(t0),6);for(let d=t0;d<=son;d=addDays(d,1))if(!fastPaa(d))return d;return null}
-function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)}
+/* Retten er købt ind, når intet på indkøbslisten til den mangler – det, der allerede er i skabet, tæller som købt */
+function erIndkoebt(f){const har=oHar();return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done&&!har[oFind(x.navn)])}
 /* Ugeoversigten øverst på Plan: swipe til venstre for næste uge. Ét felt pr. aften, der er tilbage af ugen –
    uden ugedage, for retterne er ikke bundet til en bestemt dag. De første felter får en kokkehue, én pr. planlagt ret.
    Et tryk på en kokkehue åbner retten (retArk); et tryk på et tomt felt skifter uge. En lille "−" på huen betyder,
@@ -3639,7 +3640,7 @@ function renderStrip(p){
   el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(man)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span><span style="flex:1"></span><span class="prikker">${Array.from({length:sidste+1},(_,i)=>`<button class="prik${i===ugeVis?" on":""}" data-uge="${i}" aria-label="${i===0?"Denne uge":i===1?"Næste uge":"Uge "+isoUge(addDays(man0,7*i))}"></button>`).join("")}</span></div>
   <div class="ugestribe" role="group" aria-label="${huer} af ${resten.length} ${resten.length===1?"aften":"aftener"} har en ret">${resten.map((d,i)=>{
     const f=retterS[i];
-    if(i<huer&&f){const mgl=!erIndkoebt(f);return `<button type="button" class="ugefelt plan${mgl?" mangler":""}" data-hue="${esc(f.id)}" aria-label="${esc(f.navn)}${mgl?". Der mangler noget":""}"><i>${KOKKEHUE}</i>${mgl?`<b class="hueminus" aria-hidden="true">−</b>`:""}</button>`}
+    if(i<huer&&f){const lavet=!!f.lavet,mgl=!lavet&&!erIndkoebt(f);return `<button type="button" class="ugefelt plan${mgl?" mangler":""}${lavet?" lavet":""}" data-hue="${esc(f.id)}" aria-label="${esc(f.navn)}${lavet?". Lavet":mgl?". Der mangler noget":""}"><i>${KOKKEHUE}</i>${mgl?`<b class="hueminus" aria-hidden="true">−</b>`:lavet?`<b class="hueminus lavet" aria-hidden="true">✓</b>`:""}</button>`}
     return `<span class="ugefelt${i<huer?" plan":""}"><i>${i<huer?KOKKEHUE:""}</i></span>`}).join("")}</div>
   <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges`:retter.length?"Hele ugen er planlagt":"Ingen aftener tilbage"}${retter.length?` · ${retter.length} planlagt · ${koebt} indkøbt`:""}</p>
 `;
@@ -3664,7 +3665,7 @@ function arkVis(html,tegn){
 }
 function arkLuk(){document.querySelectorAll(".arklag").forEach(x=>x.remove())}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")arkLuk()});
-function retMangler(f){return st.ekstraIndkob.map((x,i)=>({x,i})).filter(o=>o.x.fastId===f.id&&!o.x.done)}
+function retMangler(f){const har=oHar();return st.ekstraIndkob.map((x,i)=>({x,i})).filter(o=>o.x.fastId===f.id&&!o.x.done&&!har[oFind(o.x.navn)])}
 /* Linjen i opskriften, en vare på listen hører til (også når den er byttet i butikken) */
 function retLinje(r,f,id,x){
   let li=r.ing.findIndex(l=>l.i===id);
@@ -3967,9 +3968,17 @@ function kogTilpas(){
   ind.style.fontSize=(16*lo).toFixed(2)+"px";ind.style.flex="";
 }
 window.addEventListener("resize",()=>{if(kogAaben)kogTilpas()});
+/* Retten er lavet: det, der blev købt til den, trækkes fra skabet nu – ellers sker det først dagen efter (afvikl) */
+function retLavet(f){
+  if(!f||f.afviklet)return;
+  for(const b of retBehov(f))traekFra(st.skab,st.fri,b);
+  st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==f.id);
+  f.afviklet=true;f.lavet=todayIso();changed();
+  toast("Retten er lavet – det brugte er trukket fra skabet");
+}
 function kogGaa(til){
   if(!kog)return;
-  if(til==="slut"){if(history.state&&history.state.kog)history.back();else kogLuk();return}
+  if(til==="slut"){retLavet(kog.f);if(history.state&&history.state.kog)history.back();else kogLuk();return}
   const s=+til;if(!(s>=0&&s<=kog.trin.length)||s===kog.side)return;
   if(s>kog.side&&!trinKlar(s-1))return;
   kog.side=s;kogRender();
@@ -4238,6 +4247,16 @@ function visSmidUd(r,out,nB){
     out.innerHTML="";changed();toast(`${n} ${n===1?"vare er":"varer er"} trukket fra skabet`);
   };
 }
+/* Mangler mængden på en katalogvare, så brug prislinjens mængde (samme kvitteringstekst), omregnet til katalogets
+   enhed – fx 1 kg løse gulerødder → 12 stk ud fra ingrediensens vægt pr. stk */
+function kvitMaengde(v,priser){
+  const x=(priser||[]).find(x=>x&&T_NORM(String(x.tekst||""))===T_NORM(String(v.tekst||"")));if(!x||!(+x.maengde>0))return null;
+  const e=P[v.k].e,id=OB.pTilBank[v.k],gps=id&&OI[id]&&OI[id].gps;
+  if(e===x.enhed)return +x.maengde;
+  if(e==="stk"&&x.enhed==="g"&&gps)return Math.max(1,Math.round(x.maengde/gps));
+  if((e==="g"||e==="ml")&&x.enhed==="stk"&&gps)return Math.round(x.maengde*gps);
+  return null;
+}
 async function scanKvittering(f){
   const out=document.getElementById("scanResult");
   if(!document.getElementById("t-skab").classList.contains("on")||skabMode!=="tilfoej"){show("t-skab");skabModeSaet("tilfoej")}
@@ -4248,19 +4267,32 @@ Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
 Basisvarer (nøgler): ${JSON.stringify(BASIS)}
 HVIS DET ER ET SKAB: Skriv kun det, du med sikkerhed kan genkende – fx æg, frugt og grønt, eller en pakke, hvor mærkaten kan læses. GÆT ALDRIG: kan en pakke, dåse, krukke eller pose ikke kendes uden at læse mærkaten, og kan mærkaten ikke læses, så læg den i "usikre" med "hvad" som en meget kort beskrivelse på højst 5 ord, fx "glasset med rød skrift" eller "plastikbøtten". "maengde" er i katalogets enhed: tæl de stykker, du kan se, eller læs vægten/rumfanget på mærkaten; kan det ikke ses, så null. Varer, der ikke findes i kataloget, men som du med sikkerhed kan genkende, lægges i "andet" med et almindeligt dansk navn og "niveau" (hel, noget eller lidt). "raad": er billedet for mørkt eller uskarpt, så et kort råd på højst 8 ord, fx "Tag billedet i bedre lys"; ellers "".
 HVIS DET ER EN KVITTERING: Læs hver varelinje og match den til kataloget.
-Regler: "maengde" er i katalogets enhed (g, ml, stk, fed) og er den samlede købte mængde, fx 2 pakker oksekød á 500 g = 1000. Løsvægt i kg omregnes til stk ud fra en normal størrelse (1 gulerod ca. 80 g, 1 løg ca. 120 g). Varer der ikke passer til kataloget, men er basisvarer, lægges i "basis". Alt andet spiseligt i "andet" med et almindeligt dansk varenavn (fx "Rødkål", ikke kvitteringens forkortelse). Non-food udelades. Pant, poser og rabatlinjer ignoreres.
+Regler: HVER madvarelinje skal stå ét sted: i "varer", "basis" eller "andet". "maengde" er i katalogets enhed (g, ml, stk, fed) og er den samlede købte mængde, fx 2 pakker oksekød á 500 g = 1000; kan den ikke læses, så skriv én pakke (katalogets "pakke"). Løsvægt i kg omregnes til stk ud fra en normal størrelse (1 gulerod ca. 80 g, 1 løg ca. 120 g). Varer der ikke passer til kataloget, men er basisvarer, lægges i "basis". Alt andet spiseligt i "andet" med et almindeligt dansk varenavn (fx "Rødkål", ikke kvitteringens forkortelse). Non-food udelades. Pant, poser og rabatlinjer ignoreres.
 Priser: læg desuden hver madvare-linje i "priser" med "i" = id fra ingredienskataloget nedenfor (eller null), "pris" = det, linjen kostede i kr efter evt. rabat, "maengde" + "enhed" (g, ml eller stk) for den samlede købte mængde, og "rabat": true, hvis linjen havde rabat, tilbud, "x for y" eller lignende.
 Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
 Returnér KUN JSON.
-Kvittering: {"type":"kvittering","butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[nøgler],"andet":[tekst],"priser":[{"i","tekst","pris","maengde","enhed","rabat"}]}
+Kvittering: {"type":"kvittering","butik":tekst,"dato":tekst,"varer":[{"k":nøgle,"tekst":kvitteringstekst,"maengde":tal}],"basis":[{"k":nøgle,"tekst":kvitteringstekst}],"andet":[{"navn":almindeligt dansk varenavn,"tekst":kvitteringstekst}],"priser":[{"i","tekst","pris","maengde","enhed","rabat"}]}
 Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde"}],"andet":[{"navn","niveau"}],"usikre":[{"hvad"}],"raad":tekst}`;
   try{
     const r=await sample.json(prompt,{images:f,modelTier:"default",hvad:"billede"});
     if(r&&r.type==="skab"){visSkabBillede(r,out);return}
-    scanItems=(r.varer||[]).filter(v=>P[v.k]&&v.maengde>0).map(v=>({...v,on:true}));
-    const basis=(r.basis||[]).filter(b=>BASIS[b]);
+    /* Hver linje på kvitteringen skal lande ét sted – i skabet (katalogvare), som basisvare eller som fri vare. Intet
+       smides stille væk: en vare med ukendt nøgle bliver en fri vare, en vare uden mængde regnes som én pakke, og en
+       madvarelinje (fra "priser"), som ingen af listerne har fået med, lægges i skabet som fri vare. */
+    const nt=t=>T_NORM(String(t||"")),andet=[],varer=[];
+    for(const a of (r.andet||[])){const navn=String(typeof a==="string"?a:(a&&(a.navn||a.tekst))||"").trim();if(navn)andet.push({navn,tekst:typeof a==="string"?"":String(a.tekst||"")})}
+    const basisL=(r.basis||[]).map(b=>typeof b==="string"?{k:b,tekst:""}:{k:b&&b.k,tekst:String(b&&b.tekst||"")}).filter(b=>BASIS[b.k]);
+    for(const v of (r.varer||[])){
+      if(v&&P[v.k])varer.push({...v,maengde:+v.maengde>0?+v.maengde:kvitMaengde(v,r.priser)||P[v.k].pk,skoen:!(+v.maengde>0)});
+      else if(v&&(v.tekst||v.navn)){const x=(r.priser||[]).find(x=>x&&nt(x.tekst)===nt(v.tekst));andet.push({navn:x&&OI[x.i]?OI[x.i].n:stort(String(v.navn||v.tekst).toLowerCase()),tekst:String(v.tekst||"")})}
+    }
+    const daekket=t=>{const n=nt(t);return !!n&&(varer.some(v=>nt(v.tekst)===n)||basisL.some(b=>nt(b.tekst)===n)||andet.some(a=>(a.tekst&&nt(a.tekst)===n)||(!a.tekst&&nt(a.navn).split(" ").some(o=>o.length>=4&&n.includes(o)))))};
+    for(const x of (r.priser||[]))if(x&&x.tekst&&!daekket(x.tekst))andet.push({navn:OI[x.i]?OI[x.i].n:stort(String(x.tekst).toLowerCase()),tekst:String(x.tekst)});
+    r.andet=[...new Set(andet.map(a=>a.navn))];
+    scanItems=varer.map(v=>({...v,on:true}));
+    const basis=basisL.map(b=>b.k);
     let h=`<p class="muted" style="margin-top:10px">${r.butik||"Kvittering"}${r.dato?" · "+r.dato:""}. Tjek varerne, og fjern flueben ved det, der er forkert.</p>`;
-    h+=scanItems.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-i="${i}" checked><div class="grow">${P[v.k].n}<div class="amt muted">${fmt(v.k,v.maengde)} · "${(v.tekst||"").replace(/[<>]/g,"")}"</div></div></label>`).join("");
+    h+=scanItems.map((v,i)=>`<label class="scanrow"><input type="checkbox" data-i="${i}" checked><div class="grow">${P[v.k].n}<div class="amt muted">${v.skoen?"ca. ":""}${fmt(v.k,v.maengde)} · "${(v.tekst||"").replace(/[<>]/g,"")}"</div></div></label>`).join("");
     if(basis.length)h+=`<p class="muted" style="margin-top:10px">Basisvarer købt: ${basis.map(b=>BASIS[b]).join(", ")}.</p>`;
     if((r.andet||[]).length)h+=`<p class="muted">Lægges også i skabet som fri varer: ${r.andet.map(x=>String(x).replace(/[<>]/g,"")).join(", ")}.</p>`;
     const nPriser=(r.priser||[]).filter(x=>OI[x&&x.i]&&!x.rabat&&x.pris>0).length,kbutik=butikFraTekst(r.butik);
@@ -4276,12 +4308,18 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
       for(const v of scanItems){if(!v.on)continue;const amt=(st.skab[v.k]?.amt||0)+v.maengde-(lagt[v.k]||0);delete lagt[v.k];const gl=st.skab[v.k];if(amt>1e-6)st.skab[v.k]={...(gl||{dato:todayIso()}),amt,koebt:Math.max(amt,(gl&&gl.koebt)||0),dage:(gl&&gl.dage)||ho(v.k)};else delete st.skab[v.k];n++}
       for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){friLaeg(nm);n++}}
       st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
+      /* det købte tages af indkøbslisten – også når der ikke blev trykket "Færdig" i butikken. Ikke det, der først skal
+         købes en senere dag. */
+      const koebtId=new Set([...scanItems.filter(v=>v.on).map(v=>OB.pTilBank[v.k]),...(r.andet||[]).map(a=>oFind(a)),...(r.priser||[]).map(x=>x&&x.i)].filter(Boolean));
+      const foerListe=st.ekstraIndkob.length;
+      st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.done||(x.koebDato&&x.koebDato>todayIso())||!koebtId.has(oFind(x.navn)));
+      const afListen=foerListe-st.ekstraIndkob.length;
       const fjernet=scanItems.filter(v=>!v.on).map(v=>`${P[v.k].n} ("${String(v.tekst||"").slice(0,30)}")`);
       const kb=butikFraTekst(r.butik),ture=((k&&k.ture)||[]).filter(t=>!kb||t.butik===kb);
       const np=laerPriser(r);kvitDel(r,f,fjernet,ture.length?ture:kb?[{butik:kb,tid:null,varer:turNu(kb),uden_faerdig:true}]:[]);
       if(k){const kb=butikFraTekst(r.butik);k.butikker=k.butikker.filter(b=>b!==kb);if(!kb||!k.butikker.length)delete st.kvit}
       scanItems=[];out.innerHTML="";
-      changed();toast(n+(k?" varer tjekket i skabet":" varer lagt i skabet")+(np?` · ${np} priser gemt`:""));
+      changed();toast(n+(k?" varer tjekket i skabet":" varer lagt i skabet")+(afListen?` · ${afListen} taget af indkøbslisten`:"")+(np?` · ${np} priser gemt`:""));
     };
   }catch(err){
     out.innerHTML=`<p class="bad">Billedet kunne ikke læses. ${err&&err.code==="upstream_error"||err&&err.code==="invalid_json"?"Prøv et skarpere billede – lige ovenfra ved en kvittering, tæt på ved skabet.":esc(fejlTekst(err))}</p>`;
@@ -5367,7 +5405,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="70";
+const APP_VERSION="71";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
