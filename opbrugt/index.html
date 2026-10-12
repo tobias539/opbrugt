@@ -244,6 +244,13 @@ button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;fon
 .valg3 button[aria-pressed="true"],.altchips button[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft);font-weight:700}
 .altchips button{flex:0 1 auto;font-size:.82rem}
 .bogud{color:var(--muted)}
+/* Kogevisning: opskriften over hele skærmen med kun en tilbageknap øverst til venstre */
+.kogside{position:fixed;inset:0;z-index:80;background:#fbf6e9;color:#2b2218;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.kogindhold{max-width:640px;margin:0 auto;padding:calc(62px + env(safe-area-inset-top)) 20px calc(36px + env(safe-area-inset-bottom))}
+.kogtilbage{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:81;width:44px;height:44px;border-radius:50%;border:1px solid #e3d5b8;background:rgba(251,246,233,.95);color:#2b2218;font-size:1.7rem;line-height:1;padding:0 0 4px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.kogside .bogtitel{font-size:1.7rem}.kogside .bogh{font-size:1.15rem;margin-top:18px}
+.kogside .bogi,.kogside .bogtrintx{font-size:1rem;line-height:1.5}.kogside .bogtrin{font-size:1.02rem;margin-top:12px}
+body.kogaaben{overflow:hidden}
 .ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
 .kurv{position:fixed;right:16px;bottom:calc(70px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -3713,11 +3720,34 @@ function lavRet(f,rk,valg){
     st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
     changed();
   }
-  if(r){arkLuk();oValg[r.id]={...(f.byt||{})};oVis(r.id,f.id);window.scrollTo(0,0);return}
+  if(r){arkLuk();oValg[r.id]={...(f.byt||{})};kogVis(r,f);return}
   /* retter fra Snak har ingen opskrift i bogen: vis trinene her */
   arkVis(`<h3>${esc(f.navn)}</h3>${(f.trin||[]).length?`<ol style="margin:8px 0 0;padding-left:20px">${f.trin.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`:`<p class="muted">Retten er fra Snak og har ingen opskrift. Spørg i Snak, hvis du vil have en.</p>`}<button class="btn ghost" data-ark="luk">Luk</button>`,
     ark=>{ark.querySelector('[data-ark="luk"]').onclick=arkLuk});
 }
+/* ---------- Kogevisning ----------
+   "Lav retten" åbner opskriften over hele skærmen: kun opskriften (ingredienser og trin, med retten fra planens antal
+   personer, alternativer og udeladte ting) og en tilbageknap øverst til venstre. Telefonens egen tilbage-knap eller
+   -swipe lukker den også, fordi den lægger et trin i browserens historik. */
+let kogAaben=false;
+function kogVis(r,f){
+  bogFast=f||null;
+  document.querySelectorAll(".kogside").forEach(x=>x.remove());
+  const el=document.createElement("div");el.className="kogside";
+  el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label",r.t);
+  el.innerHTML=`<button class="kogtilbage" aria-label="Tilbage">‹</button><div class="kogindhold">${retBlokke(r).join("")}</div>`;
+  document.body.appendChild(el);document.body.classList.add("kogaaben");
+  el.querySelector(".kogtilbage").onclick=()=>{if(history.state&&history.state.kog)history.back();else kogLuk()};
+  if(!kogAaben){history.pushState({kog:1},"");kogAaben=true}
+  el.querySelector(".kogtilbage").focus();
+}
+function kogLuk(){
+  kogAaben=false;bogFast=null;
+  document.querySelectorAll(".kogside").forEach(x=>x.remove());document.body.classList.remove("kogaaben");
+  show("t-snak");window.scrollTo(0,0);
+}
+window.addEventListener("popstate",()=>{if(kogAaben)kogLuk()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&kogAaben)history.back()});
 /* "Ændr retten" = "Byt" i planlægningen for netop den ret */
 function aendrRet(f){
   const hv=ugeMandag(f.dato)>ugeMandag(todayIso())?"naeste":"denne",foer=up;
@@ -5083,7 +5113,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="65";
+const APP_VERSION="66";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
