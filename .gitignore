@@ -33,3 +33,6 @@ opskriftbank/kilder/frida/
 
 # Oversigten over alternativer (lav den med opskriftbank/vaerktoej/lighed.py --oversigt)
 opskriftbank/lighed/oversigt.html
+
+# clasp (opdaterer Apps Script fra computeren): scriptets id holdes lokalt
+feedback-modtager/.clasp.json

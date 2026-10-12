@@ -230,6 +230,20 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .ugefelt i{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:2px dashed var(--leaf)}
 .ugefelt.plan i{background:var(--leaf-soft);border-style:solid}
 .ugefelt svg{width:24px;height:24px;fill:#fff;stroke:var(--leaf);stroke-width:1.5;stroke-linejoin:round}
+button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer}
+.ugefelt.mangler i{border-color:var(--carrot)}
+.hueminus{position:absolute;top:-4px;left:calc(50% + 9px);width:17px;height:17px;border-radius:50%;background:var(--carrot);color:#fff;font-size:.9rem;font-weight:800;line-height:16px;text-align:center;font-style:normal}
+/* Ark nedefra (kokkehuerne på planen) */
+.arklag{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
+.ark{background:var(--card);color:var(--ink);width:100%;max-width:520px;max-height:85vh;overflow:auto;box-sizing:border-box;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.25)}
+.ark h3{margin:0 0 4px;font-size:1.15rem}
+.ark>.btn{display:block;width:100%;margin-top:10px}
+.arkrk{border-top:1px solid var(--line);padding:10px 0}
+.valg3,.altchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.valg3 button,.altchips button{flex:1 1 auto;min-width:0;padding:7px 9px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:.86rem;cursor:pointer}
+.valg3 button[aria-pressed="true"],.altchips button[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft);font-weight:700}
+.altchips button{flex:0 1 auto;font-size:.82rem}
+.bogud{color:var(--muted)}
 .ugetal{margin:0 0 6px;font-size:.92rem}
 /* Indkøbskurven svæver nede i højre hjørne */
 .kurv{position:fixed;right:16px;bottom:calc(70px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;border:0;background:var(--leaf);color:var(--card);box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -3585,7 +3599,8 @@ function ledigIUgen(){const t0=todayIso(),son=addDays(ugeMandag(t0),6);for(let d
 function erIndkoebt(f){return !st.ekstraIndkob.some(x=>x.fastId===f.id&&!x.done)}
 /* Ugeoversigten øverst på Plan: swipe til venstre for næste uge. Ét felt pr. aften, der er tilbage af ugen –
    uden ugedage, for retterne er ikke bundet til en bestemt dag. De første felter får en kokkehue, én pr. planlagt ret.
-   Et tryk på felterne skifter også uge. Knapperne "Planlæg" fylder resten af skærmen. */
+   Et tryk på en kokkehue åbner retten (retArk); et tryk på et tomt felt skifter uge. En lille "−" på huen betyder,
+   at der stadig mangler noget til retten. Knapperne "Planlæg" fylder resten af skærmen. */
 const KOKKEHUE=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 17.5V13A3.5 3.5 0 1 1 8.5 6.6A3.6 3.6 0 1 1 15.5 6.6A3.5 3.5 0 1 1 16 13V17.5Z"/><rect x="7.5" y="18.3" width="9" height="3.2" rx="1"/></svg>`;
 let ugeVis=0;
 function renderStrip(p){
@@ -3594,15 +3609,120 @@ function renderStrip(p){
   ugeVis=Math.max(0,Math.min(ugeVis,sidste));
   const man=addDays(man0,7*ugeVis),son=addDays(man,6),resten=ugeDage(man).filter(d=>d>=t0);
   const retter=st.fast.filter(f=>f.dato>=man&&f.dato<=son&&f.dato>=t0),koebt=retter.filter(erIndkoebt).length,ledige=resten.filter(d=>!fastPaa(d)).length,huer=resten.length-ledige;
+  const retterS=[...retter].sort((a,b)=>a.dato<b.dato?-1:a.dato>b.dato?1:0);
   el.innerHTML=`<div class="ugehead"><h2>Uge ${isoUge(man)}</h2><span class="muted">${esc(dayLabel(man,true))} – ${esc(dayLabel(son,true))}</span><span style="flex:1"></span><span class="prikker">${Array.from({length:sidste+1},(_,i)=>`<button class="prik${i===ugeVis?" on":""}" data-uge="${i}" aria-label="${i===0?"Denne uge":i===1?"Næste uge":"Uge "+isoUge(addDays(man0,7*i))}"></button>`).join("")}</span></div>
-  <div class="ugestribe" role="img" aria-label="${huer} af ${resten.length} ${resten.length===1?"aften":"aftener"} har en ret">${resten.map((d,i)=>`<span class="ugefelt${i<huer?" plan":""}"><i>${i<huer?KOKKEHUE:""}</i></span>`).join("")}</div>
+  <div class="ugestribe" role="group" aria-label="${huer} af ${resten.length} ${resten.length===1?"aften":"aftener"} har en ret">${resten.map((d,i)=>{
+    const f=retterS[i];
+    if(i<huer&&f){const mgl=!erIndkoebt(f);return `<button type="button" class="ugefelt plan${mgl?" mangler":""}" data-hue="${esc(f.id)}" aria-label="${esc(f.navn)}${mgl?". Der mangler noget":""}"><i>${KOKKEHUE}</i>${mgl?`<b class="hueminus" aria-hidden="true">−</b>`:""}</button>`}
+    return `<span class="ugefelt${i<huer?" plan":""}"><i>${i<huer?KOKKEHUE:""}</i></span>`}).join("")}</div>
   <p class="ugetal">${ledige?`<b>${ledige} ${ledige===1?"aften":"aftener"}</b> kan stadig planlægges`:retter.length?"Hele ugen er planlagt":"Ingen aftener tilbage"}${retter.length?` · ${retter.length} planlagt · ${koebt} indkøbt`:""}</p>
 `;
   el.querySelectorAll("[data-uge]").forEach(b=>b.onclick=()=>{ugeVis=+b.dataset.uge;renderStrip(last)});
-  /* felterne er kun til at se; et tryk går videre til næste uge (og tilbage til denne efter den sidste) */
-  el.querySelector(".ugestribe").onclick=()=>{ugeVis=ugeVis>=sidste?0:ugeVis+1;renderStrip(last)};
+  /* en kokkehue åbner retten; et tomt felt går videre til næste uge (og tilbage til denne efter den sidste) */
+  el.querySelector(".ugestribe").onclick=e=>{const h=e.target.closest("[data-hue]");if(h){retArk(h.dataset.hue);return}ugeVis=ugeVis>=sidste?0:ugeVis+1;renderStrip(last)};
   renderHyldeTilbud();
   planHoejde();
+}
+/* ---------- Kokkehuerne på planen ----------
+   Et tryk på en kokkehue åbner et ark med retten: "Lav retten" eller "Ændr retten". Mangler der noget, står det der
+   (det ligger allerede i kurven). "Lav retten" spørger for hver manglende vare: har I den alligevel, vil I bruge et
+   alternativ (fra byttegruppen og lighedstabellen, helst noget I har), eller skal den udelades. Valget gemmes på
+   retten (f.byt: linjenummer → ingrediens, "-" = udelades), varerne tages af indkøbslisten, et alternativ fra skabet
+   tages fra skabet, og opskriften åbnes med det, I faktisk laver. "Ændr retten" er det samme som "Byt" på planen. */
+function arkVis(html,tegn){
+  arkLuk();
+  const lag=document.createElement("div");lag.className="arklag";
+  lag.innerHTML=`<div class="ark" role="dialog" aria-modal="true">${html}</div>`;
+  lag.onclick=e=>{if(e.target===lag)arkLuk()};
+  document.body.appendChild(lag);tegn(lag.firstElementChild);
+}
+function arkLuk(){document.querySelectorAll(".arklag").forEach(x=>x.remove())}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")arkLuk()});
+function retMangler(f){return st.ekstraIndkob.map((x,i)=>({x,i})).filter(o=>o.x.fastId===f.id&&!o.x.done)}
+/* Linjen i opskriften, en vare på listen hører til (også når den er byttet i butikken) */
+function retLinje(r,f,id,x){
+  let li=r.ing.findIndex(l=>l.i===id);
+  if(li<0&&x&&x.bytFra){const o=oFind(x.bytFra);li=r.ing.findIndex(l=>l.i===o)}
+  if(li<0&&f.byt){const k=Object.keys(f.byt).find(k=>f.byt[k]===id);if(k!=null)li=+k}
+  if(li<0)li=r.ing.findIndex(l=>l.v&&OG[l.v]&&OG[l.v].m[id]);
+  return li;
+}
+/* Op til 3 alternativer til en linje: byttegruppen og lighedstabellen; det, I har, først */
+function kogAlt(r,li,id){
+  const l=li>=0?r.ing[li]:null,g=l&&l.v&&OG[l.v]&&OG[l.v].m[id]?OG[l.v]:null,lig=(OB.lighed&&OB.lighed[id])||{},har=oHar();
+  const nej=st.ikkeLide.map(x=>x.navn.toLowerCase()),kand=new Set([...(g?Object.keys(g.m):[]),...Object.keys(lig)]);kand.delete(id);
+  return [...kand].filter(k=>OI[k]&&!OI[k].bv&&!nej.some(n=>OI[k].n.toLowerCase().includes(n)))
+    .map(k=>({id:k,har:!!har[k],s:(lig[k]?lig[k][0]*100:0)+(g&&g.m[k]?20:0)+(g&&g.m[k]==="god"&&g.m[id]==="god"?10:0)+(har[k]?30:0)}))
+    .sort((a,b)=>b.s-a.s||OI[a.id].n.localeCompare(OI[b.id].n,"da")).slice(0,3);
+}
+function retArk(fid){
+  const f=st.fast.find(x=>x.id===fid);if(!f)return;
+  const mgl=retMangler(f),n=f.personer||st.settings.P,navne=[...new Set(mgl.map(o=>o.x.navn.toLowerCase()))];
+  arkVis(`<h3>${esc(f.navn)}</h3><p class="muted" style="margin:0">${esc(stort(dayLabel(f.dato,true)))} · ${n} ${n===1?"person":"personer"}</p>
+    <p style="margin:12px 0 0">${mgl.length?`Du mangler <b>${esc(opremsning(navne))}</b>. ${navne.length===1?"Den ligger":"De ligger"} allerede i kurven.`:"I har det, der skal bruges."}</p>
+    <button class="btn" data-ark="lav">Lav retten</button><button class="btn ghost" data-ark="aendr">Ændr retten</button>`,ark=>{
+    ark.querySelector('[data-ark="lav"]').onclick=()=>mgl.length?lavArk(f):lavRet(f);
+    ark.querySelector('[data-ark="aendr"]').onclick=()=>{arkLuk();aendrRet(f)};
+  });
+}
+/* "Lav retten", når der mangler noget: for hver vare "Jeg har det", "Alternativ" eller "Udelad" */
+function lavArk(f){
+  const r=f.opskrift&&ORMAP[f.opskrift],valg={};
+  const rk=retMangler(f).map(o=>{const id=oFind(o.x.navn),li=r&&id?retLinje(r,f,id,o.x):-1;return {...o,id,li,alt:r&&id?kogAlt(r,li,id):[]}});
+  const tegn=ark=>{
+    const alleValgt=rk.every((o,k)=>valg[k]);
+    ark.innerHTML=`<h3>Lav ${esc(f.navn)}</h3><p class="muted" style="margin:0 0 6px">Det her mangler i skabet. Har I det alligevel, eller vil I bruge noget andet?</p>`+
+      rk.map((o,k)=>{const v=valg[k],alt=v&&v!=="har"&&v!=="-";
+        return `<div class="arkrk"><b>${esc(stort(o.x.navn))}</b>${o.x.maengde?` <span class="muted">${esc(o.x.maengde)}</span>`:""}
+        <div class="valg3"><button data-k="${k}" data-v="har" aria-pressed="${v==="har"}">Jeg har det</button>${o.alt.length?`<button data-k="${k}" data-v="alt" aria-pressed="${alt}">Alternativ</button>`:""}<button data-k="${k}" data-v="-" aria-pressed="${v==="-"}">Udelad</button></div>
+        ${alt?`<div class="altchips">${o.alt.map(a=>`<button data-k="${k}" data-a="${a.id}" aria-pressed="${v===a.id}">${esc(OI[a.id].n)}${a.har?" · I har den":""}</button>`).join("")}</div>`:""}</div>`}).join("")+
+      `<button class="btn" data-ark="ok" ${alleValgt?"":"disabled"}>${r?"Gå til opskriften":"Lav retten"}</button><button class="btn ghost" data-ark="alle">Jeg har det hele</button>`;
+    ark.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;valg[k]=b.dataset.v==="alt"?rk[k].alt[0].id:b.dataset.v;tegn(ark)});
+    ark.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{valg[+b.dataset.k]=b.dataset.a;tegn(ark)});
+    ark.querySelector('[data-ark="ok"]').onclick=()=>lavRet(f,rk,valg);
+    ark.querySelector('[data-ark="alle"]').onclick=()=>{rk.forEach((o,k)=>valg[k]="har");lavRet(f,rk,valg)};
+  };
+  arkVis("",tegn);
+}
+/* Et alternativ fra skabet tages fra skabet, ligesom når retten sættes på planen (oPlacer) */
+function tagFraSkab(f,id,m,e){
+  const h=oHar()[id];if(!h)return;
+  if(h.kilde==="skab"&&st.skab[h.k]){
+    const vare=OI[id];let behov=m!=null?oOmregn(m,e,vare):null;
+    if(behov!=null&&P[h.k].e!==vare.be){const g=oGram(m,e,vare);behov=(P[h.k].e==="g"||P[h.k].e==="ml")?g:null}
+    const tag=behov==null?st.skab[h.k].amt:Math.min(st.skab[h.k].amt,behov);
+    (f.brugt=f.brugt||[]).push({k:h.k,amt:tag,dage:st.skab[h.k].dage});
+    st.skab[h.k].amt-=tag;if(st.skab[h.k].amt<=1e-6)delete st.skab[h.k];
+  }else if(h.kilde==="fri"){
+    const x=st.fri.find(y=>y.navn===h.fri);if(!x)return;
+    (f.brugt=f.brugt||[]).push({fri:x.navn,niveau:x.niveau||"hel"});
+    if((x.niveau||"hel")==="lidt")st.fri=st.fri.filter(y=>y!==x);else x.niveau="lidt";
+  }
+}
+function lavRet(f,rk,valg){
+  const r=f.opskrift&&ORMAP[f.opskrift];
+  if(rk){
+    const fjern=new Set();
+    rk.forEach((o,k)=>{
+      const v=valg[k];if(!v)return;
+      fjern.add(o.i);f.mangler=(f.mangler||[]).filter(m=>m.navn!==o.x.navn&&!(o.id&&oFind(m.navn)===o.id));
+      if(v==="har"||!r||o.li<0)return;
+      (f.byt=f.byt||{})[o.li]=v;
+      if(v!=="-"){const l=r.ing[o.li],g=OG[l.v],[m,e]=oSomMaengde(oGram(oTil(l,f.personer||st.settings.P,r.pb),l.e,OI[l.i]||OI[o.id]),OI[v],g&&g.smag);tagFraSkab(f,v,m,e)}
+    });
+    st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
+    changed();
+  }
+  if(r){arkLuk();oValg[r.id]={...(f.byt||{})};oVis(r.id,f.id);window.scrollTo(0,0);return}
+  /* retter fra Snak har ingen opskrift i bogen: vis trinene her */
+  arkVis(`<h3>${esc(f.navn)}</h3>${(f.trin||[]).length?`<ol style="margin:8px 0 0;padding-left:20px">${f.trin.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`:`<p class="muted">Retten er fra Snak og har ingen opskrift. Spørg i Snak, hvis du vil have en.</p>`}<button class="btn ghost" data-ark="luk">Luk</button>`,
+    ark=>{ark.querySelector('[data-ark="luk"]').onclick=arkLuk});
+}
+/* "Ændr retten" = "Byt" i planlægningen for netop den ret */
+function aendrRet(f){
+  const hv=ugeMandag(f.dato)>ugeMandag(todayIso())?"naeste":"denne",foer=up;
+  ugeplanStart(hv);if(!up||up===foer)return;
+  up.byt={id:f.id,dato:f.dato,navn:f.navn};up.forslag=[];up.valgt=new Set();up.trin="hvordan";renderUgeplan();
 }
 /* Knapperne "Planlæg" fylder fra ugeoversigten og ned */
 function planHoejde(){
@@ -4070,6 +4190,7 @@ function oMatch(r,n,har,valg){
     };
     const kval=id=>(g&&g.m[id]==="god"&&g.m[l.i]==="god")?"god":"ok";
     let x;
+    if(valg[i]==="-"){linjer.push({i,id:l.i,orig:l.i,m:oTil(l,n,r.pb),e:l.e,navn:l.n,q:null,erst:null,basis:false,var:l.v||null,status:"udeladt"});return}
     if(valg[i]!=null&&valg[i]!==l.i&&OI[valg[i]])x=mk(valg[i],kval(valg[i]),l.n);
     else x=mk(l.i);
     x.basis=!!(l.b||(OI[x.id]&&OI[x.id].bv));x.var=l.v||null;
@@ -4184,8 +4305,11 @@ function bogTilbage(){
 document.getElementById("bogTilbage").onclick=bogTilbage;
 document.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.dataset.omode));
 /* Åbn en ret i kogebogen (fra planen, forslag og snak) */
-function oVis(id){
+/* Retten fra planen, der laves lige nu (fra "Lav retten"): bogen viser dens antal personer og byt */
+let bogFast=null;
+function oVis(id,fastId){
   if(!ORMAP[id])return;
+  bogFast=fastId&&st.fast.find(f=>f.id===fastId)||null;
   oAaben=null;oPers=null;oMode="bog";
   if(!bog.liste.length)bog.liste=bogListe().map(r=>r.id);
   if(!bog.liste.includes(id))bog.liste=[id,...bog.liste];
@@ -4319,12 +4443,16 @@ function bogRetSide(r,i){
 function bogSideHtml(i){return i===0||!ORMAP[bog.liste[i-1]]?bogForside():bogRetSide(ORMAP[bog.liste[i-1]],i)}
 /* Opskriften som blokke, der fordeles på bogens sider */
 function retBlokke(r){
-  const n=st.settings.P,m=oMatch(r,n,oHar(),oValg[r.id]),p=retPris(r),ap=allergiProblem(r),b=[];
+  const fra=bogFast&&bogFast.opskrift===r.id?bogFast:null;
+  const n=(fra&&fra.personer)||st.settings.P,m=oMatch(r,n,oHar(),fra?{...(fra.byt||{})}:oValg[r.id]),p=retPris(r),ap=allergiProblem(r),b=[];
   b.push(`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${r.u?`<p class="bogunder">${esc(r.u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${n} ${n===1?"person":"personer"}</p>`);
   if(ap.length)b.push(`<p class="bogadvar">⚠ ${esc(allergiTekst(ap))}.</p>`);
-  b.push(`<p class="bogkoeb">${p.n?`Køb ${p.n} ${p.n===1?"vare":"varer"} for ca. ${Math.round(p.kr)} kr${p.butik?` i ${esc(p.butik)} – billigst af jeres butikker`:""}.`:"I har alt, hvad der skal bruges."}${m.harL.length?` ${m.harL.length} ${m.harL.length===1?"ting tages":"ting tages"} fra skabet.`:""}</p>`);
+  if(fra){const byttet=m.linjer.filter(x=>x.erst).length,ude=m.linjer.filter(x=>x.status==="udeladt").length;
+    b.push(`<p class="bogkoeb">Fra planen, ${esc(dayLabel(fra.dato,true))}.${byttet?` ${byttet} ${byttet===1?"ingrediens er byttet":"ingredienser er byttet"}.`:""}${ude?` ${ude} udelades.`:""}</p>`)}
+  else b.push(`<p class="bogkoeb">${p.n?`Køb ${p.n} ${p.n===1?"vare":"varer"} for ca. ${Math.round(p.kr)} kr${p.butik?` i ${esc(p.butik)} – billigst af jeres butikker`:""}.`:"I har alt, hvad der skal bruges."}${m.harL.length?` ${m.harL.length} ${m.harL.length===1?"ting tages":"ting tages"} fra skabet.`:""}</p>`);
   b.push(`<h3 class="bogh">Ingredienser</h3>`);
-  for(const x of m.linjer.filter(x=>!x.basis))b.push(`<p class="bogi"><span class="bogmg">${esc(oFmt(x.m,x.e))}</span> ${esc(x.navn)}${x.status==="har"?` <span class="boghar">har</span>`:""}</p>`);
+  for(const x of m.linjer.filter(x=>!x.basis))b.push(x.status==="udeladt"?`<p class="bogi bogud"><span class="bogmg">–</span> <s>${esc(x.navn)}</s> <span class="boghar">udelades</span></p>`
+    :`<p class="bogi"><span class="bogmg">${esc(oFmt(x.m,x.e))}</span> ${esc(x.navn)}${x.erst?` <span class="boghar">i stedet for ${esc(x.erst.toLowerCase())}</span>`:x.status==="har"&&!fra?` <span class="boghar">har</span>`:""}</p>`);
   const basis=m.linjer.filter(x=>x.basis);
   if(basis.length)b.push(`<p class="bogi bogbasis">Desuden: ${esc(basis.map(x=>x.navn.toLowerCase()).join(", "))}</p>`);
   b.push(`<h3 class="bogh">Sådan gør du</h3>`);
@@ -4389,15 +4517,19 @@ function renderBogNav(){
   const b=document.getElementById("bog");
   if(!b.querySelector(".bogkant"))b.insertAdjacentHTML("beforeend",`<div class="bogkant v" aria-hidden="true"><span>‹</span></div><div class="bogkant h" aria-hidden="true"><span>›</span></div>`);
   b.querySelector(".bogkant.v").hidden=i<=0;b.querySelector(".bogkant.h").hidden=i>=n-1;
-  nav.innerHTML=`${r?`<div class="bogknapper"><button class="btn ghost" id="bogIndkob">Tilføj til indkøb</button><button class="btn" id="bogLav">Lav denne</button></div>`:""}`;
+  /* retten fra planen (Lav retten) er allerede planlagt: kun vejen tilbage til planen */
+  const fraPlan=r&&bogFast&&bogFast.opskrift===r.id;
+  nav.innerHTML=fraPlan?`<div class="bogknapper"><button class="btn ghost" id="bogPlan">‹ Tilbage til planen</button></div>`
+    :`${r?`<div class="bogknapper"><button class="btn ghost" id="bogIndkob">Tilføj til indkøb</button><button class="btn" id="bogLav">Lav denne</button></div>`:""}`;
   const ark=document.getElementById("bogArk");
   ark.innerHTML=r&&bog.dage?bogDageHtml():"";
   const bt=document.getElementById("bogTael");
   bt.innerHTML=r?`<button class="x" id="bogDetaljer" style="font-size:.9rem;color:var(--leaf);padding:4px 0">Detaljer</button>`:`${bog.liste.length} ${bog.liste.length===1?"ret":"retter"}`;
   if(!r)return;
+  document.getElementById("bogDetaljer").onclick=()=>{oAaben=r.id;oPers=null;renderOpsk();window.scrollTo(0,0)};
+  if(fraPlan){document.getElementById("bogPlan").onclick=()=>{bogFast=null;show("t-snak");window.scrollTo(0,0)};return}
   document.getElementById("bogIndkob").onclick=()=>retTilIndkob(r);
   document.getElementById("bogLav").onclick=()=>{bog.dage=!bog.dage;renderBogNav()};
-  document.getElementById("bogDetaljer").onclick=()=>{oAaben=r.id;oPers=null;renderOpsk();window.scrollTo(0,0)};
   ark.querySelectorAll("[data-bdag]").forEach(b=>b.onclick=()=>{
     const d=b.dataset.bdag,ap=allergiProblem(r);
     if(ap.length&&!confirm(`${allergiTekst(ap)}. Sæt den på planen alligevel?`))return;
@@ -4464,7 +4596,7 @@ function renderOpskVis(){
   const n=oPers||st.settings.P,har=oHar(),valg=oValg[r.id]||{},mt=oMatch(r,n,har,valg),nej=oIkkeLide(r);
   const lin=(x)=>{
     const l=r.ing[x.i],g=OG[l.v];
-    let st_=x.status==="har"?`<span class="st">${har[x.id]&&har[x.id].kilde==="skab"?"i skabet":"har I"}</span>`:x.status==="koeb"?`<span class="st koeb">købes</span>`:`<span class="st basis">basisvare</span>`;
+    let st_=x.status==="har"?`<span class="st">${har[x.id]&&har[x.id].kilde==="skab"?"i skabet":"har I"}</span>`:x.status==="koeb"?`<span class="st koeb">købes</span>`:x.status==="udeladt"?`<span class="st">udelades</span>`:`<span class="st basis">basisvare</span>`;
     let sub="";
     if(x.erst)sub+=`<div class="amt">I stedet for ${esc(x.erst.toLowerCase())}${x.q?" ("+x.q+")":""}</div>`;
     const v=OI[x.id];if(v&&v.hf)sub+=`<div class="amt">HelloFresh-blanding${v.erst&&OI[v.erst]?". Brug "+esc(OI[v.erst].n.toLowerCase()):""}</div>`;
@@ -4951,7 +5083,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="64";
+const APP_VERSION="65";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;

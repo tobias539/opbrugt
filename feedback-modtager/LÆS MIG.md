@@ -32,8 +32,16 @@ er udeladt fra git, så de ikke kommer med i det offentlige repo.
 
 ## Når scriptet ændres
 
-Indsæt den nye kode, gem, og vælg **Udrul › Administrer udrulninger** › blyanten › **Version: Ny version** ›
-**Udrul**. Så beholder webappen den samme adresse, og appen behøver ikke opdateres.
+Det gøres fra computeren med Googles værktøj `clasp` (Node.js og clasp er installeret, og der er logget ind som
+tobias@bdygtig-mur.dk). Projektet hedder "Mapapp" på script.google.com. I denne mappe:
+
+    clasp push -f
+    clasp deploy -i AKfycbxoV1k87FsMjKh7cgRlddlfjy5OfGn7-NVFp_YqN1MghUTCVoOuJYZHN06jOcyR7wvYkg -d "<hvad der er ændret>"
+
+`push` lægger `feedback.gs` og `appsscript.json` op (se `.claspignore`). `deploy -i` giver den eksisterende
+implementering en ny version, så webappen beholder den samme adresse, og appen behøver ikke opdateres.
+`.clasp.json` (scriptets id) ligger kun lokalt. Uden clasp kan man stadig gøre det i hånden: indsæt koden, gem, og
+vælg **Implementer › Administrer implementeringer** › blyanten › **Version: Ny version** › **Implementer**.
 
 Adressen ligger i det offentlige repo. Alle, der finder den, kan altså sende tekst og opskrifter,
 og de delte opskrifter og de samlede priser kan læses af alle. Feedbacken og kvitteringerne kan ikke læses udefra. Hver besked er højst 4.000 tegn.
