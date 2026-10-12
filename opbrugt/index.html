@@ -3686,9 +3686,10 @@ function retArk(fid){
   const f=st.fast.find(x=>x.id===fid);if(!f)return;
   const mgl=retMangler(f),n=f.personer||st.settings.P,navne=[...new Set(mgl.map(o=>o.x.navn.toLowerCase()))];
   arkVis(`<h3>${esc(f.navn)}</h3><p class="muted" style="margin:0">${esc(stort(dayLabel(f.dato,true)))} · ${n} ${n===1?"person":"personer"}</p>
-    <p style="margin:12px 0 0">${mgl.length?`Du mangler <b>${esc(opremsning(navne))}</b>. ${navne.length===1?"Den ligger":"De ligger"} allerede i kurven.`:"I har det, der skal bruges."}</p>
-    <button class="btn" data-ark="lav">Lav retten</button><button class="btn ghost" data-ark="aendr">Ændr retten</button>`,ark=>{
-    ark.querySelector('[data-ark="lav"]').onclick=()=>{const r=f.opskrift&&ORMAP[f.opskrift];if(r)billederStart(r,f);mgl.length?lavArk(f):lavRet(f)};
+    <p style="margin:12px 0 0">${f.lavet?`Lavet ${esc(dayLabel(f.lavet,true))}. Det brugte er trukket fra skabet.`:mgl.length?`Du mangler <b>${esc(opremsning(navne))}</b>. ${navne.length===1?"Den ligger":"De ligger"} allerede i kurven.`:"I har det, der skal bruges."}</p>
+    <button class="btn" data-ark="lav">${f.lavet?"Se opskriften":"Lav retten"}</button><button class="btn ghost" data-ark="aendr">Ændr retten</button>`,ark=>{
+    /* en ret, der er lavet, åbnes bare igen – der trækkes aldrig noget fra skabet to gange (se retLavet) */
+    ark.querySelector('[data-ark="lav"]').onclick=()=>{const r=f.opskrift&&ORMAP[f.opskrift];if(r)billederStart(r,f);mgl.length&&!f.lavet?lavArk(f):lavRet(f)};
     ark.querySelector('[data-ark="aendr"]').onclick=()=>{arkLuk();aendrRet(f)};
   });
 }
@@ -3968,7 +3969,9 @@ function kogTilpas(){
   ind.style.fontSize=(16*lo).toFixed(2)+"px";ind.style.flex="";
 }
 window.addEventListener("resize",()=>{if(kogAaben)kogTilpas()});
-/* Retten er lavet: det, der blev købt til den, trækkes fra skabet nu – ellers sker det først dagen efter (afvikl) */
+/* Retten er lavet: det, der blev købt til den, trækkes fra skabet nu – ellers sker det først dagen efter (afvikl).
+   Kun én gang: retten markeres som afviklet, så hverken et nyt "Færdig" eller afvikl trækker fra igen. At åbne
+   opskriften trækker aldrig noget fra. */
 function retLavet(f){
   if(!f||f.afviklet)return;
   for(const b of retBehov(f))traekFra(st.skab,st.fri,b);
@@ -5405,7 +5408,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="71";
+const APP_VERSION="72";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
