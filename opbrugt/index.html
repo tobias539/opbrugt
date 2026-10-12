@@ -44,7 +44,7 @@ main{max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top))
 .prefknap{position:absolute;top:calc(14px + env(safe-area-inset-top));left:6px;width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:var(--muted);padding:8px;cursor:pointer;z-index:4}
 .prefknap svg{display:block;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .prefknap[aria-current="page"]{color:var(--leaf);background:var(--leaf-soft)}
-body:has(#t-snak.fokus.on) .prefknap,body:has(#t-pref.kunGuide.on) .prefknap{display:none}
+body:has(#t-snak.fokus.on) .prefknap,body:has(#t-pref.kunGuide.on) .prefknap,body:has(#t-pref.kunHylde.on) .prefknap,body:has(#t-skab.hyldeGuide.on) .prefknap{display:none}
 header.top{padding-left:38px}
 #opskVis>.back:first-child{margin-left:38px}
 h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
@@ -132,6 +132,20 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .wiz .nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
 .wiz .nav .grow{flex:1}
 #t-pref.kunGuide > :not(#prefOpsat){display:none}
+/* Altid på hylden: mens guiden er åben, vises kun den */
+#t-pref.kunHylde > :not(#prefHylde){display:none}
+#t-skab.hyldeGuide>#skabSe,#t-skab.hyldeGuide>#skabTilfoej,#t-skab.hyldeGuide>header{display:none}
+/* Bunken af billeder, før de sendes, og optagelsen af skabet */
+.bunke{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.bk{position:relative;width:62px;height:62px}.bk img{width:100%;height:100%;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.bk .x{position:absolute;top:-7px;right:-7px;width:22px;height:22px;padding:0;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:.95rem;line-height:1}
+.optaglag{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column}
+.optaglag video{flex:1;min-height:0;width:100%;object-fit:cover}
+.optagbund{background:rgba(0,0,0,.75);color:#fff;padding:12px 16px calc(16px + env(safe-area-inset-bottom))}
+.optagtale{margin:0 0 10px;min-height:2.8em;font-size:.95rem;line-height:1.4}
+.optagknapper{display:flex;align-items:center;justify-content:space-between;gap:10px}.optagtid{font-variant-numeric:tabular-nums;opacity:.85}
+.tilbudsbesked{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--tilbud);border:1.5px solid var(--tilbud-kant);border-radius:14px;padding:10px 12px;margin:10px 0 0;font:inherit;font-size:.92rem;color:var(--ink);cursor:pointer}
+.tilbudsbesked .grow{flex:1;min-width:0}
 /* Skærme: ét trin pr. skærm, der passer på telefonen; knapperne står nederst */
 .wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
 /* Knapperne nederst står altid synligt lige over bundmenuen – også på små telefoner, hvor skærmen er højere end telefonen */
@@ -247,6 +261,11 @@ body.medKurv .toast{bottom:calc(142px + env(safe-area-inset-bottom))}
 @keyframes skabIndH{from{transform:translateX(30%);opacity:.3}}@keyframes skabIndV{from{transform:translateX(-30%);opacity:.3}}
 .hvare.groen{box-shadow:inset 0 -3px 0 #4caf6e}.hvare.gul{box-shadow:inset 0 -3px 0 #e2c234}.hvare.orange{box-shadow:inset 0 -3px 0 #ec8a2c}.hvare.rod{box-shadow:inset 0 -3px 0 #d8452f;background:rgba(216,69,47,.12);border-radius:8px}
 .hylderum.enkelt{justify-content:flex-start;padding-top:26px}
+.hylderaekke{flex:none;display:flex;flex-direction:column;justify-content:flex-end}
+/* Primærvare, der er sluppet op: en tom plads med et lille rødt kryds */
+.hvare.tom .hv-em{opacity:.32;filter:grayscale(1)}.hvare.tom .hv-ord{opacity:.6}
+.hvare.tom::before{content:"✕";position:absolute;right:-2px;bottom:4px;z-index:1;width:15px;height:15px;border-radius:50%;background:#d8452f;color:#fff;font:700 9px/15px var(--body);text-align:center}
+.hylde.vaelger .hvare.tom .hv-em::after{display:none}
 .hkort-gitter{display:grid;gap:8px;align-content:start}
 .hvare.hkort{flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#f8f1e3;border:1px solid #d8c6a6;border-radius:10px;padding:6px 4px;width:auto;font-family:var(--body)}
 .hk-ik{line-height:1;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}.hk-n{font-size:.78rem;font-weight:700;color:#4a3a28;text-align:center;line-height:1.15;overflow:hidden;max-height:2.3em}
@@ -276,7 +295,7 @@ button.hi-ik[aria-expanded="true"]{border-style:solid;border-color:var(--leaf);b
 .skabnavn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.95em;font-weight:700;font-family:var(--display)}
 /* Bladr mellem skabene: pil, prikker, pil. Pilen er grå, når man er på første eller sidste side. */
 /* Toppen skaleres som helhed, hvis den ikke kan være der (se tilpasRaekke), så alle mål her er i em */
-.skabtop{gap:.36em}.skabtop .btn.lille{font-size:.88em;padding:.4em .65em}
+.skabtop{gap:.36em;height:38px}.skabtop .btn.lille{font-size:.88em;padding:.4em .65em}
 .skabblad{display:flex;align-items:center;gap:.25em;flex:none}.skabblad .prikker{gap:.3em}.skabblad .prik{width:.48em;height:.48em}
 .skabblad .pil{width:1.55em;height:1.55em;border-radius:50%;border:1.5px solid var(--leaf);background:var(--card);color:var(--leaf);font:700 1.05em/1 var(--body);padding:0 0 .12em;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .skabblad .pil:disabled{border-color:var(--line);color:var(--line);cursor:default}
@@ -530,6 +549,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div class="sugg" id="noClaude" style="display:none;margin-bottom:14px" role="alert"><h3>Ingen forbindelse til Claude</h3><p style="margin:0">Indsæt API-nøglen her. Planen, skabet og indkøbslisten virker også uden.</p><div class="addrow" style="padding:10px 0 0"><input id="keyIn2" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" aria-label="API-nøgle" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn" id="keySave2">Gem</button></div></div>
 
   <div id="ugeInfo"></div>
+  <div id="hyldeTilbudBox"></div>
   <div class="planknapper" id="planknapper"><button class="planknap" id="planDenne"><span class="pk-lille">Planlæg</span><span class="pk-stor">denne uge</span><span class="pk-info" id="planDenneInfo"></span></button><button class="planknap naeste" id="planNaeste"><span class="pk-lille">Planlæg</span><span class="pk-stor">næste uge</span><span class="pk-info" id="planNaesteInfo"></span></button></div>
   <p class="muted" id="naesteInfo" hidden></p>
   <div id="opsStart"></div>
@@ -605,6 +625,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <!-- SKAB -->
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
   <header class="top"><h1 id="h-skab">Skabet</h1></header>
+  <div id="skabHylde"></div>
   <div id="skabSe">
     <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><button class="btn ghost lille" id="skabVaelgKnap" aria-pressed="false">Vælg</button><span class="skabblad" id="skabBlad"><button class="pil" id="skabForrige" aria-label="Forrige skab">‹</button><span class="prikker" id="skabPrikker"></span><button class="pil" id="skabNaeste" aria-label="Næste skab">›</button></span></div>
     <p class="skabhint" id="skabForkl"></p>
@@ -615,9 +636,11 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div id="skabTilfoej" hidden>
     <button class="back" data-skab="se">‹ Skabet</button>
     <div class="ask" id="scanBox" style="margin:6px 0 12px">
-      <h3>Med et billede</h3>
-      <p class="muted" id="scanNote" style="margin:2px 0 8px">Tag et billede af kvitteringen – eller af skabet, køleskabet eller fryseren, så kan appen se, hvad I har.</p>
-      <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Vælg fra album<input type="file" class="scanFil" accept="image/*" hidden></label></div>
+      <h3>Med billeder eller video</h3>
+      <div class="seg" id="scanRetning" role="tablist" aria-label="Hvad viser billederne?" style="margin:6px 0 8px"><button role="tab" data-ret="ind" aria-selected="true">Det, vi har</button><button role="tab" data-ret="ud" aria-selected="false">Det, vi smider ud</button></div>
+      <p class="muted" id="scanNote" style="margin:2px 0 8px">Tag så mange billeder, I vil – af kvitteringen, skabet, køleskabet eller fryseren.</p>
+      <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Fra album<input type="file" class="scanFil" accept="image/*" multiple hidden></label><label class="btn ghost" style="display:inline-block">Video<input type="file" class="scanVideo" accept="video/*" hidden></label><button class="btn ghost" id="scanOptag" type="button">🎙️ Optag med lyd</button></div>
+      <div id="scanBunke"></div>
       <div id="scanResult"></div>
     </div>
     <div class="ask">
@@ -634,6 +657,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <p class="sub">Det, appen tager hensyn til, hver gang den foreslår noget.</p>
   <h2 style="margin-top:6px">Dine præferencer</h2>
   <div id="prefOpsat"></div>
+  <div id="prefHylde"></div>
   <div id="allergiWrap"></div>
   <details class="fold" id="flere" style="margin-top:22px"><summary>Flere indstillinger</summary>
   <h2 style="margin-top:12px">Forbindelse til Claude</h2>
@@ -790,7 +814,8 @@ let st = JSON.parse(JSON.stringify(DEFAULT));
 let saveTimer = null, sample = null;
 
 function price(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko)?p.oko:p.p}
-function pname(k){const p=P[k];return (st.settings.oko&&p.grund&&p.oko?"Øko ":"")+p.n}
+/* økologisk skrives som (Ø) efter varen */
+function pname(k){const p=P[k];return p.n+(st.settings.oko&&p.grund&&p.oko?" (Ø)":"")}
 function ho(k){return (st.holdbarhed&&st.holdbarhed[k])??P[k].ho??P[k].h}
 /* Læg en mængde i skabet. Købsdatoen huskes (den ældste tæller, så intet bliver for gammelt), og hvor meget der blev købt. */
 function skabLaeg(k,amt,dage){
@@ -1414,7 +1439,7 @@ function fordel(grupper){
    Varer, der er samme vare i banken (fx kyllingebryst, -inderfilet og -strimler), lægges sammen. */
 function normMaengde(q,e){if(e==="kg")return [q*1000,"g"];if(e==="l")return [q*1000,"ml"];if(e==="dl")return [q*100,"ml"];if(e==="cl")return [q*10,"ml"];return [q,e]}
 function pNoegle(id){return id?Object.keys(OB.pTilBank).find(k=>OB.pTilBank[k]===id&&P[k])||null:null}
-function samletIndkob(p){
+function samletIndkob(p,medPrimaer){
   const g=new Map();
   const put=(key,init)=>{if(!g.has(key))g.set(key,{key,...init,behov:0,ukendt:0,kilder:[],retter:new Set(),tekster:[],dato:null});return g.get(key)};
   /* Pakkeberegningens egne retter kommer kun på listen, hvis man selv har valgt retter dér. Ellers købte den
@@ -1448,6 +1473,13 @@ function samletIndkob(p){
     if(x.tilbud&&!v.fastTilbud)v.fastTilbud=x.tilbud;
     const d=dag||x.dato||(f&&f.dato);if(d&&(!v.dato||d<v.dato))v.dato=d;
   });
+  /* Primærvarer, der er sluppet op eller ikke rækker til næste indkøb – kun på den rigtige indkøbsliste, ikke i prisberegninger */
+  if(medPrimaer)for(const x of primaerBehov()){
+    const v=put(x.k?"p:"+x.k:"pv:"+x.navn.toLowerCase(),{navn:x.k?pname(x.k).replace(/ \(løs\)/,""):x.navn,pk:x.k||null,id:x.k?OB.pTilBank[x.k]||null:null,afd:x.k?afdOf(x.k):gaetAfd(x.navn),enhed:x.k?P[x.k].e:null});
+    v.primaer=x.tom?"tom":"forbrug";
+    if(x.k)v.behov+=x.behov!=null?x.behov:P[x.k].pk;
+    else if(x.behov!=null){v.primaerAntal=Math.ceil(x.behov);v.tekster.push(v.primaerAntal+" stk")}
+  }
   for(const b of p.basis)put("b:"+b,{navn:BASIS[b],afd:"toer",basis:b,enhed:null});
   for(const v of g.values()){
     if(v.basis){v.koeb=BASIS_PAK[v.basis]||"1";continue}
@@ -1464,6 +1496,7 @@ let shopAfd=null,shopSide=0,shopDag="",shopVis=null,shopRute=false,shopTrin="lis
 function tilTekst(v){
   const r=[...(v.retter||[])].map(kortRet).filter(Boolean);
   if(r.length)return "Til "+r.join(" · ");
+  if(v.primaer)return v.primaer==="tom"?"Primærvare, I er løbet tør for":"Fast forbrug frem til næste indkøb";
   return v.basis?"Basisvare, I er løbet tør for":v.kilder&&v.kilder.length?"Sat på listen af dig":"Til ugens madplan";
 }
 function stort(t){t=String(t||"");return t.charAt(0).toUpperCase()+t.slice(1)}
@@ -1543,7 +1576,7 @@ function renderShop(p){
   renderKvit();
   st.shopMark=st.shopMark||{};
   /* Handler man ind flere gange om ugen, deles listen i indkøbsdage */
-  const alleG=samletIndkob(p),dage=[...new Set(alleG.map(v=>v.koebDag||""))].sort();
+  const alleG=samletIndkob(p,true),dage=[...new Set(alleG.map(v=>v.koebDag||""))].sort();
   const ka=document.getElementById("kurvAntal");ka.textContent=alleG.length;ka.hidden=!alleG.length;
   if(!dage.includes(shopDag))shopDag=dage[0]??"";
   const G=dage.length>1?alleG.filter(v=>(v.koebDag||"")===shopDag):alleG,F=fordel(G);shopTur=F.tur;
@@ -1631,6 +1664,8 @@ function koebVarer(liste){
     if(v.basis){st.basisMangler=st.basisMangler.filter(b=>b!==v.basis);continue}
     if(v.pk){const k=v.pk,amt=v.pakker*P[k].pk;skabLaeg(k,amt);lagt[k]=(lagt[k]||0)+amt;continue}
     friLaeg(v.navn);
+    /* primærvare med fast forbrug: husk, hvor mange der er købt, så de kan trækkes fra dag for dag */
+    if(v.primaerAntal){const f=st.fri.find(y=>y.navn.toLowerCase()===renNavn(v.navn).toLowerCase());if(f)f.antal=(f.antal||0)+v.primaerAntal}
   }
   st.ekstraIndkob=st.ekstraIndkob.filter((_,i)=>!fjern.has(i));
   return lagt;
@@ -1719,6 +1754,7 @@ document.getElementById("skabNaeste").onclick=()=>skabBladre(1);
 document.getElementById("skabVaelgKnap").onclick=()=>{holdbarSend();skabVaelg=skabVaelg?null:new Set();skabGruppe=null;hyldeValgt=null;renderHylde()};
 /* Hold fingeren på en vare: så åbner dens indstillinger. I vælg-tilstand gælder det, man ændrer, alle de valgte. */
 function skabHold(key){
+  if(skabVaelg&&key.startsWith("t:"))return;
   if(!skabVaelg){
     if(hyldeValgt!==key)holdbarSend();
     hyldeValgt=key;emojiAaben=null;if(navigator.vibrate)navigator.vibrate(15);renderHylde();return;
@@ -1737,25 +1773,171 @@ function friskKlasse(rest){return rest==null?"":rest<=1?"rod":rest<=3?"orange":r
 function skabVarer(){
   const ud=[];
   for(const [k,v] of Object.entries(st.skab))if(P[k])ud.push({k,navn:P[k].n.replace(/ \(løs\)/,""),afd:visAfd(afdOf(k)),amt:v.amt,koebt:Math.max(v.koebt||0,v.amt),dage:v.dage,rest:v.dage!=null?v.dage-dageSiden(v.dato):null});
-  st.fri.forEach((f,i)=>{const dage=f.dage??friHold(f.navn);ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),niveau:f.niveau||"hel",dage,rest:dage-dageSiden(f.dato)})});
+  st.fri.forEach((f,i)=>{const dage=f.dage??friHold(f.navn);ud.push({fi:i,navn:f.navn,afd:visAfd(gaetAfd(f.navn)),niveau:f.niveau||"hel",dage,rest:dage-dageSiden(f.dato),...(f.antal!=null?{antal:f.antal}:{})})});
+  /* primærvarer, der er sluppet op, beholder deres plads – som en tom plads med et lille rødt kryds */
+  for(const navn of hyldeAf().primaer){if(primaerFind(navn))continue;const n=stort(primaerNavn(navn)),k=primaerKey(navn);ud.push({tom:true,primaer:navn,navn:n,afd:visAfd(k?afdOf(k):gaetAfd(n)),rest:null})}
   for(const x of ud){if(!AFD[x.afd])x.afd="andet";x.em=vareEmoji({navn:x.navn,afd:x.afd});x.ord=vareOrd(x.navn)}
   /* det, der skal bruges først, forrest */
   return ud.sort((a,b)=>(a.rest??999)-(b.rest??999));
 }
-function hyldeNoegle(v){return v.k?"k:"+v.k:"f:"+v.navn}
+function hyldeNoegle(v){return v.k?"k:"+v.k:v.tom?"t:"+v.navn:"f:"+v.navn}
 function skabSider(varer){return ["alle",...[...new Set(STD_RUTE.map(visAfd))].filter(a=>varer.some(v=>v.afd===a))]}
 function renderSkab(){
-  const se=skabMode==="se";
+  const se=skabMode==="se";renderAltid();
   document.getElementById("skabSe").hidden=!se;document.getElementById("skabTilfoej").hidden=se;
   if(se&&document.getElementById("t-skab").classList.contains("on"))renderHylde();
   if(!se)renderSkabValg();
 }
 function tilbageTekst(v){
   if(v.k)return `${fmt(v.k,v.amt)} af ${fmt(v.k,v.koebt)}`;
+  if(v.antal!=null)return `${Math.round(v.antal*10)/10} stk`;
   return v.niveau==="lidt"?"Lidt tilbage":v.niveau==="noget"?"Noget tilbage":"Hel";
 }
 function andel(v){return v.k?Math.max(0,Math.min(1,v.amt/(v.koebt||v.amt||1))):v.niveau==="lidt"?.2:v.niveau==="noget"?.55:1}
 function holdTekst(rest){return rest==null?"":rest<0?`${-rest} ${rest===-1?"dag":"dage"} over tiden`:rest===0?"Bør bruges i dag":rest===1?"Holder 1 dag mere":`Holder ${rest} dage mere`}
+/* ---------- Altid på hylden ----------
+   Det, husstanden altid vil have derhjemme, i tre grupper. Basisvarer har et forslag ud fra det, HelloFresh-kortene
+   regner med, at man selv har (salt, olie, peber, sukker, smør, æg, mel og mælk); husholdning har de mest almindelige;
+   primærvarer er husstandens egne og vælges aldrig automatisk. Er en af varerne på tilbud, står det på Plan – også
+   større partier, for det er tit varer, der kan gemmes. Vælges i Skab første gang og ændres under Præferencer. */
+const HYLDE=[
+  {id:"basis",navn:"Basisvarer",tekst:"Det, opskrifterne regner med, at I har. Forslaget er det, HelloFresh regner med – fravælg det, I ikke bruger, og tilføj fx paprika.",
+   standard:["Salt","Peber","Olie","Sukker","Smør","Mælk","Æg","Hvedemel"],
+   forslag:["Bouillon","Eddike","Honning","Sennep","Ketchup","Sojasauce","Paprika","Karry","Oregano","Spidskommen","Kanel","Chiliflager","Ris","Pasta","Hakkede tomater","Kokosmælk","Havregryn","Rasp"]},
+  {id:"hus",navn:"Husholdning",tekst:"Sæbe, papir og andet til hjemmet.",
+   standard:["Toiletpapir","Køkkenrulle","Opvaskemiddel","Håndsæbe","Skraldeposer"],
+   forslag:["Opvasketabs","Vaskemiddel","Skyllemiddel","Rengøringsmiddel","Bagepapir","Alufolie","Fryseposer","Tandpasta","Shampoo"]},
+  {id:"primaer",navn:"Primærvarer",tekst:"Jeres egne faste varer, fx juice, 6 øl eller rødvin. Dem vælger appen ikke for jer. De har en fast plads i skabet og kommer på indkøbslisten, når de slipper op.",
+   standard:[],forslag:["Juice","Øl","Rødvin","Hvidvin","Sodavand","Kaffe","Te","Rugbrød","Yoghurt","Frugt"]}
+];
+let hw=null;
+function hyldeAf(){const h=st.hylde||{};return {opsat:!!h.opsat,basis:h.basis||[],hus:h.hus||[],primaer:h.primaer||[],forbrug:h.forbrug||{}}}
+/* ---------- Primærvarer i skabet ----------
+   Primærvarer har en fast plads i skabet. Er der ikke flere, står de med et lille rødt kryds og kommer på
+   indkøbslisten. Med et fast forbrug (fx 3 æg om dagen) trækkes de fra hver dag, og der købes nok til næste indkøb. */
+function primaerNavn(n){return String(n||"").replace(/^\d+\s*(stk\.?|x|fl\.?|ks\.?)?\s+/i,"").trim()}
+const primaerPasser=(navn,n)=>{navn=navn.toLowerCase().replace(/ \(løs\)/,"");return navn===n||navn.startsWith(n+" ")||(n.length>=4&&navn.endsWith(n))};
+/* Varenøglen i kataloget (fx "Æg" → aeg, "Mælk" → Letmælk), også når varen ikke er i skabet */
+function primaerKey(navn){const n=primaerNavn(navn).toLowerCase();return n?Object.keys(P).find(k=>primaerPasser(P[k].n,n))||null:null}
+/* Hvor står primærvaren i skabet? {k} for en vare i kataloget, {fi} for en fri vare, ellers null */
+function primaerFind(navn){
+  const n=primaerNavn(navn).toLowerCase();if(!n)return null;
+  const k=Object.keys(st.skab).find(k=>P[k]&&primaerPasser(P[k].n,n));if(k)return {k};
+  const fi=st.fri.findIndex(f=>primaerPasser(f.navn,n));return fi>=0?{fi}:null;
+}
+function forbrugPrDag(navn){const f=hyldeAf().forbrug[navn];return f&&f.antal>0?(f.per==="uge"?f.antal/7:f.antal):0}
+function dageMellemIndkob(){return Math.ceil(7/Math.max(1,Math.min(3,st.settings.indkobGange||1)))}
+function forbrugTekst(navn){const f=hyldeAf().forbrug[navn];if(!f||!(f.antal>0))return "";const k=primaerKey(navn);return `${String(f.antal).replace(".",",")} ${k&&P[k].e!=="stk"?P[k].e:"stk"} om ${f.per==="uge"?"ugen":"dagen"}`}
+/* Det, der skal købes af primærvarerne: dem, der er sluppet op, og dem med fast forbrug, der ikke rækker til næste indkøb */
+function primaerBehov(){
+  const h=hyldeAf();if(!h.opsat)return [];
+  const dage=dageMellemIndkob(),ud=[];
+  for(const navn of h.primaer){
+    const fd=primaerFind(navn),k=fd&&fd.k||primaerKey(navn),pr=forbrugPrDag(navn);
+    const har=!fd?0:fd.k?st.skab[fd.k].amt:(st.fri[fd.fi].antal??pr*dage);
+    const behov=pr?pr*dage-har:(fd?0:null);
+    if(fd&&!(behov>1e-6))continue;
+    ud.push({navn:stort(primaerNavn(navn)),k,behov:behov>0?behov:null,tom:!fd});
+  }
+  return ud;
+}
+function hyldeStart(host){
+  const h=hyldeAf(),valgt={};
+  for(const g of HYLDE)valgt[g.id]=h.opsat?[...h[g.id]]:[...g.standard];
+  hw={host,trin:0,valgt,tekst:"",forbrug:JSON.parse(JSON.stringify(h.forbrug))};renderAltid();window.scrollTo(0,0);
+}
+function hyldeValg(g){const ud=[];for(const n of [...g.standard,...g.forslag,...hw.valgt[g.id]])if(!ud.some(x=>x.toLowerCase()===n.toLowerCase()))ud.push(n);return ud}
+function hyldeWizHtml(){
+  const trin=[...HYLDE.map(g=>g.id),"oversigt"],t=trin[hw.trin],g=HYLDE.find(x=>x.id===t);
+  const prik=`<div class="prik" aria-hidden="true">${trin.map((_,i)=>`<i class="${i<=hw.trin?"on":""}"></i>`).join("")}</div>`;
+  let h;
+  if(g)h=`<h2>${g.navn}</h2><p class="muted" style="margin:0">${g.tekst}</p>
+    <div class="chips">${hyldeValg(g).map(n=>`<button class="chip" data-hw="vare" data-n="${esc(n)}" aria-pressed="${hw.valgt[g.id].includes(n)}">${esc(n)}</button>`).join("")}</div>
+    <div class="addrow" style="padding:12px 0 0"><input id="hwIn" value="${esc(hw.tekst)}" placeholder="${g.id==="primaer"?"Fx 6 øl eller appelsinjuice":g.id==="hus"?"Fx vaskemiddel":"Fx paprika"}" aria-label="Tilføj en vare" autocomplete="off" style="flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px"><button class="btn ghost" data-hw="tilfoej">Tilføj</button></div>
+    ${g.id==="primaer"&&hw.valgt.primaer.length?`<h3 style="margin:16px 0 2px">Fast forbrug <span class="muted" style="font-weight:400;font-size:.85rem">(kan udelades)</span></h3><p class="muted" style="margin:0 0 6px;font-size:.85rem">Fx 3 æg om dagen. Så trækker appen dem fra hver dag og køber nok til næste indkøb.</p>
+    <div class="list">${hw.valgt.primaer.map(n=>{const f=hw.forbrug[n]||{},k=primaerKey(n),enh=k&&P[k].e!=="stk"?P[k].e:"stk";return `<div class="item" style="gap:8px"><span class="grow">${esc(n)}</span><input type="number" min="0" step="any" inputmode="decimal" data-fb="${esc(n)}" value="${f.antal??""}" placeholder="–" aria-label="Fast forbrug af ${esc(n)}" style="width:62px;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:5px 6px;font:inherit"><span class="muted" style="font-size:.85rem">${enh}</span><select data-fbper="${esc(n)}" aria-label="Pr. dag eller uge" style="font:inherit;font-size:.85rem"><option value="dag" ${f.per!=="uge"?"selected":""}>om dagen</option><option value="uge" ${f.per==="uge"?"selected":""}>om ugen</option></select></div>`}).join("")}</div>`:""}`;
+  else h=`<h2>Altid på hylden</h2><div class="list oversigt" style="margin-top:10px">${HYLDE.map(x=>`<div class="item"><b>${x.navn}</b><span>${esc(hw.valgt[x.id].map(n=>{const f=x.id==="primaer"&&hw.forbrug[n];return f&&f.antal>0?`${n} (${String(f.antal).replace(".",",")} om ${f.per==="uge"?"ugen":"dagen"})`:n}).join(", ")||"Ingen")}</span></div>`).join("")}</div>
+    <p class="muted" style="margin:10px 0 0;font-size:.85rem">Er nogle af dem på tilbud, står det på Plan.</p>`;
+  const nav=`<div class="nav">${hw.trin>0?`<button class="btn ghost" data-hw="tilbage">Tilbage</button>`:""}<span class="grow"></span>${t==="oversigt"?`<button class="btn" data-hw="gem">Gem</button>`:`<button class="btn" data-hw="naeste">Næste</button>`}</div>`;
+  return `<div class="wiz skaerm guide"><button class="x wizluk" data-hw="luk" aria-label="Luk">×</button>${prik}${h}${nav}</div>`;
+}
+/* Skab: besked, hvis det ikke er valgt; Præferencer: oversigt og "Ret". Guiden vises der, hvor den er startet. */
+function renderAltid(){
+  const sk=document.getElementById("skabHylde"),pr=document.getElementById("prefHylde"),h=hyldeAf();
+  document.getElementById("t-skab").classList.toggle("hyldeGuide",!!(hw&&hw.host==="skabHylde"));
+  document.getElementById("t-pref").classList.toggle("kunHylde",!!(hw&&hw.host==="prefHylde"));
+  sk.innerHTML=hw&&hw.host==="skabHylde"?hyldeWizHtml():!h.opsat&&skabMode==="se"&&st.hyldeSenere!==todayIso()?`<div class="wiz" style="margin:0 0 10px;padding:12px 14px"><b>Hvad vil I altid have på hylden?</b><p class="muted" style="margin:2px 0 0;font-size:.9rem">Du har ikke valgt det endnu. Fx basisvarer, toiletpapir og jeres egne faste varer – så siger appen til, når de er på tilbud.</p><div class="nav" style="margin-top:8px"><button class="btn ghost lille" data-hw="senere">Ikke nu</button><span class="grow"></span><button class="btn lille" data-hw="start">Kom i gang</button></div></div>`:"";
+  pr.innerHTML=hw&&hw.host==="prefHylde"?hyldeWizHtml():`<h2 style="margin-top:22px">Altid på hylden</h2>${h.opsat?`<div class="list oversigt">${HYLDE.map(x=>`<div class="item"><b>${x.navn}</b><span>${esc(h[x.id].map(n=>x.id==="primaer"&&forbrugTekst(n)?`${n} (${forbrugTekst(n)})`:n).join(", ")||"Ingen")}</span></div>`).join("")}</div><button class="btn ghost" data-hw="start" style="margin-top:10px">Ret</button>`:`<p class="muted" style="margin:0 0 8px">Det, I altid vil have derhjemme. Appen siger til, når det er på tilbud.</p><button class="btn" data-hw="start">Vælg</button>`}`;
+  for(const el of [sk,pr])el.querySelectorAll("[data-hw]").forEach(b=>b.onclick=()=>hyldeHandling(b,el.id));
+  document.querySelectorAll("[data-fb]").forEach(i=>i.oninput=()=>{const n=i.dataset.fb,v=parseFloat(String(i.value).replace(",","."));hw.forbrug[n]={...(hw.forbrug[n]||{per:"dag"}),antal:v>0?v:0}});
+  document.querySelectorAll("[data-fbper]").forEach(sel=>sel.onchange=()=>{const n=sel.dataset.fbper;hw.forbrug[n]={...(hw.forbrug[n]||{antal:0}),per:sel.value}});
+  const inp=document.getElementById("hwIn");
+  if(inp){inp.oninput=e=>{hw.tekst=e.target.value};inp.onkeydown=e=>{if(e.key==="Enter")document.querySelector('[data-hw="tilfoej"]').click()}}
+}
+function hyldeHandling(b,host){
+  const a=b.dataset.hw;
+  if(a==="start"){hyldeStart(host);return}
+  if(a==="senere"){st.hyldeSenere=todayIso();changed();return}
+  if(!hw)return;
+  const t=HYLDE[hw.trin];
+  if(a==="vare"){const n=b.dataset.n,l=hw.valgt[t.id];hw.valgt[t.id]=l.includes(n)?l.filter(x=>x!==n):[...l,n]}
+  else if(a==="tilfoej"){
+    let n=hw.tekst.trim();if(!n)return;n=n.charAt(0).toUpperCase()+n.slice(1);
+    if(!hw.valgt[t.id].some(x=>x.toLowerCase()===n.toLowerCase()))hw.valgt[t.id].push(n);
+    hw.tekst="";
+  }
+  else if(a==="naeste")hw.trin=Math.min(HYLDE.length,hw.trin+1);
+  else if(a==="tilbage")hw.trin=Math.max(0,hw.trin-1);
+  else if(a==="luk"){hw=null;renderAltid();renderSkab();return}
+  else if(a==="gem"){
+    const forbrug={};for(const n of hw.valgt.primaer){const f=hw.forbrug[n];if(f&&f.antal>0)forbrug[n]={antal:f.antal,per:f.per==="uge"?"uge":"dag"}}
+    st.hylde={opsat:true,...hw.valgt,forbrug};st.forbrugDato=st.forbrugDato||todayIso();hw=null;changed();toast("Gemt: det, I altid vil have på hylden");return;
+  }
+  renderAltid();
+  if(a==="tilfoej")document.getElementById("hwIn")?.focus();
+  if(a==="naeste"||a==="tilbage")window.scrollTo(0,0);
+}
+/* Tilbud på det, der altid skal være på hylden. Basisvarer søges kun i tilbuddets navn (ellers rammer "olie" fx
+   "tun i olie"); husholdning og primærvarer også i beskrivelsen, for dér står fx "8 rl. toiletpapir" eller "rødvin". */
+const HYLDE_TERMER={
+  "toiletpapir":/toiletpapir/,"køkkenrulle":/køkkenrul|køkkenpapir/,"opvaskemiddel":/opvaskemiddel|håndopvask/,"opvasketabs":/opvasketabs|maskinopvask/,
+  "håndsæbe":/håndsæbe/,"vaskemiddel":/vaskemiddel/,"skyllemiddel":/skyllemiddel/,"skraldeposer":/affaldspose|skraldepose|affaldssæk/,
+  "øl":/(^|[^a-zæøå])øl([^a-zæøå]|$)|pilsner/,"rødvin":/rødvin/,"hvidvin":/hvidvin/,"æg":/(^|[^a-zæøå])æg([^a-zæøå]|$)|skrabeæg|frilandsæg|buræg/,
+  "sodavand":/sodavand|(^|[^a-zæøå])cola([^a-zæøå]|$)/,"te":/(^|[^a-zæøå])te([^a-zæøå]|$)|tebreve/,"ris":/(^|[^a-zæøå])ris([^a-zæøå]|$)|jasminris|basmatiris/,
+  "olie":/olivenolie|rapsolie|solsikkeolie|madolie/,"smør":/(^|[^a-zæøå])smør([^a-zæøå]|$)/,"mælk":/(^|[^a-zæøå])(let|skummet|sød|mini)?mælk([^a-zæøå]|$)/
+};
+function hyldeSoeg(navn){
+  const n=String(navn).toLowerCase().replace(/^\d+\s*(stk\.?|x|fl\.?|ks\.?)?\s+/,"").trim();
+  if(HYLDE_TERMER[n])return HYLDE_TERMER[n];
+  const ord=n.split(/[^a-zæøå]+/).filter(w=>w.length>=3);
+  return ord.length?new RegExp(ord.map(w=>`(^|[^a-zæøå])${w}(er|e|r|s)?([^a-zæøå]|$)`).join("|")):null;
+}
+function hyldeTilbud(){
+  const h=hyldeAf();if(!h.opsat||!TB.tilbud.length)return [];
+  const gyldige=tGyldige(tUge()).filter(aegteTilbud),ud=[];
+  for(const gr of ["primaer","hus","basis"])for(const navn of h[gr]){
+    const re=hyldeSoeg(navn);if(!re)continue;
+    const hit=gyldige.filter(x=>re.test((gr==="basis"?x.o:x.o+" "+(x.b||"")).toLowerCase()));
+    /* billigst pr. liter, kg eller stk. først, så store partier kan sammenlignes med små */
+    if(hit.length)ud.push({navn,gr,tilbud:hit.sort((a,b)=>a.ep!=null&&b.ep!=null&&a.pr===b.pr?a.ep-b.ep:a.p-b.p).slice(0,3)});
+  }
+  return ud;
+}
+let htAaben=false;
+function renderHyldeTilbud(){
+  const el=document.getElementById("hyldeTilbudBox");if(!el)return;
+  const l=hyldeTilbud();
+  if(!l.length){el.innerHTML="";return}
+  const d=x=>+x.t.slice(8)+"/"+ +x.t.slice(5,7);
+  el.innerHTML=`<button class="tilbudsbesked" id="htKnap" aria-expanded="${htAaben}"><span aria-hidden="true">🏷️</span><span class="grow"><b>På tilbud:</b> ${esc(l.map(x=>x.navn).join(", "))}</span><span aria-hidden="true">${htAaben?"▾":"›"}</span></button>
+    ${htAaben?`<div class="list" style="margin-top:6px">${l.map(x=>`<div class="item"><div class="grow"><b>${esc(x.navn)}</b>${x.tilbud.map(t=>`<div class="amt">${esc(t.k)} · ${esc(t.o)}${t.m?` · ${esc(t.m)}`:""} · <b>${esc(tPris(t.p))}</b>${t.ep!=null&&t.pr?` (${esc(String(t.ep).replace(".",","))} kr/${esc(t.pr)})`:""} · til ${d(t)}</div>`).join("")}</div><button class="btn ghost lille" data-htl="${esc(x.navn)}">På listen</button></div>`).join("")}</div>`:""}`;
+  document.getElementById("htKnap").onclick=()=>{htAaben=!htAaben;renderHyldeTilbud();planHoejde()};
+  el.querySelectorAll("[data-htl]").forEach(b=>b.onclick=()=>{
+    const navn=b.dataset.htl,t=l.find(x=>x.navn===navn)?.tilbud[0];
+    if(!st.ekstraIndkob.some(x=>!x.done&&x.navn.toLowerCase()===navn.toLowerCase()))st.ekstraIndkob.push({navn,maengde:t&&t.m||"",kat:gaetAfd(navn)});
+    changed();toast(navn+" er sat på indkøbslisten");
+  });
+}
 /* Skalering: en række, der skal stå på én linje, skrumper som helhed – tekst, knapper, pile og prikker – hvis den
    ikke kan være der, i stedet for at forkorte teksten. Rækkens mål skal være i em. Under min forkortes som sidste udvej. */
 function tilpasRaekke(el,min=.7){
@@ -1799,28 +1981,30 @@ function renderHylde(){
   /* ikonet med et lille ord ovenover; ordet skrumper, hvis det er langt, så det kan stå inden for ikonets bredde */
   const ordMaal=(t,fo)=>{const c=ordMaal.c||(ordMaal.c=document.createElement("canvas").getContext("2d"));c.font=`600 ${fo}px ${getComputedStyle(document.body).fontFamily}`;return c.measureText(t).width};
   const bredde=(v,s,fo)=>Math.min(Math.max(s+4,Math.ceil(ordMaal(v.ord,fo))+6),Math.max(s+4,74));
-  const ikon=(v,s,fo)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
+  const ikon=(v,s,fo)=>`<button class="hvare ${v.tom?"tom":frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${v.tom?"løbet tør – står på indkøbslisten":esc(tilbageTekst(v))+", "+esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
+  /* Ikonernes størrelse regnes altid ud fra hele skabet, så de er lige store i overblikket og i de enkelte skabe –
+     de skaleres ikke efter, hvor fyldt det enkelte skab er */
+  const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20,fast=21;
+  /* rækker på en hylde: varerne lægges ved siden af hinanden, som flex-wrap gør */
+  const raekker=(vs,s,fo)=>{let r=1,x=0;for(const v of vs){const w=bredde(v,s,fo);if(x&&x+2+w>B){r++;x=w}else x+=(x?2:0)+w}return r};
+  let s=50,fo,rh,rk;
+  for(;;s-=2){fo=Math.max(8.5,Math.min(11,Math.round(s*.22*2)/2));rh=s+Math.ceil(fo*1.2)+4;rk=grp.map(vs=>raekker(vs,s,fo));if(s<=14||rk.reduce((a,r)=>a+fast+r*rh,0)<=plads)break}
   if(side==="alle"){
     /* afdelingens navn står på hyldekanten under varerne, som prisskiltene i butikken */
-    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20,fast=21;
-    /* rækker på en hylde: varerne lægges ved siden af hinanden, som flex-wrap gør */
-    const raekker=(vs,s,fo)=>{let r=1,x=0;for(const v of vs){const w=bredde(v,s,fo);if(x&&x+2+w>B){r++;x=w}else x+=(x?2:0)+w}return r};
-    let s=50,fo,rh,rk;
-    for(;;s-=2){fo=Math.max(8.5,Math.min(11,Math.round(s*.22*2)/2));rh=s+Math.ceil(fo*1.2)+4;rk=grp.map(vs=>raekker(vs,s,fo));if(s<=14||rk.reduce((a,r)=>a+fast+r*rh,0)<=plads)break}
     const ekstra=Math.max(0,plads-rk.reduce((a,r)=>a+fast+r*rh,0))/afd.length;
     indre.innerHTML=afd.map((a,i)=>`<div class="hylderum" style="height:${Math.floor(fast+rk[i]*rh+ekstra)}px"><div class="hyldevarer">${grp[i].map(v=>ikon(v,s,fo)).join("")}</div><div class="hyldebraet skilt"><span>${esc(afdNavn(a))}</span></div></div>`).join("");
   }else{
-    /* Én afdeling: større kort med navn, hvor meget der er tilbage, og holdbarhed */
-    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24;let kol=2,kw,kh;
-    for(kol=2;kol<=6;kol++){kw=(B-(kol-1)*8)/kol;kh=Math.min(150,kw*1.2);if(Math.ceil(vs.length/kol)*(kh+8)<=Hi)break}
-    kol=Math.min(kol,6);
-    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
+    /* Én afdeling: varerne står på hylder oppefra i samme størrelse som i overblikket */
+    const vs=varer.filter(v=>v.afd===side),rkE=[];let r=[],x=0;
+    for(const v of vs){const w=bredde(v,s,fo);if(r.length&&x+2+w>B){rkE.push(r);r=[v];x=w}else{x+=(r.length?2:0)+w;r.push(v)}}
+    if(r.length)rkE.push(r);
+    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span>${rkE.map(rr=>`<div class="hylderaekke" style="height:${rh+12}px"><div class="hyldevarer">${rr.map(v=>ikon(v,s,fo)).join("")}</div><div class="hyldebraet"></div></div>`).join("")}</div>`;
   }
   anvendZoom();
   indre.querySelectorAll("[data-hv]").forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     if(skabKlikVaek){skabKlikVaek=false;return}
-    if(skabVaelg){const k=b.dataset.hv;skabVaelg.has(k)?skabVaelg.delete(k):skabVaelg.add(k);renderHylde();return}
+    if(skabVaelg){if(b.classList.contains("tom"))return;const k=b.dataset.hv;skabVaelg.has(k)?skabVaelg.delete(k):skabVaelg.add(k);renderHylde();return}
     if(hyldeValgt!==b.dataset.hv)holdbarSend();
     hyldeValgt=hyldeValgt===b.dataset.hv?null:b.dataset.hv;renderHylde();
   });
@@ -1833,6 +2017,20 @@ function renderHyldeInfo(varer){
   if(skabVaelg){info.hidden=true;return}
   const v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
   if(!v)return;
+  if(v.tom){
+    const fb=forbrugTekst(v.primaer);
+    info.innerHTML=`<div class="hi-top"><span class="hi-ik" style="opacity:.5">${v.em}</span><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
+      <p class="muted" style="margin:6px 0 0">Primærvare – der er ikke flere. Den står på indkøbslisten${fb?`, og der købes nok til jeres faste forbrug (${esc(fb)})`:""}.</p>
+      <div class="hi-knapper"><button class="btn lille" id="hvIgen">Vi har den igen</button></div>`;
+    document.getElementById("hvLuk").onclick=()=>{hyldeValgt=null;renderHylde()};
+    document.getElementById("hvIgen").onclick=()=>{
+      const k=primaerKey(v.primaer),pr=forbrugPrDag(v.primaer);
+      if(k)skabLaeg(k,pr?Math.max(P[k].pk,Math.ceil(pr*dageMellemIndkob()/P[k].pk)*P[k].pk):P[k].pk);
+      else{friLaeg(v.navn);if(pr){const f=st.fri.find(y=>y.navn.toLowerCase()===renNavn(v.navn).toLowerCase());if(f)f.antal=Math.ceil(pr*dageMellemIndkob())}}
+      hyldeValgt=null;changed();toast(v.navn+" er lagt i skabet");
+    };
+    return;
+  }
   const trin=v.dage>21?7:1;
   const evAaben=emojiAaben===hyldeValgt;
   info.innerHTML=`<div class="hi-top"><button class="hi-ik" id="hvEmoji" aria-expanded="${evAaben}" aria-label="Vælg en anden emoji til ${esc(v.navn)}">${v.em}</button><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
@@ -2035,8 +2233,8 @@ function skabBladre(d){
     const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
     if(g.type==="?"){
       if(Math.hypot(dx,dy)<10)return;
-      /* starter man på en vare, flyttes den – uanset retning; på en tom plads bladrer eller panorerer man */
-      if(g.ikon){
+      /* starter man på en vare, flyttes den – uanset retning; på en tom plads (eller en primærvare, der er sluppet op) bladrer eller panorerer man */
+      if(g.ikon&&!g.ikon.classList.contains("tom")){
         g.type="traek";window.getSelection&&window.getSelection().removeAllRanges();spoeg=document.createElement("div");spoeg.className="traekspoeg";
         const flere=skabVaelg&&skabVaelg.has(g.ikon.dataset.hv)?skabVaelg.size:1;
         spoeg.innerHTML=esc(g.ikon.querySelector(".hk-ik,.hv-em")?.textContent||g.ikon.textContent)+(flere>1?`<b class="ts-antal">${flere}</b>`:"");
@@ -2849,6 +3047,15 @@ function traekFra(skab,fri,b){
 function afvikl(){
   const t0=todayIso();let aendret=false;
   for(const f of st.fast){if(f.dato>=t0||f.afviklet)continue;for(const b of retBehov(f))traekFra(st.skab,st.fri,b);f.afviklet=true;aendret=true}
+  /* Primærvarer med fast forbrug (fx 3 æg om dagen) trækkes fra én gang om dagen */
+  const sidst=st.forbrugDato||t0,dage=Math.round((new Date(t0+"T12:00:00")-new Date(sidst+"T12:00:00"))/864e5);
+  if(dage>0)for(const navn of hyldeAf().primaer){
+    const pr=forbrugPrDag(navn);if(!pr)continue;const fd=primaerFind(navn);if(!fd)continue;
+    if(fd.k){const y=st.skab[fd.k];y.amt-=pr*dage;if(y.amt<=1e-6)delete st.skab[fd.k]}
+    else{const f=st.fri[fd.fi];if(f.antal==null)f.antal=Math.ceil(pr*dageMellemIndkob());f.antal-=pr*dage;if(f.antal<=1e-6)st.fri.splice(fd.fi,1)}
+    aendret=true;
+  }
+  if(st.forbrugDato!==t0){st.forbrugDato=t0;aendret=true}
   return aendret;
 }
 /* Hvad er der tilbage i skabet på dagen "til", når planen indtil da er spist? */
@@ -3283,6 +3490,7 @@ function renderStrip(p){
   el.querySelectorAll("[data-uge]").forEach(b=>b.onclick=()=>{ugeVis=+b.dataset.uge;renderStrip(last)});
   /* felterne er kun til at se; et tryk går videre til næste uge (og tilbage til denne efter den sidste) */
   el.querySelector(".ugestribe").onclick=()=>{ugeVis=ugeVis>=sidste?0:ugeVis+1;renderStrip(last)};
+  renderHyldeTilbud();
   planHoejde();
 }
 /* Knapperne "Planlæg" fylder fra ugeoversigten og ned */
@@ -3295,6 +3503,7 @@ function planHoejde(){
   const over=document.documentElement.scrollHeight-innerHeight;if(over>0)k.style.height=Math.max(150,parseFloat(k.style.height)-over)+"px";
 }
 function renderPref(){
+  renderAltid();
   const aw=document.getElementById("allergiWrap"),a=st.settings.allergier||{};
   aw.innerHTML=`<h2>Allergier</h2><p class="muted" style="margin:0">Tryk på det, nogen i husstanden ikke tåler. Retter med det – også spor af det – bliver aldrig foreslået.</p>${allergiChips(a,"data-allergi")}<p class="muted" style="font-size:.8rem;margin:8px 0 0">${esc(ALLERGI_NOTE)}</p>`;
   aw.querySelectorAll("[data-allergi]").forEach(b=>b.onclick=()=>{const id=b.dataset.allergi;st.settings.allergier={...a,[id]:!a[id]};if(!st.settings.allergier[id])delete st.settings.allergier[id];changed()});
@@ -3316,13 +3525,167 @@ async function setupScan(){
   let caps=null; if(sample){try{caps=await sample.limits()}catch(e){caps=null}}
   if(!caps||!caps.images){lab.style.display="none";note.textContent="Scanning virker, når der er en API-nøgle under Præferencer.";return}
   /* accept forbliver "image/*": en liste med bestemte billedtyper får iPhone til at skjule kameraet. Billedet laves alligevel om til JPEG. */
-  lab.style.display="flex";note.textContent="Tag et billede af kvitteringen – eller af skabet, køleskabet eller fryseren, så kan appen se, hvad I har.";
+  lab.style.display="flex";scanNote();
 }
-/* Kameraet og albummet (og forslaget efter indkøb) bruger samme scanning */
-document.addEventListener("change",e=>{
-  if(!e.target.classList||!e.target.classList.contains("scanFil"))return;
-  const f=e.target.files&&e.target.files[0];e.target.value="";if(f)scanKvittering(f);
+/* ---------- Billeder og video af skabet ----------
+   Billederne samles i en bunke – flere i træk med kameraet, mange fra albummet, en video eller en optagelse med tale –
+   og sendes samlet til Claude. Claude finder først varerne på hvert billede og tæller så hver fysiske vare én gang, også
+   når den ses på flere billeder. "Det, vi smider ud" trækker varerne fra skabet i stedet for at lægge dem i.
+   Ét billede alene går som før: kvittering eller skab. Claude kan ikke høre video, så lyd kommer kun med fra "Optag med
+   lyd", hvor telefonen skriver talen ned undervejs. */
+let bunke={filer:[],tale:"",video:false,ret:"ind"};
+const BUNKE_MAKS=30;
+function scanNote(){const n=document.getElementById("scanNote");if(n)n.textContent=bunke.ret==="ud"?"Stil det, I smider ud, frem, og tag billeder af det. Så trækkes det fra skabet.":"Tag så mange billeder, I vil – af kvitteringen, skabet, køleskabet eller fryseren. Ses en vare på flere billeder, tælles den kun én gang."}
+function bunkeTilfoej(filer,fraVideo){
+  for(const f of filer){if(bunke.filer.length>=BUNKE_MAKS){toast(`Højst ${BUNKE_MAKS} billeder ad gangen`);break}bunke.filer.push({fil:f,url:URL.createObjectURL(f)})}
+  if(fraVideo)bunke.video=true;
+  document.getElementById("scanResult").innerHTML="";renderBunke();
+}
+function renderBunke(){
+  const el=document.getElementById("scanBunke");if(!el)return;
+  const n=bunke.filer.length;
+  el.innerHTML=!n?"":`<div class="bunke">${bunke.filer.map((b,i)=>`<span class="bk"><img src="${b.url}" alt="Billede ${i+1}"><button class="x" data-bk="${i}" aria-label="Fjern billede ${i+1}">×</button></span>`).join("")}</div>
+    ${bunke.tale?`<p class="muted" style="margin:8px 0 0;font-size:.85rem">🎙️ "${esc(bunke.tale.length>220?bunke.tale.slice(0,220)+"…":bunke.tale)}"</p>`:""}
+    <div style="display:flex;gap:8px;align-items:center;margin-top:10px"><button class="btn ghost lille" id="bunkeRyd">Ryd</button><span style="flex:1"></span><button class="btn" id="bunkeFind">${bunke.ret==="ud"?"Find det, I smider ud":"Find varerne"} (${n})</button></div>`;
+  el.querySelectorAll("[data-bk]").forEach(b=>b.onclick=()=>{const x=bunke.filer.splice(+b.dataset.bk,1)[0];if(!bunke.filer.length)bunkeRyd();else renderBunke();if(x)URL.revokeObjectURL(x.url)});
+  const r=document.getElementById("bunkeRyd");if(r)r.onclick=bunkeRyd;
+  const f=document.getElementById("bunkeFind");if(f)f.onclick=bunkeFind;
+}
+/* billederne fjernes fra skærmen, før deres adresser frigives */
+function bunkeRyd(){const gl=bunke.filer;bunke={filer:[],tale:"",video:false,ret:bunke.ret};renderBunke();for(const b of gl)URL.revokeObjectURL(b.url)}
+async function bunkeFind(){
+  const filer=bunke.filer.map(b=>b.fil),{tale,video,ret}=bunke;
+  if(!filer.length)return;
+  bunkeRyd();
+  if(ret==="ud"){await scanSmidUd(filer,tale);return}
+  if(filer.length===1&&!tale&&!video){scanKvittering(filer[0]);return}
+  await scanSkabFlere(filer,tale,video);
+}
+document.querySelectorAll("#scanRetning [data-ret]").forEach(b=>b.onclick=()=>{
+  bunke.ret=b.dataset.ret;document.querySelectorAll("#scanRetning [data-ret]").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.getElementById("scanResult").innerHTML="";scanNote();renderBunke();
 });
+/* Kameraet og albummet lægger billeder i bunken. Forslaget om kvitteringen efter et indkøb scanner med det samme. */
+document.addEventListener("change",e=>{
+  if(!e.target.classList)return;
+  if(e.target.classList.contains("scanFil")){
+    const filer=[...(e.target.files||[])],iKvit=!!e.target.closest("#kvitForslag");e.target.value="";
+    if(!filer.length)return;
+    if(iKvit){scanKvittering(filer[0]);return}
+    bunkeTilfoej(filer);
+  }else if(e.target.classList.contains("scanVideo")){
+    const f=e.target.files&&e.target.files[0];e.target.value="";if(f)videoTilBunke(f);
+  }
+});
+/* En video bliver til et billede hvert halvandet sekund (højst 20) */
+async function videoBilleder(fil,maks=20){
+  const url=URL.createObjectURL(fil),v=document.createElement("video");
+  v.muted=true;v.playsInline=true;v.preload="auto";v.src=url;
+  try{
+    await new Promise((ok,nej)=>{v.onloadeddata=ok;v.onerror=()=>nej(new Error("video"))});
+    let d=v.duration;
+    if(!isFinite(d)){await new Promise(ok=>{v.onseeked=ok;v.currentTime=1e7});d=isFinite(v.duration)?v.duration:v.currentTime}
+    const n=Math.max(1,Math.min(maks,Math.round(d/1.5))),sk=Math.min(1,1600/Math.max(v.videoWidth,v.videoHeight));
+    const c=document.createElement("canvas");c.width=Math.round(v.videoWidth*sk);c.height=Math.round(v.videoHeight*sk);
+    const ud=[];
+    for(let i=0;i<n;i++){
+      await new Promise(ok=>{v.onseeked=ok;v.currentTime=Math.min(Math.max(0,d-.05),(i+.5)*d/n)});
+      c.getContext("2d").drawImage(v,0,0,c.width,c.height);
+      const b=await new Promise(ok=>c.toBlob(ok,"image/jpeg",.8));if(b)ud.push(b);
+    }
+    return ud;
+  }finally{URL.revokeObjectURL(url)}
+}
+async function videoTilBunke(f){
+  const out=document.getElementById("scanResult");out.innerHTML=`<p class="muted">${tanke("Henter billeder fra videoen")}</p>`;
+  try{const b=await videoBilleder(f);out.innerHTML="";if(!b.length)throw new Error("tom");bunkeTilfoej(b,true);toast(`${b.length} billeder fra videoen. Lyden kommer ikke med – brug "Optag med lyd" til det.`)}
+  catch(e){out.innerHTML=`<p class="bad">Videoen kunne ikke læses. Prøv "Optag med lyd" i stedet.</p>`}
+}
+/* Optag skabet: kameraet tager et billede hvert halvandet sekund, og telefonen skriver det ned, man siger */
+async function optagSkab(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast("Telefonen kan ikke optage her – tag billeder i stedet");return}
+  let strm;
+  try{strm=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false})}catch(e){toast("Kameraet kunne ikke åbnes");return}
+  const lag=document.createElement("div");lag.className="optaglag";
+  lag.innerHTML=`<video autoplay playsinline muted></video><div class="optagbund"><p class="optagtale" aria-live="polite">Gå langsomt hen over hylderne, og sig gerne, hvad der står – fx "tre dåser tomater, ketchuppen er næsten tom".</p><div class="optagknapper"><span class="optagtid">0:00 · 0 billeder</span><button class="btn" id="optagStop">Stop</button></div></div>`;
+  document.body.appendChild(lag);
+  const v=lag.querySelector("video");v.srcObject=strm;
+  const frames=[],c=document.createElement("canvas"),t0=Date.now();let tale="",midl="",stop=false,venter=0;
+  const tag=()=>{if(!v.videoWidth||frames.length+venter>=BUNKE_MAKS)return;const sk=Math.min(1,1600/Math.max(v.videoWidth,v.videoHeight));c.width=Math.round(v.videoWidth*sk);c.height=Math.round(v.videoHeight*sk);c.getContext("2d").drawImage(v,0,0,c.width,c.height);venter++;c.toBlob(b=>{venter--;if(b)frames.push(b)},"image/jpeg",.8)};
+  const iv=setInterval(()=>{tag();const sek=Math.round((Date.now()-t0)/1000);lag.querySelector(".optagtid").textContent=`${Math.floor(sek/60)}:${String(sek%60).padStart(2,"0")} · ${frames.length} billeder`},1500);
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let sr=null;
+  if(SR){try{
+    sr=new SR();sr.lang="da-DK";sr.continuous=true;sr.interimResults=true;
+    sr.onresult=e=>{midl="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)tale+=r[0].transcript+" ";else midl+=r[0].transcript}lag.querySelector(".optagtale").textContent=(tale+midl).trim()||"…"};
+    sr.onend=()=>{if(!stop)try{sr.start()}catch(e){}};
+    sr.start();
+  }catch(e){sr=null}}
+  await new Promise(ok=>{lag.querySelector("#optagStop").onclick=ok});
+  stop=true;clearInterval(iv);tag();if(sr)try{sr.stop()}catch(e){}
+  strm.getTracks().forEach(t=>t.stop());
+  for(let i=0;i<20&&venter>0;i++)await new Promise(r=>setTimeout(r,50));
+  lag.remove();
+  bunke.tale=(bunke.tale+" "+tale+midl).trim();
+  if(frames.length)bunkeTilfoej(frames,true);else toast("Der kom ingen billeder med");
+}
+document.getElementById("scanOptag").onclick=optagSkab;
+/* Mange billeder af skabet: find varerne på hvert billede, og tæl hver fysiske vare én gang */
+async function scanSkabFlere(filer,tale,video){
+  const out=document.getElementById("scanResult");
+  out.innerHTML=`<p class="muted">${tanke(`Kigger på ${filer.length} billeder`)}<br>Det kan tage et par minutter.</p>`;
+  const catalog=Object.entries(P).map(([k,p])=>({k,navn:p.n,pakke:p.pk,enhed:p.e}));
+  const prompt=`Billederne (${filer.length}) er taget af et skab, køleskab, en fryser, et spisekammer eller hylder med madvarer${video?" – de er taget fra en video, så de samme varer ses på mange billeder":""}.${tale?`\nBrugeren har sagt undervejs (brug det til at genkende varer og mængder): «${tale}»`:""}
+Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
+Arbejd i to trin:
+1. Gå billederne igennem ét ad gangen, og find hver vare, du med sikkerhed kan genkende.
+2. Saml listen: den SAMME fysiske vare, der ses på flere billeder (fordi billederne overlapper, eller skabet er filmet), tælles kun én gang. Afgør det ud fra placering, mærke, størrelse, og hvor fyldt den er. Står der reelt flere ens varer, fx 4 flasker ketchup side om side på samme billede, tælles de alle.
+GÆT ALDRIG: kan en pakke, dåse, krukke eller pose ikke kendes uden at læse mærkaten, og kan mærkaten ikke læses på nogen af billederne, så læg den i "usikre" med "hvad" som en meget kort beskrivelse på højst 5 ord. "maengde" er i katalogets enhed: tæl de stykker, du kan se, eller læs vægten/rumfanget på mærkaten; kan det ikke ses, så null. Varer, der ikke findes i kataloget, men som du med sikkerhed kan genkende, lægges i "andet" med et almindeligt dansk navn og "niveau" (hel, noget eller lidt). "raad": er mange billeder for mørke eller uskarpe, så et kort råd på højst 8 ord; ellers "".
+Returnér KUN JSON: {"varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde","billeder":[numre]}],"andet":[{"navn","niveau","billeder":[numre]}],"usikre":[{"hvad"}],"set_igen":antal varer, der blev set på flere billeder og kun talt én gang,"raad":tekst}`;
+  try{
+    const r=await sample.json(prompt,{images:filer,modelTier:"default",hvad:"billede"});
+    visSkabBillede({...r,type:"skab"},out,{billeder:filer.length,setIgen:+r.set_igen||0});
+  }catch(err){out.innerHTML=`<p class="bad">Billederne kunne ikke læses. ${esc(fejlTekst(err))}</p>`}
+}
+/* Billeder af det, der smides ud: matches med skabet og trækkes fra */
+async function scanSmidUd(filer,tale){
+  const out=document.getElementById("scanResult");
+  out.innerHTML=`<p class="muted">${tanke("Finder det, I smider ud")}<br>Det kan tage op til et par minutter.</p>`;
+  const skab=Object.entries(st.skab).filter(([k])=>P[k]).map(([k,v])=>`${k}: ${P[k].n} (${fmt(k,v.amt)})`).join("; ")||"intet";
+  const fri=st.fri.map(f=>f.navn).join("; ")||"intet";
+  const prompt=`Billederne (${filer.length}) viser varer, som husstanden smider ud – fx stillet frem på bordet, mens skabet ryddes op.${tale?`\nBrugeren har sagt undervejs: «${tale}»`:""}
+Find hver vare, du med sikkerhed kan genkende. Den samme fysiske vare på flere billeder tælles kun én gang. Gæt aldrig.
+Match hver vare til det, der står i skabet nu.
+Varer med nøgle (nøgle: navn (mængde)): ${skab}
+Fri varer: ${fri}
+Returnér KUN JSON: {"varer":[{"k": nøglen fra skabet eller null,"fri": navnet på den fri vare præcis som ovenfor eller null,"navn": "det du ser","maengde": hvor meget der smides ud i katalogets enhed, eller null hvis det hele}],"usikre":[{"hvad"}]}`;
+  try{const r=await sample.json(prompt,{images:filer,modelTier:"default",hvad:"billede"});visSmidUd(r,out,filer.length)}
+  catch(err){out.innerHTML=`<p class="bad">Billederne kunne ikke læses. ${esc(fejlTekst(err))}</p>`}
+}
+function visSmidUd(r,out,nB){
+  const lav=x=>String(x||"").toLowerCase().trim();
+  const l=(r.varer||[]).map(v=>{const k=v&&v.k&&st.skab[v.k]&&P[v.k]?v.k:null,f=!k&&v&&v.fri?st.fri.find(y=>lav(y.navn)===lav(v.fri)):null;return {k,f,navn:k?P[k].n.replace(/ \(løs\)/,""):f?f.navn:String(v&&v.navn||""),maengde:v&&v.maengde>0?+v.maengde:null,on:true}}).filter(x=>x.navn.trim());
+  const i=l.filter(x=>x.k||x.f),ikke=l.filter(x=>!x.k&&!x.f),usikre=(r.usikre||[]).filter(x=>x&&x.hvad);
+  const hvorMeget=x=>x.k&&x.maengde&&x.maengde<st.skab[x.k].amt?`${fmt(x.k,x.maengde)} af ${fmt(x.k,st.skab[x.k].amt)}`:"det hele";
+  let h=`<div class="genkendt"><b>${i.length} ${i.length===1?"vare":"varer"} fra skabet smides ud</b></div><p class="muted" style="margin:2px 0 0;font-size:.85rem">${nB} ${nB===1?"billede":"billeder"}. Fjern fluebenet ved det, der ikke skal trækkes fra.</p>`;
+  h+=i.map(x=>`<label class="scanrow"><input type="checkbox" data-ud="${l.indexOf(x)}" checked><div class="grow">${esc(x.navn)}<div class="amt muted">${esc(hvorMeget(x))}</div></div></label>`).join("");
+  if(ikke.length)h+=`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Står ikke i skabet: ${esc(ikke.map(x=>x.navn).join(", "))}</p>`;
+  if(usikre.length)h+=`<p class="muted" style="margin:4px 0 0;font-size:.85rem">Kunne ikke kendes: ${esc(usikre.map(x=>x.hvad).join(", "))}</p>`;
+  if(i.length)h+=`<button class="btn" id="scanUdOk" style="margin-top:10px">Træk fra skabet</button>`;
+  out.innerHTML=h;
+  out.querySelectorAll("[data-ud]").forEach(cb=>cb.onchange=()=>{l[+cb.dataset.ud].on=cb.checked});
+  const ok=document.getElementById("scanUdOk");
+  if(ok)ok.onclick=()=>{
+    let n=0;const vaek=[];
+    for(const x of l){
+      if(!x.on||(!x.k&&!x.f))continue;n++;
+      if(x.k){const y=st.skab[x.k];if(!y)continue;const rest=x.maengde?y.amt-x.maengde:0;if(rest>1e-6)st.skab[x.k]={...y,amt:Math.round(rest*100)/100};else delete st.skab[x.k]}
+      else vaek.push(x.f);
+      (st.spildLog=st.spildLog||[]).push({navn:x.navn,dato:todayIso(),hvordan:"smidt ud"});
+    }
+    st.fri=st.fri.filter(f=>!vaek.includes(f));st.spildLog=st.spildLog.slice(-200);
+    out.innerHTML="";changed();toast(`${n} ${n===1?"vare er":"varer er"} trukket fra skabet`);
+  };
+}
 async function scanKvittering(f){
   const out=document.getElementById("scanResult");
   if(!document.getElementById("t-skab").classList.contains("on")||skabMode!=="tilfoej"){show("t-skab");skabModeSaet("tilfoej")}
@@ -3372,7 +3735,7 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
 /* Billede af skabet: kun det, Claude med sikkerhed kunne genkende, kommer med. Det, der allerede er i skabet, er
    fravalgt fra start ("4 ting er fravalgt, da de allerede er i dit skab – Ændr"); sætter man flueben ved en af dem,
    har man den to gange, og den lægges til. Det, der ikke kunne kendes, står under "Se mere" som en kort punktliste. */
-function visSkabBillede(r,out){
+function visSkabBillede(r,out,info){
   const lav=x=>String(x||"").toLowerCase().trim(),pNavn=k=>P[k].n.replace(/ \(løs\)/,"");
   const harNavn=n=>st.fri.some(f=>lav(f.navn)===lav(n))||Object.keys(st.skab).some(k=>P[k]&&lav(pNavn(k))===lav(n));
   const varer=(r.varer||[]).filter(v=>v&&P[v.k]).map(v=>({k:v.k,navn:pNavn(v.k),hvor:String(v.hvor||""),maengde:v.maengde>0?+v.maengde:null}));
@@ -3384,6 +3747,7 @@ function visSkabBillede(r,out){
   const raekke=x=>`<label class="scanrow"><input type="checkbox" data-sx="${alle.indexOf(x)}" ${x.on?"checked":""}><div class="grow">${esc(x.navn)}<div class="amt muted">${x.type==="k"?(x.maengde?fmt(x.k,x.maengde):"mængden kunne ikke ses – regnes som 1 pakke"):(x.niveau==="hel"?"hel":x.niveau+" tilbage")}${x.hvor?" · "+esc(x.hvor):""}${x.findes?" · har I allerede":""}</div></div></label>`;
   let h=`<div class="genkendt"><b>Genkendte ${kendt}/${ialt} ting</b>${usikre.length?`<button class="x" id="seMere" aria-expanded="${!kendt}" aria-controls="ukendtListe">${kendt?"Se mere":"Skjul"}</button>`:""}</div>
     ${usikre.length?`<div class="ukendt" id="ukendtListe" ${kendt?"hidden":""}><p>Kunne ikke kendes:</p><ul>${usikre.map(x=>`<li>${esc(x.hvad||x.hvor)}</li>`).join("")}</ul><p class="muted">Tag et billede tættere på, så mærkaterne kan læses.</p></div>`:""}
+    ${info?`<p class="muted" style="margin:4px 0 0;font-size:.85rem">${info.billeder} billeder${info.setIgen>0?` · ${info.setIgen} ${info.setIgen===1?"vare blev":"varer blev"} set på flere billeder og talt én gang`:""}</p>`:""}
     ${r.raad?`<p class="muted" style="margin:6px 0 0">${esc(r.raad)}</p>`:""}`;
   if(nye.length)h+=`<p class="muted" style="margin:8px 0 0;font-size:.85rem">Fjern fluebenet ved det, der er forkert.</p>${nye.map(raekke).join("")}`;
   if(gamle.length)h+=`<div class="fravalgt"><span>${gamle.length} ting er fravalgt, da ${gamle.length===1?"den":"de"} allerede er i dit skab.</span><button class="x" id="aendrFravalgt" aria-expanded="false" aria-controls="fravalgtListe">Ændr</button></div>
@@ -4203,9 +4567,9 @@ function fejlTekst(e){
   return "Det gik ikke igennem. Prøv igen om lidt.";
 }
 /* Telefonbilleder er ofte for store til API'et (5 MB). Skaler ned og send som JPEG. */
-async function billede64(fil){
+async function billede64(fil,maksSide=2400,maksPx=3.5e6){
   const img=await createImageBitmap(fil);
-  const s=Math.min(1,2400/Math.max(img.width,img.height),Math.sqrt(3.5e6/(img.width*img.height)));
+  const s=Math.min(1,maksSide/Math.max(img.width,img.height),Math.sqrt(maksPx/(img.width*img.height)));
   const c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
   c.getContext("2d").drawImage(img,0,0,c.width,c.height);
   return c.toDataURL("image/jpeg",0.85).split(",")[1];
@@ -4222,7 +4586,12 @@ function apiAdapter(){
       const key=noegle();if(!key)throw {code:"no_key"};
       const model=opt.modelTier==="default"?st.settings.modelScan:st.settings.modelHurtig;
       const content=[];
-      for(const f of [].concat(opt.images||[]))content.push({type:"image",source:{type:"base64",media_type:"image/jpeg",data:await billede64(f)}});
+      /* Mange billeder (fx 20 af skabet): hvert får et nummer, og de gøres lidt mindre, så kaldet ikke bliver for stort */
+      const billeder=[].concat(opt.images||[]),flere=billeder.length>1;
+      for(let i=0;i<billeder.length;i++){
+        if(flere)content.push({type:"text",text:`Billede ${i+1}:`});
+        content.push({type:"image",source:{type:"base64",media_type:"image/jpeg",data:await billede64(billeder[i],flere?1600:2400,flere?2e6:3.5e6)}});
+      }
       content.push({type:"text",text:prompt});
       const body={model,max_tokens:16000,messages:[{role:"user",content}]};
       const headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
@@ -4377,7 +4746,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="59";
+const APP_VERSION="61";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
