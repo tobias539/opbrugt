@@ -34,7 +34,8 @@
   --felt:#25302B; --tilbud:#5C4B12; --tilbud-kant:#B8962E;
 }
 *{box-sizing:border-box}
-html,body{margin:0;overflow-x:hidden;overscroll-behavior:none}
+/* clip i stedet for hidden, hvor browseren kan: hidden gør body til sin egen rullecontainer, og så kan knapperne nederst ikke stå fast */
+html,body{margin:0;overflow-x:hidden;overflow-x:clip;overscroll-behavior:none}
 /* Siden ligger fast: den kan kun rulles op og ned, ikke skubbes til siden eller zoomes (undtagen reolen i skabet) */
 body{touch-action:pan-y}
 body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-text-size-adjust:100%;padding-bottom:calc(58px + env(safe-area-inset-bottom))}
@@ -133,7 +134,8 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 #t-pref.kunGuide > :not(#prefOpsat){display:none}
 /* Skærme: ét trin pr. skærm, der passer på telefonen; knapperne står nederst */
 .wiz.skaerm{display:flex;flex-direction:column;margin-top:0;min-height:calc(100vh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:calc(100dvh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
-.wiz.skaerm>.nav{margin-top:auto;padding-top:16px}
+/* Knapperne nederst står altid synligt lige over bundmenuen – også på små telefoner, hvor skærmen er højere end telefonen */
+.wiz.skaerm>.nav{margin:auto -16px -16px;padding:12px 16px 16px;position:sticky;bottom:calc(54px + env(safe-area-inset-bottom));background:var(--card);border-radius:0 0 18px 18px;box-shadow:0 -8px 12px -10px rgba(0,0,0,.18);z-index:2}
 .wiz.skaerm .nav .btn{padding:10px 14px}
 .skhead{display:flex;align-items:flex-start;gap:8px}.skhead h2{flex:1;min-width:0}.skhead .x{margin:-2px -8px 0 0}
 .skkrop{margin-top:12px}
@@ -231,7 +233,10 @@ body.medKurv .toast{bottom:calc(142px + env(safe-area-inset-bottom))}
 #t-skab.on{margin-bottom:-18px}
 .skabtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 6px}
 .prikker{display:flex;gap:6px}.prik{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);padding:0;cursor:pointer}.prik.on{background:var(--leaf)}
-.hylde{touch-action:none}
+.hylde{touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* Ingen tekstmarkering i skabet, når man trækker eller holder på varer (felter, man skriver i, virker stadig) */
+#skabSe,body.traekker{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#skabSe input{-webkit-user-select:text;user-select:text}
 .hyldeindre{transform-origin:0 0;height:100%;display:flex;flex-direction:column}
 .hyldeindre.ind-hoejre{animation:skabIndH .25s ease-out}.hyldeindre.ind-venstre{animation:skabIndV .25s ease-out}
 @keyframes skabIndH{from{transform:translateX(30%);opacity:.3}}@keyframes skabIndV{from{transform:translateX(-30%);opacity:.3}}
@@ -249,6 +254,16 @@ body.traekker .dropzone{border-color:var(--leaf)}
 .dropzone.over{transform:scale(1.4)!important;background:var(--leaf-soft);border-style:solid}
 .traekspoeg{position:fixed;left:0;top:0;font-size:44px;line-height:1;pointer-events:none;z-index:50;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .hi-top{display:flex;align-items:center;gap:10px}.hi-ik{font-size:2rem;line-height:1}
+button.hi-ik{border:1.5px dashed var(--line);background:transparent;border-radius:12px;padding:3px 5px;cursor:pointer;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+button.hi-ik[aria-expanded="true"]{border-style:solid;border-color:var(--leaf);background:var(--leaf-soft)}
+/* Vælg emoji til en vare */
+.emojivalg{border-top:1px solid var(--line);margin-top:10px;padding-top:8px}
+.ev-lbl{font-size:.8rem;font-weight:700;color:var(--muted);margin:6px 0 4px}
+.ev-rk{display:flex;flex-wrap:wrap;gap:4px}
+.ev{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;min-width:40px;height:40px;padding:0 4px;font-size:1.4rem;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:2px;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+.ev small{font-size:.7rem;color:var(--muted);font-family:var(--body)}
+.ev-egen{display:flex;gap:8px;margin-top:8px;align-items:center}
+.ev-egen input{flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit}
 .hi-raekke{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.88rem}.hi-lbl{width:5.6em;color:var(--muted);flex:none}.hi-bar{flex:1;width:auto}.hi-tal{white-space:nowrap}
 .hi-hold{flex:1}.hi-hold.rod{color:#c0392b;font-weight:700}.hi-hold.orange{color:#c46a12;font-weight:700}
 .hi-knapper{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
@@ -278,10 +293,15 @@ body.traekker .dzlag{display:flex}
 .hvare{border:0;background:transparent;padding:0;line-height:1;cursor:pointer;position:relative;display:flex;align-items:flex-end;justify-content:center;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .hvare.snart::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:var(--carrot)}
 .hvare.valgt{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
+/* Vælg flere: de valgte får et flueben, de andre bliver lidt svagere */
+.hvare.markeret{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
+.hvare.markeret::after{content:"✓";position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--leaf);color:#fff;font:700 12px/18px var(--body);text-align:center}
+.hylde.vaelger .hvare:not(.markeret){opacity:.7}
+.traekspoeg .ts-antal{position:absolute;top:-6px;right:-12px;background:var(--leaf);color:#fff;border-radius:999px;font:700 13px/20px var(--body);padding:0 7px}
 .hyldebraet{height:10px;margin:2px -8px 0;background:linear-gradient(#a98057,#7d5a35);box-shadow:0 3px 4px rgba(0,0,0,.25)}
 .hyldebraet.skilt{height:15px;display:flex;align-items:center;padding-left:14px}
 .hyldebraet.skilt span{font-family:var(--body);font-size:.62rem;font-weight:700;line-height:1;color:#fbf3e4;letter-spacing:.02em;text-shadow:0 1px 0 rgba(0,0,0,.3)}
-.hyldeinfo{position:absolute;left:8px;right:8px;bottom:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:7;display:flex;gap:12px;align-items:center}
+.hyldeinfo{position:absolute;left:8px;right:8px;bottom:8px;max-height:calc(100% - 16px);overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:7;display:flex;gap:12px;align-items:center}
 /* Kogebogen */
 #opskBog{display:flex;flex-direction:column;position:relative}
 .bogtop{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px}
@@ -574,7 +594,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
   <header class="top"><h1 id="h-skab">Skabet</h1></header>
   <div id="skabSe">
-    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><span class="prikker" id="skabPrikker"></span></div>
+    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><span class="prikker" id="skabPrikker"></span><button class="btn ghost lille" id="skabVaelgKnap" aria-pressed="false">Vælg</button></div>
     <p class="skabhint" id="skabForkl"></p>
     <div class="hylde" id="hylde"><div class="hyldeindre" id="hyldeIndre"></div></div>
     <div class="dzlag" id="dzLag"><button class="dropzone" data-dz="kurv" tabindex="-1"><span>🛒</span><small>Køb mere</small></button><button class="dropzone" data-dz="mund" tabindex="-1"><span>😋</span><small>Spist</small></button><button class="dropzone" data-dz="skrald" tabindex="-1"><span>🗑️</span><small>Smidt ud</small></button></div>
@@ -1145,7 +1165,10 @@ const VAREKAT=[
 const VARE_LISTE=VAREKAT.flatMap(k=>k.v.map(([navn,em,re,ord])=>({navn,em,re,ord,afd:k.afd,forslag:k.forslag!==false})));
 function vareFind(navn){const n=String(navn||"").toLowerCase(),h=n.split(",")[0].trim();return VARE_LISTE.find(x=>x.re.test(h))||VARE_LISTE.find(x=>x.re.test(n))}
 const AFD_EMOJI={gront:"🥬",kod:"🥩",mejeri:"🥛",ost:"🧀",brod:"🍞",paalaeg:"🥓",toer:"🥫",frost:"🧊",hus:"🧻",andet:"📦"};
-function vareEmoji(v){const x=vareFind(v.navn);return x?x.em:AFD_EMOJI[v.afd]||"📦"}
+function standardEmoji(v){const x=vareFind(v.navn);return x?x.em:AFD_EMOJI[v.afd]||"📦"}
+/* En emoji, man selv har valgt i skabet, går forud for listens */
+function emojiNoegle(navn){return String(navn||"").toLowerCase().trim()}
+function vareEmoji(v){return (st.emojiValg||{})[emojiNoegle(v.navn)]||standardEmoji(v)}
 /* Ét kort ord over varen på hylden: hovedordet i navnet ("Hakket oksekød 8-12 %" → "Oksekød"), uden mængder og
    beskrivende ord. Er det for langt, bruges listens korte navn ("Kyllingebrystfilet" → "Kylling"). */
 const ORD_SKIP=new Set("hakket hakkede revet revne finrevet frisk friske øko økologisk økologiske løs løse skåret skårne snittet snittede blandet blandede færdig færdige flåede røget røgede kogt kogte frosne frossen frosset hel hele små stor store lille mini rød røde grøn grønne gul gule hvid hvide sort sorte græsk græske let lette mager magre dansk danske tørret tørrede fersk ferske og med i til af på uden ekstra jomfru fin fine grov grove stk pk ca asiatisk asiatiske italiensk italienske mexicansk vegansk veganske vegetarisk cremet cremede saltet saltede sød søde marineret".split(" "));
@@ -1675,9 +1698,18 @@ function renderButikValg(F,G){
    bruges først, står forrest. Tryk på en vare for at se, hvor meget der er tilbage af det købte, og for at
    justere holdbarheden med en skyder. Træk en vare til munden (spist), skraldespanden (smidt ud) eller kurven
    (køb mere). Man kan zoome i reolen med to fingre. */
-let skabMode="se",skabSide=0,hyldeValgt=null,skabValg=null,skabKlikVaek=false;
+let skabMode="se",skabSide=0,hyldeValgt=null,skabValg=null,skabKlikVaek=false,emojiAaben=null,skabVaelg=null,skabGruppe=null;
 const zoom={s:1,x:0,y:0};
-function skabModeSaet(m){holdbarSend();skabMode=m;hyldeValgt=null;skabValg=null;renderSkab();window.scrollTo(0,0)}
+function skabModeSaet(m){holdbarSend();skabMode=m;hyldeValgt=null;skabValg=null;skabVaelg=null;renderSkab();window.scrollTo(0,0)}
+/* "Vælg": tryk på flere varer, og giv dem samme handling */
+document.getElementById("skabVaelgKnap").onclick=()=>{holdbarSend();skabVaelg=skabVaelg?null:new Set();skabGruppe=null;hyldeValgt=null;renderHylde()};
+/* Hold fingeren på en af de valgte: så åbner indstillingerne, og det, man ændrer, gælder dem alle */
+function skabHold(key){
+  if(!skabVaelg)return;
+  skabVaelg.add(key);skabGruppe=key;emojiAaben=null;
+  if(navigator.vibrate)navigator.vibrate(15);
+  renderHylde();
+}
 document.querySelectorAll("[data-skab]").forEach(b=>b.onclick=()=>skabModeSaet(b.dataset.skab));
 document.getElementById("skabTilfoejKnap").onclick=()=>skabModeSaet("tilfoej");
 /* Dage siden en dato */
@@ -1714,19 +1746,28 @@ function renderHylde(){
   document.getElementById("skabPrikker").innerHTML=sider.length>1?sider.map((a,i)=>`<button class="prik${i===skabSide?" on":""}" data-sside="${i}" aria-label="${a==="alle"?"Overblik":esc(afdNavn(a))}"></button>`).join(""):"";
   document.querySelectorAll("[data-sside]").forEach(b=>b.onclick=()=>{skabSide=+b.dataset.sside;zoom.s=1;zoom.x=zoom.y=0;hyldeValgt=null;renderHylde()});
   document.getElementById("skabNavn").textContent=side==="alle"?"Overblik":afdNavn(side);
-  document.getElementById("skabForkl").textContent=varer.length?"Træk en vare for at spise den, smide den ud eller købe mere":"";
+  /* væk med valgte varer, der ikke er i skabet længere */
+  if(skabVaelg)for(const k of [...skabVaelg])if(!varer.some(v=>hyldeNoegle(v)===k))skabVaelg.delete(k);
+  if(!varer.length)skabVaelg=null;
+  const vk=document.getElementById("skabVaelgKnap");vk.hidden=!varer.length;vk.textContent=skabVaelg?"Annullér":"Vælg";vk.setAttribute("aria-pressed",!!skabVaelg);
+  h.classList.toggle("vaelger",!!skabVaelg);
+  const mrk=v=>skabVaelg&&skabVaelg.has(hyldeNoegle(v))?" markeret":"";
+  document.getElementById("skabForkl").textContent=!varer.length?"":skabVaelg?"Tryk for at vælge. Hold fingeren på en af dem for at ændre dem alle":"Træk en vare for at spise den, smide den ud eller købe mere";
   if(!varer.length){h.style.height="";indre.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tryk på "+ Tilføj".</p>`;info.hidden=true;return}
   h.style.height="";
   const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+6;
   const H=Math.max(260,innerHeight-top-bund);h.style.height=H+"px";
+  /* Vælg-tilstand: bjælken nederst får sin egen plads, så den ikke dækker den nederste hylde */
+  let ekstraBund=0;
+  if(skabVaelg&&!(skabGruppe&&skabVaelg.has(skabGruppe))){renderHyldeInfo(varer);ekstraBund=document.getElementById("hyldeInfo").offsetHeight+8}
   const B=h.clientWidth-16,frisk=v=>friskKlasse(v.rest);
   /* ikonet med et lille ord ovenover; ordet skrumper, hvis det er langt, så det kan stå inden for ikonets bredde */
   const ordMaal=(t,fo)=>{const c=ordMaal.c||(ordMaal.c=document.createElement("canvas").getContext("2d"));c.font=`600 ${fo}px ${getComputedStyle(document.body).fontFamily}`;return c.measureText(t).width};
   const bredde=(v,s,fo)=>Math.min(Math.max(s+4,Math.ceil(ordMaal(v.ord,fo))+6),Math.max(s+4,74));
-  const ikon=(v,s,fo)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
+  const ikon=(v,s,fo)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
   if(side==="alle"){
     /* afdelingens navn står på hyldekanten under varerne, som prisskiltene i butikken */
-    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20,fast=21;
+    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20-ekstraBund,fast=21;
     /* rækker på en hylde: varerne lægges ved siden af hinanden, som flex-wrap gør */
     const raekker=(vs,s,fo)=>{let r=1,x=0;for(const v of vs){const w=bredde(v,s,fo);if(x&&x+2+w>B){r++;x=w}else x+=(x?2:0)+w}return r};
     let s=50,fo,rh,rk;
@@ -1735,31 +1776,53 @@ function renderHylde(){
     indre.innerHTML=afd.map((a,i)=>`<div class="hylderum" style="height:${Math.floor(fast+rk[i]*rh+ekstra)}px"><div class="hyldevarer">${grp[i].map(v=>ikon(v,s,fo)).join("")}</div><div class="hyldebraet skilt"><span>${esc(afdNavn(a))}</span></div></div>`).join("");
   }else{
     /* Én afdeling: større kort med navn, hvor meget der er tilbage, og holdbarhed */
-    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24;let kol=2,kw,kh;
+    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24-ekstraBund;let kol=2,kw,kh;
     for(kol=2;kol<=6;kol++){kw=(B-(kol-1)*8)/kol;kh=Math.min(150,kw*1.2);if(Math.ceil(vs.length/kol)*(kh+8)<=Hi)break}
     kol=Math.min(kol,6);
-    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
+    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20-ekstraBund}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
   }
   anvendZoom();
   indre.querySelectorAll("[data-hv]").forEach(b=>b.onclick=e=>{
     e.stopPropagation();
     if(skabKlikVaek){skabKlikVaek=false;return}
+    if(skabVaelg){const k=b.dataset.hv;skabVaelg.has(k)?skabVaelg.delete(k):skabVaelg.add(k);renderHylde();return}
     if(hyldeValgt!==b.dataset.hv)holdbarSend();
     hyldeValgt=hyldeValgt===b.dataset.hv?null:b.dataset.hv;renderHylde();
   });
   renderHyldeInfo(varer);
 }
 function renderHyldeInfo(varer){
-  const info=document.getElementById("hyldeInfo"),v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
+  const info=document.getElementById("hyldeInfo");
+  if(skabVaelg&&skabGruppe&&skabVaelg.has(skabGruppe)&&varer.some(x=>hyldeNoegle(x)===skabGruppe)){gruppeInfo(info,varer);return}
+  if(skabVaelg){
+    const side=skabSider(varer)[skabSide],synlige=side==="alle"?varer:varer.filter(v=>v.afd===side);
+    const valgte=varer.filter(x=>skabVaelg.has(hyldeNoegle(x))),n=valgte.length,alle=synlige.every(x=>skabVaelg.has(hyldeNoegle(x)));
+    info.hidden=false;
+    info.innerHTML=`<div class="hi-top"><b style="flex:1;min-width:0">${n?`${n} ${n===1?"vare":"varer"} valgt`:"Tryk på de varer, der skal med"}</b><button class="btn ghost lille" id="hvAlle">${alle?"Fravælg alle":"Vælg alle"}</button></div>
+      <div class="hi-knapper"><button class="btn ghost lille" data-flere="mund" ${n?"":"disabled"}>😋 Spist</button><button class="btn ghost lille" data-flere="skrald" ${n?"":"disabled"}>🗑️ Smidt ud</button><button class="btn ghost lille" data-flere="kurv" ${n?"":"disabled"}>🛒 Køb mere</button></div>`;
+    document.getElementById("hvAlle").onclick=()=>{for(const x of synlige)alle?skabVaelg.delete(hyldeNoegle(x)):skabVaelg.add(hyldeNoegle(x));renderHylde()};
+    info.querySelectorAll("[data-flere]").forEach(b=>b.onclick=()=>skabSlipFlere(valgte,b.dataset.flere));
+    return;
+  }
+  const v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
   if(!v)return;
   const trin=v.dage>21?7:1;
-  info.innerHTML=`<div class="hi-top"><span class="hi-ik">${v.em}</span><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
+  const evAaben=emojiAaben===hyldeValgt;
+  info.innerHTML=`<div class="hi-top"><button class="hi-ik" id="hvEmoji" aria-expanded="${evAaben}" aria-label="Vælg en anden emoji til ${esc(v.navn)}">${v.em}</button><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
+    ${evAaben?emojiValgHtml(v):""}
     <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><span class="hi-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hi-tal">${esc(tilbageTekst(v))}</span>${v.k?`<span class="step"><button data-rest="-1" aria-label="Mindre tilbage">−</button><button data-rest="1" aria-label="Mere tilbage">+</button></span>`:""}</div>
     ${v.k?"":`<div class="chips" style="margin:2px 0 0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${v.niveau===n}">${lb}</button>`).join("")}</div>`}
     <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold ${friskKlasse(v.rest)}" id="hiHold">${esc(holdTekst(v.rest))}</span></div>
     <input type="range" class="holdskyder" id="hiSkyder" min="0" max="${2*Math.max(1,v.rest??1)}" step="1" value="${Math.max(0,v.rest??0)}" aria-label="Juster holdbarheden">
     <div class="hi-knapper"><button class="btn ghost lille" data-slip="mund">😋 Spist</button><button class="btn ghost lille" data-slip="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-slip="kurv">🛒 Køb mere</button></div>`;
   document.getElementById("hvLuk").onclick=()=>{holdbarSend();hyldeValgt=null;renderHylde()};
+  document.getElementById("hvEmoji").onclick=()=>{emojiAaben=evAaben?null:hyldeValgt;renderHyldeInfo(skabVarer())};
+  info.querySelectorAll("[data-em]").forEach(b=>b.onclick=()=>emojiVaelg(v,b.dataset.em));
+  const evIn=document.getElementById("evIn");
+  if(evIn){
+    const brug=()=>{const e=foersteEmoji(evIn.value);if(!e){toast("Skriv en emoji, fx 🥕");return}emojiVaelg(v,e)};
+    document.getElementById("evOk").onclick=brug;evIn.onkeydown=e=>{if(e.key==="Enter")brug()};
+  }
   info.querySelectorAll("[data-slip]").forEach(b=>b.onclick=()=>skabSlip(v,b.dataset.slip));
   info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
   info.querySelectorAll("[data-rest]").forEach(b=>b.onclick=()=>{
@@ -1774,17 +1837,79 @@ function renderHyldeInfo(varer){
   sk.oninput=()=>{const n=+sk.value;hl.textContent=holdTekst(n);hl.className="hi-hold "+friskKlasse(n)};
   sk.onchange=()=>holdbarSaet(v,+sk.value);
 }
+/* ---------- Vælg emoji til en vare ----------
+   Tryk på emojien i boksen: først det, andre har valgt til samme vare, så forslag fra lignende varer og samme
+   afdeling, og til sidst et felt til sin egen. Valget gemmes på telefonen og sendes anonymt (kun varens navn og
+   emojien) til samme Google Apps Script som feedbacken, der tæller valgene sammen for alle. */
+let EMOJI_ANDRE={};
+const EMOJI_RE=(()=>{try{return [new RegExp("^(\\p{Extended_Pictographic}|\\p{Emoji_Component}|\u200d|\ufe0f)+$","u"),new RegExp("\\p{Extended_Pictographic}|\\p{Regional_Indicator}","u")]}catch(e){return null}})();
+function erEmoji(t){return !!t&&t.length<=16&&(EMOJI_RE?EMOJI_RE[0].test(t)&&EMOJI_RE[1].test(t):!/[a-zæøå0-9<>]/i.test(t))}
+/* Det første tegn (som én emoji, også sammensatte som 🧑‍🍳), hvis det er en emoji */
+function foersteEmoji(t){
+  t=String(t||"").trim();if(!t)return null;
+  const f=typeof Intl!=="undefined"&&Intl.Segmenter?[...new Intl.Segmenter("da",{granularity:"grapheme"}).segment(t)][0].segment:[...t][0];
+  return erEmoji(f)?f:null;
+}
+function emojiForslag(v){
+  const ord=v.navn.toLowerCase().split(/[^a-zæøå]+/).filter(w=>w.length>=4),ud=[];
+  const laeg=e=>{if(e&&e!==v.em&&!ud.includes(e))ud.push(e)};
+  /* lignende varer først, så samme afdeling, så afdelingernes egne */
+  for(const x of VARE_LISTE)if(ord.some(w=>x.re.test(w)||x.navn.toLowerCase().includes(w)))laeg(x.em);
+  for(const x of VARE_LISTE)if(x.afd===v.afd)laeg(x.em);
+  for(const e of Object.values(AFD_EMOJI))laeg(e);
+  return ud.slice(0,24);
+}
+function emojiValgHtml(v){
+  const n=emojiNoegle(v.navn),std=standardEmoji(v),eget=(st.emojiValg||{})[n];
+  const andre=Object.entries(EMOJI_ANDRE[n]||{}).filter(([e])=>e!==v.em&&erEmoji(e)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  return `<div class="emojivalg">
+    ${andre.length?`<div class="ev-lbl">Andre har valgt</div><div class="ev-rk">${andre.map(([e,k])=>`<button class="ev" data-em="${esc(e)}" aria-label="${esc(e)}, valgt ${k} ${k===1?"gang":"gange"}">${esc(e)}<small>${k}</small></button>`).join("")}</div>`:""}
+    <div class="ev-lbl">Forslag</div><div class="ev-rk">${emojiForslag(v).map(e=>`<button class="ev" data-em="${esc(e)}">${esc(e)}</button>`).join("")}</div>
+    <div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Eller skriv din egen" aria-label="Skriv en emoji" autocomplete="off"><button class="btn ghost lille" id="evOk">Brug</button></div>
+    ${eget?`<div class="ev-rk" style="margin-top:8px"><button class="btn ghost lille" data-em="${esc(std)}">Tilbage til ${esc(std)}</button></div>`:""}
+  </div>`;
+}
+function emojiVaelg(v,em){
+  const n=emojiNoegle(v.navn),std=standardEmoji(v);
+  st.emojiValg=st.emojiValg||{};
+  if(em===std)delete st.emojiValg[n];
+  else{
+    st.emojiValg[n]=em;(st.emojiKoe=st.emojiKoe||[]).push({vare:n,emoji:em});
+    const a=EMOJI_ANDRE[n]=EMOJI_ANDRE[n]||{};a[em]=(a[em]||0)+1;
+  }
+  emojiAaben=null;changed();emojiSend();toast(v.navn+" har fået "+em);
+}
+async function hentEmojis(){
+  if(!FEEDBACK_URL)return;
+  try{const j=await (await fetch(FEEDBACK_URL+"?type=emojis",{cache:"no-store"})).json();if(j&&j.emojis&&typeof j.emojis==="object")EMOJI_ANDRE=j.emojis}catch(e){}
+  emojiSend();
+}
+let emojiSender=false;
+async function emojiSend(){
+  if(!FEEDBACK_URL||emojiSender||!(st.emojiKoe||[]).length)return;
+  emojiSender=true;
+  try{
+    while(st.emojiKoe.length){
+      const r=await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify({type:"emoji",...st.emojiKoe[0]})}),j=await r.json().catch(()=>null);
+      /* afviser modtageren emojien, sendes den ikke igen */
+      if(j&&j.fejl==="ikke en emoji"){st.emojiKoe.shift();save();continue}
+      if(!r.ok||!j||!j.ok)break;
+      st.emojiKoe.shift();save();
+    }
+  }catch(e){}
+  emojiSender=false;
+}
 /* Skru holdbarheden op eller ned: gælder varen nu og bliver standard for varen fremover. Ændringen sendes
    anonymt som feedback, når man er færdig, så standarderne i appen kan rettes til. */
 let holdbarAendr={};
-function holdbarSaet(v,nyRest){
+function holdbarSaet(v,nyRest,stille){
   const nu=v.dage,ny=Math.max(0,nu-(v.rest??0)+nyRest),noegle=v.navn.toLowerCase();
   if(ny===nu)return;
   if(!holdbarAendr[noegle])holdbarAendr[noegle]={navn:v.navn,fra:nu};
   holdbarAendr[noegle].til=ny;
   if(v.k){st.skab[v.k]={...st.skab[v.k],dage:ny};(st.holdbarhed=st.holdbarhed||{})[v.k]=ny}
   else{st.fri[v.fi].dage=ny;(st.holdbarhedFri=st.holdbarhedFri||{})[noegle]=ny}
-  changed();
+  if(!stille)changed();
 }
 function holdbarSend(){
   const l=Object.values(holdbarAendr).filter(x=>x.til!==x.fra);holdbarAendr={};
@@ -1802,7 +1927,58 @@ function skabSlip(v,hvor){
   (st.spildLog=st.spildLog||[]).push({navn:v.navn,dato:todayIso(),hvordan:hvor==="skrald"?"smidt ud":"spist"});st.spildLog=st.spildLog.slice(-200);
   hyldeValgt=null;changed();toast(v.navn+(hvor==="skrald"?" er smidt ud":" er brugt op"));
 }
-/* Zoom (to fingre), panorering, swipe mellem afdelinger og træk-og-slip – alt sammen i reolen */
+/* Indstillinger for alle de valgte: hvor meget der er tilbage, holdbarheden, emojien og handlingerne */
+function gruppeInfo(info,varer){
+  const v=varer.find(x=>hyldeNoegle(x)===skabGruppe),valgte=varer.filter(x=>skabVaelg.has(hyldeNoegle(x))),n=valgte.length;
+  const evAaben=emojiAaben==="gruppe";
+  info.hidden=false;
+  info.innerHTML=`<div class="hi-top"><span class="hi-ik">${v.em}</span><b style="flex:1;min-width:0">${esc(v.navn)}${n>1?` <span class="muted" style="font-weight:400">+ ${n-1} ${n-1===1?"anden":"andre"}</span>`:""}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
+    <p class="muted" style="margin:2px 0 4px;font-size:.82rem">Det, du ændrer her, gælder ${n===1?"varen":`alle ${n} valgte`}.</p>
+    <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><div class="chips" style="margin:0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([k,lb])=>`<button class="chip lille" data-gniv="${k}">${lb}</button>`).join("")}</div></div>
+    <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold" id="hiHold">Uændret</span></div>
+    <input type="range" class="holdskyder" id="hiSkyder" min="-7" max="7" step="1" value="0" aria-label="Flyt holdbarheden for alle de valgte">
+    <div class="hi-raekke"><span class="hi-lbl">Emoji</span><button class="btn ghost lille" id="gEmoji" aria-expanded="${evAaben}">Skift for ${n===1?"varen":"alle"}</button></div>
+    ${evAaben?`<div class="emojivalg"><div class="ev-lbl">Forslag</div><div class="ev-rk">${emojiForslag(v).map(e=>`<button class="ev" data-gem="${esc(e)}">${esc(e)}</button>`).join("")}</div><div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Eller skriv din egen" aria-label="Skriv en emoji" autocomplete="off"><button class="btn ghost lille" id="evOk">Brug</button></div></div>`:""}
+    <div class="hi-knapper"><button class="btn ghost lille" data-flere="mund">😋 Spist</button><button class="btn ghost lille" data-flere="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-flere="kurv">🛒 Køb mere</button></div>`;
+  document.getElementById("hvLuk").onclick=()=>{holdbarSend();skabGruppe=null;emojiAaben=null;renderHylde()};
+  info.querySelectorAll("[data-flere]").forEach(b=>b.onclick=()=>{skabGruppe=null;skabSlipFlere(valgte,b.dataset.flere)});
+  /* Hel, noget eller lidt: varer med mængde sættes til en andel af det købte, fri varer til niveauet */
+  info.querySelectorAll("[data-gniv]").forEach(b=>b.onclick=()=>{
+    const niv=b.dataset.gniv,f={hel:1,noget:.55,lidt:.2}[niv];
+    for(const x of valgte){
+      if(x.k){const y=st.skab[x.k],koebt=Math.max(y.koebt||0,y.amt);st.skab[x.k]={...y,koebt,amt:P[x.k].e==="stk"?Math.max(.5,Math.round(koebt*f*2)/2):Math.round(koebt*f*100)/100}}
+      else st.fri[x.fi].niveau=niv;
+    }
+    changed();toast(`${n} ${n===1?"vare":"varer"}: ${b.textContent.toLowerCase()} tilbage`);
+  });
+  /* Holdbarheden flyttes lige meget for alle (fra en uge kortere til en uge længere) */
+  const sk=document.getElementById("hiSkyder"),hl=document.getElementById("hiHold");
+  const dageTekst=d=>d===0?"Uændret":`${d>0?"+":"−"}${Math.abs(d)} ${Math.abs(d)===1?"dag":"dage"} for ${n===1?"varen":"alle"}`;
+  sk.oninput=()=>{hl.textContent=dageTekst(+sk.value)};
+  sk.onchange=()=>{const d=+sk.value;if(!d)return;for(const x of valgte)holdbarSaet(x,Math.max(0,(x.rest??0)+d),true);changed();toast(dageTekst(d).replace(/ for .*/,"")+" holdbarhed for "+n+" "+(n===1?"vare":"varer"))};
+  /* Samme emoji til alle de valgte. Gemmes kun på telefonen – det er ikke et valg til én bestemt vare. */
+  document.getElementById("gEmoji").onclick=()=>{emojiAaben=evAaben?null:"gruppe";renderHyldeInfo(skabVarer())};
+  const saetEmoji=em=>{st.emojiValg=st.emojiValg||{};for(const x of valgte){const k=emojiNoegle(x.navn);if(em===standardEmoji(x))delete st.emojiValg[k];else st.emojiValg[k]=em}emojiAaben=null;changed();toast(`${n} ${n===1?"vare":"varer"} har fået ${em}`)};
+  info.querySelectorAll("[data-gem]").forEach(b=>b.onclick=()=>saetEmoji(b.dataset.gem));
+  const evIn=document.getElementById("evIn");
+  if(evIn){const brug=()=>{const e=foersteEmoji(evIn.value);if(!e){toast("Skriv en emoji, fx 🥕");return}saetEmoji(e)};document.getElementById("evOk").onclick=brug;evIn.onkeydown=e=>{if(e.key==="Enter")brug()}}
+}
+/* Samme handling for flere varer på én gang; derefter slutter vælg-tilstanden */
+function skabSlipFlere(vs,hvor){
+  if(!vs.length)return;
+  const n=vs.length,ord=n===1?"vare er":"varer er";
+  if(hvor==="kurv"){
+    for(const v of vs){const kat=v.k?afdOf(v.k):gaetAfd(v.navn);if(!st.ekstraIndkob.some(x=>!x.done&&!x.fastId&&x.navn.toLowerCase()===v.navn.toLowerCase()))st.ekstraIndkob.push({navn:v.navn,maengde:"",kat})}
+    skabVaelg=null;skabGruppe=null;changed();toast(`${n} ${ord} sat på indkøbslisten`);return;
+  }
+  /* fri varer fjernes efter, hvem de er – ikke efter plads, for pladserne flytter sig, når noget fjernes */
+  const fri=vs.filter(v=>!v.k).map(v=>st.fri[v.fi]);
+  for(const v of vs)if(v.k)delete st.skab[v.k];
+  st.fri=st.fri.filter(f=>!fri.includes(f));
+  st.spildLog=(st.spildLog||[]).concat(vs.map(v=>({navn:v.navn,dato:todayIso(),hvordan:hvor==="skrald"?"smidt ud":"spist"}))).slice(-200);
+  skabVaelg=null;skabGruppe=null;hyldeValgt=null;changed();toast(`${n} ${ord} ${hvor==="skrald"?"smidt ud":"brugt op"}`);
+}
+/* Zoom (to fingre), panorering og swipe mellem afdelinger (fra en tom plads) og træk-og-slip (fra en vare) – alt sammen i reolen */
 function anvendZoom(){
   const h=document.getElementById("hylde"),W=h.clientWidth,H=h.clientHeight;
   zoom.x=Math.min(0,Math.max(W-W*zoom.s,zoom.x));zoom.y=Math.min(0,Math.max(H-H*zoom.s,zoom.y));
@@ -1817,15 +1993,18 @@ function skabBladre(d){
   renderHylde();indre.classList.add(d>0?"ind-hoejre":"ind-venstre");
 }
 (()=>{
-  const h=document.getElementById("hylde"),pts=new Map();let g=null,spoeg=null,maalZone=null;
+  const h=document.getElementById("hylde"),pts=new Map();let g=null,spoeg=null,maalZone=null,holdTimer=null;
   const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
   const zoneVed=(x,y)=>{const el=document.elementFromPoint(x,y);return el&&el.closest("[data-dz]")};
   const stopTraek=()=>{if(spoeg){spoeg.remove();spoeg=null}document.body.classList.remove("traekker");document.querySelectorAll("[data-dz]").forEach(z=>z.classList.remove("over"));maalZone=null};
   h.addEventListener("pointerdown",e=>{
     pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    clearTimeout(holdTimer);
     if(pts.size===2){stopTraek();const [a,b]=[...pts.values()],r=h.getBoundingClientRect();g={type:"pinch",d0:dist(a,b)||1,s0:zoom.s,px:(a.x+b.x)/2-r.left,py:(a.y+b.y)/2-r.top,x0:zoom.x,y0:zoom.y};return}
     if(pts.size>2)return;
     g={type:"?",id:e.pointerId,x0:e.clientX,y0:e.clientY,t0:Date.now(),ikon:e.target.closest(".hvare"),zx:zoom.x,zy:zoom.y};
+    /* vælg-tilstand: holder man stille på en vare i et halvt sekund, åbner indstillingerne for alle de valgte */
+    if(skabVaelg&&g.ikon){const gg=g;holdTimer=setTimeout(()=>{if(g===gg&&g.type==="?"){g.type="hold";skabHold(gg.ikon.dataset.hv)}},500)}
   });
   window.addEventListener("pointermove",e=>{
     if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
@@ -1834,21 +2013,26 @@ function skabBladre(d){
     const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
     if(g.type==="?"){
       if(Math.hypot(dx,dy)<10)return;
-      if(g.ikon&&(Date.now()-g.t0>200||Math.abs(dy)>=Math.abs(dx))){
-        g.type="traek";spoeg=document.createElement("div");spoeg.className="traekspoeg";spoeg.textContent=g.ikon.querySelector(".hk-ik,.hv-em")?.textContent||g.ikon.textContent;document.body.appendChild(spoeg);document.body.classList.add("traekker");
+      /* starter man på en vare, flyttes den – uanset retning; på en tom plads bladrer eller panorerer man */
+      if(g.ikon){
+        g.type="traek";window.getSelection&&window.getSelection().removeAllRanges();spoeg=document.createElement("div");spoeg.className="traekspoeg";
+        const flere=skabVaelg&&skabVaelg.has(g.ikon.dataset.hv)?skabVaelg.size:1;
+        spoeg.innerHTML=esc(g.ikon.querySelector(".hk-ik,.hv-em")?.textContent||g.ikon.textContent)+(flere>1?`<b class="ts-antal">${flere}</b>`:"");
+        document.body.appendChild(spoeg);document.body.classList.add("traekker");
       }else g.type=zoom.s>1?"pan":"swipe";
     }
     if(g.type==="traek"){spoeg.style.transform=`translate(${e.clientX-28}px,${e.clientY-28}px)`;const z=zoneVed(e.clientX,e.clientY);document.querySelectorAll("[data-dz]").forEach(x=>x.classList.toggle("over",x===z));maalZone=z}
     if(g.type==="pan"){zoom.x=g.zx+dx;zoom.y=g.zy+dy;anvendZoom()}
   });
   const slut=e=>{
-    if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);
+    if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);clearTimeout(holdTimer);
     if(!g)return;
     if(g.type==="traek"){
       const z=maalZone,key=g.ikon.dataset.hv;stopTraek();skabKlikVaek=true;
-      const v=skabVarer().find(x=>hyldeNoegle(x)===key);if(z&&v)skabSlip(v,z.dataset.dz);
+      const alle=skabVarer(),v=alle.find(x=>hyldeNoegle(x)===key);
+      if(z&&v){if(skabVaelg&&skabVaelg.has(key)&&skabVaelg.size>1)skabSlipFlere(alle.filter(x=>skabVaelg.has(hyldeNoegle(x))),z.dataset.dz);else skabSlip(v,z.dataset.dz)}
     }else if(g.type==="swipe"){const dx=e.clientX-g.x0,dy=e.clientY-g.y0;skabKlikVaek=true;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy))skabBladre(dx<0?1:-1)}
-    else if(g.type==="pan")skabKlikVaek=true;
+    else if(g.type==="pan"||g.type==="hold")skabKlikVaek=true;
     if(!pts.size){g=null;setTimeout(()=>{skabKlikVaek=false},350)}
   };
   window.addEventListener("pointerup",slut);
@@ -3962,7 +4146,7 @@ for(const f of st.fri){if(!f.dato)f.dato=todayIso();f.navn=renNavn(f.navn)}
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
 fillSelects();render();setupScan();
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)feedbackSend()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){feedbackSend();emojiSend()}});
 
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
 window.addEventListener("error",e=>{try{diag("fejl: "+e.message+" (linje "+e.lineno+")")}catch(_){}});
@@ -4163,7 +4347,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="55";
+const APP_VERSION="56";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
@@ -4175,7 +4359,7 @@ async function tjekOpdatering(){
     location.replace(location.pathname+"?v="+encodeURIComponent(v));
   }catch(e){}
 }
-tjekOpdatering();feedbackSend();hentDelte();
+tjekOpdatering();feedbackSend();hentDelte();hentEmojis();
 /* Service worker: så Android-telefoner (fx Samsung) kan installere appen som en rigtig app, og den virker uden net */
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});

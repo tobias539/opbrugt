@@ -1,11 +1,14 @@
 # Feedback og fælles opskrifter fra Mad app
 
-Et Google Apps Script (`feedback.gs`) tager imod to ting fra appen:
+Et Google Apps Script (`feedback.gs`) tager imod tre ting fra appen:
 
 - **Feedback**: det, der sendes fra Feedback under Snak, og ændringer af holdbarhed i skabet. Det sendes
   anonymt, og hver besked gemmes som en tekstfil i Google Drive › Privat › mad › feedback.
 - **Fælles opskrifter**: egne opskrifter, man vælger at dele. Hver gemmes som en JSON-fil i
   Google Drive › Privat › mad › opskrifter-delt, og alle, der bruger appen, kan se dem i kogebogen.
+- **Emojis**: når nogen vælger en anden emoji til en vare i skabet, sendes varens navn og emojien anonymt.
+  Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json, og appen viser dem som
+  "Andre har valgt". Kun emojis tages imod.
 
 Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/` er udeladt fra git, så
 feedbacken ikke kommer med i det offentlige repo.

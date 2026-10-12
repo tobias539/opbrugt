@@ -3,10 +3,15 @@
    Google Drive › Privat › mad › feedback. Der gemmes ikke noget om, hvem der har skrevet.
    Opskrifter: appen sender {type:"opskrift", opskrift:{...}}. Hver opskrift gemmes som en JSON-fil i
    Google Drive › Privat › mad › opskrifter-delt, og ?type=opskrifter henter dem alle.
+   Emojis: appen sender {type:"emoji", vare, emoji}, når nogen vælger en anden emoji til en vare i skabet.
+   Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json ({vare: {emoji: antal}}),
+   og ?type=emojis henter dem, så appen kan vise, hvad andre har valgt.
    Mapperne oprettes, hvis de mangler. Opsætning: se LÆS MIG.md. */
 
 const FEEDBACK_STI = ["Privat", "mad", "feedback"];
 const OPSKRIFT_STI = ["Privat", "mad", "opskrifter-delt"];
+const EMOJI_STI = ["Privat", "mad", "emojis"];
+const EMOJI_FIL = "emojis.json";
 const MAKS = 4000;
 const KILDER = { snak: "skrevet i snakken", holdbarhed: "holdbarhed ændret i skabet", feedback: "feedback-feltet" };
 
@@ -23,6 +28,7 @@ function doPost(e) {
   try {
     const d = JSON.parse((e && e.postData && e.postData.contents) || "{}");
     if (d.type === "opskrift") return gemOpskrift(d.opskrift);
+    if (d.type === "emoji") return gemEmoji(d);
     const tekst = String(d.tekst || "").trim().slice(0, MAKS);
     if (!tekst) return svar({ ok: false, fejl: "tom besked" });
     const kilde = KILDER[d.kilde] ? d.kilde : "feedback";
@@ -52,7 +58,39 @@ function gemOpskrift(o) {
   return svar({ ok: true });
 }
 
+/* Emoji-valg tælles sammen i én fil. Kun emojis (højst 3 tegn-klynger) og korte varenavne tages imod.
+   Skriver to telefoner på samme tid, venter den ene på den anden. */
+function emojiFil() {
+  const m = mappe(EMOJI_STI), fundet = m.getFilesByName(EMOJI_FIL);
+  return fundet.hasNext() ? fundet.next() : m.createFile(EMOJI_FIL, "{}", MimeType.PLAIN_TEXT);
+}
+function erEmoji(s) {
+  return typeof s === "string" && s.length <= 16 && /^(\p{Extended_Pictographic}|\p{Emoji_Component}|\u200d|\ufe0f)+$/u.test(s) &&
+    /\p{Extended_Pictographic}|\p{Regional_Indicator}/u.test(s);
+}
+function gemEmoji(d) {
+  const vare = String(d.vare || "").toLowerCase().trim().slice(0, 60), emoji = String(d.emoji || "");
+  if (!vare || !erEmoji(emoji)) return svar({ ok: false, fejl: "ikke en emoji" });
+  const laas = LockService.getScriptLock();
+  laas.waitLock(10000);
+  try {
+    const fil = emojiFil();
+    let alle = {};
+    try { alle = JSON.parse(fil.getBlob().getDataAsString()) || {}; } catch (x) {}
+    const v = alle[vare] = alle[vare] || {};
+    v[emoji] = (v[emoji] || 0) + 1;
+    fil.setContent(JSON.stringify(alle));
+  } finally {
+    laas.releaseLock();
+  }
+  return svar({ ok: true });
+}
+
 function doGet(e) {
+  if (e && e.parameter && e.parameter.type === "emojis") {
+    try { return svar({ ok: true, emojis: JSON.parse(emojiFil().getBlob().getDataAsString()) || {} }); }
+    catch (x) { return svar({ ok: true, emojis: {} }); }
+  }
   if (e && e.parameter && e.parameter.type === "opskrifter") {
     const ud = [], filer = mappe(OPSKRIFT_STI).getFiles();
     while (filer.hasNext()) {

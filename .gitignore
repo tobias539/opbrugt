@@ -18,3 +18,6 @@ priser/salling-noegle.txt
 
 # Feedback fra appen (privat; kommer via Google Drive)
 feedback/
+
+# Emoji-valg fra appen (kommer via Google Drive; appen henter dem fra scriptet)
+emojis/
