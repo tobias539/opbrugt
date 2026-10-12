@@ -3728,8 +3728,15 @@ function lavRet(f,rk,valg){
 /* ---------- Kogevisning ----------
    "Lav retten" åbner opskriften over hele skærmen: kun opskriften (ingredienser og trin, med retten fra planens antal
    personer, alternativer og udeladte ting) og en tilbageknap øverst til venstre. Telefonens egen tilbage-knap eller
-   -swipe lukker den også, fordi den lægger et trin i browserens historik. */
-let kogAaben=false;
+   -swipe lukker den også, fordi den lægger et trin i browserens historik. Skærmen holdes tændt, mens den er åben
+   (Wake Lock); browseren slipper låsen, når appen ikke er synlig, så den tages igen, når man kommer tilbage. */
+let kogAaben=false,kogLaas=null;
+async function kogHoldTaendt(){
+  if(!kogAaben||kogLaas||!("wakeLock" in navigator))return;
+  try{kogLaas=await navigator.wakeLock.request("screen");kogLaas.addEventListener("release",()=>{kogLaas=null})}catch(e){kogLaas=null}
+}
+function kogSlip(){try{if(kogLaas)kogLaas.release()}catch(e){}kogLaas=null}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&kogAaben)kogHoldTaendt()});
 function kogVis(r,f){
   bogFast=f||null;
   document.querySelectorAll(".kogside").forEach(x=>x.remove());
@@ -3739,10 +3746,11 @@ function kogVis(r,f){
   document.body.appendChild(el);document.body.classList.add("kogaaben");
   el.querySelector(".kogtilbage").onclick=()=>{if(history.state&&history.state.kog)history.back();else kogLuk()};
   if(!kogAaben){history.pushState({kog:1},"");kogAaben=true}
+  kogHoldTaendt();
   el.querySelector(".kogtilbage").focus();
 }
 function kogLuk(){
-  kogAaben=false;bogFast=null;
+  kogAaben=false;bogFast=null;kogSlip();
   document.querySelectorAll(".kogside").forEach(x=>x.remove());document.body.classList.remove("kogaaben");
   show("t-snak");window.scrollTo(0,0);
 }
@@ -5113,7 +5121,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="66";
+const APP_VERSION="67";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
