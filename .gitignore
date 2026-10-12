@@ -21,3 +21,6 @@ feedback/
 
 # Emoji-valg fra appen (kommer via Google Drive; appen henter dem fra scriptet)
 emojis/
+
+# Kvitteringer fra appen (billeder og priser; kommer via Google Drive)
+kvitteringer/

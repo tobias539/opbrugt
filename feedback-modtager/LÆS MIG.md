@@ -1,6 +1,6 @@
 # Feedback og fælles opskrifter fra Mad app
 
-Et Google Apps Script (`feedback.gs`) tager imod tre ting fra appen:
+Et Google Apps Script (`feedback.gs`) tager imod fire ting fra appen:
 
 - **Feedback**: det, der sendes fra Feedback under Snak, og ændringer af holdbarhed i skabet. Det sendes
   anonymt, og hver besked gemmes som en tekstfil i Google Drive › Privat › mad › feedback.
@@ -9,9 +9,13 @@ Et Google Apps Script (`feedback.gs`) tager imod tre ting fra appen:
 - **Emojis**: når nogen vælger en anden emoji til en vare i skabet, sendes varens navn og emojien anonymt.
   Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json, og appen viser dem som
   "Andre har valgt". Kun emojis tages imod.
+- **Kvitteringer**: når en kvittering scannes og lægges i skabet, sendes billedet (formindsket) og varelinjerne
+  uden navn. De gemmes i Google Drive › Privat › mad › kvitteringer som en `.jpg` og en `.json` med samme navn.
+  Normalpriserne (ikke tilbud) samles i `kvitteringer/priser.json` – de sidste 5 pr. vare og butik – og appen
+  henter midterværdien, så alles priser bliver bedre. Kan slås fra i appen under Præferencer › Del kvitteringer.
 
-Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/` er udeladt fra git, så
-feedbacken ikke kommer med i det offentlige repo.
+Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/`, `emojis/` og `kvitteringer/`
+er udeladt fra git, så de ikke kommer med i det offentlige repo.
 
 ## Opsætning (én gang)
 
@@ -30,7 +34,7 @@ Indsæt den nye kode, gem, og vælg **Udrul › Administrer udrulninger** › bl
 **Udrul**. Så beholder webappen den samme adresse, og appen behøver ikke opdateres.
 
 Adressen ligger i det offentlige repo. Alle, der finder den, kan altså sende tekst og opskrifter,
-og de delte opskrifter kan læses af alle. Feedbacken kan ikke læses udefra. Hver besked er højst 4.000 tegn.
+og de delte opskrifter og de samlede priser kan læses af alle. Feedbacken og kvitteringerne kan ikke læses udefra. Hver besked er højst 4.000 tegn.
 
 ## Opsamling
 

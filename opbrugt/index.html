@@ -139,11 +139,7 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .bunke{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .bk{position:relative;width:62px;height:62px}.bk img{width:100%;height:100%;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
 .bk .x{position:absolute;top:-7px;right:-7px;width:22px;height:22px;padding:0;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:.95rem;line-height:1}
-.optaglag{position:fixed;inset:0;z-index:60;background:#000;display:flex;flex-direction:column}
-.optaglag video{flex:1;min-height:0;width:100%;object-fit:cover}
-.optagbund{background:rgba(0,0,0,.75);color:#fff;padding:12px 16px calc(16px + env(safe-area-inset-bottom))}
-.optagtale{margin:0 0 10px;min-height:2.8em;font-size:.95rem;line-height:1.4}
-.optagknapper{display:flex;align-items:center;justify-content:space-between;gap:10px}.optagtid{font-variant-numeric:tabular-nums;opacity:.85}
+.taletekst{width:100%;box-sizing:border-box;margin-top:6px;resize:vertical;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;font-size:.88rem}
 .tilbudsbesked{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--tilbud);border:1.5px solid var(--tilbud-kant);border-radius:14px;padding:10px 12px;margin:10px 0 0;font:inherit;font-size:.92rem;color:var(--ink);cursor:pointer}
 .tilbudsbesked .grow{flex:1;min-width:0}
 /* Skærme: ét trin pr. skærm, der passer på telefonen; knapperne står nederst */
@@ -639,7 +635,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
       <h3>Med billeder eller video</h3>
       <div class="seg" id="scanRetning" role="tablist" aria-label="Hvad viser billederne?" style="margin:6px 0 8px"><button role="tab" data-ret="ind" aria-selected="true">Det, vi har</button><button role="tab" data-ret="ud" aria-selected="false">Det, vi smider ud</button></div>
       <p class="muted" id="scanNote" style="margin:2px 0 8px">Tag så mange billeder, I vil – af kvitteringen, skabet, køleskabet eller fryseren.</p>
-      <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Fra album<input type="file" class="scanFil" accept="image/*" multiple hidden></label><label class="btn ghost" style="display:inline-block">Video<input type="file" class="scanVideo" accept="video/*" hidden></label><button class="btn ghost" id="scanOptag" type="button">🎙️ Optag med lyd</button></div>
+      <div id="scanLabel" style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn" style="display:inline-block">Tag billede<input type="file" class="scanFil" accept="image/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">🎥 Optag video<input type="file" class="scanVideo" accept="video/*" capture="environment" hidden></label><label class="btn ghost" style="display:inline-block">Fra album<input type="file" class="scanFil" accept="image/*,video/*" multiple hidden></label></div>
       <div id="scanBunke"></div>
       <div id="scanResult"></div>
     </div>
@@ -1287,7 +1283,8 @@ async function hentHyldepriser(){
 }
 /* Priser lært fra brugerens egne kvitteringer: st.laertePriser[butik][ingrediens] = {ep, pr, dato, tekst} */
 function laertEP(id,butik){
-  const L=butik&&st.laertePriser&&st.laertePriser[butik]&&st.laertePriser[butik][id];if(!L)return null;
+  /* egne kvitteringer først, så dem, alle har delt */
+  const L=butik&&((st.laertePriser&&st.laertePriser[butik]&&st.laertePriser[butik][id])||(FAELLES_PRISER[butik]&&FAELLES_PRISER[butik][id]));if(!L||!(L.ep>0))return null;
   const gps=OI[id]&&OI[id].gps,o={[L.pr]:L.ep};if(L.pr==="stk"&&gps)o.kg=L.ep/(gps/1000);if(L.pr==="kg"&&gps)o.stk=L.ep*gps/1000;return o;
 }
 function butikFraTekst(t){const n=T_NORM(t);if(!n)return null;return alleButikker().find(b=>n.includes(T_NORM(b))||T_NORM(b).includes(n))||null}
@@ -2337,11 +2334,13 @@ function renderSet(){
   const s=document.getElementById("setList");
   s.innerHTML=stepper("Personer","P")+stepper("Aftener","N")+stepper("Gange madlavning","M",0,0,"Færre gange betyder større portioner og flere restedage.")+
    `<div class="set"><div>Økologi på grundvarer<div class="muted">Mælk, æg, fløde, smør, løg, gulerødder, kartofler, pasta, oksekød</div></div><button class="toggle" id="oko" aria-pressed="${st.settings.oko}" aria-label="Økologi på grundvarer"></button></div>`+
+   `<div class="set"><div>Del kvitteringer<div class="muted">Scannede kvitteringer gemmes uden navn hos Mad app, så priserne bliver bedre for alle</div></div><button class="toggle" id="delKvit" aria-pressed="${st.settings.delKvit!==false}" aria-label="Del kvitteringer"></button></div>`+
    `<div class="set"><div>Frugt og grønt<div class="muted">Skal du bruge 2 æbler: køb dem enkeltvis, når det kan lade sig gøre, eller en hel pose?</div><div class="chips" style="margin-top:8px"><button class="chip" data-kf="enkelt" aria-pressed="${st.settings.koebForm!=="pakke"}">Enkeltvis</button><button class="chip" data-kf="pakke" aria-pressed="${st.settings.koebForm==="pakke"}">Hele pakker</button></div></div></div>`+
    `<div class="set"><div>Butikker du handler i<div class="chips" id="butikker" style="margin-top:8px"></div></div></div>`+
    `<div class="set"><div>Tag en butik mere med på samme tur, hvis det sparer mindst<div class="muted">Bruges, når appen sammenligner butikkernes priser og tilbud.</div></div><div class="step"><button data-g="-25" aria-label="Lavere">−</button><output>${st.settings.delGraense} kr</output><button data-g="25" aria-label="Højere">+</button></div></div>`;
   s.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.settings[k]=Math.min(LIM[k][1],Math.max(LIM[k][0],st.settings[k]+ +b.dataset.d));changed()});
   document.getElementById("oko").onclick=()=>{st.settings.oko=!st.settings.oko;changed()};
+  document.getElementById("delKvit").onclick=()=>{st.settings.delKvit=st.settings.delKvit===false;changed()};
   s.querySelectorAll("[data-kf]").forEach(b=>b.onclick=()=>{st.settings.koebForm=b.dataset.kf;changed()});
   const bw=document.getElementById("butikker");
   for(const b of alleButikker()){const on=st.settings.butikker.includes(b);const el=document.createElement("button");el.className="chip";el.setAttribute("aria-pressed",on);el.textContent=b;el.onclick=()=>{st.settings.butikker=on?st.settings.butikker.filter(x=>x!==b):[...st.settings.butikker,b];changed()};bw.appendChild(el)}
@@ -3528,16 +3527,18 @@ async function setupScan(){
   lab.style.display="flex";scanNote();
 }
 /* ---------- Billeder og video af skabet ----------
-   Billederne samles i en bunke – flere i træk med kameraet, mange fra albummet, en video eller en optagelse med tale –
+   Billederne samles i en bunke – flere i træk med kameraet, mange fra albummet eller billeder fra en video –
    og sendes samlet til Claude. Claude finder først varerne på hvert billede og tæller så hver fysiske vare én gang, også
    når den ses på flere billeder. "Det, vi smider ud" trækker varerne fra skabet i stedet for at lægge dem i.
-   Ét billede alene går som før: kvittering eller skab. Claude kan ikke høre video, så lyd kommer kun med fra "Optag med
-   lyd", hvor telefonen skriver talen ned undervejs. */
-let bunke={filer:[],tale:"",video:false,ret:"ind"};
+   Ét billede alene går som før: kvittering eller skab. Talen i en video skrives ned på telefonen (se "Tale i videoer")
+   med tidsstempler, så Claude kan koble det sagte med billederne fra samme tidspunkt. */
+let bunke={filer:[],tale:"",video:false,ret:"ind",tid:0};
+function fmtTid(t){t=Math.max(0,Math.round(t));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
 const BUNKE_MAKS=30;
-function scanNote(){const n=document.getElementById("scanNote");if(n)n.textContent=bunke.ret==="ud"?"Stil det, I smider ud, frem, og tag billeder af det. Så trækkes det fra skabet.":"Tag så mange billeder, I vil – af kvitteringen, skabet, køleskabet eller fryseren. Ses en vare på flere billeder, tælles den kun én gang."}
-function bunkeTilfoej(filer,fraVideo){
-  for(const f of filer){if(bunke.filer.length>=BUNKE_MAKS){toast(`Højst ${BUNKE_MAKS} billeder ad gangen`);break}bunke.filer.push({fil:f,url:URL.createObjectURL(f)})}
+function scanNote(){const n=document.getElementById("scanNote");if(n)n.textContent=bunke.ret==="ud"?"Stil det, I smider ud, frem, og tag billeder eller en video af det. Så trækkes det fra skabet.":"Tag så mange billeder, I vil – eller en video, hvor du siger, hvad der står. Ses en vare flere gange, tælles den kun én gang."}
+function bunkeTilfoej(filer,fraVideo,tider){
+  filer.forEach((f,i)=>{if(bunke.filer.length>=BUNKE_MAKS)return;bunke.filer.push({fil:f,url:URL.createObjectURL(f),tid:tider?tider[i]:null})});
+  if(filer.length&&bunke.filer.length>=BUNKE_MAKS)toast(`Højst ${BUNKE_MAKS} billeder ad gangen`);
   if(fraVideo)bunke.video=true;
   document.getElementById("scanResult").innerHTML="";renderBunke();
 }
@@ -3545,21 +3546,24 @@ function renderBunke(){
   const el=document.getElementById("scanBunke");if(!el)return;
   const n=bunke.filer.length;
   el.innerHTML=!n?"":`<div class="bunke">${bunke.filer.map((b,i)=>`<span class="bk"><img src="${b.url}" alt="Billede ${i+1}"><button class="x" data-bk="${i}" aria-label="Fjern billede ${i+1}">×</button></span>`).join("")}</div>
-    ${bunke.tale?`<p class="muted" style="margin:8px 0 0;font-size:.85rem">🎙️ "${esc(bunke.tale.length>220?bunke.tale.slice(0,220)+"…":bunke.tale)}"</p>`:""}
+    ${bunke.tale?`<label class="muted" for="bunkeTale" style="display:block;margin-top:8px;font-size:.85rem">🎙️ Det, der blev sagt (ret gerne)</label><textarea id="bunkeTale" class="taletekst" rows="${Math.min(8,Math.max(3,bunke.tale.split("\n").length+1))}">${esc(bunke.tale)}</textarea>`:""}
     <div style="display:flex;gap:8px;align-items:center;margin-top:10px"><button class="btn ghost lille" id="bunkeRyd">Ryd</button><span style="flex:1"></span><button class="btn" id="bunkeFind">${bunke.ret==="ud"?"Find det, I smider ud":"Find varerne"} (${n})</button></div>`;
+  const bt=document.getElementById("bunkeTale");if(bt)bt.oninput=()=>{bunke.tale=bt.value};
   el.querySelectorAll("[data-bk]").forEach(b=>b.onclick=()=>{const x=bunke.filer.splice(+b.dataset.bk,1)[0];if(!bunke.filer.length)bunkeRyd();else renderBunke();if(x)URL.revokeObjectURL(x.url)});
   const r=document.getElementById("bunkeRyd");if(r)r.onclick=bunkeRyd;
   const f=document.getElementById("bunkeFind");if(f)f.onclick=bunkeFind;
 }
 /* billederne fjernes fra skærmen, før deres adresser frigives */
-function bunkeRyd(){const gl=bunke.filer;bunke={filer:[],tale:"",video:false,ret:bunke.ret};renderBunke();for(const b of gl)URL.revokeObjectURL(b.url)}
+function bunkeRyd(){const gl=bunke.filer;bunke={filer:[],tale:"",video:false,ret:bunke.ret,tid:0};renderBunke();for(const b of gl)URL.revokeObjectURL(b.url)}
 async function bunkeFind(){
   const filer=bunke.filer.map(b=>b.fil),{tale,video,ret}=bunke;
+  /* etiketter til Claude: billedets nummer og, for billeder fra en video, tidspunktet */
+  const tekster=bunke.filer.map((b,i)=>`Billede ${i+1}${b.tid!=null?` (${fmtTid(b.tid)} i videoen)`:""}:`);
   if(!filer.length)return;
   bunkeRyd();
-  if(ret==="ud"){await scanSmidUd(filer,tale);return}
+  if(ret==="ud"){await scanSmidUd(filer,tale,tekster);return}
   if(filer.length===1&&!tale&&!video){scanKvittering(filer[0]);return}
-  await scanSkabFlere(filer,tale,video);
+  await scanSkabFlere(filer,tale,video,tekster);
 }
 document.querySelectorAll("#scanRetning [data-ret]").forEach(b=>b.onclick=()=>{
   bunke.ret=b.dataset.ret;document.querySelectorAll("#scanRetning [data-ret]").forEach(x=>x.setAttribute("aria-selected",x===b));
@@ -3572,12 +3576,14 @@ document.addEventListener("change",e=>{
     const filer=[...(e.target.files||[])],iKvit=!!e.target.closest("#kvitForslag");e.target.value="";
     if(!filer.length)return;
     if(iKvit){scanKvittering(filer[0]);return}
-    bunkeTilfoej(filer);
+    const vid=filer.filter(f=>/^video\//.test(f.type));
+    bunkeTilfoej(filer.filter(f=>!vid.includes(f)));
+    (async()=>{for(const f of vid)await videoTilBunke(f)})();
   }else if(e.target.classList.contains("scanVideo")){
     const f=e.target.files&&e.target.files[0];e.target.value="";if(f)videoTilBunke(f);
   }
 });
-/* En video bliver til et billede hvert halvandet sekund (højst 20) */
+/* En video bliver til et billede hvert halvandet sekund (højst 20), hvert med sit tidspunkt */
 async function videoBilleder(fil,maks=20){
   const url=URL.createObjectURL(fil),v=document.createElement("video");
   v.muted=true;v.playsInline=true;v.preload="auto";v.src=url;
@@ -3587,54 +3593,86 @@ async function videoBilleder(fil,maks=20){
     if(!isFinite(d)){await new Promise(ok=>{v.onseeked=ok;v.currentTime=1e7});d=isFinite(v.duration)?v.duration:v.currentTime}
     const n=Math.max(1,Math.min(maks,Math.round(d/1.5))),sk=Math.min(1,1600/Math.max(v.videoWidth,v.videoHeight));
     const c=document.createElement("canvas");c.width=Math.round(v.videoWidth*sk);c.height=Math.round(v.videoHeight*sk);
-    const ud=[];
+    const billeder=[];
     for(let i=0;i<n;i++){
-      await new Promise(ok=>{v.onseeked=ok;v.currentTime=Math.min(Math.max(0,d-.05),(i+.5)*d/n)});
+      const t=Math.min(Math.max(0,d-.05),(i+.5)*d/n);
+      await new Promise(ok=>{v.onseeked=ok;v.currentTime=t});
       c.getContext("2d").drawImage(v,0,0,c.width,c.height);
-      const b=await new Promise(ok=>c.toBlob(ok,"image/jpeg",.8));if(b)ud.push(b);
+      const b=await new Promise(ok=>c.toBlob(ok,"image/jpeg",.8));if(b)billeder.push({blob:b,tid:t});
     }
-    return ud;
+    return {billeder,varighed:d};
   }finally{URL.revokeObjectURL(url)}
 }
+/* ---------- Tale i videoer ----------
+   Claude kan ikke høre, så talen i en video skrives ned på telefonen med Whisper (OpenAI's talegenkendelse, der kører
+   i browseren via transformers.js). Modellen hentes første gang (ca. 250 MB – eller 80 MB, hvis telefonen ikke kan
+   klare den store) og gemmes i browseren. Er der ingen tale i lyden, springes det over, for Whisper finder ellers på
+   tekst i stilhed. Går siden ned undervejs (for lidt hukommelse), står modellens navn stadig i "opbrugt_tale_hent",
+   og næste gang bruges den lille model. */
+const TALE_LIB="https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0/+esm";
+const TALE_MODELLER=["onnx-community/whisper-small","onnx-community/whisper-base"];
+let taleModel=null;
+async function taleLyd(fil){
+  const buf=await fil.arrayBuffer(),ctx=new (window.AudioContext||window.webkitAudioContext)();
+  let lyd;
+  try{lyd=await new Promise((ok,nej)=>{const p=ctx.decodeAudioData(buf,ok,nej);if(p&&p.then)p.then(ok,nej)})}finally{try{ctx.close()}catch(e){}}
+  const off=new OfflineAudioContext(1,Math.max(1,Math.ceil(lyd.duration*16000)),16000),src=off.createBufferSource();
+  src.buffer=lyd;src.connect(off.destination);src.start();
+  return (await off.startRendering()).getChannelData(0);
+}
+/* Er der tale? Mindst 5 % af lydens halve sekunder skal være tydeligt højere end baggrundsstøjen */
+function harTale(a){
+  const w=8000,rms=[];for(let i=0;i+w<=a.length;i+=w){let s=0;for(let j=i;j<i+w;j++)s+=a[j]*a[j];rms.push(Math.sqrt(s/w))}
+  if(!rms.length)return false;const stoej=[...rms].sort((x,y)=>x-y)[Math.floor(rms.length*.2)]||0;
+  return rms.filter(r=>r>Math.max(.02,stoej*3)).length>=Math.max(1,rms.length*.05);
+}
+function taleLaes(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function taleSkriv(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+async function taleModelHent(status){
+  if(taleModel)return taleModel;
+  const T=await import(TALE_LIB);
+  let fejl=[];try{fejl=JSON.parse(taleLaes("opbrugt_tale_fejl")||"[]")}catch(e){}
+  const nede=taleLaes("opbrugt_tale_hent");if(nede&&!fejl.includes(nede)){fejl.push(nede);taleSkriv("opbrugt_tale_fejl",JSON.stringify(fejl))}
+  for(const navn of TALE_MODELLER){
+    if(fejl.includes(navn)&&navn!==TALE_MODELLER[TALE_MODELLER.length-1])continue;
+    taleSkriv("opbrugt_tale_hent",navn);
+    try{taleModel=await T.pipeline("automatic-speech-recognition",navn,{dtype:"q8",device:"wasm",progress_callback:x=>{if(x.status==="progress"&&x.total>5e6)status(`Henter talegenkendelsen (kun første gang) … ${Math.round(x.progress)} %`)}});return taleModel}
+    catch(e){console.warn("talemodel",navn,e);fejl.push(navn);taleSkriv("opbrugt_tale_fejl",JSON.stringify(fejl))}
+  }
+  taleSkriv("opbrugt_tale_hent",null);
+  throw new Error("talemodel");
+}
+async function taleTilTekst(a,status){
+  const p=await taleModelHent(status);status(`Skriver det ned, der bliver sagt i videoen (${fmtTid(a.length/16000)})`);
+  const r=await p(a,{language:"danish",task:"transcribe",return_timestamps:true,chunk_length_s:30,stride_length_s:5});
+  taleSkriv("opbrugt_tale_hent",null);
+  return (r.chunks&&r.chunks.length?r.chunks:[{timestamp:[0],text:r.text}]).map(c=>({fra:(c.timestamp&&c.timestamp[0])||0,tekst:String(c.text||"").trim()})).filter(c=>c.tekst);
+}
 async function videoTilBunke(f){
-  const out=document.getElementById("scanResult");out.innerHTML=`<p class="muted">${tanke("Henter billeder fra videoen")}</p>`;
-  try{const b=await videoBilleder(f);out.innerHTML="";if(!b.length)throw new Error("tom");bunkeTilfoej(b,true);toast(`${b.length} billeder fra videoen. Lyden kommer ikke med – brug "Optag med lyd" til det.`)}
-  catch(e){out.innerHTML=`<p class="bad">Videoen kunne ikke læses. Prøv "Optag med lyd" i stedet.</p>`}
+  const out=document.getElementById("scanResult"),status=t=>{out.innerHTML=`<p class="muted">${tanke(t)}</p>`};
+  status("Henter billeder fra videoen");
+  let v;try{v=await videoBilleder(f);if(!v.billeder.length)throw new Error("tom")}catch(e){out.innerHTML=`<p class="bad">Videoen kunne ikke læses. Prøv en kortere video, eller tag billeder i stedet.</p>`;return}
+  /* flere videoer i samme bunke: tidspunkterne fortsætter fra den forrige */
+  const start=bunke.tid||0;let linjer=[],besked="";
+  try{
+    /* hele filen skal i hukommelsen for at lyden kan læses – meget store videoer springes over */
+    if(f.size>350e6)throw Object.assign(new Error("stor"),{besked:"Videoen er for stor til, at talen kan skrives ned – kun billederne kommer med. Prøv en kortere video."});
+    const a=await taleLyd(f);
+    if(!harTale(a))besked="Der blev ikke sagt noget i videoen – kun billederne kommer med.";
+    else if(taleLaes("opbrugt_tale")!=="ja"&&!confirm("For at forstå, hvad du siger i videoen, henter appen en talegenkendelse første gang (ca. 250 MB – helst på wifi). Den gemmes i browseren. Hent den nu?"))besked="Kun billederne kommer med.";
+    else{linjer=await taleTilTekst(a,status);taleSkriv("opbrugt_tale","ja")}
+  }catch(e){console.warn("tale",e);besked=e.besked||"Talen kunne ikke skrives ned – kun billederne kommer med."}
+  out.innerHTML=besked?`<p class="muted">${esc(besked)}</p>`:"";
+  if(linjer.length)bunke.tale=(bunke.tale?bunke.tale+"\n":"")+linjer.map(l=>`[${fmtTid(start+l.fra)}] ${l.tekst}`).join("\n");
+  bunke.tid=start+v.varighed;
+  bunkeTilfoej(v.billeder.map(x=>x.blob),true,v.billeder.map(x=>start+x.tid));
 }
-/* Optag skabet: kameraet tager et billede hvert halvandet sekund, og telefonen skriver det ned, man siger */
-async function optagSkab(){
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast("Telefonen kan ikke optage her – tag billeder i stedet");return}
-  let strm;
-  try{strm=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false})}catch(e){toast("Kameraet kunne ikke åbnes");return}
-  const lag=document.createElement("div");lag.className="optaglag";
-  lag.innerHTML=`<video autoplay playsinline muted></video><div class="optagbund"><p class="optagtale" aria-live="polite">Gå langsomt hen over hylderne, og sig gerne, hvad der står – fx "tre dåser tomater, ketchuppen er næsten tom".</p><div class="optagknapper"><span class="optagtid">0:00 · 0 billeder</span><button class="btn" id="optagStop">Stop</button></div></div>`;
-  document.body.appendChild(lag);
-  const v=lag.querySelector("video");v.srcObject=strm;
-  const frames=[],c=document.createElement("canvas"),t0=Date.now();let tale="",midl="",stop=false,venter=0;
-  const tag=()=>{if(!v.videoWidth||frames.length+venter>=BUNKE_MAKS)return;const sk=Math.min(1,1600/Math.max(v.videoWidth,v.videoHeight));c.width=Math.round(v.videoWidth*sk);c.height=Math.round(v.videoHeight*sk);c.getContext("2d").drawImage(v,0,0,c.width,c.height);venter++;c.toBlob(b=>{venter--;if(b)frames.push(b)},"image/jpeg",.8)};
-  const iv=setInterval(()=>{tag();const sek=Math.round((Date.now()-t0)/1000);lag.querySelector(".optagtid").textContent=`${Math.floor(sek/60)}:${String(sek%60).padStart(2,"0")} · ${frames.length} billeder`},1500);
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let sr=null;
-  if(SR){try{
-    sr=new SR();sr.lang="da-DK";sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{midl="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal)tale+=r[0].transcript+" ";else midl+=r[0].transcript}lag.querySelector(".optagtale").textContent=(tale+midl).trim()||"…"};
-    sr.onend=()=>{if(!stop)try{sr.start()}catch(e){}};
-    sr.start();
-  }catch(e){sr=null}}
-  await new Promise(ok=>{lag.querySelector("#optagStop").onclick=ok});
-  stop=true;clearInterval(iv);tag();if(sr)try{sr.stop()}catch(e){}
-  strm.getTracks().forEach(t=>t.stop());
-  for(let i=0;i<20&&venter>0;i++)await new Promise(r=>setTimeout(r,50));
-  lag.remove();
-  bunke.tale=(bunke.tale+" "+tale+midl).trim();
-  if(frames.length)bunkeTilfoej(frames,true);else toast("Der kom ingen billeder med");
-}
-document.getElementById("scanOptag").onclick=optagSkab;
 /* Mange billeder af skabet: find varerne på hvert billede, og tæl hver fysiske vare én gang */
-async function scanSkabFlere(filer,tale,video){
+async function scanSkabFlere(filer,tale,video,tekster){
   const out=document.getElementById("scanResult");
   out.innerHTML=`<p class="muted">${tanke(`Kigger på ${filer.length} billeder`)}<br>Det kan tage et par minutter.</p>`;
   const catalog=Object.entries(P).map(([k,p])=>({k,navn:p.n,pakke:p.pk,enhed:p.e}));
-  const prompt=`Billederne (${filer.length}) er taget af et skab, køleskab, en fryser, et spisekammer eller hylder med madvarer${video?" – de er taget fra en video, så de samme varer ses på mange billeder":""}.${tale?`\nBrugeren har sagt undervejs (brug det til at genkende varer og mængder): «${tale}»`:""}
+  const prompt=`Billederne (${filer.length}) er taget af et skab, køleskab, en fryser, et spisekammer eller hylder med madvarer${video?" – de er taget fra en video, så de samme varer ses på mange billeder":""}.${tale?`\nDet blev sagt i videoen, med tidspunkt (brug det til at genkende varer og mængder, og kobl det med billedet fra samme tidspunkt – talegenkendelsen kan have fejl):\n${tale}`:""}
 Katalog (brug kun disse nøgler): ${JSON.stringify(catalog)}
 Arbejd i to trin:
 1. Gå billederne igennem ét ad gangen, og find hver vare, du med sikkerhed kan genkende.
@@ -3642,23 +3680,23 @@ Arbejd i to trin:
 GÆT ALDRIG: kan en pakke, dåse, krukke eller pose ikke kendes uden at læse mærkaten, og kan mærkaten ikke læses på nogen af billederne, så læg den i "usikre" med "hvad" som en meget kort beskrivelse på højst 5 ord. "maengde" er i katalogets enhed: tæl de stykker, du kan se, eller læs vægten/rumfanget på mærkaten; kan det ikke ses, så null. Varer, der ikke findes i kataloget, men som du med sikkerhed kan genkende, lægges i "andet" med et almindeligt dansk navn og "niveau" (hel, noget eller lidt). "raad": er mange billeder for mørke eller uskarpe, så et kort råd på højst 8 ord; ellers "".
 Returnér KUN JSON: {"varer":[{"k":nøgle,"navn":"det du ser","maengde":tal eller null,"hvor":"fx øverste hylde","billeder":[numre]}],"andet":[{"navn","niveau","billeder":[numre]}],"usikre":[{"hvad"}],"set_igen":antal varer, der blev set på flere billeder og kun talt én gang,"raad":tekst}`;
   try{
-    const r=await sample.json(prompt,{images:filer,modelTier:"default",hvad:"billede"});
+    const r=await sample.json(prompt,{images:filer,billedTekster:tekster,modelTier:"default",hvad:"billede"});
     visSkabBillede({...r,type:"skab"},out,{billeder:filer.length,setIgen:+r.set_igen||0});
   }catch(err){out.innerHTML=`<p class="bad">Billederne kunne ikke læses. ${esc(fejlTekst(err))}</p>`}
 }
 /* Billeder af det, der smides ud: matches med skabet og trækkes fra */
-async function scanSmidUd(filer,tale){
+async function scanSmidUd(filer,tale,tekster){
   const out=document.getElementById("scanResult");
   out.innerHTML=`<p class="muted">${tanke("Finder det, I smider ud")}<br>Det kan tage op til et par minutter.</p>`;
   const skab=Object.entries(st.skab).filter(([k])=>P[k]).map(([k,v])=>`${k}: ${P[k].n} (${fmt(k,v.amt)})`).join("; ")||"intet";
   const fri=st.fri.map(f=>f.navn).join("; ")||"intet";
-  const prompt=`Billederne (${filer.length}) viser varer, som husstanden smider ud – fx stillet frem på bordet, mens skabet ryddes op.${tale?`\nBrugeren har sagt undervejs: «${tale}»`:""}
+  const prompt=`Billederne (${filer.length}) viser varer, som husstanden smider ud – fx stillet frem på bordet, mens skabet ryddes op.${tale?`\nDet blev sagt i videoen, med tidspunkt (talegenkendelsen kan have fejl):\n${tale}`:""}
 Find hver vare, du med sikkerhed kan genkende. Den samme fysiske vare på flere billeder tælles kun én gang. Gæt aldrig.
 Match hver vare til det, der står i skabet nu.
 Varer med nøgle (nøgle: navn (mængde)): ${skab}
 Fri varer: ${fri}
 Returnér KUN JSON: {"varer":[{"k": nøglen fra skabet eller null,"fri": navnet på den fri vare præcis som ovenfor eller null,"navn": "det du ser","maengde": hvor meget der smides ud i katalogets enhed, eller null hvis det hele}],"usikre":[{"hvad"}]}`;
-  try{const r=await sample.json(prompt,{images:filer,modelTier:"default",hvad:"billede"});visSmidUd(r,out,filer.length)}
+  try{const r=await sample.json(prompt,{images:filer,billedTekster:tekster,modelTier:"default",hvad:"billede"});visSmidUd(r,out,filer.length)}
   catch(err){out.innerHTML=`<p class="bad">Billederne kunne ikke læses. ${esc(fejlTekst(err))}</p>`}
 }
 function visSmidUd(r,out,nB){
@@ -3713,6 +3751,7 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
     if((r.andet||[]).length)h+=`<p class="muted">Lægges også i skabet som fri varer: ${r.andet.map(x=>String(x).replace(/[<>]/g,"")).join(", ")}.</p>`;
     const nPriser=(r.priser||[]).filter(x=>OI[x&&x.i]&&!x.rabat&&x.pris>0).length,kbutik=butikFraTekst(r.butik);
     if(nPriser&&kbutik)h+=`<p class="muted">${nPriser} ${nPriser===1?"pris":"priser"} fra ${esc(kbutik)} gemmes, så appen lærer butikkens normalpriser.</p>`;
+    if(st.settings.delKvit!==false&&FEEDBACK_URL)h+=`<p class="muted" style="font-size:.82rem">Kvitteringen gemmes uden navn hos Mad app, så priserne bliver bedre for alle. Kan slås fra under Præferencer.</p>`;
     h+=`<button class="btn" id="scanOk" style="margin-top:10px">Læg i skabet</button>`;
     out.innerHTML=h;
     out.querySelectorAll("input[data-i]").forEach(cb=>cb.onchange=()=>{scanItems[+cb.dataset.i].on=cb.checked});
@@ -3723,7 +3762,7 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
       for(const v of scanItems){if(!v.on)continue;const amt=(st.skab[v.k]?.amt||0)+v.maengde-(lagt[v.k]||0);delete lagt[v.k];const gl=st.skab[v.k];if(amt>1e-6)st.skab[v.k]={...(gl||{dato:todayIso()}),amt,koebt:Math.max(amt,(gl&&gl.koebt)||0),dage:(gl&&gl.dage)||ho(v.k)};else delete st.skab[v.k];n++}
       for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){friLaeg(nm);n++}}
       st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
-      const np=laerPriser(r);
+      const np=laerPriser(r);kvitDel(r,f);
       if(k){const kb=butikFraTekst(r.butik);k.butikker=k.butikker.filter(b=>b!==kb);if(!kb||!k.butikker.length)delete st.kvit}
       scanItems=[];out.innerHTML="";
       changed();toast(n+(k?" varer tjekket i skabet":" varer lagt i skabet")+(np?` · ${np} priser gemt`:""));
@@ -3802,7 +3841,36 @@ function laerPriser(r){
     if(set.has(id)&&L[id].ep>=ep)continue;
     L[id]={ep:Math.round(ep*100)/100,pr,dato,tekst:String(x.tekst||"").slice(0,40)};if(!set.has(id))n++;set.add(id);
   }
+  /* normalpriserne fra denne kvittering, så de kan deles med de andre (se kvitDel) */
+  r._normal={butik,priser:Object.fromEntries([...set].map(id=>[id,L[id]]))};
   return n;
+}
+/* ---------- Kvitteringer hos Mad app ----------
+   En scannet kvittering gemmes (billede og varelinjer, uden navn) i Google Drive › Privat › mad › kvitteringer via samme
+   Google Apps Script som feedbacken. Normalpriserne samles dér for alle butikker, og appen henter dem, så priserne bliver
+   bedre for alle. Kan slås fra under Præferencer. Kan den ikke sendes, venter varelinjerne (uden billede) på telefonen. */
+let FAELLES_PRISER={};
+async function hentFaellesPriser(){
+  if(!FEEDBACK_URL)return;
+  try{const j=await (await fetch(FEEDBACK_URL+"?type=priser",{cache:"no-store"})).json();if(j&&j.priser&&typeof j.priser==="object"){FAELLES_PRISER=j.priser;render()}}catch(e){}
+  kvitSend();
+}
+async function billedeLille(fil){try{return await billede64(fil,1600,1.6e6)}catch(e){return null}}
+async function kvitDel(r,fil){
+  if(!FEEDBACK_URL||st.settings.delKvit===false)return;
+  const data={type:"kvittering",butik:(r._normal&&r._normal.butik)||butikFraTekst(r.butik)||String(r.butik||"").slice(0,40),dato:String(r.dato||"").slice(0,20),version:APP_VERSION,
+    linjer:(r.priser||[]).slice(0,200).map(x=>({i:x.i||null,tekst:String(x.tekst||"").slice(0,60),pris:+x.pris||0,maengde:+x.maengde||0,enhed:x.enhed||"",rabat:!!x.rabat})),
+    normal:(r._normal&&r._normal.priser)||{}};
+  const billede=fil?await billedeLille(fil):null;
+  try{const j=await (await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify({...data,billede})})).json();if(j&&j.ok)return}catch(e){}
+  (st.kvitKoe=st.kvitKoe||[]).push(data);st.kvitKoe=st.kvitKoe.slice(-20);save();
+}
+let kvitSender=false;
+async function kvitSend(){
+  if(!FEEDBACK_URL||kvitSender||!(st.kvitKoe||[]).length)return;
+  kvitSender=true;
+  try{while(st.kvitKoe.length){const j=await (await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify(st.kvitKoe[0])})).json().catch(()=>null);if(!j||!j.ok)break;st.kvitKoe.shift();save()}}catch(e){}
+  kvitSender=false;
 }
 
 /* ---------- Opskriftbanken ----------
@@ -4540,7 +4608,7 @@ for(const f of st.fri){if(!f.dato)f.dato=todayIso();f.navn=renNavn(f.navn)}
 st.visStart=todayIso();let aabnetDag=todayIso();
 document.addEventListener("visibilitychange",()=>{if(document.hidden||todayIso()===aabnetDag)return;aabnetDag=todayIso();st.visStart=aabnetDag;selDays.clear();if(afvikl())save();render()});
 fillSelects();render();setupScan();
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){feedbackSend();emojiSend()}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){feedbackSend();emojiSend();kvitSend()}});
 
 function diag(t){document.getElementById("diag").textContent="Forbindelse: "+t}
 window.addEventListener("error",e=>{try{diag("fejl: "+e.message+" (linje "+e.lineno+")")}catch(_){}});
@@ -4589,7 +4657,7 @@ function apiAdapter(){
       /* Mange billeder (fx 20 af skabet): hvert får et nummer, og de gøres lidt mindre, så kaldet ikke bliver for stort */
       const billeder=[].concat(opt.images||[]),flere=billeder.length>1;
       for(let i=0;i<billeder.length;i++){
-        if(flere)content.push({type:"text",text:`Billede ${i+1}:`});
+        if(flere)content.push({type:"text",text:(opt.billedTekster&&opt.billedTekster[i])||`Billede ${i+1}:`});
         content.push({type:"image",source:{type:"base64",media_type:"image/jpeg",data:await billede64(billeder[i],flere?1600:2400,flere?2e6:3.5e6)}});
       }
       content.push({type:"text",text:prompt});
@@ -4746,7 +4814,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="61";
+const APP_VERSION="62";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
@@ -4758,7 +4826,7 @@ async function tjekOpdatering(){
     location.replace(location.pathname+"?v="+encodeURIComponent(v));
   }catch(e){}
 }
-tjekOpdatering();feedbackSend();hentDelte();hentEmojis();
+tjekOpdatering();feedbackSend();hentDelte();hentEmojis();hentFaellesPriser();
 /* Service worker: så Android-telefoner (fx Samsung) kan installere appen som en rigtig app, og den virker uden net */
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)tjekOpdatering()});
