@@ -273,7 +273,12 @@ button.hi-ik[aria-expanded="true"]{border-style:solid;border-color:var(--leaf);b
 .hi-hold{flex:1}.hi-hold.rod{color:#c0392b;font-weight:700}.hi-hold.orange{color:#c46a12;font-weight:700}
 .hi-knapper{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .hyldeinfo{flex-direction:column;align-items:stretch;gap:0;bottom:8px}
-.skabnavn{flex:1;font-weight:700;font-family:var(--display)}
+.skabnavn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.95rem;font-weight:700;font-family:var(--display)}
+/* Bladr mellem skabene: pil, prikker, pil. Pilen er grå, når man er på første eller sidste side. */
+.skabtop{gap:6px}.skabtop .btn.lille{padding-left:10px;padding-right:10px}
+.skabblad{display:flex;align-items:center;gap:4px;flex:none}.skabblad .prikker{gap:5px}.skabblad .prik{width:8px;height:8px}
+.pil{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--leaf);background:var(--card);color:var(--leaf);font:700 1.1rem/1 var(--body);padding:0 0 2px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pil:disabled{border-color:var(--line);color:var(--line);cursor:default}
 .skabhint{margin:0 2px 6px;font-size:.78rem;color:var(--muted)}
 /* De tre mål vises kun, mens man trækker: et lag nederst oven på reolen */
 .dzlag{position:absolute;left:0;right:0;bottom:0;display:none;justify-content:space-around;align-items:center;padding:14px 8px 18px;background:linear-gradient(transparent,rgba(30,25,15,.55));border-radius:0 0 8px 8px;z-index:8;pointer-events:none}
@@ -298,10 +303,11 @@ body.traekker .dzlag{display:flex}
 .hvare{border:0;background:transparent;padding:0;line-height:1;cursor:pointer;position:relative;display:flex;align-items:flex-end;justify-content:center;font-family:system-ui,"Apple Color Emoji","Segoe UI Emoji",sans-serif}
 .hvare.snart::after{content:"";position:absolute;top:0;right:0;width:8px;height:8px;border-radius:50%;background:var(--carrot)}
 .hvare.valgt{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
-/* Vælg flere: de valgte får et flueben, de andre bliver lidt svagere */
-.hvare.markeret{outline:2px solid var(--leaf);border-radius:8px;background:rgba(255,255,255,.6)}
-.hvare.markeret::after{content:"✓";position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--leaf);color:#fff;font:700 12px/18px var(--body);text-align:center}
-.hylde.vaelger .hvare:not(.markeret){opacity:.7}
+/* Vælg flere: en tom boks i hjørnet af hver vare (ved emojien, så navnet kan ses); et tryk sætter flueben */
+.hylde.vaelger .hv-em{position:relative}
+.hylde.vaelger .hv-em::after,.hylde.vaelger .hkort::after{content:"";position:absolute;top:-4px;right:-6px;width:16px;height:16px;box-sizing:border-box;border-radius:5px;border:2px solid var(--leaf);background:#fff;color:#fff;font:700 11px/12px var(--body);text-align:center}
+.hylde.vaelger .hkort::after{top:6px;right:6px;width:20px;height:20px;font-size:13px;line-height:16px}
+.hylde.vaelger .markeret .hv-em::after,.hylde.vaelger .hkort.markeret::after{content:"✓";background:var(--leaf)}
 .traekspoeg .ts-antal{position:absolute;top:-6px;right:-12px;background:var(--leaf);color:#fff;border-radius:999px;font:700 13px/20px var(--body);padding:0 7px}
 .hyldebraet{height:10px;margin:2px -8px 0;background:linear-gradient(#a98057,#7d5a35);box-shadow:0 3px 4px rgba(0,0,0,.25)}
 .hyldebraet.skilt{height:15px;display:flex;align-items:center;padding-left:14px}
@@ -599,7 +605,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
 <section class="tab" id="t-skab" aria-labelledby="h-skab">
   <header class="top"><h1 id="h-skab">Skabet</h1></header>
   <div id="skabSe">
-    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><span class="prikker" id="skabPrikker"></span><button class="btn ghost lille" id="skabVaelgKnap" aria-pressed="false">Vælg</button></div>
+    <div class="skabtop"><button class="btn ghost lille" id="skabTilfoejKnap">+ Tilføj</button><span class="skabnavn" id="skabNavn">Overblik</span><button class="btn ghost lille" id="skabVaelgKnap" aria-pressed="false">Vælg</button><span class="skabblad" id="skabBlad"><button class="pil" id="skabForrige" aria-label="Forrige skab">‹</button><span class="prikker" id="skabPrikker"></span><button class="pil" id="skabNaeste" aria-label="Næste skab">›</button></span></div>
     <p class="skabhint" id="skabForkl"></p>
     <div class="hylde" id="hylde"><div class="hyldeindre" id="hyldeIndre"></div></div>
     <div class="dzlag" id="dzLag"><button class="dropzone" data-dz="kurv" tabindex="-1"><span>🛒</span><small>Køb mere</small></button><button class="dropzone" data-dz="mund" tabindex="-1"><span>😋</span><small>Spist</small></button><button class="dropzone" data-dz="skrald" tabindex="-1"><span>🗑️</span><small>Smidt ud</small></button></div>
@@ -1706,11 +1712,16 @@ function renderButikValg(F,G){
 let skabMode="se",skabSide=0,hyldeValgt=null,skabValg=null,skabKlikVaek=false,emojiAaben=null,skabVaelg=null,skabGruppe=null;
 const zoom={s:1,x:0,y:0};
 function skabModeSaet(m){holdbarSend();skabMode=m;hyldeValgt=null;skabValg=null;skabVaelg=null;renderSkab();window.scrollTo(0,0)}
+document.getElementById("skabForrige").onclick=()=>skabBladre(-1);
+document.getElementById("skabNaeste").onclick=()=>skabBladre(1);
 /* "Vælg": tryk på flere varer, og giv dem samme handling */
 document.getElementById("skabVaelgKnap").onclick=()=>{holdbarSend();skabVaelg=skabVaelg?null:new Set();skabGruppe=null;hyldeValgt=null;renderHylde()};
-/* Hold fingeren på en af de valgte: så åbner indstillingerne, og det, man ændrer, gælder dem alle */
+/* Hold fingeren på en vare: så åbner dens indstillinger. I vælg-tilstand gælder det, man ændrer, alle de valgte. */
 function skabHold(key){
-  if(!skabVaelg)return;
+  if(!skabVaelg){
+    if(hyldeValgt!==key)holdbarSend();
+    hyldeValgt=key;emojiAaben=null;if(navigator.vibrate)navigator.vibrate(15);renderHylde();return;
+  }
   skabVaelg.add(key);skabGruppe=key;emojiAaben=null;
   if(navigator.vibrate)navigator.vibrate(15);
   renderHylde();
@@ -1750,6 +1761,8 @@ function renderHylde(){
   const side=sider[skabSide];
   document.getElementById("skabPrikker").innerHTML=sider.length>1?sider.map((a,i)=>`<button class="prik${i===skabSide?" on":""}" data-sside="${i}" aria-label="${a==="alle"?"Overblik":esc(afdNavn(a))}"></button>`).join(""):"";
   document.querySelectorAll("[data-sside]").forEach(b=>b.onclick=()=>{skabSide=+b.dataset.sside;zoom.s=1;zoom.x=zoom.y=0;hyldeValgt=null;renderHylde()});
+  document.getElementById("skabBlad").hidden=sider.length<=1;
+  document.getElementById("skabForrige").disabled=skabSide<=0;document.getElementById("skabNaeste").disabled=skabSide>=sider.length-1;
   document.getElementById("skabNavn").textContent=side==="alle"?"Overblik":afdNavn(side);
   /* væk med valgte varer, der ikke er i skabet længere */
   if(skabVaelg)for(const k of [...skabVaelg])if(!varer.some(v=>hyldeNoegle(v)===k))skabVaelg.delete(k);
@@ -1757,14 +1770,11 @@ function renderHylde(){
   const vk=document.getElementById("skabVaelgKnap");vk.hidden=!varer.length;vk.textContent=skabVaelg?"Annullér":"Vælg";vk.setAttribute("aria-pressed",!!skabVaelg);
   h.classList.toggle("vaelger",!!skabVaelg);
   const mrk=v=>skabVaelg&&skabVaelg.has(hyldeNoegle(v))?" markeret":"";
-  document.getElementById("skabForkl").textContent=!varer.length?"":skabVaelg?"Tryk for at vælge. Hold fingeren på en af dem for at ændre dem alle":"Træk en vare for at spise den, smide den ud eller købe mere";
+  document.getElementById("skabForkl").textContent=!varer.length?"":skabVaelg?"Sæt flueben, og træk de valgte til køb mere, spist eller smidt ud. Hold på en for at ændre dem alle":"Træk en vare for at spise den, smide den ud eller købe mere. Hold på den for at se mere";
   if(!varer.length){h.style.height="";indre.innerHTML=`<p class="muted" style="padding:18px;margin:0">Skabet er tomt. Tryk på "+ Tilføj".</p>`;info.hidden=true;return}
   h.style.height="";
   const top=h.getBoundingClientRect().top+scrollY,bund=parseFloat(getComputedStyle(document.body).paddingBottom)+6;
   const H=Math.max(260,innerHeight-top-bund);h.style.height=H+"px";
-  /* Vælg-tilstand: bjælken nederst får sin egen plads, så den ikke dækker den nederste hylde */
-  let ekstraBund=0;
-  if(skabVaelg&&!(skabGruppe&&skabVaelg.has(skabGruppe))){renderHyldeInfo(varer);ekstraBund=document.getElementById("hyldeInfo").offsetHeight+8}
   const B=h.clientWidth-16,frisk=v=>friskKlasse(v.rest);
   /* ikonet med et lille ord ovenover; ordet skrumper, hvis det er langt, så det kan stå inden for ikonets bredde */
   const ordMaal=(t,fo)=>{const c=ordMaal.c||(ordMaal.c=document.createElement("canvas").getContext("2d"));c.font=`600 ${fo}px ${getComputedStyle(document.body).fontFamily}`;return c.measureText(t).width};
@@ -1772,7 +1782,7 @@ function renderHylde(){
   const ikon=(v,s,fo)=>`<button class="hvare ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="width:${bredde(v,s,fo)}px" aria-label="${esc(v.navn)}, ${esc(tilbageTekst(v))}, ${esc(holdTekst(v.rest))}"><span class="hv-ord" style="font-size:${fo}px">${esc(v.ord)}</span><span class="hv-em" style="height:${s}px;font-size:${Math.round(s*.74)}px">${v.em}</span></button>`;
   if(side==="alle"){
     /* afdelingens navn står på hyldekanten under varerne, som prisskiltene i butikken */
-    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20-ekstraBund,fast=21;
+    const afd=sider.slice(1),grp=afd.map(a=>varer.filter(v=>v.afd===a)),plads=H-20,fast=21;
     /* rækker på en hylde: varerne lægges ved siden af hinanden, som flex-wrap gør */
     const raekker=(vs,s,fo)=>{let r=1,x=0;for(const v of vs){const w=bredde(v,s,fo);if(x&&x+2+w>B){r++;x=w}else x+=(x?2:0)+w}return r};
     let s=50,fo,rh,rk;
@@ -1781,10 +1791,10 @@ function renderHylde(){
     indre.innerHTML=afd.map((a,i)=>`<div class="hylderum" style="height:${Math.floor(fast+rk[i]*rh+ekstra)}px"><div class="hyldevarer">${grp[i].map(v=>ikon(v,s,fo)).join("")}</div><div class="hyldebraet skilt"><span>${esc(afdNavn(a))}</span></div></div>`).join("");
   }else{
     /* Én afdeling: større kort med navn, hvor meget der er tilbage, og holdbarhed */
-    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24-ekstraBund;let kol=2,kw,kh;
+    const vs=varer.filter(v=>v.afd===side),Hi=H-20-24;let kol=2,kw,kh;
     for(kol=2;kol<=6;kol++){kw=(B-(kol-1)*8)/kol;kh=Math.min(150,kw*1.2);if(Math.ceil(vs.length/kol)*(kh+8)<=Hi)break}
     kol=Math.min(kol,6);
-    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20-ekstraBund}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
+    indre.innerHTML=`<div class="hylderum enkelt" style="height:${H-20}px"><span class="hyldeskilt">${esc(afdNavn(side))}</span><div class="hkort-gitter" style="grid-template-columns:repeat(${kol},1fr)">${vs.map(v=>`<button class="hvare hkort ${frisk(v)}${hyldeValgt===hyldeNoegle(v)?" valgt":""}${mrk(v)}" data-hv="${esc(hyldeNoegle(v))}" style="height:${Math.floor(kh)}px" aria-label="${esc(v.navn)}"><span class="hk-ik" style="font-size:${Math.round(kw*.34)}px">${v.em}</span><span class="hk-n">${esc(v.navn)}</span><span class="hk-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hk-d">${esc(holdTekst(v.rest))}</span></button>`).join("")}</div><div class="hyldebraet"></div></div>`;
   }
   anvendZoom();
   indre.querySelectorAll("[data-hv]").forEach(b=>b.onclick=e=>{
@@ -1799,35 +1809,23 @@ function renderHylde(){
 function renderHyldeInfo(varer){
   const info=document.getElementById("hyldeInfo");
   if(skabVaelg&&skabGruppe&&skabVaelg.has(skabGruppe)&&varer.some(x=>hyldeNoegle(x)===skabGruppe)){gruppeInfo(info,varer);return}
-  if(skabVaelg){
-    const side=skabSider(varer)[skabSide],synlige=side==="alle"?varer:varer.filter(v=>v.afd===side);
-    const valgte=varer.filter(x=>skabVaelg.has(hyldeNoegle(x))),n=valgte.length,alle=synlige.every(x=>skabVaelg.has(hyldeNoegle(x)));
-    info.hidden=false;
-    info.innerHTML=`<div class="hi-top"><b style="flex:1;min-width:0">${n?`${n} ${n===1?"vare":"varer"} valgt`:"Tryk på de varer, der skal med"}</b><button class="btn ghost lille" id="hvAlle">${alle?"Fravælg alle":"Vælg alle"}</button></div>
-      <div class="hi-knapper"><button class="btn ghost lille" data-flere="mund" ${n?"":"disabled"}>😋 Spist</button><button class="btn ghost lille" data-flere="skrald" ${n?"":"disabled"}>🗑️ Smidt ud</button><button class="btn ghost lille" data-flere="kurv" ${n?"":"disabled"}>🛒 Køb mere</button></div>`;
-    document.getElementById("hvAlle").onclick=()=>{for(const x of synlige)alle?skabVaelg.delete(hyldeNoegle(x)):skabVaelg.add(hyldeNoegle(x));renderHylde()};
-    info.querySelectorAll("[data-flere]").forEach(b=>b.onclick=()=>skabSlipFlere(valgte,b.dataset.flere));
-    return;
-  }
+  /* vælg-tilstand: ingen boks, før man holder fingeren på en af de valgte */
+  if(skabVaelg){info.hidden=true;return}
   const v=varer.find(x=>hyldeNoegle(x)===hyldeValgt);info.hidden=!v;
   if(!v)return;
   const trin=v.dage>21?7:1;
   const evAaben=emojiAaben===hyldeValgt;
   info.innerHTML=`<div class="hi-top"><button class="hi-ik" id="hvEmoji" aria-expanded="${evAaben}" aria-label="Vælg en anden emoji til ${esc(v.navn)}">${v.em}</button><b style="flex:1;min-width:0">${esc(v.navn)}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
     ${evAaben?emojiValgHtml(v):""}
-    <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><span class="hi-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hi-tal">${esc(tilbageTekst(v))}</span>${v.k?`<span class="step"><button data-rest="-1" aria-label="Mindre tilbage">−</button><button data-rest="1" aria-label="Mere tilbage">+</button></span>`:""}</div>
-    ${v.k?"":`<div class="chips" style="margin:2px 0 0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${v.niveau===n}">${lb}</button>`).join("")}</div>`}
+    <div class="hi-raekke"><span class="hi-lbl">Mængde</span><span class="hi-bar"><i style="width:${Math.round(andel(v)*100)}%"></i></span><span class="hi-tal">${esc(tilbageTekst(v))}</span>${v.k?`<span class="step"><button data-rest="-1" aria-label="Mindre tilbage">−</button><button data-rest="1" aria-label="Mere tilbage">+</button></span>`:""}</div>
+    ${v.k?"":`<div class="chips" style="margin:2px 0 0">${[["lidt","Lidt"],["noget","Noget"],["hel","Hel"]].map(([n,lb])=>`<button class="chip lille" data-niv="${n}" aria-pressed="${v.niveau===n}">${lb}</button>`).join("")}</div>`}
     <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold ${friskKlasse(v.rest)}" id="hiHold">${esc(holdTekst(v.rest))}</span></div>
     <input type="range" class="holdskyder" id="hiSkyder" min="0" max="${2*Math.max(1,v.rest??1)}" step="1" value="${Math.max(0,v.rest??0)}" aria-label="Juster holdbarheden">
     <div class="hi-knapper"><button class="btn ghost lille" data-slip="mund">😋 Spist</button><button class="btn ghost lille" data-slip="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-slip="kurv">🛒 Køb mere</button></div>`;
   document.getElementById("hvLuk").onclick=()=>{holdbarSend();hyldeValgt=null;renderHylde()};
   document.getElementById("hvEmoji").onclick=()=>{emojiAaben=evAaben?null:hyldeValgt;renderHyldeInfo(skabVarer())};
   info.querySelectorAll("[data-em]").forEach(b=>b.onclick=()=>emojiVaelg(v,b.dataset.em));
-  const evIn=document.getElementById("evIn");
-  if(evIn){
-    const brug=()=>{const e=foersteEmoji(evIn.value);if(!e){toast("Skriv en emoji, fx 🥕");return}emojiVaelg(v,e)};
-    document.getElementById("evOk").onclick=brug;evIn.onkeydown=e=>{if(e.key==="Enter")brug()};
-  }
+  egenEmojiFelt(e=>emojiVaelg(v,e));
   info.querySelectorAll("[data-slip]").forEach(b=>b.onclick=()=>skabSlip(v,b.dataset.slip));
   info.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{st.fri[v.fi].niveau=b.dataset.niv;changed()});
   info.querySelectorAll("[data-rest]").forEach(b=>b.onclick=()=>{
@@ -1870,7 +1868,7 @@ function emojiValgHtml(v){
   return `<div class="emojivalg">
     ${andre.length?`<div class="ev-lbl">Andre har valgt</div><div class="ev-rk">${andre.map(([e,k])=>`<button class="ev" data-em="${esc(e)}" aria-label="${esc(e)}, valgt ${k} ${k===1?"gang":"gange"}">${esc(e)}<small>${k}</small></button>`).join("")}</div>`:""}
     <div class="ev-lbl">Forslag</div><div class="ev-rk">${emojiForslag(v).map(e=>`<button class="ev" data-em="${esc(e)}">${esc(e)}</button>`).join("")}</div>
-    <div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Eller skriv din egen" aria-label="Skriv en emoji" autocomplete="off"><button class="btn ghost lille" id="evOk">Brug</button></div>
+    <div class="ev-lbl">Brug din egen</div><div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Tryk og vælg fra tastaturet" aria-label="Vælg en emoji fra tastaturet" autocomplete="off" autocorrect="off" spellcheck="false"></div><p class="muted" id="evHjaelp" style="margin:4px 0 0;font-size:.78rem" hidden>Det skal være en emoji – tryk på 😊-knappen på tastaturet.</p>
     ${eget?`<div class="ev-rk" style="margin-top:8px"><button class="btn ghost lille" data-em="${esc(std)}">Tilbage til ${esc(std)}</button></div>`:""}
   </div>`;
 }
@@ -1939,11 +1937,11 @@ function gruppeInfo(info,varer){
   info.hidden=false;
   info.innerHTML=`<div class="hi-top"><span class="hi-ik">${v.em}</span><b style="flex:1;min-width:0">${esc(v.navn)}${n>1?` <span class="muted" style="font-weight:400">+ ${n-1} ${n-1===1?"anden":"andre"}</span>`:""}</b><button class="x" id="hvLuk" aria-label="Luk">×</button></div>
     <p class="muted" style="margin:2px 0 4px;font-size:.82rem">Det, du ændrer her, gælder ${n===1?"varen":`alle ${n} valgte`}.</p>
-    <div class="hi-raekke"><span class="hi-lbl">Tilbage</span><div class="chips" style="margin:0">${[["hel","Hel"],["noget","Noget"],["lidt","Lidt"]].map(([k,lb])=>`<button class="chip lille" data-gniv="${k}">${lb}</button>`).join("")}</div></div>
+    <div class="hi-raekke"><span class="hi-lbl">Mængde</span><div class="chips" style="margin:0">${[["lidt","Lidt"],["noget","Noget"],["hel","Hel"]].map(([k,lb])=>`<button class="chip lille" data-gniv="${k}">${lb}</button>`).join("")}</div></div>
     <div class="hi-raekke"><span class="hi-lbl">Holdbarhed</span><span class="hi-hold" id="hiHold">Uændret</span></div>
     <input type="range" class="holdskyder" id="hiSkyder" min="-7" max="7" step="1" value="0" aria-label="Flyt holdbarheden for alle de valgte">
     <div class="hi-raekke"><span class="hi-lbl">Emoji</span><button class="btn ghost lille" id="gEmoji" aria-expanded="${evAaben}">Skift for ${n===1?"varen":"alle"}</button></div>
-    ${evAaben?`<div class="emojivalg"><div class="ev-lbl">Forslag</div><div class="ev-rk">${emojiForslag(v).map(e=>`<button class="ev" data-gem="${esc(e)}">${esc(e)}</button>`).join("")}</div><div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Eller skriv din egen" aria-label="Skriv en emoji" autocomplete="off"><button class="btn ghost lille" id="evOk">Brug</button></div></div>`:""}
+    ${evAaben?`<div class="emojivalg"><div class="ev-lbl">Forslag</div><div class="ev-rk">${emojiForslag(v).map(e=>`<button class="ev" data-gem="${esc(e)}">${esc(e)}</button>`).join("")}</div><div class="ev-lbl">Brug din egen</div><div class="ev-egen"><input id="evIn" maxlength="16" placeholder="Tryk og vælg fra tastaturet" aria-label="Vælg en emoji fra tastaturet" autocomplete="off" autocorrect="off" spellcheck="false"></div><p class="muted" id="evHjaelp" style="margin:4px 0 0;font-size:.78rem" hidden>Det skal være en emoji – tryk på 😊-knappen på tastaturet.</p></div>`:""}
     <div class="hi-knapper"><button class="btn ghost lille" data-flere="mund">😋 Spist</button><button class="btn ghost lille" data-flere="skrald">🗑️ Smidt ud</button><button class="btn ghost lille" data-flere="kurv">🛒 Køb mere</button></div>`;
   document.getElementById("hvLuk").onclick=()=>{holdbarSend();skabGruppe=null;emojiAaben=null;renderHylde()};
   info.querySelectorAll("[data-flere]").forEach(b=>b.onclick=()=>{skabGruppe=null;skabSlipFlere(valgte,b.dataset.flere)});
@@ -1965,8 +1963,7 @@ function gruppeInfo(info,varer){
   document.getElementById("gEmoji").onclick=()=>{emojiAaben=evAaben?null:"gruppe";renderHyldeInfo(skabVarer())};
   const saetEmoji=em=>{st.emojiValg=st.emojiValg||{};for(const x of valgte){const k=emojiNoegle(x.navn);if(em===standardEmoji(x))delete st.emojiValg[k];else st.emojiValg[k]=em}emojiAaben=null;changed();toast(`${n} ${n===1?"vare":"varer"} har fået ${em}`)};
   info.querySelectorAll("[data-gem]").forEach(b=>b.onclick=()=>saetEmoji(b.dataset.gem));
-  const evIn=document.getElementById("evIn");
-  if(evIn){const brug=()=>{const e=foersteEmoji(evIn.value);if(!e){toast("Skriv en emoji, fx 🥕");return}saetEmoji(e)};document.getElementById("evOk").onclick=brug;evIn.onkeydown=e=>{if(e.key==="Enter")brug()}}
+  egenEmojiFelt(saetEmoji);
 }
 /* Samme handling for flere varer på én gang; derefter slutter vælg-tilstanden */
 function skabSlipFlere(vs,hvor){
@@ -2008,8 +2005,8 @@ function skabBladre(d){
     if(pts.size===2){stopTraek();const [a,b]=[...pts.values()],r=h.getBoundingClientRect();g={type:"pinch",d0:dist(a,b)||1,s0:zoom.s,px:(a.x+b.x)/2-r.left,py:(a.y+b.y)/2-r.top,x0:zoom.x,y0:zoom.y};return}
     if(pts.size>2)return;
     g={type:"?",id:e.pointerId,x0:e.clientX,y0:e.clientY,t0:Date.now(),ikon:e.target.closest(".hvare"),zx:zoom.x,zy:zoom.y};
-    /* vælg-tilstand: holder man stille på en vare i et halvt sekund, åbner indstillingerne for alle de valgte */
-    if(skabVaelg&&g.ikon){const gg=g;holdTimer=setTimeout(()=>{if(g===gg&&g.type==="?"){g.type="hold";skabHold(gg.ikon.dataset.hv)}},500)}
+    /* holder man stille på en vare i et halvt sekund, åbner dens indstillinger af sig selv – i vælg-tilstand for alle de valgte */
+    if(g.ikon){const gg=g;holdTimer=setTimeout(()=>{if(g===gg&&g.type==="?"){g.type="hold";skabHold(gg.ikon.dataset.hv)}},500)}
   });
   window.addEventListener("pointermove",e=>{
     if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
@@ -3068,6 +3065,14 @@ function fraSkabet(f){
     for(const x of mt.harL){const h=har[x.id];laeg(h.kilde==="skab"?{noegle:"k:"+h.k,navn:skabNavn(h.k)}:{noegle:"f:"+h.fri,navn:h.fri})}
   }else for(const u of f.bruger||[])if(!erBasisNavn(u.navn))laeg(brugerNoegle(u));
   return ud;
+}
+/* "Brug din egen": emojien bruges, så snart den er valgt på tastaturet – så skal man ikke finde en knap,
+   som tastaturet måske dækker. Feltet rulles frem, når tastaturet er åbnet. */
+function egenEmojiFelt(brug){
+  const evIn=document.getElementById("evIn");if(!evIn)return;
+  const hj=document.getElementById("evHjaelp");
+  evIn.oninput=()=>{const e=foersteEmoji(evIn.value);if(e){evIn.blur();brug(e);return}if(hj)hj.hidden=!evIn.value.trim()};
+  evIn.onfocus=()=>setTimeout(()=>evIn.scrollIntoView({block:"center",behavior:"smooth"}),350);
 }
 function opremsning(l){return l.length>1?l.slice(0,-1).join(", ")+" og "+l[l.length-1]:l[0]||""}
 /* Det, I ikke har: Claudes egne retter skal købe det i stedet, og det fjernes fra skabet */
@@ -4352,7 +4357,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="57";
+const APP_VERSION="58";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
