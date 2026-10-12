@@ -137,6 +137,11 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 /* Knapperne nederst står altid synligt lige over bundmenuen – også på små telefoner, hvor skærmen er højere end telefonen */
 .wiz.skaerm>.nav{margin:auto -16px -16px;padding:12px 16px 16px;position:sticky;bottom:calc(54px + env(safe-area-inset-bottom));background:var(--card);border-radius:0 0 18px 18px;box-shadow:0 -8px 12px -10px rgba(0,0,0,.18);z-index:2}
 .wiz.skaerm .nav .btn{padding:10px 14px}
+/* Præference-guiden: × i hjørnet, så knapperne nederst kan stå på én linje */
+.wiz.guide{position:relative}.wiz.guide .wizluk{position:absolute;top:8px;right:6px}.wiz.guide h2{padding-right:30px}
+/* Oversigten: navn og værdi på samme linje, så hele oversigten kan ses på en telefon */
+.oversigt .item{display:grid;grid-template-columns:minmax(92px,36%) 1fr;gap:10px;padding:8px 12px;align-items:baseline}
+.oversigt .item b{font-size:.9rem}.oversigt .item span{font-size:.92rem;color:var(--muted)}
 .skhead{display:flex;align-items:flex-start;gap:8px}.skhead h2{flex:1;min-width:0}.skhead .x{margin:-2px -8px 0 0}
 .skkrop{margin-top:12px}
 .tiles.kompakt{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:0}
@@ -2741,11 +2746,11 @@ function wizHtml(){
     <div class="tiles">${[[1,"Én gang","Storindkøb"],[2,"Op til to gange","Friskere varer og flere tilbud"],[3,"Op til tre gange","Friskt hele ugen"]].map(([n,lb,sm])=>`<button class="tile" data-w="indkob" data-n="${n}" aria-pressed="${v.indkobGange===n}"><span class="ik">🧺</span><span class="lb">${lb}</span><span class="sm">${sm}</span></button>`).join("")}</div>`;
   else{
     const uden=v.butikker.filter(b=>!harTilbud(b));
-    h=`<h2>Sådan ser det ud</h2><div class="list" style="margin-top:10px">${[["Personer",v.P],["Allergier",allergiNavne(v.allergier)?stort(allergiNavne(v.allergier)):"Ingen"],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Vigtigt for jer",[v.maal.skab&&"Tøm skabet",v.maal.tilbud&&"Bedste tilbud",typerKort(v.typer)].filter(Boolean).join(", ")||"Intet valgt"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Indkøbsture",indkobKort(v)],["Butikker pr. tur",handelKort(v)]].map(([a,b])=>`<div class="item"><div class="grow"><b>${a}</b><div class="amt">${esc(String(b))}</div></div></div>`).join("")}</div>
+    h=`<h2>Sådan ser det ud</h2><div class="list oversigt" style="margin-top:10px">${[["Personer",v.P],["Allergier",allergiNavne(v.allergier)?stort(allergiNavne(v.allergier)):"Ingen"],["Madlavning",v.M+(v.M===1?" gang":" gange")+" om ugen"],["Vigtigt for jer",[v.maal.skab&&"Tøm skabet",v.maal.tilbud&&"Bedste tilbud",typerKort(v.typer)].filter(Boolean).join(", ")||"Intet valgt"],["Butikker",v.butikker.join(", ")||"Ingen valgt"],["Indkøbsture",indkobKort(v)],["Butikker pr. tur",handelKort(v)]].map(([a,b])=>`<div class="item"><b>${a}</b><span>${esc(String(b))}</span></div>`).join("")}</div>
     ${uden.length?`<p class="muted" style="margin-top:8px">Vi har ikke tilbud fra ${esc(uden.join(", "))} endnu. Ønsket bliver gemt, så de kan komme med senere.</p>`:""}`;
   }
-  const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span><button class="btn ghost" data-w="luk">Luk</button>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">Næste</button>`}</div>`;
-  return `<div class="wiz skaerm">${prik}${h}${nav}</div>`;
+  const nav=`<div class="nav">${wiz.trin>0?`<button class="btn ghost" data-w="tilbage">Tilbage</button>`:""}<span class="grow"></span>${t==="oversigt"?`<button class="btn" data-w="gem">Gem præferencer</button>`:`<button class="btn" data-w="naeste">Næste</button>`}</div>`;
+  return `<div class="wiz skaerm guide"><button class="x wizluk" data-w="luk" aria-label="Luk guiden">×</button>${prik}${h}${nav}</div>`;
 }
 function wizHandling(b,host){
   const w=b.dataset.w;
@@ -4347,7 +4352,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="56";
+const APP_VERSION="57";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
