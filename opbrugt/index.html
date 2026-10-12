@@ -1746,12 +1746,24 @@ function renderShop(p){
     /* Alt, der ikke har ✕, er købt og lægges i skabet. Varer med ✕ bliver på listen. */
     const koebt=iButik.filter(v=>mark(v.key)!=="nej");
     const lagt=koebVarer(koebt);
-    if(koebt.length&&sample){const k=kvitAktiv()&&st.kvit.dato===todayIso()?st.kvit:(st.kvit={dato:todayIso(),butikker:[],lagt:{}});if(butik&&!k.butikker.includes(butik))k.butikker.push(butik);for(const x in lagt)k.lagt[x]=(k.lagt[x]||0)+lagt[x]}
+    if(koebt.length&&sample){const k=kvitAktiv()&&st.kvit.dato===todayIso()?st.kvit:(st.kvit={dato:todayIso(),butikker:[],lagt:{}});if(butik&&!k.butikker.includes(butik))k.butikker.push(butik);for(const x in lagt)k.lagt[x]=(k.lagt[x]||0)+lagt[x];
+      k.ture=[...(k.ture||[]),{butik,tid:new Date().toISOString().slice(0,16),varer:turVarer(iButik,F,butik,mark)}].slice(-4)}
     for(const v of koebt)delete st.shopMark[v.key];
     shopAfd=null;shopSide=0;shopVis=null;if(naesteButik)st.aktivButik=naesteButik;
     changed();toast(koebt.length?`${koebt.length} ${koebt.length===1?"vare":"varer"} lagt i skabet`:"Færdig");
     if(kvitAktiv()&&sample)window.scrollTo({top:0,behavior:"smooth"});
   };
+}
+/* Det, listen foreslog i butikken, i kort form: sendes med kvitteringen, så den daglige rutine kan se, om tilbuddene
+   blev købt som foreslået (se priser/kvitteringer.py) */
+function turVarer(varer,F,butik,mark){
+  return varer.slice(0,80).map(v=>{const o=F.tilbud.get(v.key);return {navn:v.navn,id:v.id||null,koeb:koebMaengde(v,butik)||"",mark:mark(v.key)||"",
+    retter:[...(v.retter||[])].map(kortRet).filter(Boolean).slice(0,3),...(v.bytFra?{bytFra:v.bytFra}:{}),
+    ...(o?{tilbud:{o:String(o.o||o.n||"").slice(0,60),p:o.p,ep:o.ep??null,pr:o.pr||null,f:o.f,t:o.t}}:{})}});
+}
+/* Listen for butikken lige nu – til en kvittering, der scannes uden at have trykket "Færdig" */
+function turNu(butik){
+  try{const G=samletIndkob(last,true),F=fordel(G),m=k=>(st.shopMark||{})[k]||"";return turVarer(G.filter(v=>F.tildelt.get(v.key)===butik),F,butik,m)}catch(e){return []}
 }
 /* Købte varer lægges i skabet og fjernes fra listen. Planlagte retter tager dem fra skabet på dagen. */
 function koebVarer(liste){
@@ -3863,7 +3875,8 @@ Skab: {"type":"skab","varer":[{"k":nøgle,"navn":"det du ser","maengde":tal elle
       for(const a of (r.andet||[])){const nm=String(a).trim();if(nm&&!st.fri.some(f=>f.navn.toLowerCase()===nm.toLowerCase())){friLaeg(nm);n++}}
       st.basisMangler=st.basisMangler.filter(b=>!basis.includes(b));
       const fjernet=scanItems.filter(v=>!v.on).map(v=>`${P[v.k].n} ("${String(v.tekst||"").slice(0,30)}")`);
-      const np=laerPriser(r);kvitDel(r,f,fjernet);
+      const kb=butikFraTekst(r.butik),ture=((k&&k.ture)||[]).filter(t=>!kb||t.butik===kb);
+      const np=laerPriser(r);kvitDel(r,f,fjernet,ture.length?ture:kb?[{butik:kb,tid:null,varer:turNu(kb),uden_faerdig:true}]:[]);
       if(k){const kb=butikFraTekst(r.butik);k.butikker=k.butikker.filter(b=>b!==kb);if(!kb||!k.butikker.length)delete st.kvit}
       scanItems=[];out.innerHTML="";
       changed();toast(n+(k?" varer tjekket i skabet":" varer lagt i skabet")+(np?` · ${np} priser gemt`:""));
@@ -3973,7 +3986,7 @@ function kvitAfviger(r,butik){
   }
   return ud;
 }
-async function kvitDel(r,fil,fjernet){
+async function kvitDel(r,fil,fjernet,ture){
   if(!FEEDBACK_URL||st.settings.delKvit===false)return;
   const butik=(r._normal&&r._normal.butik)||butikFraTekst(r.butik);
   const grunde=[],afv=kvitAfviger(r,butik);
@@ -3982,7 +3995,7 @@ async function kvitDel(r,fil,fjernet){
   if(!grunde.length&&Math.random()<1/20)grunde.push("stikprøve");
   const data={type:"kvittering",butik:butik||String(r.butik||"").slice(0,40),dato:String(r.dato||"").slice(0,20),version:APP_VERSION,
     linjer:(r.priser||[]).slice(0,200).map(x=>({i:x.i||null,tekst:String(x.tekst||"").slice(0,60),pris:+x.pris||0,maengde:+x.maengde||0,enhed:x.enhed||"",rabat:!!x.rabat})),
-    normal:(r._normal&&r._normal.priser)||{},billedeGrund:grunde.join(" · ").slice(0,1000)||null};
+    normal:(r._normal&&r._normal.priser)||{},billedeGrund:grunde.join(" · ").slice(0,1000)||null,indkob:(ture||[]).slice(-4)};
   const billede=fil&&grunde.length?await billedeLille(fil):null;
   try{const j=await (await fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify({...data,billede})})).json();if(j&&j.ok)return}catch(e){}
   (st.kvitKoe=st.kvitKoe||[]).push(data);st.kvitKoe=st.kvitKoe.slice(-20);save();
@@ -4938,7 +4951,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="63";
+const APP_VERSION="64";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;

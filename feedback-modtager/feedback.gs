@@ -6,7 +6,7 @@
    Emojis: appen sender {type:"emoji", vare, emoji}, når nogen vælger en anden emoji til en vare i skabet.
    Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json ({vare: {emoji: antal}}),
    og ?type=emojis henter dem, så appen kan vise, hvad andre har valgt.
-   Kvitteringer: appen sender {type:"kvittering", butik, dato, linjer, normal, billedeGrund, billede}, når en kvittering
+   Kvitteringer: appen sender {type:"kvittering", butik, dato, linjer, normal, billedeGrund, indkob, billede}, når en kvittering
    er scannet. Varelinjerne gemmes i Google Drive › Privat › mad › kvitteringer › <måned>. Billedet kommer kun med,
    når noget ser forkert ud eller som stikprøve (billedeGrund siger hvorfor). Normalpriserne samles i
    kvitteringer › priser.json, og ?type=priser henter dem, så appens priser bliver bedre for alle.
@@ -106,7 +106,9 @@ function gemKvittering(d) {
     version: String(d.version || "").slice(0, 10),
     linjer: Array.isArray(d.linjer) ? d.linjer.slice(0, 200) : [],
     normal: d.normal && typeof d.normal === "object" ? d.normal : {},
-    billedeGrund: d.billedeGrund ? String(d.billedeGrund).slice(0, 1000) : null
+    billedeGrund: d.billedeGrund ? String(d.billedeGrund).slice(0, 1000) : null,
+    /* det, indkøbslisten foreslog i butikken (tilbud, ✓/✕), så kvitteringen kan holdes op mod den */
+    indkob: Array.isArray(d.indkob) ? d.indkob.slice(0, 4) : []
   };
   const json = JSON.stringify(data, null, 1);
   if (json.length > 200000) return svar({ ok: false, fejl: "for stor" });

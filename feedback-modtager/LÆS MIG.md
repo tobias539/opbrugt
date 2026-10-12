@@ -40,5 +40,9 @@ og de delte opskrifter og de samlede priser kan læses af alle. Feedbacken og kv
 
 ## Opsamling
 
-Åbn en Claude-session i mappen `mad`, og skriv fx:
-"Lav en opsamling på feedbacken i mappen feedback – hvad går igen, og hvad bør vi lave først?"
+Den daglige rutine "Hent tilbudsaviser, kvitteringer og feedback" (kl. 7) gør det af sig selv:
+- `python priser/kvitteringer.py` holder nye kvitteringer op mod indkøbslisten, tilbudsavisen og hyldepriserne
+  (rapport i `kvitteringer/rapporter/`). Kvitteringerne har indkøbslisten med, hvis man trykker "Færdig" i butikken.
+- `python feedback-modtager/indbakke.py` viser ny feedback. Rutinen skriver en vurdering i
+  `feedback/vurderinger/<dato>.md` med tre veje: optimistisk, reflekterende og ulemperne. Du vælger i rutinens
+  session, og valget skrives i filen.
