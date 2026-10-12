@@ -3194,10 +3194,19 @@ function traekFra(skab,fri,b){
   if(i>=0){fri.splice(i,1);return true}
   return false;
 }
-/* Retter fra dage, der er gået: træk det købte fra skabet. Returnerer true, hvis noget blev ændret. */
+/* Retter fra dage, der er gået. Ikke alle retter bliver lavet: en ret antages kun at være lavet, hvis opskriften blev
+   åbnet ("Lav retten") og der var købt ind til den (eller alt var hjemme). Så trækkes det købte fra skabet.
+   Ellers blev den ikke lavet: det, der blev reserveret fra skabet, da den kom på planen, lægges tilbage, det købte
+   bliver i skabet, rettens linjer fjernes fra indkøbslisten, og den tæller ikke som spist (3-ugers-reglen).
+   En ret, der fik "Færdig", er allerede afviklet (retLavet). Returnerer true, hvis noget blev ændret. */
 function afvikl(){
   const t0=todayIso();let aendret=false;
-  for(const f of st.fast){if(f.dato>=t0||f.afviklet)continue;for(const b of retBehov(f))traekFra(st.skab,st.fri,b);f.afviklet=true;aendret=true}
+  for(const f of st.fast){
+    if(f.dato>=t0||f.afviklet)continue;
+    if(f.aabnet&&erIndkoebt(f)){for(const b of retBehov(f))traekFra(st.skab,st.fri,b);f.lavet=f.lavet||f.dato}
+    else retIkkeLavet(f);
+    f.afviklet=true;aendret=true;
+  }
   /* Primærvarer med fast forbrug (fx 3 æg om dagen) trækkes fra én gang om dagen */
   const sidst=st.forbrugDato||t0,dage=Math.round((new Date(t0+"T12:00:00")-new Date(sidst+"T12:00:00"))/864e5);
   if(dage>0)for(const navn of hyldeAf().primaer){
@@ -3742,7 +3751,8 @@ function lavRet(f,rk,valg){
     changed();
   }
   if(r){arkLuk();oValg[r.id]={...(f.byt||{})};kogVis(r,f);return}
-  /* retter fra Snak har ingen opskrift i bogen: vis trinene her */
+  /* retter fra Snak har ingen opskrift i bogen: vis trinene her (det tæller også som åbnet) */
+  if(!f.aabnet){f.aabnet=todayIso();save()}
   arkVis(`<h3>${esc(f.navn)}</h3>${(f.trin||[]).length?`<ol style="margin:8px 0 0;padding-left:20px">${f.trin.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`:`<p class="muted">Retten er fra Snak og har ingen opskrift. Spørg i Snak, hvis du vil have en.</p>`}<button class="btn ghost" data-ark="luk">Luk</button>`,
     ark=>{ark.querySelector('[data-ark="luk"]').onclick=arkLuk});
 }
@@ -3988,6 +3998,7 @@ function kogGaa(til){
 }
 function kogVis(r,f){
   bogFast=f||null;kog={r,f,side:0,fundet:new Set(),vist:-1};
+  if(f&&!f.aabnet){f.aabnet=todayIso();save()}
   document.querySelectorAll(".kogside").forEach(x=>x.remove());
   const el=document.createElement("div");el.className="kogside";
   el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label",r.t);
@@ -4992,12 +5003,23 @@ function oPlacer(r,dato,personer){
   return id;
 }
 /* Fjern en ret fra planen og læg det, den ville bruge fra skabet, tilbage */
-function fjernFast(id){
-  const f=st.fast.find(x=>x.id===id);
+/* Det, en ret reserverede fra skabet (f.brugt), lægges tilbage */
+function givTilbage(f){
   for(const b of (f&&f.brugt)||[]){
     if(b.k&&P[b.k]){const x=st.skab[b.k];st.skab[b.k]=x?{...x,amt:x.amt+b.amt}:{amt:b.amt,koebt:b.amt,dage:b.dage??ho(b.k),dato:todayIso()}}
     else if(b.fri){const x=st.fri.find(y=>y.navn===b.fri);if(x)x.niveau=b.niveau;else st.fri.push({navn:b.fri,niveau:b.niveau,dato:todayIso()})}
   }
+  if(f)f.brugt=[];
+}
+/* Retten blev ikke lavet (se afvikl) */
+function retIkkeLavet(f){
+  givTilbage(f);f.ikkeLavet=true;
+  st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==f.id);
+  if(st.historik.some(h=>h.id===f.id)){st.historik=st.historik.filter(h=>h.id!==f.id);if(f.opskrift&&st.valgtAntal[f.opskrift])st.valgtAntal[f.opskrift]--}
+}
+function fjernFast(id){
+  const f=st.fast.find(x=>x.id===id);
+  givTilbage(f);
   st.fast=st.fast.filter(x=>x.id!==id);st.ekstraIndkob=st.ekstraIndkob.filter(x=>x.fastId!==id);
   /* fjernet før dagen: den blev ikke lavet, så den tæller ikke som valgt */
   if(f&&f.dato>=todayIso()&&st.historik.some(h=>h.id===id)){st.historik=st.historik.filter(h=>h.id!==id);if(f.opskrift&&st.valgtAntal[f.opskrift])st.valgtAntal[f.opskrift]--}
@@ -5066,6 +5088,7 @@ const NYLIG_DAGE=21;
 function historikSync(){
   const kendt=new Map(st.historik.map(h=>[h.id,h]));
   for(const f of st.fast){
+    if(f.ikkeLavet)continue;
     const h=kendt.get(f.id);
     if(h){h.dato=f.dato;continue}
     st.historik.push({id:f.id,navn:f.navn,opskrift:f.opskrift||null,dato:f.dato});
@@ -5195,6 +5218,8 @@ function flag(m){document.getElementById("saveState").textContent=m}
 function merge(d){if(d&&typeof d==="object"){d=JSON.parse(JSON.stringify(d));st={...JSON.parse(JSON.stringify(DEFAULT)),...d,settings:{...DEFAULT.settings,...(d.settings||{})}}}}
 
 try{const l=localStorage.getItem("opbrugt");if(l)merge(JSON.parse(l))}catch(e){}
+/* Overgang (v73): før blev det ikke husket, om opskriften var åbnet – dagens retter regnes som åbnet */
+if(!st.aabnetHuskes){for(const f of st.fast)if(f.dato===todayIso()&&!f.afviklet)f.aabnet=f.aabnet||todayIso();st.aabnetHuskes=1}
 historikSync();afvikl();st.ekstraIndkob=st.ekstraIndkob.filter(x=>!x.done);
 for(const [k,v] of Object.entries(st.skab)){if(!v.dato)v.dato=todayIso();if(!v.koebt&&P[k])v.koebt=Math.max(v.amt,P[k].pk)}
 for(const f of st.fri){if(!f.dato)f.dato=todayIso();f.navn=renNavn(f.navn)}
@@ -5408,7 +5433,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="72";
+const APP_VERSION="73";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
