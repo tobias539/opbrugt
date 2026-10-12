@@ -10,6 +10,9 @@
    er scannet. Varelinjerne gemmes i Google Drive › Privat › mad › kvitteringer › <måned>. Billedet kommer kun med,
    når noget ser forkert ud eller som stikprøve (billedeGrund siger hvorfor). Normalpriserne samles i
    kvitteringer › priser.json, og ?type=priser henter dem, så appens priser bliver bedre for alle.
+   Trinbilleder: appen sender {type:"trinbillede", noegle, opskrift, trin, svg}, når Claude har tegnet et billede til et
+   trin i "Lav retten". Det gemmes i Google Drive › Privat › mad › trinbilleder, og ?type=trinbillede&noegle=… henter
+   det, så hvert billede kun tegnes én gang for alle. Kun rene SVG-tegninger tages imod.
    Mapperne oprettes, hvis de mangler. Opsætning: se LÆS MIG.md. */
 
 const FEEDBACK_STI = ["Privat", "mad", "feedback"];
@@ -19,6 +22,8 @@ const EMOJI_FIL = "emojis.json";
 const KVIT_STI = ["Privat", "mad", "kvitteringer"];
 const PRIS_FIL = "priser.json";
 const PRIS_ENHEDER = { kg: true, l: true, stk: true };
+const TRINBILLEDE_STI = ["Privat", "mad", "trinbilleder"];
+const TRINBILLEDE_NOEGLE = /^[a-z0-9-]{1,120}_[0-9a-f]{8}$/;
 const MAKS = 4000;
 const KILDER = { snak: "skrevet i snakken", holdbarhed: "holdbarhed ændret i skabet", feedback: "feedback-feltet" };
 
@@ -37,6 +42,7 @@ function doPost(e) {
     if (d.type === "opskrift") return gemOpskrift(d.opskrift);
     if (d.type === "emoji") return gemEmoji(d);
     if (d.type === "kvittering") return gemKvittering(d);
+    if (d.type === "trinbillede") return gemTrinbillede(d);
     const tekst = String(d.tekst || "").trim().slice(0, MAKS);
     if (!tekst) return svar({ ok: false, fejl: "tom besked" });
     const kilde = KILDER[d.kilde] ? d.kilde : "feedback";
@@ -155,7 +161,27 @@ function midterpris(obs) {
   return n % 2 ? s[(n - 1) / 2] : Math.round((s[n / 2 - 1] + s[n / 2]) * 50) / 100;
 }
 
+/* Et billede til et trin: én SVG-fil pr. nøgle (opskrift + trinets tekst + stilens version). Findes den, bliver den. */
+function rentSvg(svg) {
+  return /^<svg[\s>]/i.test(svg) && /<\/svg>$/i.test(svg) && svg.length <= 200000 &&
+    !/<script|javascript:|\son[a-z]+\s*=|<foreignObject|<image|<iframe|href\s*=\s*(?!["']?#)/i.test(svg);
+}
+function gemTrinbillede(d) {
+  const k = String(d.noegle || ""), svg = String(d.svg || "").trim();
+  if (!TRINBILLEDE_NOEGLE.test(k)) return svar({ ok: false, fejl: "nøgle" });
+  if (!rentSvg(svg)) return svar({ ok: false, fejl: "ikke en ren SVG" });
+  const m = mappe(TRINBILLEDE_STI), navn = k + ".svg";
+  if (!m.getFilesByName(navn).hasNext()) m.createFile(navn, svg, "image/svg+xml");
+  return svar({ ok: true });
+}
+
 function doGet(e) {
+  if (e && e.parameter && e.parameter.type === "trinbillede") {
+    const k = String(e.parameter.noegle || "");
+    if (!TRINBILLEDE_NOEGLE.test(k)) return svar({ ok: false, svg: null });
+    const f = mappe(TRINBILLEDE_STI).getFilesByName(k + ".svg");
+    return svar({ ok: true, svg: f.hasNext() ? f.next().getBlob().getDataAsString() : null });
+  }
   if (e && e.parameter && e.parameter.type === "priser") {
     const ud = {};
     try {

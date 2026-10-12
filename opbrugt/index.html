@@ -245,8 +245,22 @@ button.ugefelt{position:relative;background:none;border:0;padding:0;margin:0;fon
 .altchips button{flex:0 1 auto;font-size:.82rem}
 .bogud{color:var(--muted)}
 /* Kogevisning: opskriften over hele skærmen med kun en tilbageknap øverst til venstre */
-.kogside{position:fixed;inset:0;z-index:80;background:#fbf6e9;color:#2b2218;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.kogindhold{max-width:640px;margin:0 auto;padding:calc(62px + env(safe-area-inset-top)) 20px calc(36px + env(safe-area-inset-bottom))}
+.kogside{position:fixed;inset:0;z-index:80;background:#fbf6e9;color:#2b2218;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;align-items:center}
+.kogindhold{flex:1 0 auto;width:100%;max-width:640px;box-sizing:border-box;padding:calc(62px + env(safe-area-inset-top)) 20px 8px}
+.kogbund{position:sticky;bottom:0;width:100%;max-width:640px;box-sizing:border-box;padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(rgba(251,246,233,0),#fbf6e9 28%)}
+.kogbund>.btn{display:block;width:100%}.kogknapper{display:flex;gap:10px}.kogknapper .btn{flex:1}
+.kogstatus{margin:0 0 8px;font-size:.9rem;color:#8a6d45;text-align:center;font-style:italic}
+.kogbillede{display:block;width:100%;aspect-ratio:8/5;border-radius:14px;background:#efe5cf;object-fit:cover;margin:0 0 14px}
+.kogbillede.tom{display:flex;align-items:center;justify-content:center;color:#8a6d45;font-style:italic;animation:kogpuls 1.6s ease-in-out infinite}
+@keyframes kogpuls{50%{opacity:.55}}@media (prefers-reduced-motion:reduce){.kogbillede.tom{animation:none}}
+.kogtrinnr{margin:0;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#8a6d45}
+.kogtrintitel{font-family:Georgia,"Times New Roman",serif;font-size:1.5rem;line-height:1.2;margin:2px 0 10px;color:#2b2218}
+.findfrem{display:flex;flex-direction:column}
+.ff{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #eadfc8;padding:9px 2px;font:inherit;font-size:1rem;color:#2b2218;cursor:pointer}
+.ff .bogmg{flex:none}
+.ffboks{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #b9a27f;box-sizing:border-box}
+.ff[aria-pressed="true"]{color:#8a7a62}.ff[aria-pressed="true"] .ffboks{background:#2f5a3f;border-color:#2f5a3f;box-shadow:inset 0 0 0 3px #fbf6e9}
+.ff[aria-pressed="true"] .ffnavn{text-decoration:line-through}
 .kogtilbage{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;z-index:81;width:44px;height:44px;border-radius:50%;border:1px solid #e3d5b8;background:rgba(251,246,233,.95);color:#2b2218;font-size:1.7rem;line-height:1;padding:0 0 4px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .kogside .bogtitel{font-size:1.7rem}.kogside .bogh{font-size:1.15rem;margin-top:18px}
 .kogside .bogi,.kogside .bogtrintx{font-size:1rem;line-height:1.5}.kogvent{color:#8a6d45;font-style:italic}.kogside .bogtrin{font-size:1.02rem;margin-top:12px}
@@ -2701,6 +2715,8 @@ function placer(f,dato,antaget){
     }
   }
   if(f.indkob&&f._fastId)for(const x of st.ekstraIndkob)if(x.fastId===f._fastId)x.koebDato=f.indkob<dato?f.indkob:dato;
+  /* planlagt via "Kategori": husk den, så billederne til trinene får kategoriens stemning */
+  if(f._fastId&&up&&up.kategori&&(up.forslag||[]).includes(f)){const fk=st.fast.find(x=>x.id===f._fastId);if(fk)fk.kat=up.kategori}
   ugeStart();
   f._antaget=!!antaget; f._velg=0;
 }
@@ -3668,7 +3684,7 @@ function retArk(fid){
   arkVis(`<h3>${esc(f.navn)}</h3><p class="muted" style="margin:0">${esc(stort(dayLabel(f.dato,true)))} · ${n} ${n===1?"person":"personer"}</p>
     <p style="margin:12px 0 0">${mgl.length?`Du mangler <b>${esc(opremsning(navne))}</b>. ${navne.length===1?"Den ligger":"De ligger"} allerede i kurven.`:"I har det, der skal bruges."}</p>
     <button class="btn" data-ark="lav">Lav retten</button><button class="btn ghost" data-ark="aendr">Ændr retten</button>`,ark=>{
-    ark.querySelector('[data-ark="lav"]').onclick=()=>mgl.length?lavArk(f):lavRet(f);
+    ark.querySelector('[data-ark="lav"]').onclick=()=>{const r=f.opskrift&&ORMAP[f.opskrift];if(r)billederStart(r,f);mgl.length?lavArk(f):lavRet(f)};
     ark.querySelector('[data-ark="aendr"]').onclick=()=>{arkLuk();aendrRet(f)};
   });
 }
@@ -3781,53 +3797,187 @@ function trinTil(r,valg,fra){
   return {trin,fix:t=>fix(t)??""};
 }
 let kogVenter=false;
+/* Claude finpudser de tilpassede trin – med præcis samme antal trin, så billederne passer til hvert trin */
 async function trinFinpuds(f,r){
   const valg=f.byt||{},noegle=JSON.stringify(valg);
   if(!sample||!Object.keys(valg).length||(f.trinTil&&f.trinTil.noegle===noegle))return;
   const aendr=Object.entries(valg).map(([i,v])=>{const l=r.ing[+i];return !l||v===l.i?null:v==="-"?`${l.n}: udelades`:`${l.n} → ${OI[v]?OI[v].n:v}`}).filter(Boolean);
   if(!aendr.length)return;
+  const regel=trinTil(r,valg,null).trin;
   const prompt=`Opskrift: ${r.t}${r.u?" "+r.u:""}.
 Ingredienser: ${r.ing.map(l=>l.n).join(", ")}.
 Det er ændret: ${aendr.join("; ")}.
-Omskriv trinene, så de passer til ændringerne: brug alternativet i stedet for originalen, med den tilberedning det kræver (skæring, stegetid osv.), og fjern det udeladte helt – også trin, der kun handler om det. Ret ikke andet, behold rækkefølgen, og skriv på dansk i samme stil som originalen.
-Trin: ${JSON.stringify(r.trin||[])}
+Trinene herunder er allerede tilpasset med faste regler, men kan være klodsede. Ret dem, så de passer til ændringerne: alternativet med den tilberedning, det kræver (skæring, stegetid osv.), og intet om det udeladte. Behold PRÆCIS ${regel.length} trin i samme rækkefølge, ret ikke andet, og skriv på dansk i samme stil.
+Trin: ${JSON.stringify(regel)}
 Returnér KUN JSON: {"trin":[{"t":"titel","x":["sætning", ...],"vig":tekst eller null,"tip":tekst eller null}]}`;
-  kogVenter=true;kogTegn(r);
+  kogVenter=true;kogRender();
   try{
     const j=await sample.json(prompt,{modelTier:"quick",hvad:"opsk"});
-    if(j&&Array.isArray(j.trin)&&j.trin.length&&j.trin.every(t=>t&&typeof t.t==="string"&&Array.isArray(t.x))){
+    if(j&&Array.isArray(j.trin)&&j.trin.length===regel.length&&j.trin.every(t=>t&&typeof t.t==="string"&&Array.isArray(t.x))){
       f.trinTil={noegle,trin:j.trin.map(t=>({t:String(t.t),x:t.x.map(String).filter(Boolean),...(t.vig?{vig:String(t.vig)}:{}),...(t.tip?{tip:String(t.tip)}:{})}))};save();
     }
   }catch(e){}
-  kogVenter=false;kogTegn(r);
+  kogVenter=false;if(kog&&kog.f===f){kogTrinLaes();kogRender()}
 }
-function kogTegn(r){const ind=document.querySelector(".kogside .kogindhold");if(ind&&bogFast&&bogFast.opskrift===r.id)ind.innerHTML=retBlokke(r).join("")}
+/* ---------- Billeder til trinene ----------
+   Hvert trin i "Lav retten" får et billede, som Claude tegner (SVG) efter den faste instruks i billedstil.md, med
+   stemning efter rettens kategori (retStemning). De tegnes i baggrunden, så snart man trykker "Lav retten" – trin 1
+   først, to ad gangen – og man kan først gå videre til et trin, når dets billede er klar (eller ikke kan laves, fx
+   uden API-nøgle). Et billede gemmes på telefonen (IndexedDB) og deles via Google Apps Script, så hvert billede kun
+   tegnes én gang for alle. Nøglen er rettens id + trinets tekst efter byt med faste regler + stilens version, så et
+   trin med et alternativ får sit eget billede, og et nyt versionsnummer i billedstil.md tegner alt om.
+   SVG'en vises altid som <img>, så intet i den kan køre. */
+let BILLEDSTIL=null;
+async function billedstil(){
+  if(BILLEDSTIL)return BILLEDSTIL;
+  try{const t=await (await fetch("billedstil.md",{cache:"no-cache"})).text();BILLEDSTIL={tekst:t,v:(t.match(/Version:\s*(\S+)/)||[])[1]||"1"}}
+  catch(e){BILLEDSTIL={tekst:"",v:"1"}}
+  return BILLEDSTIL;
+}
+function fnv(t){let h=0x811c9dc5;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,0x01000193)}return (h>>>0).toString(16).padStart(8,"0")}
+function trinNoegle(r,t,v){return r.id+"_"+fnv([t.t||"",...(t.x||[])].join("|")+"|"+v)}
+let billedDbP=null;
+function billedDb(){return billedDbP||(billedDbP=new Promise((ok,nej)=>{try{const q=indexedDB.open("madapp",1);q.onupgradeneeded=()=>q.result.createObjectStore("trinbilleder");q.onsuccess=()=>ok(q.result);q.onerror=()=>nej(q.error)}catch(e){nej(e)}}))}
+async function billedLaes(k){try{const db=await billedDb();return await new Promise(ok=>{const q=db.transaction("trinbilleder").objectStore("trinbilleder").get(k);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null)})}catch(e){return null}}
+async function billedSkriv(k,svg){try{const db=await billedDb();db.transaction("trinbilleder","readwrite").objectStore("trinbilleder").put(svg,k)}catch(e){}}
+function erSvg(t){return typeof t==="string"&&t.length<200000&&/^<svg[\s>]/i.test(t.trim())&&/<\/svg>$/i.test(t.trim())}
+async function faellesBillede(k){if(!FEEDBACK_URL)return null;try{const j=await (await fetch(FEEDBACK_URL+"?type=trinbillede&noegle="+encodeURIComponent(k))).json();return j&&j.svg||null}catch(e){return null}}
+function faellesDel(k,id,i,svg){if(FEEDBACK_URL)fetch(FEEDBACK_URL,{method:"POST",body:JSON.stringify({type:"trinbillede",noegle:k,opskrift:id,trin:i+1,svg})}).catch(()=>{})}
+/* Stemningen: kategorien, retten blev planlagt med, ellers ud fra retten selv */
+function retStemning(r,f){
+  if(f&&f.kat&&MTYPER.some(m=>m[0]===f.kat))return f.kat;
+  const tags=r.tags||[],pr=(r.pr||[]).join(" ").toLowerCase();
+  if(/fisk|laks|torsk|rejer|tun/.test(pr))return "fisk";
+  if(tags.includes("vegetar")||tags.includes("vegansk"))return "vegetar";
+  if(tags.includes("boernevenlig"))return "boern";
+  if((r.k||[]).includes("Dansk"))return "klassiker";
+  if(tags.includes("proteinrig"))return "protein";
+  const p=retPris(r);if(p&&p.pr&&p.pr<30)return "billig";
+  if(tags.includes("hurtig"))return "hurtig";
+  return "hverdag";
+}
+function stemningNavn(k){const m=MTYPER.find(x=>x[0]===k);return m?m[2]:"Hverdag"}
+const TB_STATUS={},TB_SVG={};let tbKoe=[],tbAktive=0;
+/* Sæt billederne til rettens trin i kø (trin 1 først); kaldes igen, når byttet ændrer trinene */
+async function billederStart(r,f){
+  const bs=await billedstil(),trin=trinTil(r,{...(f.byt||{})},null).trin,noegler=trin.map(t=>trinNoegle(r,t,bs.v));
+  for(const j of tbKoe)if(!noegler.includes(j.k)&&TB_STATUS[j.k]==="venter")delete TB_STATUS[j.k];
+  tbKoe=[];
+  noegler.forEach((k,i)=>{if(!TB_STATUS[k]){TB_STATUS[k]="venter"}if(TB_STATUS[k]==="venter")tbKoe.push({k,r,f,i,trin})});
+  tbKoer();
+  return noegler;
+}
+function tbKoer(){while(tbAktive<2&&tbKoe.length){const j=tbKoe.shift();if(TB_STATUS[j.k]!=="venter")continue;tbAktive++;tbLav(j).finally(()=>{tbAktive--;tbKoer()})}}
+async function tbLav(j){
+  const k=j.k;TB_STATUS[k]="laver";kogRender();
+  let svg=await billedLaes(k),ny=false;
+  if(!erSvg(svg))svg=await faellesBillede(k);
+  if(!erSvg(svg)&&sample){try{svg=await tegnTrin(j);ny=true}catch(e){console.warn("billede",e);svg=null}}
+  if(erSvg(svg)){svg=svg.trim();TB_SVG[k]=svg;TB_STATUS[k]="klar";billedSkriv(k,svg);if(ny)faellesDel(k,j.r.id,j.i,svg)}
+  else TB_STATUS[k]=sample?"fejl":"mangler";
+  kogRender();
+}
+async function tegnTrin(j){
+  const bs=await billedstil(),{r,f,i,trin}=j,n=trin.length;
+  const t=kog&&kog.r===r&&kog.noegler&&kog.noegler[i]===j.k?kog.trin[i]:trin[i];
+  const m=oMatch(r,f.personer||st.settings.P,{},{...(f.byt||{})});
+  const ing=m.linjer.filter(x=>x.status!=="udeladt").map(x=>x.navn).join(", ");
+  const prompt=`${bs.tekst}
+
+---
+Opgave: Tegn billedet til ét trin i en opskrift, nøjagtigt efter billedstilen ovenfor.
+Stemning: ${stemningNavn(retStemning(r,f))} (brug afsnittet for den under "Stemning pr. kategori").
+Ret: ${r.t}${r.u?" – "+r.u:""}. Køkken: ${(r.k||[]).join(", ")||"–"}.
+Ingredienser i retten: ${ing}.
+Hele forløbet, så billederne hænger sammen som en serie: ${trin.map((x,k)=>`${k+1}. ${x.t}`).join("; ")}.
+Dette billede: trin ${i+1} af ${n} – ${t.t||""}: ${(t.x||[]).join(" ")}
+Returnér KUN SVG-koden: start med <svg og slut med </svg>, intet andet.`;
+  const svar=await sample.json(prompt,{modelTier:"default",hvad:"tegning",raa:true});
+  const mm=String(svar||"").match(/<svg[\s\S]*<\/svg>/i);
+  if(!mm)throw new Error("intet svg i svaret");
+  return mm[0];
+}
 /* ---------- Kogevisning ----------
-   "Lav retten" åbner opskriften over hele skærmen: kun opskriften (ingredienser og trin, med retten fra planens antal
-   personer, alternativer og udeladte ting) og en tilbageknap øverst til venstre. Telefonens egen tilbage-knap eller
-   -swipe lukker den også, fordi den lægger et trin i browserens historik. Skærmen holdes tændt, mens den er åben
-   (Wake Lock); browseren slipper låsen, når appen ikke er synlig, så den tages igen, når man kommer tilbage. */
-let kogAaben=false,kogLaas=null;
+   "Lav retten" åbner retten over hele skærmen med kun en tilbageknap øverst til venstre. Første side er "Find frem":
+   overskriften og ingredienserne (tryk for at sætte flueben). Derefter ét trin ad gangen med sit billede; man kan
+   først gå videre til et trin, når billedet er klar. Telefonens egen tilbage lukker også, og skærmen holdes tændt
+   (Wake Lock), mens retten er åben. */
+let kogAaben=false,kogLaas=null,kog=null;
 async function kogHoldTaendt(){
   if(!kogAaben||kogLaas||!("wakeLock" in navigator))return;
   try{kogLaas=await navigator.wakeLock.request("screen");kogLaas.addEventListener("release",()=>{kogLaas=null})}catch(e){kogLaas=null}
 }
 function kogSlip(){try{if(kogLaas)kogLaas.release()}catch(e){}kogLaas=null}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&kogAaben)kogHoldTaendt()});
+function kogTrinLaes(){
+  const {r,f}=kog,valg={...(f.byt||{})},regel=trinTil(r,valg,null).trin;
+  const fin=f.trinTil&&f.trinTil.noegle===JSON.stringify(valg)&&f.trinTil.trin.length===regel.length?f.trinTil.trin:null;
+  kog.trin=fin||regel;
+  kog.noegler=BILLEDSTIL?regel.map(t=>trinNoegle(r,t,BILLEDSTIL.v)):null;
+  kog.side=Math.min(kog.side,kog.trin.length);
+}
+function trinKlar(i){if(!kog||!kog.noegler)return false;const s=TB_STATUS[kog.noegler[i]];return s==="klar"||s==="fejl"||s==="mangler"}
+function trinBillede(i){
+  const k=kog.noegler&&kog.noegler[i],s=k&&TB_STATUS[k];
+  if(s==="klar"&&TB_SVG[k])return `<img class="kogbillede" alt="" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(TB_SVG[k])}">`;
+  if(s==="fejl"||s==="mangler")return "";
+  return `<div class="kogbillede tom" aria-hidden="true">Tegner …</div>`;
+}
+function kogRender(){
+  const el=document.querySelector(".kogside");if(!el||!kog||!kog.trin)return;
+  const {r,f}=kog,n=kog.trin.length,side=kog.side,ind=el.querySelector(".kogindhold"),bund=el.querySelector(".kogbund");
+  let h="",b="";
+  if(side===0){
+    const p=f.personer||st.settings.P,valg={...(f.byt||{})},m=oMatch(r,p,oHar(),valg),u=r.u&&trinTil(r,valg,null).fix(r.u);
+    const byttet=m.linjer.filter(x=>x.erst).length,ude=m.linjer.filter(x=>x.status==="udeladt").length,basis=m.linjer.filter(x=>x.basis);
+    h=`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${u?`<p class="bogunder">${esc(u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${p} ${p===1?"person":"personer"} · ${n} trin</p>`
+      +(byttet||ude?`<p class="bogkoeb">${byttet?`${byttet} ${byttet===1?"ingrediens er byttet.":"ingredienser er byttet."}`:""}${ude?` ${ude} udelades.`:""}</p>`:"")
+      +`<h3 class="bogh">Find frem</h3><div class="findfrem">`
+      +m.linjer.filter(x=>!x.basis&&x.status!=="udeladt").map(x=>`<button class="ff" data-ff="${x.i}" aria-pressed="${kog.fundet.has(x.i)}"><span class="ffboks" aria-hidden="true"></span><span class="bogmg">${esc(oFmt(x.m,x.e))}</span><span class="ffnavn">${esc(x.navn)}${x.erst?` <span class="boghar">i stedet for ${esc(x.erst.toLowerCase())}</span>`:""}</span></button>`).join("")
+      +`</div>${basis.length?`<p class="bogi bogbasis">Desuden: ${esc(basis.map(x=>x.navn.toLowerCase()).join(", "))}</p>`:""}`
+      +(kogVenter?`<p class="bogtrintx kogvent">Trinene tilpasses det, I har byttet …</p>`:"");
+    if(n)b=trinKlar(0)?`<button class="btn" data-kog="1">Start: trin 1 ›</button>`
+      :`<p class="kogstatus">Retten er ved at blive oprettet … billede 1 af ${n} tegnes.</p><button class="btn" disabled>Start: trin 1 ›</button>`;
+  }else{
+    const t=kog.trin[side-1],sidst=side===n,videre=sidst||trinKlar(side);
+    h=trinBillede(side-1)+`<p class="kogtrinnr">Trin ${side} af ${n}</p><h2 class="kogtrintitel">${esc(t.t||"Fortsæt")}</h2>`
+      +(t.x||[]).map(x=>`<p class="bogtrintx">${esc(x)}</p>`).join("")
+      +(t.vig?`<p class="bogtrintx"><b>Vigtigt:</b> ${esc(t.vig)}</p>`:"")+(t.tip?`<p class="bogtrintx"><i>Tip: ${esc(t.tip)}</i></p>`:"");
+    b=`${videre?"":`<p class="kogstatus">Trin ${side+1} er ved at blive oprettet … billedet tegnes.</p>`}<div class="kogknapper"><button class="btn ghost" data-kog="${side-1}">‹ ${side===1?"Find frem":"Forrige"}</button><button class="btn" data-kog="${sidst?"slut":side+1}" ${videre?"":"disabled"}>${sidst?"Færdig":"Næste ›"}</button></div>`;
+  }
+  const rul=kog.vist===side?el.scrollTop:0;kog.vist=side;
+  ind.innerHTML=h;bund.innerHTML=b;el.scrollTop=rul;
+  ind.querySelectorAll("[data-ff]").forEach(x=>x.onclick=()=>{const i=+x.dataset.ff;if(kog.fundet.has(i))kog.fundet.delete(i);else kog.fundet.add(i);x.setAttribute("aria-pressed",kog.fundet.has(i))});
+  bund.querySelectorAll("[data-kog]").forEach(x=>x.onclick=()=>kogGaa(x.dataset.kog));
+}
+function kogGaa(til){
+  if(!kog)return;
+  if(til==="slut"){if(history.state&&history.state.kog)history.back();else kogLuk();return}
+  const s=+til;if(!(s>=0&&s<=kog.trin.length)||s===kog.side)return;
+  if(s>kog.side&&!trinKlar(s-1))return;
+  kog.side=s;kogRender();
+}
 function kogVis(r,f){
-  bogFast=f||null;
+  bogFast=f||null;kog={r,f,side:0,fundet:new Set(),vist:-1};
   document.querySelectorAll(".kogside").forEach(x=>x.remove());
   const el=document.createElement("div");el.className="kogside";
   el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label",r.t);
-  el.innerHTML=`<button class="kogtilbage" aria-label="Tilbage">‹</button><div class="kogindhold">${retBlokke(r).join("")}</div>`;
+  el.innerHTML=`<button class="kogtilbage" aria-label="Tilbage">‹</button><div class="kogindhold"></div><div class="kogbund"></div>`;
   document.body.appendChild(el);document.body.classList.add("kogaaben");
   el.querySelector(".kogtilbage").onclick=()=>{if(history.state&&history.state.kog)history.back();else kogLuk()};
+  /* swipe til siden: næste eller forrige trin */
+  let sx=null,sy=0;
+  el.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY},{passive:true});
+  el.addEventListener("touchend",e=>{if(sx==null||!kog)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dy)<45)kogGaa(kog.side+(dx<0?1:-1))},{passive:true});
   if(!kogAaben){history.pushState({kog:1},"");kogAaben=true}
-  kogHoldTaendt();if(f)trinFinpuds(f,r);
+  kogHoldTaendt();
+  kogTrinLaes();kogRender();
+  billederStart(r,f).then(()=>{if(kog&&kog.r===r){kogTrinLaes();kogRender()}});
+  if(f)trinFinpuds(f,r);
   el.querySelector(".kogtilbage").focus();
 }
 function kogLuk(){
-  kogAaben=false;bogFast=null;kogVenter=false;kogSlip();
+  kogAaben=false;bogFast=null;kogVenter=false;kog=null;kogSlip();
   document.querySelectorAll(".kogside").forEach(x=>x.remove());document.body.classList.remove("kogaaben");
   show("t-snak");window.scrollTo(0,0);
 }
@@ -5078,7 +5228,7 @@ function apiAdapter(){
         const d=await r.json().catch(()=>({}));clearTimeout(vagt);
         forbrugLaeg(opt.hvad,d.model,d.usage,model);
         if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
-        return lesJson((d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
+        {const t=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");return opt.raa?t:lesJson(t)}
       }
       const rd=r.body.getReader(),dek=new TextDecoder();let buf="",tekst="",stop=null,svarModel=null,brug=null;
       try{
@@ -5102,7 +5252,7 @@ function apiAdapter(){
       finally{clearTimeout(vagt);forbrugLaeg(opt.hvad,svarModel,brug,model)}
       if(stop==="refusal")throw {code:"refusal",message:"afvist"};
       if(stop==="max_tokens")throw {code:"invalid_json",message:"svaret blev for langt og blev skåret af"};
-      return lesJson(tekst);
+      return opt.raa?tekst:lesJson(tekst);
     }
   };
 }
@@ -5137,7 +5287,7 @@ const FORBRUG="opbrugt_forbrug";
 const PRISER={"claude-haiku-5-5":[0.1,0.5],"claude-sonnet-5-5":[2,10],"claude-opus-5-5":[4,20],"claude-sonnet-5":[2,10],"claude-opus-5":[5,25],"claude-opus-4-8":[5,25]};
 /* Beløbene vises i kr inkl. 25 % moms */
 const KR_PR_DOLLAR=6.5,MOMS=1.25;
-const FORMAAL={snak:["💬","Snak"],plan:["📅","Madplan"],billede:["📷","Kvitteringer og skab"],opsk:["📖","Egne opskrifter"],andet:["✨","Andet"]};
+const FORMAAL={snak:["💬","Snak"],plan:["📅","Madplan"],billede:["📷","Kvitteringer og skab"],tegning:["🎨","Billeder til trinene"],opsk:["📖","Opskrifter"],andet:["✨","Andet"]};
 function forbrugHent(){try{const f=JSON.parse(localStorage.getItem(FORBRUG)||"null");if(f&&f.alt)return f}catch(e){}return {fra:todayIso(),alt:{},md:{},dag:{}}}
 function forbrugLaeg(hvad,model,u,bedt){
   if(!u)return;
@@ -5200,7 +5350,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="68";
+const APP_VERSION="69";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;

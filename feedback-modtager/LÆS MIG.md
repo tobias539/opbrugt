@@ -1,6 +1,6 @@
 # Feedback og fælles opskrifter fra Mad app
 
-Et Google Apps Script (`feedback.gs`) tager imod fire ting fra appen:
+Et Google Apps Script (`feedback.gs`) tager imod fem ting fra appen:
 
 - **Feedback**: det, der sendes fra Feedback under Snak, og ændringer af holdbarhed i skabet. Det sendes
   anonymt, og hver besked gemmes som en tekstfil i Google Drive › Privat › mad › feedback.
@@ -13,10 +13,13 @@ Et Google Apps Script (`feedback.gs`) tager imod fire ting fra appen:
   Google Drive › Privat › mad › kvitteringer › `<måned>` som en `.json`. Billedet (formindsket) kommer kun med, når
   Claude kan have læst forkert – der blev fjernet flueben, eller en pris ligger langt fra det normale – og ellers i
   hver 20. kvittering som stikprøve; `billedeGrund` i `.json`-filen siger hvorfor.
+- **Trinbilleder**: når Claude har tegnet et billede til et trin i "Lav retten" (efter `opbrugt/billedstil.md`), gemmes
+  det som `.svg` i Google Drive › Privat › mad › trinbilleder. Andre telefoner henter det derfra, så hvert billede kun
+  tegnes én gang. Kun rene SVG-tegninger tages imod, og appen viser dem som billeder, så intet i dem kan køre.
   Normalpriserne (ikke tilbud) samles i `kvitteringer/priser.json` – de sidste 5 pr. vare og butik – og appen
   henter midterværdien, så alles priser bliver bedre. Kan slås fra i appen under Præferencer › Del kvitteringer.
 
-Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/`, `emojis/` og `kvitteringer/`
+Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/`, `emojis/`, `kvitteringer/` og `trinbilleder/`
 er udeladt fra git, så de ikke kommer med i det offentlige repo.
 
 ## Opsætning (én gang)

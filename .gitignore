@@ -36,3 +36,6 @@ opskriftbank/lighed/oversigt.html
 
 # clasp (opdaterer Apps Script fra computeren): scriptets id holdes lokalt
 feedback-modtager/.clasp.json
+
+# Billeder til trinene (tegnet af Claude, gemt via Google Drive)
+trinbilleder/
