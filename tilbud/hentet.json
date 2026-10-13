@@ -78,5 +78,21 @@
   "til": "2026-10-15T21:59:59+0000",
   "antal": 395,
   "fil": "raa/føtex/2026-10-08_nIYwBzZL.json.gz"
+ },
+ "xSC_Gqx2": {
+  "kaede": "føtex",
+  "label": "Uge 43",
+  "fra": "2026-10-15T22:00:00+0000",
+  "til": "2026-10-22T21:59:59+0000",
+  "antal": 324,
+  "fil": "raa/føtex/2026-10-15_xSC_Gqx2.json.gz"
+ },
+ "UsoZJkLd": {
+  "kaede": "Lidl",
+  "label": "Weekendavis (uge 42)",
+  "fra": "2026-10-14T22:00:00+0000",
+  "til": "2026-10-17T21:59:59+0000",
+  "antal": 222,
+  "fil": "raa/Lidl/2026-10-14_UsoZJkLd.json.gz"
  }
 }
