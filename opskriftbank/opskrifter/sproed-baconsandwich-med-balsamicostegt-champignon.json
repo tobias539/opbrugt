@@ -240,8 +240,8 @@
       "titel": "Bland persilleolie",
       "tekst": [
         "Imens, hak persille fint.",
-        "Pres eller hak løg fint.",
-        "Bland løg, persille, olivenolie og et nip salt i en lille skål."
+        "Pres eller hak hvidløg fint.",
+        "Bland hvidløg, persille, olivenolie og et nip salt i en lille skål."
       ]
     },
     {
@@ -297,5 +297,5 @@
       "hvede"
     ]
   },
-  "noter": "Titlen er skåret af forsiden i scanningen; titel og undertitel er hentet fra hellofresh.dk (hvor ingredienserne passer), tiden fra kortet. Kortet skriver 'løg' i trin 4, men det er hvidløgsfeddene, der skal presses og blandes i persilleolien (hellofresh.dk skriver hvidløg)."
+  "noter": "Titlen er skåret af forsiden i scanningen; titel og undertitel er hentet fra hellofresh.dk (hvor ingredienserne passer), tiden fra kortet. Kortet skriver 'løg' i trin 4, men det er hvidløgsfeddene, der skal presses og blandes i persilleolien (hellofresh.dk skriver hvidløg). Trin 4 er rettet til hvidløg."
 }

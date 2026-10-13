@@ -1,7 +1,7 @@
 {
  "format": "opskriftbank",
  "version": 1,
- "genereret": "2026-10-12",
+ "genereret": "2026-10-13",
  "antal_opskrifter": 89,
  "skalering": "Mængde til n portioner = linjens tabel[n], hvis den findes, ellers maengde * n / portioner.basis. 'beregnet.pr_portioner' er allerede regnet om til ingrediensens basisenhed.",
  "variabler": "En linje med 'variabel' kan byttes med de andre i gruppen (se 'variabelgrupper'). 'beregnet.alternativer' viser mængden til basis-portioner, regnet efter vægt. 'beregnet.skabelon' på hver opskrift er den løse udgave. 'kan_bruges_i' på hver ingrediens viser alle retter, den kan bruges i – også som erstatning.",
@@ -42608,8 +42608,7 @@
      "titel": "Forbered råvarer",
      "tekst": [
       "Imens, halver avocado, og fjern sten. Grav indmad ud med en ske, og skær i tynde skiver.",
-      "Skær gulerod (uskrællet) i tynde, halve skiver.",
-      "Hak pak choi groft."
+      "Skær gulerod (uskrællet) i tynde, halve skiver."
      ]
     },
     {
@@ -42618,7 +42617,7 @@
      "tekst": [
       "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
       "Steg gulerod i 3-4 min, eller indtil møre.",
-      "Tilsæt pak choi, og steg videre i 2 min.",
+      "Tilsæt spidskål, og steg videre i 2 min.",
       "Krydr med salt og et nip peber, og overfør til en skål."
      ]
     },
@@ -42635,7 +42634,7 @@
      "nr": 5,
      "titel": "Tilsæt grøntsager",
      "tekst": [
-      "Tilsæt gulerod, pak choi, sojasauce og sukker til stegepanden, og steg i 1-2 min, eller indtil gennemvarmet.",
+      "Tilsæt gulerod, spidskål, sojasauce og sukker til stegepanden, og steg i 1-2 min, eller indtil gennemvarmet.",
       "Krydr med salt og et nip peber."
      ]
     },
@@ -42682,7 +42681,7 @@
      "hvede"
     ]
    },
-   "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Trin 2, 3 og 5 på kortet nævner pak choi, men ingredienslisten har kun spidskål, skåret (og trinbillederne viser spidskål), så brug spidskålen dér. Samme ret er også scannet med bagside fra 2025-U48 (side 43/44), hvor trinene skriver spidskål, 3 personer får 225 g spidskål i stedet for 300 g, og næringsindholdet er lidt anderledes (460 g og 904 kcal pr. portion).",
+   "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Trin 2, 3 og 5 på kortet nævner pak choi, men ingredienslisten har kun spidskål, skåret (og trinbillederne viser spidskål). Trinene er rettet til spidskål efter kortet fra 2025-U48, som også dropper \"Hak pak choi groft\". Samme ret er også scannet med bagside fra 2025-U48 (side 43/44), hvor trinene skriver spidskål, 3 personer får 225 g spidskål i stedet for 300 g, og næringsindholdet er lidt anderledes (460 g og 904 kcal pr. portion).",
    "beregnet": {
     "region": [
      "asien"
@@ -95875,8 +95874,8 @@
      "titel": "Bland persilleolie",
      "tekst": [
       "Imens, hak persille fint.",
-      "Pres eller hak løg fint.",
-      "Bland løg, persille, olivenolie og et nip salt i en lille skål."
+      "Pres eller hak hvidløg fint.",
+      "Bland hvidløg, persille, olivenolie og et nip salt i en lille skål."
      ]
     },
     {
@@ -95932,7 +95931,7 @@
      "hvede"
     ]
    },
-   "noter": "Titlen er skåret af forsiden i scanningen; titel og undertitel er hentet fra hellofresh.dk (hvor ingredienserne passer), tiden fra kortet. Kortet skriver 'løg' i trin 4, men det er hvidløgsfeddene, der skal presses og blandes i persilleolien (hellofresh.dk skriver hvidløg).",
+   "noter": "Titlen er skåret af forsiden i scanningen; titel og undertitel er hentet fra hellofresh.dk (hvor ingredienserne passer), tiden fra kortet. Kortet skriver 'løg' i trin 4, men det er hvidløgsfeddene, der skal presses og blandes i persilleolien (hellofresh.dk skriver hvidløg). Trin 4 er rettet til hvidløg.",
    "beregnet": {
     "region": [
      "nordamerika"

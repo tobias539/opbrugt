@@ -274,8 +274,7 @@
       "titel": "Forbered råvarer",
       "tekst": [
         "Imens, halver avocado, og fjern sten. Grav indmad ud med en ske, og skær i tynde skiver.",
-        "Skær gulerod (uskrællet) i tynde, halve skiver.",
-        "Hak pak choi groft."
+        "Skær gulerod (uskrællet) i tynde, halve skiver."
       ]
     },
     {
@@ -284,7 +283,7 @@
       "tekst": [
         "Opvarm olivenolie i en stor stegepande på middelhøj varme.",
         "Steg gulerod i 3-4 min, eller indtil møre.",
-        "Tilsæt pak choi, og steg videre i 2 min.",
+        "Tilsæt spidskål, og steg videre i 2 min.",
         "Krydr med salt og et nip peber, og overfør til en skål."
       ]
     },
@@ -301,7 +300,7 @@
       "nr": 5,
       "titel": "Tilsæt grøntsager",
       "tekst": [
-        "Tilsæt gulerod, pak choi, sojasauce og sukker til stegepanden, og steg i 1-2 min, eller indtil gennemvarmet.",
+        "Tilsæt gulerod, spidskål, sojasauce og sukker til stegepanden, og steg i 1-2 min, eller indtil gennemvarmet.",
         "Krydr med salt og et nip peber."
       ]
     },
@@ -348,5 +347,5 @@
       "hvede"
     ]
   },
-  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Trin 2, 3 og 5 på kortet nævner pak choi, men ingredienslisten har kun spidskål, skåret (og trinbillederne viser spidskål), så brug spidskålen dér. Samme ret er også scannet med bagside fra 2025-U48 (side 43/44), hvor trinene skriver spidskål, 3 personer får 225 g spidskål i stedet for 300 g, og næringsindholdet er lidt anderledes (460 g og 904 kcal pr. portion)."
+  "noter": "Titel sat af os; forsiden i scanningen viser kun billedet. Trin 2, 3 og 5 på kortet nævner pak choi, men ingredienslisten har kun spidskål, skåret (og trinbillederne viser spidskål). Trinene er rettet til spidskål efter kortet fra 2025-U48, som også dropper \"Hak pak choi groft\". Samme ret er også scannet med bagside fra 2025-U48 (side 43/44), hvor trinene skriver spidskål, 3 personer får 225 g spidskål i stedet for 300 g, og næringsindholdet er lidt anderledes (460 g og 904 kcal pr. portion)."
 }
