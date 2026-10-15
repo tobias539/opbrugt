@@ -39,3 +39,6 @@ feedback-modtager/.clasp.json
 
 # Billeder til trinene (tegnet af Claude, gemt via Google Drive)
 trinbilleder/
+
+# Opskrifter, brugerne har delt fra appen (kommer via Google Drive; se feedback-modtager/godkend.py)
+opskrifter-delt/

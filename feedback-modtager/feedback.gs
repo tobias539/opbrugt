@@ -2,7 +2,8 @@
    Feedback: appen sender {tekst, kilde, tid, version}. Hver besked gemmes som en tekstfil i
    Google Drive › Privat › mad › feedback. Der gemmes ikke noget om, hvem der har skrevet.
    Opskrifter: appen sender {type:"opskrift", opskrift:{...}}. Hver opskrift gemmes som en JSON-fil i
-   Google Drive › Privat › mad › opskrifter-delt, og ?type=opskrifter henter dem alle.
+   Google Drive › Privat › mad › opskrifter-delt › afventer, til den er godkendt. Godkendt = flyttet op i
+   opskrifter-delt (det gør feedback-modtager/godkend.py), og ?type=opskrifter henter kun de godkendte.
    Emojis: appen sender {type:"emoji", vare, emoji}, når nogen vælger en anden emoji til en vare i skabet.
    Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json ({vare: {emoji: antal}}),
    og ?type=emojis henter dem, så appen kan vise, hvad andre har valgt.
@@ -17,6 +18,7 @@
 
 const FEEDBACK_STI = ["Privat", "mad", "feedback"];
 const OPSKRIFT_STI = ["Privat", "mad", "opskrifter-delt"];
+const AFVENTER_STI = OPSKRIFT_STI.concat(["afventer"]);
 const EMOJI_STI = ["Privat", "mad", "emojis"];
 const EMOJI_FIL = "emojis.json";
 const KVIT_STI = ["Privat", "mad", "kvitteringer"];
@@ -60,13 +62,14 @@ function doPost(e) {
   }
 }
 
-/* Én fil pr. opskrift; sendes den samme opskrift igen, bliver filen opdateret */
+/* Én fil pr. opskrift i "afventer"; sendes den samme opskrift igen, bliver filen dér opdateret.
+   En ny udgave af en godkendt opskrift venter også: den gamle udgave bliver vist, til den nye er godkendt. */
 function gemOpskrift(o) {
   if (!o || typeof o.id !== "string" || !o.t || !Array.isArray(o.ing) || !Array.isArray(o.trin)) return svar({ ok: false, fejl: "ikke en opskrift" });
   const json = JSON.stringify(o);
   if (json.length > 100000) return svar({ ok: false, fejl: "for stor" });
   const navn = String(o.id).replace(/[^a-z0-9-]/gi, "").slice(0, 100) + ".json";
-  const m = mappe(OPSKRIFT_STI), fundet = m.getFilesByName(navn);
+  const m = mappe(AFVENTER_STI), fundet = m.getFilesByName(navn);
   if (fundet.hasNext()) fundet.next().setContent(json);
   else m.createFile(navn, json, MimeType.PLAIN_TEXT);
   return svar({ ok: true });
@@ -202,6 +205,7 @@ function doGet(e) {
     catch (x) { return svar({ ok: true, emojis: {} }); }
   }
   if (e && e.parameter && e.parameter.type === "opskrifter") {
+    /* Kun filerne direkte i opskrifter-delt (de godkendte), ikke dem i "afventer" og "afvist" */
     const ud = [], filer = mappe(OPSKRIFT_STI).getFiles();
     while (filer.hasNext()) {
       try { ud.push(JSON.parse(filer.next().getBlob().getDataAsString())); } catch (x) {}

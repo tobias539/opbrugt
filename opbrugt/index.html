@@ -2827,7 +2827,8 @@ function hurtigIndkob(t){
 }
 let selDays=new Set();
 /* ---------- Fælles opskrifter ----------
-   Egne opskrifter deles via det samme Google Apps Script som feedbacken og hentes af alle, der bruger appen.
+   Egne opskrifter deles via det samme Google Apps Script som feedbacken og hentes af alle, der bruger appen,
+   men først når de er godkendt (feedback-modtager/godkend.py). Indtil da kan kun den, der har delt, se dem.
    Andres opskrifter er ikke tjekket for jeres allergier: de tæller som "ikke bekræftet", til I selv har tjekket dem.
    Kan en opskrift ikke sendes (fx før scriptet er opdateret), venter den på telefonen og sendes senere. */
 let delte=[];
@@ -5238,9 +5239,9 @@ function renderEgen(){
     <ol style="margin:4px 0 0;padding-left:20px">${r.trin.map(t=>`<li>${t.t?`<b>${esc(t.t)}</b> `:""}${esc(t.x.join(" "))}</li>`).join("")}</ol>
     ${allergier().length?`<div class="allergiboks" style="margin-top:12px">${allergier().map(([id,navn,noegler])=>{const har=r.al.indeholder.some(a=>noegler.includes(a));return har?`<p style="margin:0 0 6px">⚠ <b>Vi mener, retten indeholder ${esc(navn.toLowerCase())}.</b> Den bliver ikke foreslået.</p>`:`<label style="display:flex;gap:8px;align-items:flex-start;margin:0 0 6px"><input type="checkbox" data-fri="${id}" style="width:22px;height:22px;flex:none"><span>Jeg har tjekket alle ingredienser: retten er fri for ${esc(navn.toLowerCase())} – også for spor.</span></label>`}).join("")}<p class="muted" style="margin:0;font-size:.8rem">Uden flueben bliver retten ikke foreslået. ${esc(ALLERGI_NOTE)}</p></div>`:""}
     ${ig?`<p class="muted" style="margin-top:12px">Retten bliver gemt i Opskrifter og som favorit, så den kommer med i forslagene til madplanen.</p>`:""}
-    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" id="egenDel" ${ig?"":"checked"} style="width:22px;height:22px;flex:none"><span>Del opskriften med alle, der bruger appen</span></label>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" id="egenDel" ${ig?"":"checked"} style="width:22px;height:22px;flex:none"><span>Del opskriften med andre, der bruger appen. De kan se den, når den er godkendt.</span></label>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenGem">${ig?"Gem i Opskrifter":"Gem opskriften"}</button><button class="btn ghost" id="egenRet">${ig?"Tilbage til billederne":"Ret teksten"}</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
-    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);if(document.getElementById("egenDel").checked)delOpskrift(r);st.egne.push(r);if(ig&&!isFav(r.t))st.favoritter.push(r.t);egen.visUrl.forEach(u=>URL.revokeObjectURL(u));egen=egenTom();changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast(ig?"Gemt i Opskrifter og som favorit":"Opskriften er gemt")};
+    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);const del=document.getElementById("egenDel").checked;if(del)delOpskrift(r);st.egne.push(r);if(ig&&!isFav(r.t))st.favoritter.push(r.t);egen.visUrl.forEach(u=>URL.revokeObjectURL(u));egen=egenTom();changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast((ig?"Gemt i Opskrifter og som favorit":"Opskriften er gemt")+(del?". Den bliver delt, når den er godkendt.":""))};
     document.getElementById("egenRet").onclick=()=>{egen.trin="input";renderEgen()};
     document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";opskMode("start")};
     return;
@@ -5652,7 +5653,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="76";
+const APP_VERSION="77";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;

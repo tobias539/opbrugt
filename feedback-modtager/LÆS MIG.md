@@ -5,7 +5,8 @@ Et Google Apps Script (`feedback.gs`) tager imod fem ting fra appen:
 - **Feedback**: det, der sendes fra Feedback under Snak, og ændringer af holdbarhed i skabet. Det sendes
   anonymt, og hver besked gemmes som en tekstfil i Google Drive › Privat › mad › feedback.
 - **Fælles opskrifter**: egne opskrifter, man vælger at dele. Hver gemmes som en JSON-fil i
-  Google Drive › Privat › mad › opskrifter-delt, og alle, der bruger appen, kan se dem i kogebogen.
+  Google Drive › Privat › mad › opskrifter-delt › afventer. Først når en opskrift er godkendt, altså flyttet op i
+  opskrifter-delt, kan alle, der bruger appen, se den i kogebogen. Det gør `godkend.py` (se "Opsamling").
 - **Emojis**: når nogen vælger en anden emoji til en vare i skabet, sendes varens navn og emojien anonymt.
   Valgene tælles sammen i Google Drive › Privat › mad › emojis › emojis.json, og appen viser dem som
   "Andre har valgt". Kun emojis tages imod.
@@ -19,8 +20,8 @@ Et Google Apps Script (`feedback.gs`) tager imod fem ting fra appen:
   Normalpriserne (ikke tilbud) samles i `kvitteringer/priser.json` – de sidste 5 pr. vare og butik – og appen
   henter midterværdien, så alles priser bliver bedre. Kan slås fra i appen under Præferencer › Del kvitteringer.
 
-Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/`, `emojis/`, `kvitteringer/` og `trinbilleder/`
-er udeladt fra git, så de ikke kommer med i det offentlige repo.
+Mapperne synkroniseres til `My Drive\Privat\mad\` på computeren. `feedback/`, `opskrifter-delt/`, `emojis/`, `kvitteringer/`
+og `trinbilleder/` er udeladt fra git, så de ikke kommer med i det offentlige repo.
 
 ## Opsætning (én gang)
 
@@ -57,3 +58,6 @@ Den daglige rutine "Hent tilbudsaviser, kvitteringer og feedback" (kl. 7) gør d
 - `python feedback-modtager/indbakke.py` viser ny feedback. Rutinen skriver en vurdering i
   `feedback/vurderinger/<dato>.md` med tre veje: optimistisk, reflekterende og ulemperne. Du vælger i rutinens
   session, og valget skrives i filen.
+- Venter der delte opskrifter på godkendelse, siger `indbakke.py` det også. `python feedback-modtager/godkend.py` viser
+  dem (titel, kilde, ingredienser og trin). `--godkend <id>` flytter en op i `opskrifter-delt/`, så alle kan se den;
+  `--afvis <id>` flytter den til `opskrifter-delt/afvist/`. Du kan også bare flytte filen i Stifinder eller i Google Drive.

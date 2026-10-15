@@ -1,4 +1,5 @@
 """Vis ny feedback fra appen, så den daglige rutine kan vurdere den.
+Viser også delte opskrifter, der venter på godkendelse (godkendes med godkend.py).
 
 Brug:  python feedback-modtager/indbakke.py            ny feedback + vurderinger, der venter på et valg
        python feedback-modtager/indbakke.py --marker   marker den viste feedback som vurderet
@@ -15,6 +16,8 @@ from pathlib import Path
 
 MAPPE = Path(__file__).resolve().parent.parent / "feedback"
 STATUS = MAPPE / "_vurderet.json"
+# Delte opskrifter, der venter på godkendelse (se godkend.py)
+DELT_AFVENTER = MAPPE.parent / "opskrifter-delt" / "afventer"
 
 
 def main():
@@ -36,6 +39,17 @@ def main():
             afventer.append(f"{v.relative_to(MAPPE.parent).as_posix()} ({n})")
     if afventer:
         print("Vurderinger, der venter på et valg:", ", ".join(afventer))
+    delte = sorted(DELT_AFVENTER.glob("*.json")) if DELT_AFVENTER.is_dir() else []
+    if delte:
+        titler = []
+        for f in delte:
+            try:
+                titler.append(json.loads(f.read_text(encoding="utf-8")).get("t") or f.stem)
+            except (OSError, ValueError):
+                titler.append(f.stem)
+        print(f"Delte opskrifter, der venter på godkendelse ({len(delte)}): {', '.join(titler)}. "
+              "Vis dem med python feedback-modtager/godkend.py, og spørg brugeren, om de skal godkendes "
+              "(--godkend <id>) eller afvises (--afvis <id>).")
     if not nye:
         print("Ingen ny feedback.")
         return
