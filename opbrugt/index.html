@@ -643,7 +643,9 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   <div id="opskListe">
     <header class="top"><h1 id="h-opsk">Opskrifter</h1><span class="muted" id="opskAntal"></span></header>
     <div id="opskStart">
-      <div class="tiles en store">
+      <input id="opskSoeg" type="search" placeholder="Søg i opskrifterne – fx kylling, rødbede, pasta" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-label="Søg i opskrifterne" style="width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:1rem;color:inherit;margin:0 0 12px">
+      <div id="opskSoegRes" hidden></div>
+      <div class="tiles en store" id="opskTiles">
         <button class="tile" id="opskFindKnap"><span class="ik">🔎</span><span><span class="lb">Find en opskrift</span><span class="sm">Vælg type, tid, økonomi og hvad I har – så samler appen en kogebog</span></span></button>
         <button class="tile" id="opskNyKnap"><span class="ik">➕</span><span><span class="lb">Tilføj din egen</span><span class="sm">Indsæt, skriv eller tag et billede – vi tager os af resten</span></span></button>
         <button class="tile" id="opskIgKnap"><span class="ik">📸</span><span><span class="lb">Fra Instagram</span><span class="sm">Tag et skærmbillede af retten – vi finder opskriften og gemmer den som favorit</span></span></button>
@@ -4690,6 +4692,7 @@ function bfGaa(d){if(d>0&&!bog.filt[BF_TRIN[bfTrin].grp]){toast("Vælg en af dem
 /* Tilbage: fra en ret til bogen; fra bogen op og væk (samme vej som den kom) */
 function bogTilbage(){
   if(bog.travl)return;
+  if(bog.ret&&bogFraSoeg){bogFraSoeg=false;bog.ret=null;bog.dage=false;opskMode("start");return}
   if(bog.ret){bog.ret=null;bog.dage=false;renderBog(-1);return}
   const w=document.getElementById("opskBog");w.classList.remove("ind-oppefra");w.classList.add("ud-opad");
   setTimeout(()=>{w.classList.remove("ud-opad");opskMode("filter")},280);
@@ -4699,9 +4702,11 @@ document.querySelectorAll("[data-omode]").forEach(b=>b.onclick=()=>opskMode(b.da
 /* Åbn en ret i kogebogen (fra planen, forslag og snak) */
 /* Retten fra planen, der laves lige nu (fra "Lav retten"): bogen viser dens antal personer og byt */
 let bogFast=null;
-function oVis(id,fastId){
+/* Åbnet fra søgningen: "Tilbage" fører tilbage til søgeresultaterne */
+let bogFraSoeg=false;
+function oVis(id,fastId,fraSoeg){
   if(!ORMAP[id])return;
-  bogFast=fastId&&st.fast.find(f=>f.id===fastId)||null;
+  bogFast=fastId&&st.fast.find(f=>f.id===fastId)||null;bogFraSoeg=!!fraSoeg;
   oAaben=null;oPers=null;oMode="bog";
   if(!bog.liste.length)bog.liste=bogListe().map(r=>r.id);
   if(!bog.liste.includes(id))bog.liste=[id,...bog.liste];
@@ -4724,13 +4729,45 @@ function renderOpsk(){
   for(const [id,m] of [["opskStart","start"],["opskFilter","filter"],["opskBog","bog"],["opskEgen","egen"]])document.getElementById(id).hidden=oMode!==m;
   kurvOpdater();
   if(oMode==="egen"){renderEgen();return}
-  if(oMode==="start")return;
+  if(oMode==="start"){renderSoeg();return}
   /* Priserne er tunge at regne, så det sker kun, når fanen er fremme */
   if(!document.getElementById("t-opsk").classList.contains("on"))return;
   if(!OB.opskrifter.length&&!st.egne.length){document.getElementById("bogFiltre").innerHTML=`<p class="muted">Opskriftbanken kunne ikke indlæses. Prøv at genindlæse siden.</p>`;return}
   if(oMode==="bog"){renderBog(0);return}
   renderBogFiltre();
 }
+/* ---------- Søg i opskrifterne ----------
+   Mens man skriver: titel, undertitel, køkken, protein, ingredienser og kilde (fx "instagram"). Alle ord skal
+   passe. Retter, husstanden ikke tåler, tages ud som i kogebogen. Titlen tæller mest, så favoritter og det,
+   der bruger mest fra skabet. Et tryk åbner retten i bogen, og "Tilbage" fører tilbage hertil. */
+let oSoeg="";
+const SOEG_FYLD=/^(med|og|til|i|en|et|af|pa|uden|noget)$/; /* efter soegNorm, der gør å til a */
+function soegNorm(s){return String(s||"").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g,"")}
+function soegResultater(q){
+  const ord=soegNorm(q).split(/[^a-zæøå0-9]+/).filter(w=>w&&!SOEG_FYLD.test(w));
+  if(!ord.length)return {liste:[],skjult:0};
+  const har=oHar(),ud=[];let skjult=0;
+  for(const r of oAlle()){
+    const titel=soegNorm(r.t+" "+(r.u||""));
+    const rest=soegNorm([...(r.k||[]),...(r.reg||[]),...(r.pr||[]),...(r.tags||[]),r.kilde||"",...r.ing.map(l=>l.n+" "+((OI[l.i]||{}).n||""))].join(" "));
+    if(!ord.every(w=>titel.includes(w)||rest.includes(w)))continue;
+    if(!allergiOk(r)){skjult++;continue}
+    const m=oMatch(r,st.settings.P,har,oValg[r.id]);
+    ud.push({r,m,point:ord.filter(w=>titel.includes(w)).length*10+(isFav(r.t)?3:0)+m.score});
+  }
+  ud.sort((a,b)=>b.point-a.point||a.r.t.localeCompare(b.r.t,"da"));
+  return {liste:ud.slice(0,40),skjult};
+}
+function renderSoeg(){
+  const res=document.getElementById("opskSoegRes"),q=oSoeg.trim();
+  document.getElementById("opskTiles").hidden=!!q;res.hidden=!q;
+  if(!q){res.innerHTML="";return}
+  const {liste,skjult}=soegResultater(q),uge=tUge();
+  res.innerHTML=`<p class="muted" style="margin:0 0 8px">${liste.length?`${liste.length} ${liste.length===1?"ret":"retter"}`:"Ingen retter passer. Prøv et andet ord."}${skjult?` ${skjult} ${skjult===1?"ret er":"retter er"} taget ud på grund af allergi.`:""}</p>
+  <div style="display:grid;gap:8px">${liste.map(({r,m})=>{const set=new Set();m.tb=m.koeb.filter(x=>!set.has(x.id)&&set.add(x.id)).map(x=>[x,tBedst(x.id,uge)]).filter(([,t])=>t);m.ny=nyligFor(r);return oKort(r,m,"data-osoeg")}).join("")}</div>`;
+}
+document.getElementById("opskSoeg").oninput=e=>{oSoeg=e.target.value;renderSoeg()};
+document.getElementById("opskSoegRes").onclick=e=>{const b=e.target.closest("[data-osoeg]");if(b){oVis(b.dataset.osoeg,null,true);window.scrollTo(0,0)}};
 /* Det, der skal købes til retten (det, I ikke har i skabet) */
 function retKoeb(r,dato){
   const mt=oMatch(r,st.settings.P,oHar(),oValg[r.id]);
@@ -4824,7 +4861,7 @@ function bogRetSide(r,i){
   const tb=[...new Set(m.koeb.filter(x=>tBedst(x.id,uge)).map(x=>x.navn.toLowerCase()))];
   return `<div class="bogside" data-aabn="${esc(r.id)}" role="button" aria-label="Åbn ${esc(r.t)}">
     <p class="kapitel">${esc((r.k&&r.k[0])||(r.reg&&r.reg[0])||"Opskrift")}</p>
-    ${r.img?`<img class="bogfoto" src="${r.img}" alt="">`:`<div class="bogfoto tom" aria-hidden="true">🍽️</div>`}
+    ${r.img?`<img class="bogfoto" src="${esc(r.img)}" alt="">`:`<div class="bogfoto tom" aria-hidden="true">🍽️</div>`}
     <h2 class="bogtitel">${esc(r.t)}</h2>${r.u?`<p class="bogunder">${esc(r.u)}</p>`:""}
     <p class="bogmeta">${esc(oTid(r))} · ${p.n?`ca. ${Math.round(p.pr)} kr pr. person`:"I har det hele"}${m.harL.length?` · ${m.harL.length} fra skabet`:""}</p>
     ${tb.length?`<p class="bogtilbud">På tilbud: ${esc(tb.slice(0,3).join(", "))}</p>`:""}
@@ -4888,7 +4925,7 @@ function renderBog(retning){
   kurvOpdater();
   const r=bog.ret&&ORMAP[bog.ret];
   if(bog.ret&&!r)bog.ret=null;
-  document.getElementById("bogTilbage").textContent=r?"‹ Kogebogen":"‹ Filtre";
+  document.getElementById("bogTilbage").textContent=r?(bogFraSoeg?"‹ Søgning":"‹ Kogebogen"):"‹ Filtre";
   bog.side=Math.min(bog.side,bog.liste.length);
   bogHoejde();renderBogNav();
   if(r){bog.retSider=retSider(r);bog.retSide=Math.min(bog.retSide,bog.retSider.length-1);bladre(bog.retSider[bog.retSide],retning)}
@@ -4981,9 +5018,9 @@ let bogLoeft=false;
     if(e.target.closest("[data-naeste]"))bogFlyt(1);
   });
 })();
-function oKort(r,m){
+function oKort(r,m,attr="data-oopen"){
   const nej=oIkkeLide(r),n=st.valgtAntal[r.id]||0;
-  return `<button class="rcard" data-oopen="${r.id}">${r.img?`<img src="${r.img}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${m.koeb.length?" · køb "+m.koeb.length:""}${r.egen&&n?` · valgt ${n} ${n===1?"gang":"gange"}`:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${m.ny?`<span class="muted" style="display:block;font-size:.85rem">${esc(nyligLabel(m.ny))}</span>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`;
+  return `<button class="rcard" ${attr}="${esc(r.id)}">${r.img?`<img src="${esc(r.img)}" alt="" loading="lazy">`:`<span class="ph"></span>`}<span class="tx"><h3>${esc(r.t)}</h3><span class="rmeta">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${m.koeb.length?" · køb "+m.koeb.length:""}${r.egen&&n?` · valgt ${n} ${n===1?"gang":"gange"}`:""}</span>${oBrugerHtml(m,4)}${m.tb.length?`<div class="uses">`+m.tb.slice(0,3).map(([x,t])=>`<span class="tb">${esc((OI[x.id]||{n:x.navn}).n)}: ${esc(t.k)} ${esc(tPris(t.p))}</span>`).join("")+`</div>`:""}${m.ny?`<span class="muted" style="display:block;font-size:.85rem">${esc(nyligLabel(m.ny))}</span>`:""}${nej.length?`<span class="note" style="display:block">Indeholder ${esc(nej.join(", ").toLowerCase())}</span>`:""}</span></button>`;
 }
 function renderOpskVis(){
   const r=ORMAP[oAaben],vis=document.getElementById("opskVis");
@@ -5008,7 +5045,7 @@ function renderOpskVis(){
   const paaPlanen=st.fast.filter(f=>f.opskrift===r.id&&f.dato>=t0).sort((a,b)=>a.dato.localeCompare(b.dato));
   let dage="";for(let i=0;i<7;i++){const di=addDays(t0,i),opt=fastPaa(di);dage+=`<button data-odag="${di}" ${opt?"disabled":""}>${i===0?"I dag":i===1?"I morgen":dayLabel(di)}${opt?" · "+esc(opt.navn):""}</button>`}
   vis.innerHTML=`<button class="back" id="oTilbage">‹ Tilbage</button>
-  ${r.img?`<img class="hero" src="${r.img}" alt="${esc(r.t)}">`:""}
+  ${r.img?`<img class="hero" src="${esc(r.img)}" alt="${esc(r.t)}">`:""}
   <h2 class="titel">${esc(r.t)}</h2>${r.u?`<p class="muted" style="margin:4px 0 0">${esc(r.u)}</p>`:""}
   ${(ap=>ap.length?`<div class="allergiboks advarsel">⚠ <b>${esc(allergiTekst(ap))}.</b>${ap.some(x=>x.hvad==="ukendt")&&r.egen?`<br>Har du selv tjekket alle ingredienser (og emballagen)?<br><button class="btn ghost" id="oBekraeft" style="margin-top:8px">Jeg har tjekket: fri for ${esc(ap.filter(x=>x.hvad==="ukendt").map(x=>x.navn.toLowerCase()).join(", "))}</button>`:""}</div>`:"")(allergiProblem(r))}
   <p class="rmeta" style="margin-top:6px">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${r.kilde?" · "+esc(r.kilde):""}${r.egen?" · tilføjet af dig":""}</p>
@@ -5615,7 +5652,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="75";
+const APP_VERSION="76";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
