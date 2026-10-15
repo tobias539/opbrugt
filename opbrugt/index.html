@@ -646,6 +646,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
       <div class="tiles en store">
         <button class="tile" id="opskFindKnap"><span class="ik">🔎</span><span><span class="lb">Find en opskrift</span><span class="sm">Vælg type, tid, økonomi og hvad I har – så samler appen en kogebog</span></span></button>
         <button class="tile" id="opskNyKnap"><span class="ik">➕</span><span><span class="lb">Tilføj din egen</span><span class="sm">Indsæt, skriv eller tag et billede – vi tager os af resten</span></span></button>
+        <button class="tile" id="opskIgKnap"><span class="ik">📸</span><span><span class="lb">Fra Instagram</span><span class="sm">Tag et skærmbillede af retten – vi finder opskriften og gemmer den som favorit</span></span></button>
       </div>
     </div>
     <div id="opskFilter" hidden>
@@ -4677,7 +4678,8 @@ function opskMode(m){
   renderOpsk();window.scrollTo(0,0);
   if(m==="bog"){const w=document.getElementById("opskBog");w.classList.remove("ind-oppefra","ud-opad");void w.offsetWidth;w.classList.add("ind-oppefra")}
 }
-document.getElementById("opskNyKnap").onclick=()=>opskMode("egen");
+document.getElementById("opskNyKnap").onclick=()=>egenStart(false);
+document.getElementById("opskIgKnap").onclick=()=>egenStart(true);
 document.getElementById("opskFindKnap").onclick=()=>{bfTrin=0;bog.filt={type:null,tid:null,oko:null,skab:null};opskMode("filter")};
 document.getElementById("bfTilbage").onclick=()=>opskMode("start");
 document.getElementById("bogAabn").onclick=()=>opskMode("bog");
@@ -4838,6 +4840,8 @@ function retBlokke(r){
   const tl=trinTil(r,valg,fra),u=r.u&&tl.fix(r.u);
   b.push(`<p class="kapitel">${esc((r.k&&r.k[0])||"Opskrift")}</p><h2 class="bogtitel">${esc(r.t)}</h2>${u?`<p class="bogunder">${esc(u)}</p>`:""}<p class="bogmeta">${esc(oTid(r))} · til ${n} ${n===1?"person":"personer"}</p>`);
   if(ap.length)b.push(`<p class="bogadvar">⚠ ${esc(allergiTekst(ap))}.</p>`);
+  /* Retter fra Instagram: videoen er god at have ved siden af, mens man laver retten */
+  if(sikkerUrl(r.ig))b.push(`<p class="bogi"><a href="${esc(sikkerUrl(r.ig))}" target="_blank" rel="noopener" style="color:inherit">▶ Se opslaget på ${urlVaert(r.ig)==="instagram.com"?"Instagram":esc(urlVaert(r.ig))}</a>${r.udgave?` <span class="boghar">appens udgave</span>`:""}</p>`);
   if(fra){const byttet=m.linjer.filter(x=>x.erst).length,ude=m.linjer.filter(x=>x.status==="udeladt").length;
     b.push(`<p class="bogkoeb">Fra planen, ${esc(dayLabel(fra.dato,true))}.${byttet?` ${byttet} ${byttet===1?"ingrediens er byttet":"ingredienser er byttet"}.`:""}${ude?` ${ude} udelades.`:""}</p>`)}
   else b.push(`<p class="bogkoeb">${p.n?`Køb ${p.n} ${p.n===1?"vare":"varer"} for ca. ${Math.round(p.kr)} kr${p.butik?` i ${esc(p.butik)} – billigst af jeres butikker`:""}.`:"I har alt, hvad der skal bruges."}${m.harL.length?` ${m.harL.length} ${m.harL.length===1?"ting tages":"ting tages"} fra skabet.`:""}</p>`);
@@ -4967,7 +4971,7 @@ let bogLoeft=false;
   b.addEventListener("touchend",e=>{if(x0==null)return;if(bogLoeft){x0=null;return}const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy)){swipet=true;bogFlyt(dx<0?1:-1)}else if(dy<-60&&Math.abs(dy)>1.5*Math.abs(dx)){swipet=true;bogTilbage()}},{passive:true});
   b.addEventListener("click",e=>{
     if(swipet||bogLoeft){swipet=false;bogLoeft=false;return}
-    if(bog.travl)return;
+    if(bog.travl||e.target.closest("a"))return;
     /* venstre 20 % bladrer tilbage, højre 20 % frem, midten åbner retten */
     const rr=b.getBoundingClientRect(),fx=(e.clientX-rr.left)/rr.width;
     if(fx<.2){bogFlyt(-1);return}
@@ -5008,6 +5012,8 @@ function renderOpskVis(){
   <h2 class="titel">${esc(r.t)}</h2>${r.u?`<p class="muted" style="margin:4px 0 0">${esc(r.u)}</p>`:""}
   ${(ap=>ap.length?`<div class="allergiboks advarsel">⚠ <b>${esc(allergiTekst(ap))}.</b>${ap.some(x=>x.hvad==="ukendt")&&r.egen?`<br>Har du selv tjekket alle ingredienser (og emballagen)?<br><button class="btn ghost" id="oBekraeft" style="margin-top:8px">Jeg har tjekket: fri for ${esc(ap.filter(x=>x.hvad==="ukendt").map(x=>x.navn.toLowerCase()).join(", "))}</button>`:""}</div>`:"")(allergiProblem(r))}
   <p class="rmeta" style="margin-top:6px">${esc(oTid(r))}${r.k.length?" · "+esc(r.k.join(", ")):""}${r.kilde?" · "+esc(r.kilde):""}${r.egen?" · tilføjet af dig":""}</p>
+  ${r.udgave?`<p class="muted" style="margin-top:4px">Det er appens egen udgave af retten, ikke skaberens opskrift.</p>`:""}
+  ${sikkerUrl(r.ig)?`<p style="margin-top:6px"><a href="${esc(sikkerUrl(r.ig))}" target="_blank" rel="noopener">▶ Se opslaget på ${urlVaert(r.ig)==="instagram.com"?"Instagram":esc(urlVaert(r.ig))}</a></p>`:""}
   <button class="btn ghost" id="oFav" style="margin-top:8px" aria-pressed="${isFav(r.t)}">${isFav(r.t)?"♥ Favorit":"♡ Gør til favorit"}</button>
   ${nyligFor(r)?`<p class="muted" style="margin-top:6px">${esc(nyligLabel(nyligFor(r)))}. Den bliver ikke anbefalet igen før om 3 uger, medmindre den er favorit.</p>`:""}
   ${nej.length?`<p class="note">Indeholder ${esc(nej.join(", ").toLowerCase())}, som står under "Kan ikke lide / tåler ikke".</p>`:""}
@@ -5022,7 +5028,7 @@ function renderOpskVis(){
   <ol class="trinl">${r.trin.map(t=>`<li><b>${esc(t.t)}</b>${t.x.map(p=>`<p>${esc(p)}</p>`).join("")}${t.vig?`<p class="note">Vigtigt: ${esc(t.vig)}</p>`:""}${t.tip?`<p class="tip">Tip: ${esc(t.tip)}</p>`:""}</li>`).join("")}</ol>
   ${r.al&&r.al.indeholder.length?`<p class="muted" style="margin-top:16px">Allergener: ${esc(r.al.indeholder.join(", "))}${r.al.spor_af.length?". Kan indeholde spor af: "+esc(r.al.spor_af.join(", ")):""}.</p>`:""}
   ${r.noter?`<p class="muted">${esc(r.noter)}</p>`:""}
-  ${r.url?`<p class="muted"><a href="${esc(r.url)}" target="_blank" rel="noopener">Se retten på ${esc(urlVaert(r.url))}</a></p>`:""}
+  ${sikkerUrl(r.url)?`<p class="muted"><a href="${esc(sikkerUrl(r.url))}" target="_blank" rel="noopener">Se retten på ${esc(urlVaert(r.url))}</a></p>`:""}
   ${r.egen&&!r.delt?`<button class="btn ghost" id="oSlet" style="margin-top:16px">Slet opskriften</button>`:""}${r.delt?`<p class="muted" style="margin-top:16px">Delt af en anden, der bruger appen.</p>`:""}`;
   document.getElementById("oTilbage").onclick=()=>{oAaben=null;renderOpsk();window.scrollTo(0,0)};
   document.getElementById("oFav").onclick=()=>{if(isFav(r.t))st.favoritter=st.favoritter.filter(x=>x.toLowerCase()!==r.t.toLowerCase());else st.favoritter.push(r.t);changed()};
@@ -5159,29 +5165,50 @@ function nyligLabel(h){const t0=todayIso();return h.dato>=t0?"På planen "+(h.da
 function nyligNavne(){return [...new Set(nyligListe().map(h=>h.navn))].filter(n=>!isFav(n))}
 function nyligTekst(){return nyligNavne().join(", ")}
 
-/* ---------- Tilføj din egen ---------- */
-let egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};
+/* ---------- Tilføj din egen ----------
+   To veje ind: "Tilføj din egen" (tekst eller et billede af en opskrift) og "Fra Instagram" (skærmbilleder af et opslag).
+   Fra Instagram læser Claude først skærmbillederne. Mangler opskriften, søger Claude skaberens egen opskrift på nettet
+   (aldrig på Instagram, der ikke må læses automatisk). Findes den heller ikke dér, laver Claude appens egen udgave af
+   retten ud fra skabet, tilbuddene og allergierne. Retter fra Instagram gemmes som favoritter, så planen foreslår dem. */
+function egenTom(){return {trin:"luk",tekst:"",billede:null,billeder:[],visUrl:[],link:"",ig:false,forslag:null,fejl:""}}
+let egen=egenTom();
+/* Åbn "Tilføj din egen" (ig=false) eller "Fra Instagram" (ig=true). Det, man var i gang med, bliver, hvis det er samme slags. */
+function egenStart(ig){if(egen.trin==="luk"||egen.ig!==ig){egen=egenTom();egen.ig=ig;egen.trin="input"}opskMode("egen")}
+/* Kun almindelige webadresser må blive til links (opskrifter kan være delt af andre) */
+function sikkerUrl(u){u=String(u||"").trim();return /^https?:\/\/[^\s"<>]+$/i.test(u)?u:""}
+/* Instagram-links uden sporingsdelen: ".../reel/ABC/?igsh=…" -> "https://www.instagram.com/reel/ABC/" */
+function igRens(u){
+  u=String(u||"").trim();
+  const m=u.match(/instagram\.com\/(?:[\w.]+\/)?(p|reels?|tv)\/([\w-]+)/i);
+  if(m)return `https://www.instagram.com/${m[1].toLowerCase()==="reels"?"reel":m[1].toLowerCase()}/${m[2]}/`;
+  return sikkerUrl(u);
+}
+const IG_MAKS=6;
 function renderEgen(){
   const p=document.getElementById("egenPanel");
   if(egen.trin==="luk")return;
-  if(egen.trin==="arbejder"){p.innerHTML=`<h3>Tilføj din egen opskrift</h3><p class="muted">${tanke("Vi sætter opskriften op")}<br>Det kan tage op til et minut.</p>`;return}
+  const ig=egen.ig,overskrift=ig?"Fra Instagram":"Tilføj din egen opskrift";
+  if(egen.trin==="arbejder"){p.innerHTML=`<h3>${overskrift}</h3><p class="muted">${tanke(ig?"Vi finder opskriften":"Vi sætter opskriften op")}<br>${ig?"Måske skal vi søge efter den på nettet, så det kan tage et par minutter.":"Det kan tage op til et minut."}</p>`;return}
   if(egen.trin==="vis"){
     const r=egen.forslag,ukendt=r.ing.filter(l=>!OI[l.i]&&!l.b).length;
     p.innerHTML=`<h3>${esc(r.t)}</h3>${r.u?`<p class="muted" style="margin:2px 0 0">${esc(r.u)}</p>`:""}
     <p class="rmeta" style="margin-top:6px">${esc(oTid(r))} · til ${r.pb} ${r.pb===1?"person":"personer"}${r.k.length?" · "+esc(r.k.join(", ")):""}${r.kilde?" · "+esc(r.kilde):""}</p>
+    ${r.udgave?`<p class="note" style="margin-top:8px">Vi fandt ikke opskriften, så det her er appens egen udgave af retten, lavet ud fra jeres skab og ugens tilbud. Har du et skærmbillede af teksten under opslaget, kan du prøve igen med det.</p>`:r.url?`<p class="muted" style="margin-top:6px">Opskriften er fundet på ${esc(urlVaert(r.url))}.</p>`:""}
     <h3 style="margin-top:10px">Ingredienser</h3>
     <ul style="margin:4px 0 0;padding-left:20px">${r.ing.map(l=>`<li>${esc(oFmt(l.m,l.e))} ${esc(l.n)}${l.b?` <span class="muted">(basisvare)</span>`:""}</li>`).join("")}</ul>
     ${ukendt?`<p class="muted" style="margin-top:6px">${ukendt} ${ukendt===1?"ingrediens findes":"ingredienser findes"} ikke i appens varekatalog. De kommer stadig på indkøbslisten, men kan ikke matches med skabet eller tilbud.</p>`:""}
     <h3 style="margin-top:10px">Sådan gør du</h3>
     <ol style="margin:4px 0 0;padding-left:20px">${r.trin.map(t=>`<li>${t.t?`<b>${esc(t.t)}</b> `:""}${esc(t.x.join(" "))}</li>`).join("")}</ol>
     ${allergier().length?`<div class="allergiboks" style="margin-top:12px">${allergier().map(([id,navn,noegler])=>{const har=r.al.indeholder.some(a=>noegler.includes(a));return har?`<p style="margin:0 0 6px">⚠ <b>Vi mener, retten indeholder ${esc(navn.toLowerCase())}.</b> Den bliver ikke foreslået.</p>`:`<label style="display:flex;gap:8px;align-items:flex-start;margin:0 0 6px"><input type="checkbox" data-fri="${id}" style="width:22px;height:22px;flex:none"><span>Jeg har tjekket alle ingredienser: retten er fri for ${esc(navn.toLowerCase())} – også for spor.</span></label>`}).join("")}<p class="muted" style="margin:0;font-size:.8rem">Uden flueben bliver retten ikke foreslået. ${esc(ALLERGI_NOTE)}</p></div>`:""}
-    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" id="egenDel" checked style="width:22px;height:22px;flex:none"><span>Del opskriften med alle, der bruger appen</span></label>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenGem">Gem opskriften</button><button class="btn ghost" id="egenRet">Ret teksten</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
-    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);if(document.getElementById("egenDel").checked)delOpskrift(r);st.egne.push(r);egen={trin:"luk",tekst:"",billede:null,forslag:null,fejl:""};changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast("Opskriften er gemt")};
+    ${ig?`<p class="muted" style="margin-top:12px">Retten bliver gemt i Opskrifter og som favorit, så den kommer med i forslagene til madplanen.</p>`:""}
+    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" id="egenDel" ${ig?"":"checked"} style="width:22px;height:22px;flex:none"><span>Del opskriften med alle, der bruger appen</span></label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenGem">${ig?"Gem i Opskrifter":"Gem opskriften"}</button><button class="btn ghost" id="egenRet">${ig?"Tilbage til billederne":"Ret teksten"}</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
+    document.getElementById("egenGem").onclick=()=>{r.fri=[...document.querySelectorAll("#egenPanel [data-fri]:checked")].map(x=>x.dataset.fri);if(document.getElementById("egenDel").checked)delOpskrift(r);st.egne.push(r);if(ig&&!isFav(r.t))st.favoritter.push(r.t);egen.visUrl.forEach(u=>URL.revokeObjectURL(u));egen=egenTom();changed();renderEgen();oVis(r.id);window.scrollTo(0,0);toast(ig?"Gemt i Opskrifter og som favorit":"Opskriften er gemt")};
     document.getElementById("egenRet").onclick=()=>{egen.trin="input";renderEgen()};
     document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";opskMode("start")};
     return;
   }
+  if(ig){renderIgInput(p);return}
   p.innerHTML=`<h3>Tilføj din egen opskrift</h3>
   <p class="muted" style="margin:2px 0 8px">Indsæt opskriften (fx kopieret fra en hjemmeside), skriv den med dine egne ord, eller tag et billede af en side i en kogebog. Vi tager os af resten.</p>
   <textarea id="egenTekst" rows="6" placeholder="Fx: Chili sin carne til 4. 2 dåser hakkede tomater, 1 dåse kidneybønner, 2 løg …" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;color:inherit">${esc(egen.tekst)}</textarea>
@@ -5193,32 +5220,106 @@ function renderEgen(){
   document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";opskMode("start")};
   document.getElementById("egenLav").onclick=egenLav;
 }
-async function egenLav(){
-  const tekst=egen.tekst.trim();
-  if(!tekst&&!egen.billede){egen.fejl="Skriv eller indsæt opskriften, eller tag et billede af den.";renderEgen();return}
-  if(!sample){egen.fejl=fejlTekst({code:"no_key"});renderEgen();return}
-  egen.trin="arbejder";egen.fejl="";renderEgen();
+/* "Fra Instagram": et eller flere skærmbilleder, link til opslaget og evt. teksten fra opslaget */
+function renderIgInput(p){
+  const n=egen.billeder.length,felt="background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;color:inherit";
+  p.innerHTML=`<h3>Fra Instagram</h3>
+  <p class="muted" style="margin:2px 0 8px">Tag et skærmbillede af opslaget, hvor man kan se retten – gerne også teksten under (tryk på "mere" først). Vi finder opskriften. Findes den ikke, laver vi vores egen udgave ud fra det, I har.</p>
+  ${n?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${egen.visUrl.map((u,i)=>`<img src="${u}" alt="Skærmbillede ${i+1}" style="width:64px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">`).join("")}</div>`:""}
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">${n<IG_MAKS?`<label class="btn${n?" ghost":""}" style="display:inline-block">${n?"Tilføj et billede mere":"Vælg skærmbillede"}<input type="file" id="igBilleder" accept="image/*" multiple hidden></label>`:""}${n?`<button class="btn ghost" id="igRyd">Fjern billederne</button>`:""}</div>
+  <label for="igLink" class="muted" style="display:block;margin-top:14px">Link til opslaget (valgfrit), så du kan se videoen, når du laver retten</label>
+  <div style="display:flex;gap:8px;margin-top:4px"><input id="igLink" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://www.instagram.com/reel/…" value="${esc(egen.link)}" style="flex:1;min-width:0;${felt}">${navigator.clipboard&&navigator.clipboard.readText?`<button class="btn ghost" id="igIndsaet">Indsæt</button>`:""}</div>
+  <details class="fold" style="margin-top:12px"${egen.tekst?" open":""}><summary style="font-size:.95rem">Har du teksten fra opslaget?</summary><textarea id="egenTekst" rows="4" placeholder="Indsæt teksten under opslaget" style="width:100%;margin-top:8px;${felt}">${esc(egen.tekst)}</textarea></details>
+  ${egen.fejl?`<p class="bad" style="margin-top:8px">${esc(egen.fejl)}</p>`:""}
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="egenLav">Find opskriften</button><button class="btn ghost" id="egenLuk">Annuller</button></div>`;
+  const vaelg=document.getElementById("igBilleder");
+  if(vaelg)vaelg.onchange=e=>{
+    const nye=[...(e.target.files||[])].slice(0,IG_MAKS-egen.billeder.length);
+    if((e.target.files||[]).length>nye.length)toast(`Højst ${IG_MAKS} billeder`);
+    egen.billeder.push(...nye);egen.visUrl.push(...nye.map(f=>URL.createObjectURL(f)));egen.fejl="";renderEgen();
+  };
+  const ryd=document.getElementById("igRyd");if(ryd)ryd.onclick=()=>{egen.visUrl.forEach(u=>URL.revokeObjectURL(u));egen.billeder=[];egen.visUrl=[];renderEgen()};
+  document.getElementById("igLink").oninput=e=>{egen.link=e.target.value};
+  const ind=document.getElementById("igIndsaet");
+  if(ind)ind.onclick=async()=>{
+    try{const t=await navigator.clipboard.readText(),u=(String(t).match(/https?:\/\/\S+/)||[])[0];if(!u){toast("Der er ikke et link i udklipsholderen");return}egen.link=igRens(u);renderEgen()}
+    catch(e){toast("Appen må ikke læse udklipsholderen. Sæt linket ind i feltet.")}
+  };
+  document.getElementById("egenTekst").oninput=e=>{egen.tekst=e.target.value};
+  document.getElementById("egenLuk").onclick=()=>{egen.trin="luk";opskMode("start")};
+  document.getElementById("egenLav").onclick=igLav;
+}
+/* Appens opskriftsformat (fælles for "Tilføj din egen" og "Fra Instagram") */
+function egenRegler(){
   const vaerdier=f=>[...new Set(OB.opskrifter.flatMap(f))].join(", ");
-  const prompt=`Lav brugerens opskrift om til appens opskriftsformat. Opskriften står ${egen.billede&&tekst?"på billedet og i teksten nedenfor":egen.billede?"på billedet":"i teksten nedenfor"}.
-Regler:
-- Skriv på dansk. Brug opskriftens egne mængder og trin, og opfind ikke ingredienser. Mangler der mængder, så skøn dem fornuftigt.
+  return `- Skriv på dansk. Brug opskriftens egne mængder og trin, og opfind ikke ingredienser. Mangler der mængder, så skøn dem fornuftigt.
 - "pb": antal personer, opskriften er til (4, hvis den ikke siger det).
 - Ingredienser: "i" er id'et fra kataloget, hvis varen findes der (også under et andet navn), ellers null. "n" er navnet, som det står i opskriften. "m" er mængden som tal, eller null ved "efter smag". "e" er enheden: g, ml, dl, stk, fed, tsk, spsk, daase, pose, nip eller "efter smag". Omregn kg til g og liter til ml. "b": true for basisvarer, man normalt har i skabet (salt, peber, olie, vand, sukker, mel).
 - "k": køkken, fx ${vaerdier(r=>r.k)}. "reg": region blandt ${vaerdier(r=>r.reg)}. "pr": hovedprotein blandt ${vaerdier(r=>r.pr)} (tom liste, hvis der ikke er noget).
 - "tid": [mindst, højst] minutter i alt. "trin": 3-8 trin, hver med en kort overskrift "t" og sætninger "x".
+- "al": allergener, ingredienserne indeholder, med disse nøgler: gluten, hvede, rug, byg, havre, spelt, maelk, aeg, noedder, jordnoedder, fisk, krebsdyr, bloeddyr, soja, selleri, sennep, sesam, svovldioxid, lupin. Tag alt med, du er i tvivl om (fx pasta, mel, brød, sojasauce = gluten).`;
+}
+function egenKatalog(){return Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
+const EGEN_FELTER=`"t":titel,"u":kort undertitel eller "","k":[...],"reg":[...],"pr":[...],"tid":[min,max],"pb":tal,"ing":[{"i","n","m","e","b"}],"trin":[{"t","x":[...]}],"al":[...]`;
+async function egenLav(){
+  const e=egen,tekst=e.tekst.trim();
+  if(!tekst&&!e.billede){e.fejl="Skriv eller indsæt opskriften, eller tag et billede af den.";renderEgen();return}
+  if(!sample){e.fejl=fejlTekst({code:"no_key"});renderEgen();return}
+  e.trin="arbejder";e.fejl="";renderEgen();
+  const prompt=`Lav brugerens opskrift om til appens opskriftsformat. Opskriften står ${e.billede&&tekst?"på billedet og i teksten nedenfor":e.billede?"på billedet":"i teksten nedenfor"}.
+Regler:
+${egenRegler()}
 - "kilde": bog og side eller hjemmeside, hvis det fremgår, ellers null.
-- "al": allergener, ingredienserne indeholder, med disse nøgler: gluten, hvede, rug, byg, havre, spelt, maelk, aeg, noedder, jordnoedder, fisk, krebsdyr, bloeddyr, soja, selleri, sennep, sesam, svovldioxid, lupin. Tag alt med, du er i tvivl om (fx pasta, mel, brød, sojasauce = gluten).
 Er det ikke en opskrift, så svar {"ok":false,"fejl":"kort forklaring på dansk"}.
-Ingredienskatalog (id: navn): ${Object.entries(OI).map(([id,v])=>id+": "+v.n).join("; ")}
+Ingredienskatalog (id: navn): ${egenKatalog()}
 ${tekst?`\nOpskriften:\n"""${tekst}"""\n`:""}
-Returnér KUN JSON: {"ok":true,"t":titel,"u":kort undertitel eller "","k":[...],"reg":[...],"pr":[...],"tid":[min,max],"pb":tal,"ing":[{"i","n","m","e","b"}],"trin":[{"t","x":[...]}],"kilde":tekst eller null,"al":[...]}`;
+Returnér KUN JSON: {"ok":true,${EGEN_FELTER},"kilde":tekst eller null}`;
   try{
-    const x=await sample.json(prompt,{images:egen.billede||undefined,modelTier:"default",hvad:"opsk"});
-    if(!x||x.ok===false){egen.trin="input";egen.fejl=(x&&x.fejl)||"Det ligner ikke en opskrift.";renderEgen();return}
+    const x=await sample.json(prompt,{images:e.billede||undefined,modelTier:"default",hvad:"opsk"});
+    if(egen!==e)return;
+    if(!x||x.ok===false){e.trin="input";e.fejl=(x&&x.fejl)||"Det ligner ikke en opskrift.";renderEgen();return}
     const r=egenNorm(x);
-    if(!r.ing.length||!r.trin.length){egen.trin="input";egen.fejl="Claude kunne ikke finde både ingredienser og fremgangsmåde. Prøv med hele opskriften.";renderEgen();return}
-    egen.forslag=r;egen.trin="vis";renderEgen();
-  }catch(e){egen.trin="input";egen.fejl=fejlTekst(e);renderEgen()}
+    if(!r.ing.length||!r.trin.length){e.trin="input";e.fejl="Claude kunne ikke finde både ingredienser og fremgangsmåde. Prøv med hele opskriften.";renderEgen();return}
+    e.forslag=r;e.trin="vis";renderEgen();
+  }catch(err){if(egen!==e)return;e.trin="input";e.fejl=fejlTekst(err);renderEgen()}
+}
+/* Fra Instagram: skærmbilleder -> opskrift. Fra billedet, fra skaberens egen side på nettet eller appens egen udgave. */
+async function igLav(){
+  const e=egen,tekst=e.tekst.trim();
+  e.link=igRens(e.link);
+  if(!e.billeder.length&&!tekst){e.fejl="Vælg et skærmbillede af opslaget.";renderEgen();return}
+  if(!sample){e.fejl=fejlTekst({code:"no_key"});renderEgen();return}
+  e.trin="arbejder";e.fejl="";renderEgen();
+  const P_=st.settings.P||2,al=allergiNavne(),tb=tTekst();
+  const prompt=`Brugeren har set en ret på Instagram og vil gerne lave den.${e.billeder.length?" Billederne er skærmbilleder af opslaget.":""}${e.link?` Opslaget: ${e.link}`:""}
+Find opskriften på denne måde, og stop ved den første, der lykkes:
+1. "billede": Står hele opskriften (ingredienser med mængder og fremgangsmåde) i billederne eller teksten, så brug den.
+2. "nettet": Ellers find rettens navn og skaberens @navn i billederne, og søg med websøgningen efter skaberens egen opskrift på retten, fx på skaberens blog eller hjemmeside (det er dér, "link i bio" og "opskrift på bloggen" peger hen). Hent siden, og brug den, hvis det er den samme ret. Instagram, TikTok og Facebook kan ikke læses, så søg ikke dér.
+3. "udgave": Findes opskriften ikke, så lav appens egen udgave af retten ud fra det, du kan se, og hvordan retten normalt laves. Brug gerne det, de har i skabet, og det, der er på tilbud, når det passer til retten. Lav den til ${P_} personer ("pb": ${P_}).
+Kald aldrig en opskrift for skaberens, hvis du selv har lavet den.
+Husstand: ${P_} personer.${al?` De tåler ikke: ${al} (heller ikke spor). Undgå det ved "udgave".`:""}
+Det har de i skabet: ${skabTekst()}.
+${tb?`Tilbud den kommende uge: ${tb}.\n`:""}Regler for opskriften:
+${egenRegler()}
+- Ved "udgave" er det dig, der skriver opskriften, så der vælger du selv ingredienser og mængder.
+- Opskrifter fra Instagram er tit amerikanske: omregn cups til dl, oz og lb til g, °F til °C og "1 stick butter" til 115 g, og brug danske varer, man kan købe i Netto, Rema og Føtex (fx heavy cream = piskefløde, cilantro = koriander, ground beef = hakket oksekød, scallions = forårsløg).
+- Skriv trinene med dine egne ord, ikke kopieret fra kilden. Temperaturer, tider og mængder skal passe med kilden.
+Er billederne ikke af mad eller en ret, så svar {"ok":false,"fejl":"kort forklaring på dansk"}.
+Ingredienskatalog (id: navn): ${egenKatalog()}
+${tekst?`\nTeksten fra opslaget:\n"""${tekst}"""\n`:""}
+Når du er færdig, så returnér KUN JSON (ingen tekst før eller efter): {"ok":true,"hvordan":"billede", "nettet" eller "udgave","skaber":"@brugernavn" eller null,"url":adressen på siden med opskriften (kun ved "nettet") eller null,${EGEN_FELTER}}`;
+  try{
+    const x=await sample.json(prompt,{images:e.billeder,billedTekster:e.billeder.map((_,i)=>`Skærmbillede ${i+1}:`),modelTier:"default",hvad:"opsk",web:true});
+    if(egen!==e)return;
+    if(!x||x.ok===false){e.trin="input";e.fejl=(x&&x.fejl)||"Vi kunne ikke se en ret på billedet.";renderEgen();return}
+    const r=egenNorm(x);
+    if(!r.ing.length||!r.trin.length){e.trin="input";e.fejl="Vi kunne ikke lave en opskrift ud fra billedet. Prøv med et skærmbillede, hvor man kan se teksten under opslaget.";renderEgen();return}
+    const sk=String(x.skaber||"").trim().replace(/^@/,""),skaber=/^[\w.]{1,30}$/.test(sk)?"@"+sk:"";
+    r.fra="instagram";r.ig=e.link;r.udgave=x.hvordan==="udgave";
+    r.url=x.hvordan==="nettet"?sikkerUrl(x.url):"";
+    r.kilde=r.udgave?`appens udgave af en ret fra ${skaber||"Instagram"}`:[skaber?skaber+" på Instagram":"Instagram",r.url?urlVaert(r.url):""].filter(Boolean).join(" · ");
+    e.forslag=r;e.trin="vis";renderEgen();
+  }catch(err){if(egen!==e)return;e.trin="input";e.fejl=fejlTekst(err);renderEgen()}
 }
 function egenNorm(x){
   const liste=v=>Array.isArray(v)?v.map(String).map(s=>s.trim()).filter(Boolean):(v?[String(v)]:[]);
@@ -5315,6 +5416,13 @@ function lesJson(t){
   const a=t.indexOf("{"),b=t.lastIndexOf("}");
   try{return JSON.parse(a>=0?t.slice(a,b+1):t)}catch(e){throw {code:"invalid_json",message:"ugyldigt svar"}}
 }
+/* Websøgning og -hentning kører hos Anthropic. De nyeste udgaver (med filtrering) findes ikke til Haiku.
+   Sociale medier spærres: de kan ikke læses automatisk, og det er skaberens egen side, vi leder efter. */
+function webVaerktoej(model){
+  const ny=!/haiku/.test(model),spaer=["instagram.com","tiktok.com","facebook.com"];
+  return [{type:ny?"web_search_20260209":"web_search_20250305",name:"web_search",max_uses:3,blocked_domains:spaer},
+    {type:ny?"web_fetch_20260209":"web_fetch_20250910",name:"web_fetch",max_uses:3,blocked_domains:spaer}];
+}
 function apiAdapter(){
   return {
     limits:async()=>({images:{mediaTypes:["image/jpeg","image/png","image/webp","image/gif"]}}),
@@ -5330,6 +5438,7 @@ function apiAdapter(){
       }
       content.push({type:"text",text:prompt});
       const body={model,max_tokens:16000,messages:[{role:"user",content}]};
+      if(opt.web)body.tools=webVaerktoej(model);
       const headers={"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"};
       /* Sonnet og Opus: lad API'et selv prøve en anden model, hvis en sikkerhedsfilter afviser et svar */
       if(model!=="claude-haiku-5-5"){body.fallbacks="default";headers["anthropic-beta"]="server-side-fallback-2026-07-01"}
@@ -5339,52 +5448,75 @@ function apiAdapter(){
       /* Svaret streames altid: der kommer data hele tiden (iPhone opgiver ellers en forespørgsel,
          der er stille i ca. 60 sek.), og man kan vise, hvor langt Claude er. Vagt: stop, hvis intet sker i 45 sek. */
       const stream=opt.stream!==false,onText=typeof opt.onText==="function"?opt.onText:()=>{};if(stream)body.stream=true;
-      const ctrl=new AbortController();let vagt=null;const vent=()=>{clearTimeout(vagt);vagt=setTimeout(()=>ctrl.abort(),stream?45000:120000)};vent();
-      let r,d0=null;
-      for(let i=0;i<2;i++){
-        try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body),signal:ctrl.signal})}
-        catch(e){clearTimeout(vagt);throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
-        if(r.ok)break;
-        d0=await r.json().catch(()=>({}));
-        /* Afviser modellen thinking-indstillingen, så prøv uden */
-        if(r.status===400&&body.thinking&&/thinking/i.test(d0?.error?.message||"")){delete body.thinking;continue}
-        break;
-      }
-      if(!r.ok){
-        clearTimeout(vagt);
-        const d=d0||{};
-        const msg=d?.error?.message||("HTTP "+r.status);
-        throw {code:r.status===401||r.status===403?"bad_key":r.status===429||r.status===529?"rate_limit":/credit balance/i.test(msg)?"no_credit":"upstream_error",message:msg};
-      }
-      if(!stream){
-        const d=await r.json().catch(()=>({}));clearTimeout(vagt);
-        forbrugLaeg(opt.hvad,d.model,d.usage,model);
-        if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
-        {const t=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");return opt.raa?t:lesJson(t)}
-      }
-      const rd=r.body.getReader(),dek=new TextDecoder();let buf="",tekst="",stop=null,svarModel=null,brug=null;
-      try{
-        for(;;){
-          const {done,value}=await rd.read();if(done)break;vent();
-          buf+=dek.decode(value,{stream:true});
-          let i;while((i=buf.indexOf("\n"))>=0){
-            const linje=buf.slice(0,i).trim();buf=buf.slice(i+1);
-            if(!linje.startsWith("data:"))continue;
-            let ev;try{ev=JSON.parse(linje.slice(5))}catch(e){continue}
-            /* Forbruget: message_start har modellen, der svarer, og tokens ind; message_delta har tokens ud indtil nu */
-            if(ev.type==="message_start"&&ev.message){svarModel=ev.message.model||null;brug={...(ev.message.usage||{})}}
-            if(ev.type==="message_delta"&&ev.usage)brug={...(brug||{}),...ev.usage};
-            if(ev.type==="content_block_delta"&&ev.delta&&ev.delta.type==="text_delta"){tekst+=ev.delta.text;onText(tekst)}
-            else if(ev.type==="content_block_start"&&ev.content_block&&ev.content_block.type==="thinking"&&opt.onTaenk)opt.onTaenk();
-            else if(ev.type==="message_delta"&&ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason;
-            else if(ev.type==="error")throw {code:/overload/i.test(ev.error&&ev.error.type||"")?"rate_limit":"upstream_error",message:(ev.error&&ev.error.message)||"fejl undervejs"};
-          }
+      const ctrl=new AbortController();let vagt=null;const vent=()=>{clearTimeout(vagt);vagt=setTimeout(()=>ctrl.abort(),stream?45000:120000)};
+      /* Med websøgning kan Claude bruge mange skridt. Stopper svaret med "pause_turn", sendes det, der er kommet
+         indtil nu, tilbage, og Claude fortsætter, hvor den slap (højst 4 gange). */
+      let tekst="";const svar=[];
+      for(let runde=0;;runde++){
+        vent();
+        let r,d0=null;
+        for(let i=0;i<3;i++){
+          try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify(body),signal:ctrl.signal})}
+          catch(e){clearTimeout(vagt);throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
+          if(r.ok)break;
+          d0=await r.json().catch(()=>({}));
+          const fm=d0?.error?.message||"";
+          /* Afviser modellen thinking-indstillingen, så prøv uden */
+          if(r.status===400&&body.thinking&&/thinking/i.test(fm)){delete body.thinking;continue}
+          /* Kan nøglen eller modellen ikke bruge websøgning, så prøv uden (kun før Claude er gået i gang) */
+          if(r.status===400&&body.tools&&!runde&&/web_|tool/i.test(fm)){delete body.tools;continue}
+          break;
         }
-      }catch(e){if(e&&e.code)throw e;throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
-      finally{clearTimeout(vagt);forbrugLaeg(opt.hvad,svarModel,brug,model)}
-      if(stop==="refusal")throw {code:"refusal",message:"afvist"};
-      if(stop==="max_tokens")throw {code:"invalid_json",message:"svaret blev for langt og blev skåret af"};
-      return opt.raa?tekst:lesJson(tekst);
+        if(!r.ok){
+          clearTimeout(vagt);
+          const d=d0||{};
+          const msg=d?.error?.message||("HTTP "+r.status);
+          throw {code:r.status===401||r.status===403?"bad_key":r.status===429||r.status===529?"rate_limit":/credit balance/i.test(msg)?"no_credit":"upstream_error",message:msg};
+        }
+        if(!stream){
+          const d=await r.json().catch(()=>({}));clearTimeout(vagt);
+          forbrugLaeg(opt.hvad,d.model,d.usage,model);
+          if(d.stop_reason==="refusal")throw {code:"refusal",message:"afvist"};
+          {const t=(d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");return opt.raa?t:lesJson(t)}
+        }
+        /* Svaret samles også blok for blok, så det kan sendes tilbage ved "pause_turn" */
+        const rd=r.body.getReader(),dek=new TextDecoder();let buf="",stop=null,svarModel=null,brug=null;const blokke=[];
+        try{
+          for(;;){
+            const {done,value}=await rd.read();if(done)break;vent();
+            buf+=dek.decode(value,{stream:true});
+            let i;while((i=buf.indexOf("\n"))>=0){
+              const linje=buf.slice(0,i).trim();buf=buf.slice(i+1);
+              if(!linje.startsWith("data:"))continue;
+              let ev;try{ev=JSON.parse(linje.slice(5))}catch(e){continue}
+              /* Forbruget: message_start har modellen, der svarer, og tokens ind; message_delta har tokens ud indtil nu */
+              if(ev.type==="message_start"&&ev.message){svarModel=ev.message.model||null;brug={...(ev.message.usage||{})}}
+              if(ev.type==="message_delta"&&ev.usage)brug={...(brug||{}),...ev.usage};
+              if(ev.type==="content_block_start"&&ev.content_block){blokke[ev.index]={...ev.content_block};if(ev.content_block.type==="thinking"&&opt.onTaenk)opt.onTaenk()}
+              else if(ev.type==="content_block_delta"&&ev.delta){
+                const b=blokke[ev.index]||(blokke[ev.index]={type:"text",text:""}),d=ev.delta;
+                if(d.type==="text_delta"){b.text=(b.text||"")+d.text;tekst+=d.text;onText(tekst)}
+                else if(d.type==="input_json_delta")b.json=(b.json||"")+(d.partial_json||"");
+                else if(d.type==="thinking_delta")b.thinking=(b.thinking||"")+d.thinking;
+                else if(d.type==="signature_delta")b.signature=d.signature;
+              }
+              else if(ev.type==="content_block_stop"){const b=blokke[ev.index];if(b&&b.json!=null){try{b.input=JSON.parse(b.json||"{}")}catch(e){}delete b.json}}
+              else if(ev.type==="message_delta"&&ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason;
+              else if(ev.type==="error")throw {code:/overload/i.test(ev.error&&ev.error.type||"")?"rate_limit":"upstream_error",message:(ev.error&&ev.error.message)||"fejl undervejs"};
+            }
+          }
+        }catch(e){if(e&&e.code)throw e;throw {code:ctrl.signal.aborted?"timeout":"network",message:String(e&&e.message||e)}}
+        finally{clearTimeout(vagt);forbrugLaeg(opt.hvad,svarModel,brug,model)}
+        svar.push(...blokke.filter(Boolean).map(b=>b.type==="text"?{type:"text",text:b.text||""}:b));
+        if(stop==="pause_turn"&&body.tools&&runde<4){body.messages=[body.messages[0],{role:"assistant",content:svar}];continue}
+        if(stop==="refusal")throw {code:"refusal",message:"afvist"};
+        if(stop==="max_tokens")throw {code:"invalid_json",message:"svaret blev for langt og blev skåret af"};
+        if(opt.raa)return tekst;
+        /* Med websøgning står svaret i teksten efter det sidste værktøjskald (teksten før er Claudes egne noter) */
+        const sidst=svar.map(b=>!["text","thinking","redacted_thinking"].includes(b.type)).lastIndexOf(true);
+        const efter=sidst<0?tekst:svar.slice(sidst+1).filter(b=>b.type==="text").map(b=>b.text).join("");
+        return lesJson(efter.includes("{")?efter:tekst);
+      }
     }
   };
 }
@@ -5428,7 +5560,8 @@ function forbrugLaeg(hvad,model,u,bedt){
   model=PRISER[model]?model:bedt;
   let [pi,po]=PRISER[model]||[0,0];
   if(model==="claude-haiku-5-5"&&ind>1e5){pi=0.5;po=2.5}
-  const usd=((u.input_tokens||0)+1.25*(u.cache_creation_input_tokens||0)+0.1*(u.cache_read_input_tokens||0))*pi/1e6+ud*po/1e6;
+  /* Websøgning koster 10 $ pr. 1.000 søgninger oven i tokens */
+  const usd=((u.input_tokens||0)+1.25*(u.cache_creation_input_tokens||0)+0.1*(u.cache_read_input_tokens||0))*pi/1e6+ud*po/1e6+((u.server_tool_use&&u.server_tool_use.web_search_requests)||0)*0.01;
   const f=forbrugHent(),d=todayIso(),k=FORMAAL[hvad]?hvad:"andet";
   const laeg=o=>{const x=o[k]=o[k]||{n:0,ind:0,ud:0,usd:0};x.n++;x.ind+=ind;x.ud+=ud;x.usd+=usd};
   laeg(f.alt);laeg(f.md[d.slice(0,7)]=f.md[d.slice(0,7)]||{});laeg(f.dag[d]=f.dag[d]||{});
@@ -5482,7 +5615,7 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="74";
+const APP_VERSION="75";
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
