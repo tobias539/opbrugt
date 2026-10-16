@@ -118,5 +118,13 @@
   "til": "2026-10-24T21:59:59+0000",
   "antal": 200,
   "fil": "raa/Lidl/2026-10-17_dMuk5I-K.json.gz"
+ },
+ "2owlMUb9": {
+  "kaede": "REMA 1000",
+  "label": "Uge 43",
+  "fra": "2026-10-17T22:00:00+0000",
+  "til": "2026-10-24T21:59:59+0000",
+  "antal": 130,
+  "fil": "raa/REMA 1000/2026-10-17_2owlMUb9.json.gz"
  }
 }
