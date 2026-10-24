@@ -73,12 +73,39 @@ prioritet i enhver plan, og en plan med tomt skab viser ikke, hvad appen kan.
 | Indkøb, listen | Swipe mellem afdelingerne · ✓ købt, ✕ ikke i dag | Første "Færdig" | Nej |
 | Snak | "?" med det, man kan her | Bliver (det er et "?", ikke en hint) | Ja |
 
-## Tilstand og genstart (kort)
+## Hvornår introen kommer
 
-- `st.opsat` (præferencer) og `st.hylde.opsat` (hylden) findes. Nyt: `st.intro = {trin, faerdig}`.
-  Introen starter, når `nyBruger()` er sand, og genoptager ved `st.intro.trin`, hvis den blev lukket undervejs.
-- × lukker hele introen. Det, der allerede er gemt (fx præferencerne), bliver. Introen vises ikke igen af sig
-  selv, men kan åbnes under Præferencer: "Gå introen igennem igen".
+Introen kommer af sig selv én gang, og den kan altid startes igen under Præferencer.
+
+| Situation | Hvad sker der |
+|---|---|
+| **Første gang appen åbnes** | Introen starter af sig selv på Plan, fra skærm 0. |
+| **Appen lukkes midt i introen** (telefonen låses, appen skiftes) | Introen fortsætter fra den skærm, man var på, næste gang appen åbnes. |
+| **× midt i introen** | Introen lukker. Det, der allerede er gemt, bliver. Den kommer ikke igen af sig selv. Kortene "Velkommen til Mad app" på Plan og "Hvad vil I altid have på hylden?" på Skab står, som de gør i dag, for det, der mangler. |
+| **Præferencer › Ny opsætning** | Introen starter fra skærm 1. Velkomsten og "Jeg har en gemt kopi" springes over. |
+| **Præferencer › Nulstil præferencer** | Som i dag: præferencerne slettes, og kortet "Velkommen til Mad app" kommer tilbage på Plan. Trykker man på det, starter introen fra skærm 1. |
+
+Knappen **Ny opsætning** står øverst under "Dine præferencer", ved siden af "Ret præferencer". De to gør hver sit:
+"Ret præferencer" åbner kun præferenceguiden, som i dag, mens "Ny opsætning" går hele kæden igennem.
+
+**Når introen startes igen**, er det en gennemgang af det, man har, ikke en ny start:
+
+- Alle valg står på det, man valgte sidst. Næste beholder det, og man retter kun det, der er ændret.
+  Sådan virker præferenceguiden og hylde-guiden allerede i dag.
+- Intet slettes. Hver del gemmer først ved sin egen Gem, og × undervejs lader alt stå, som det var.
+- Skærm 6 (nøglen): har telefonen en nøgle, står der "Nøglen er sat ✓" med Næste. Feltet kommer kun frem,
+  hvis man vil skifte den.
+- Skærm 7 (skabet): billeder og "Skriv selv" tilføjer kun det nye, som i dag. Skabet tømmes ikke. Står der
+  allerede varer i skabet, siger linjen "I har 23 ting i skabet. Tag billeder af det nye, eller gå videre", og
+  "Skabet er tomt" hedder i stedet "Gå videre".
+- Skærm 9: "Se mig omkring først" hedder i stedet "Færdig".
+
+## Tilstand (kort)
+
+- `st.opsat` (præferencer) og `st.hylde.opsat` (hylden) findes. Nyt: `st.intro = {trin, faerdig, igen}`.
+  Introen starter af sig selv, når `nyBruger()` er sand (funktionen findes, men bruges ikke i dag), eller når
+  `st.intro.trin` er sat og `faerdig` ikke er. × og den sidste skærm sætter `faerdig`. "Ny opsætning" sætter
+  `igen`, som styrer teksterne ovenfor.
 - Hver del gemmer ved sin egen afslutning, som i dag (kladde indtil Gem). Kæden er kun det, der sker efter Gem.
 - Hints: `st.hint = {guideSwipe:true, kokkehue:true, kurv:true, hjemmeskaerm:true}`; nøglen slettes, når
   handlingen er gjort.
@@ -89,7 +116,8 @@ prioritet i enhver plan, og en plan med tomt skab viser ikke, hvad appen kan.
 
 Udledt af kilderne i `ux-regler.md` (afsnit C):
 
-1. Valgfri og kort: kan lukkes fra første skærm, vises aldrig igen af sig selv, kan findes under Præferencer.
+1. Valgfri og kort: kan lukkes fra første skærm, vises aldrig igen af sig selv, kan startes igen under
+   Præferencer › Ny opsætning med de valg, man har i forvejen.
 2. Ét spørgsmål pr. skærm. Overskriften er spørgsmålet. Én hjælpelinje, ingen links.
 3. Kun det, der ændrer den første uge. Resten har standardværdier og spørges, hvor det bruges.
 4. Lær ved at gøre: skabet fyldes med rigtige billeder i stedet for en skærm, der forklarer skabet.

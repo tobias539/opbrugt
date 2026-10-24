@@ -237,6 +237,7 @@ tungere end den anbefaling. Behold "Næste".
 | Begynd en guide | Kom i gang · Opret … · Vælg | fyldt grøn | i kortet |
 | Udskyd et tilbud om en guide | Ikke nu | ghost | i kortet, til venstre |
 | Ret noget gemt | Ret | ghost | under oversigten |
+| Gå hele introen igennem igen | Ny opsætning (forslag, ikke i appen) | ghost | under Dine præferencer |
 | Nulstil | Nulstil (med bekræftelse) | ghost | under Præferencer |
 | Tilføj | + Tilføj (knap) · Tilføj (ved et felt) | ghost | øverst i fanen / ved feltet |
 | Åbn en ret | Lav retten · Ændr retten | fyldt / ghost | ved kokkehuen |
