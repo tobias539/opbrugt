@@ -655,7 +655,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
       <div class="bftop"><button class="back" id="bfTilbage">‹ Opskrifter</button><span class="prikker" id="bfPrikker"></span></div>
       <div class="allergiboks" id="opskAllergi" hidden></div>
       <div id="bogFiltre"></div>
-      <div class="bfbund"><p class="bfantal" id="bfAntal"></p><div class="bfknapper"><button class="btn ghost" id="bfForrige">‹ Tilbage</button><button class="btn ghost" id="bogAabn">Åbn kogebogen</button><button class="btn" id="bfNaeste">Næste ›</button></div></div>
+      <div class="bfbund"><p class="bfantal" id="bfAntal"></p><div class="bfknapper"><button class="btn ghost" id="bfForrige">Tilbage</button><button class="btn ghost" id="bogAabn">Åbn kogebogen</button><button class="btn" id="bfNaeste">Næste</button></div></div>
     </div>
     <div id="opskBog" hidden>
       <div class="bogtop"><button class="back" id="bogTilbage">‹ Filtre</button><span class="muted" id="bogTael"></span></div>
@@ -754,7 +754,7 @@ nav.bar button[aria-current="page"]{color:var(--leaf);font-weight:700}
   </div>
   </details>
   <p class="foot" id="diag">Forbindelse: tjekker …</p>
-  <p class="foot">Version 52 · 10/10-2026. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
+  <p class="foot">Version <span id="appVersion"></span>. Priser og pakningsstørrelser er eksempeldata i Rema-stil, ikke live priser. <span id="opskVersion"></span></p>
 </section>
 
 <!-- INDKØB -->
@@ -5653,7 +5653,9 @@ forbind();tHent();hentHyldepriser();
    Telefoner (især apps på iPhones hjemmeskærm) holder fast i den gamle side. Ved start og hver gang appen
    hentes frem, tjekkes version.json uden cache. Er der en nyere version, hentes siden igen med versionen i
    adressen, så telefonens cache ikke bruges. Husk at hæve APP_VERSION og version.json sammen. */
-const APP_VERSION="77";
+const APP_VERSION="78";
+/* Versionslinjen under Præferencer følger APP_VERSION, så den ikke bliver forældet */
+document.getElementById("appVersion").textContent=APP_VERSION;
 async function tjekOpdatering(){
   try{
     const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)return;
