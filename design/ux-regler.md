@@ -66,11 +66,12 @@ Det her findes allerede i koden. Nye sider bygges af det samme.
 | `.tilbudsbesked` (gul) | Et tilbud |
 | `.hjaelp` "?" + `.hjaelpboks` | Hvad kan man her. Én pr. fane eller visning |
 | `.skabhint` / grå linje | Én hint om en bevægelse, dér hvor den bruges |
-| Browserens `confirm` | Kun før noget slettes |
+| Browserens `confirm` | Kun før noget slettes. Sletter det meget, fx Nulstil hele appen, er det i stedet én skærm i guide-rammen med en liste over, hvad der slettes, og hvad der bliver |
 
 **Farver, skrift, tone, bevægelser**
 
-- Grøn (`--leaf`) = handling og valgt. Orange (`--carrot`) = opmærksomhed og fokusring. Gul (`--tilbud`) =
+- Grøn (`--leaf`) = handling og valgt. Orange (`--carrot`) = opmærksomhed og fokusring. En fyldt orange knap
+  bruges kun til den knap, der sletter noget, der ikke kan fortrydes (fx "Nulstil alt"). Gul (`--tilbud`) =
   tilbud. Grå (`--muted`) = forklaring. Mørk tilstand følger telefonen.
 - Bricolage Grotesque til overskrifter, Atkinson Hyperlegible til brødtekst. 17 px som grundstørrelse.
 - Appen siger "vi" og nævner aldrig Claude, AI eller en model. "I/jer" er husstanden ("Hvor mange er I?").
@@ -237,8 +238,10 @@ tungere end den anbefaling. Behold "Næste".
 | Begynd en guide | Kom i gang · Opret … · Vælg | fyldt grøn | i kortet |
 | Udskyd et tilbud om en guide | Ikke nu | ghost | i kortet, til venstre |
 | Ret noget gemt | Ret | ghost | under oversigten |
-| Gå hele introen igennem igen | Ny opsætning (forslag, ikke i appen) | ghost | under Dine præferencer |
-| Nulstil | Nulstil (med bekræftelse) | ghost | under Præferencer |
+| Gå hele introen igennem igen, fra velkomstkortet | Ny opsætning (forslag, ikke i appen) | ghost | under Dine præferencer |
+| Slet præferencerne | Nulstil præferencer (med bekræftelse) | ghost | Præferencer › Dine data › Start forfra (står i dag øverst) |
+| Slet alt og start forfra | Nulstil hele appen (forslag, ikke i appen) → skærm med "Nulstil alt" | ghost → fyldt orange | Præferencer › Dine data › Start forfra |
+| Tøm indkøbslisten | Nulstil | ghost | øverst i Indkøb |
 | Tilføj | + Tilføj (knap) · Tilføj (ved et felt) | ghost | øverst i fanen / ved feltet |
 | Åbn en ret | Lav retten · Ændr retten | fyldt / ghost | ved kokkehuen |
 | Fravalgt i en liste | ✕ | – | på varen |

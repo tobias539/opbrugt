@@ -23,6 +23,8 @@ Tandhjulet og kurven er skjult, mens introen kører, som ved guiderne i dag.
 - Skab: kortet "Hvad vil I altid have på hylden?" med "Ikke nu" / "Kom i gang" og en guide på fire trin.
 - Skab: "+ Tilføj" med billeder, video eller skriv selv.
 - Snak: "?" med hjælp til den viste del.
+- Præferencer: "Ret præferencer" og "Nulstil præferencer" øverst. Nulstil sletter kun præferencerne, og
+  velkomstkortet kommer tilbage på Plan. Der er ingen måde at nulstille hele appen på.
 - Ingenting forklarer fanerne, kurven, tandhjulet, swipe, langt tryk eller træk til kurv/spist/smidt ud.
 
 ## Kæden
@@ -82,13 +84,14 @@ Introen kommer af sig selv én gang, og den kan altid startes igen under Præfer
 | **Første gang appen åbnes** | Introen starter af sig selv på Plan, fra skærm 0. |
 | **Appen lukkes midt i introen** (telefonen låses, appen skiftes) | Introen fortsætter fra den skærm, man var på, næste gang appen åbnes. |
 | **× midt i introen** | Introen lukker. Det, der allerede er gemt, bliver. Den kommer ikke igen af sig selv. Kortene "Velkommen til Mad app" på Plan og "Hvad vil I altid have på hylden?" på Skab står, som de gør i dag, for det, der mangler. |
-| **Præferencer › Ny opsætning** | Introen starter fra skærm 1. Velkomsten og "Jeg har en gemt kopi" springes over. |
-| **Præferencer › Nulstil præferencer** | Som i dag: præferencerne slettes, og kortet "Velkommen til Mad app" kommer tilbage på Plan. Trykker man på det, starter introen fra skærm 1. |
+| **Præferencer › Ny opsætning** | Velkomstkortet kommer igen, og introen går hele vejen igennem med de valg, man har. Intet slettes. |
+| **Præferencer › Nulstil præferencer** | Præferencerne slettes, og velkomstkortet kommer tilbage på Plan. Skab, plan og indkøbsliste bliver. |
+| **Præferencer › Nulstil hele appen** | Alt slettes, og appen starter forfra med velkomstkortet, som første gang. |
 
-Knappen **Ny opsætning** står øverst under "Dine præferencer", ved siden af "Ret præferencer". De to gør hver sit:
-"Ret præferencer" åbner kun præferenceguiden, som i dag, mens "Ny opsætning" går hele kæden igennem.
+Velkomstkortet er skærm 0. Det kommer altså igen på tre måder: Ny opsætning, Nulstil præferencer og Nulstil
+hele appen. "Jeg har en gemt kopi" står på det hver gang, så man altid kan hente en kopi ind i stedet.
 
-**Når introen startes igen**, er det en gennemgang af det, man har, ikke en ny start:
+**Når introen startes igen** med Ny opsætning, er det en gennemgang af det, man har, ikke en ny start:
 
 - Alle valg står på det, man valgte sidst. Næste beholder det, og man retter kun det, der er ændret.
   Sådan virker præferenceguiden og hylde-guiden allerede i dag.
@@ -99,6 +102,50 @@ Knappen **Ny opsætning** står øverst under "Dine præferencer", ved siden af 
   allerede varer i skabet, siger linjen "I har 23 ting i skabet. Tag billeder af det nye, eller gå videre", og
   "Skabet er tomt" hedder i stedet "Gå videre".
 - Skærm 9: "Se mig omkring først" hedder i stedet "Færdig".
+
+## Start forfra under Præferencer
+
+De fire knapper deles i to grupper, så det, der sletter noget, ikke står ved siden af det, man bruger til hverdag.
+
+| Hvor | Knap | Hvad den gør | Findes? |
+|---|---|---|---|
+| Øverst, under "Dine præferencer" | **Ret præferencer** | Åbner kun præferenceguiden | Ja |
+| Øverst, under "Dine præferencer" | **Ny opsætning** | Hele introen fra velkomstkortet, med de valg, man har | Nej |
+| Nederst, Flere indstillinger › Dine data › Start forfra | **Nulstil præferencer** | Sletter præferencerne. Velkomstkortet kommer på Plan | Ja, flyttes hertil fra toppen |
+| Nederst, Flere indstillinger › Dine data › Start forfra | **Nulstil hele appen** | Sletter alt og starter forfra | Nej |
+
+"Start forfra" står lige under "Gem kopi", så kopien er det sidste, man ser, før man nulstiller.
+
+### Nulstil hele appen
+
+Ét tryk åbner én skærm i guide-rammen. Det er ikke browserens `confirm`, fordi listen er for lang til den, og fordi
+skærmen skal kunne tilbyde en kopi først.
+
+| Del | Indhold |
+|---|---|
+| Overskrift | **Nulstil hele appen?** |
+| Grå linje | Appen bliver som første gang, I åbnede den. Det kan ikke fortrydes. |
+| Slettes | Plan, skab, indkøbsliste, præferencer, altid på hylden, jeres egne opskrifter, favoritter, snak og tallene under Forbrug. |
+| Bliver | Det, I har delt med andre (opskrifter, kvitteringer), og det, appen har hentet: talegenkendelsen og billederne til Lav retten, så de ikke skal hentes igen. |
+| Valg | Chip **Slet også nøglen**, slået fra som standard. Linjen under: "Fx hvis telefonen skal bruges af en anden." |
+| Knapper | Ghost **Gem kopi først** til venstre. Fyldt orange **Nulstil alt** til højre. × lukker uden at gøre noget. |
+
+Efter "Nulstil alt":
+
+1. Feedback, der venter på net, prøves sendt én gang. Det, der ikke kommer afsted, slettes med resten.
+2. Husstandens data og forbrugstallene slettes. Nøglen slettes kun, hvis chippen er valgt.
+3. Appen genindlæser og starter med velkomstkortet, som første gang. Det er kvitteringen; der er ingen toast.
+
+Hvad der ligger hvor på telefonen, til den, der bygger det:
+
+| Gemt som | Indhold | Ved Nulstil hele appen |
+|---|---|---|
+| `localStorage` "opbrugt" | Alt om husstanden: plan, skab, indkøbsliste, præferencer, hylde, egne opskrifter, favoritter, snak, historik, feedback der venter | Slettes |
+| `localStorage` "opbrugt_forbrug" | Forbruget af nøglen på denne telefon | Slettes |
+| `localStorage` "opbrugt_api_noegle" | Nøglen | Slettes kun med "Slet også nøglen" |
+| `localStorage` "opbrugt_tale…" | Om talegenkendelsen er hentet og godkendt | Bliver |
+| IndexedDB "madapp" › trinbilleder | Billederne til Lav retten | Bliver |
+| Cache Storage | Appens filer (service worker) og talegenkendelsen (ca. 250 MB) | Bliver |
 
 ## Tilstand (kort)
 
@@ -116,8 +163,8 @@ Knappen **Ny opsætning** står øverst under "Dine præferencer", ved siden af 
 
 Udledt af kilderne i `ux-regler.md` (afsnit C):
 
-1. Valgfri og kort: kan lukkes fra første skærm, vises aldrig igen af sig selv, kan startes igen under
-   Præferencer › Ny opsætning med de valg, man har i forvejen.
+1. Valgfri og kort: kan lukkes fra første skærm, vises aldrig igen af sig selv, kan startes igen fra
+   velkomstkortet under Præferencer › Ny opsætning med de valg, man har i forvejen.
 2. Ét spørgsmål pr. skærm. Overskriften er spørgsmålet. Én hjælpelinje, ingen links.
 3. Kun det, der ændrer den første uge. Resten har standardværdier og spørges, hvor det bruges.
 4. Lær ved at gøre: skabet fyldes med rigtige billeder i stedet for en skærm, der forklarer skabet.
