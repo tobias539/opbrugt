@@ -158,5 +158,13 @@
   "til": "2026-10-31T22:59:59+0000",
   "antal": 234,
   "fil": "raa/Lidl/2026-10-24_2vtlwPyf.json.gz"
+ },
+ "zWxK5Xry": {
+  "kaede": "Lidl",
+  "label": "Weekendavis (uge 44)",
+  "fra": "2026-10-28T23:00:00+0000",
+  "til": "2026-10-31T22:59:59+0000",
+  "antal": 234,
+  "fil": "raa/Lidl/2026-10-28_zWxK5Xry.json.gz"
  }
 }
