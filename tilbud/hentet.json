@@ -166,5 +166,37 @@
   "til": "2026-10-31T22:59:59+0000",
   "antal": 234,
   "fil": "raa/Lidl/2026-10-28_zWxK5Xry.json.gz"
+ },
+ "j3i_0vU-": {
+  "kaede": "REMA 1000",
+  "label": "Uge 44 Indstik",
+  "fra": "2026-10-28T23:00:00+0000",
+  "til": "2026-10-31T22:59:59+0000",
+  "antal": 16,
+  "fil": "raa/REMA 1000/2026-10-28_j3i_0vU-.json.gz"
+ },
+ "xozUXXk1": {
+  "kaede": "Netto",
+  "label": "Netto uge 45",
+  "fra": "2026-10-30T23:00:00+0000",
+  "til": "2026-11-06T22:59:59+0000",
+  "antal": 244,
+  "fil": "raa/Netto/2026-10-30_xozUXXk1.json.gz"
+ },
+ "H5C70sXQ": {
+  "kaede": "Lidl",
+  "label": "Lidl avis (uge 45)",
+  "fra": "2026-10-31T23:00:00+0000",
+  "til": "2026-11-07T22:59:59+0000",
+  "antal": 237,
+  "fil": "raa/Lidl/2026-10-31_H5C70sXQ.json.gz"
+ },
+ "otpMvLYC": {
+  "kaede": "REMA 1000",
+  "label": "Uge 45",
+  "fra": "2026-10-31T23:00:00+0000",
+  "til": "2026-11-07T22:59:59+0000",
+  "antal": 113,
+  "fil": "raa/REMA 1000/2026-10-31_otpMvLYC.json.gz"
  }
 }
