@@ -1,7 +1,7 @@
 {
  "format": "opskriftbank",
  "version": 1,
- "genereret": "2026-10-13",
+ "genereret": "2026-11-06",
  "antal_opskrifter": 89,
  "skalering": "Mængde til n portioner = linjens tabel[n], hvis den findes, ellers maengde * n / portioner.basis. 'beregnet.pr_portioner' er allerede regnet om til ingrediensens basisenhed.",
  "variabler": "En linje med 'variabel' kan byttes med de andre i gruppen (se 'variabelgrupper'). 'beregnet.alternativer' viser mængden til basis-portioner, regnet efter vægt. 'beregnet.skabelon' på hver opskrift er den løse udgave. 'kan_bruges_i' på hver ingrediens viser alle retter, den kan bruges i – også som erstatning.",
@@ -686,6 +686,7 @@
     "kyllingebryststrimler",
     "kyllingestrimler",
     "kyllingefilet",
+    "kyllingebrystfilet",
     "kyllingeinderfilet"
    ],
    "afdeling": "kod",
